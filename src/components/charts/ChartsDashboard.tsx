@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SignTypesChart } from "./SignTypesChart";
 import { WordPairsChart } from "./WordPairsChart";
-import { CategoryPieChart } from "./CategoryPieChart";
 import type { QuranicMiracle } from "../../types/Types";
 
 interface ChartsDashboardProps {
@@ -22,11 +21,6 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
       id: "pairs",
       name: "Word Pairs",
       component: <WordPairsChart data={data} />,
-    },
-    {
-      id: "categories",
-      name: "Categories",
-      component: <CategoryPieChart data={data} />,
     },
   ];
 
