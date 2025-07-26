@@ -5,6 +5,7 @@ import { DatasetOverview } from "./DatasetOverview";
 import { DataPreview } from "./DataPreview";
 import { SearchBar } from "./SearchBar";
 import { ChartsDashboard } from "./charts/ChartsDashboard";
+import { AdvancedSearchDashboard } from "./search/AdvancedSearchDashboard";
 import Masonry from "react-masonry-css";
 import PaginationButton from "./PaginationButton";
 import SectionTabs from "./SectionTabs";
@@ -108,7 +109,8 @@ export default function HomePage({
           "Dataset Overview",
           "Data Preview",
           "Statistics",
-          "Search & Filter",
+          "Quick Search",
+          "Advanced Search",
           "Charts & Graphs",
         ]}
         activeTab={activeTab}
@@ -195,12 +197,12 @@ export default function HomePage({
           </section>
         </>
 
-        {/* Search/Filter Tab */}
+        {/* Quick Search Tab */}
         <>
           <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
             <h2 className="text-xl sm:text-2xl font-bold text-green-700 dark:text-green-400 mb-2 text-left tracking-tight flex items-center gap-2">
-              Search & Filter
-              <Tooltip content="Search signs and guidance by keyword, filter by type, and sort the results.">
+              Quick Search
+              <Tooltip content="Quick search signs and guidance by keyword, filter by type, and sort the results.">
                 <svg
                   className="w-5 h-5 text-green-500 dark:text-green-400 cursor-help"
                   fill="none"
@@ -464,6 +466,17 @@ export default function HomePage({
               </nav>
             </>
           )}
+        </>
+
+        {/* Advanced Search Tab */}
+        <>
+          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+            <AdvancedSearchDashboard
+              data={miracles}
+              onFavorite={handleFavorite}
+              isFavorite={isFavorite}
+            />
+          </section>
         </>
 
         {/* Visualizations Tab */}
