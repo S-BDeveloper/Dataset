@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { IslamicFact } from "../types/Types";
+import type { QuranicMiracle } from "../types/Types";
 import { db } from "../firebase/config";
 import {
   doc,
@@ -11,10 +11,10 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../contexts/useAuth";
 
-// useFavorites manages the user's favorite facts in Firestore
+// useFavorites manages the user's favorite Quranic miracles in Firestore
 export function useFavorites() {
   const { user } = useAuth();
-  const [favorites, setFavorites] = useState<IslamicFact[]>([]);
+  const [favorites, setFavorites] = useState<QuranicMiracle[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +29,7 @@ export function useFavorites() {
     getDoc(ref)
       .then((snap) => {
         if (snap.exists()) {
-          setFavorites(snap.data().facts || []);
+          setFavorites(snap.data().miracles || []);
         } else {
           setFavorites([]);
         }
@@ -42,30 +42,32 @@ export function useFavorites() {
       });
   }, [user]);
 
-  // Add a fact to favorites in Firestore
-  const addFavorite = async (fact: IslamicFact) => {
+  // Add a miracle to favorites in Firestore
+  const addFavorite = async (miracle: QuranicMiracle) => {
     if (!user) return;
     const ref = doc(db, "favorites", user.uid);
     try {
-      await setDoc(ref, { facts: arrayUnion(fact) }, { merge: true });
+      await setDoc(ref, { miracles: arrayUnion(miracle) }, { merge: true });
       setFavorites((prev) =>
-        prev.some((f) => f.Fact === fact.Fact && f.Source === fact.Source)
+        prev.some((m) => m.title === miracle.title && m.type === miracle.type)
           ? prev
-          : [...prev, fact]
+          : [...prev, miracle]
       );
     } catch {
       setError("Failed to add favorite");
     }
   };
 
-  // Remove a fact from favorites in Firestore
-  const removeFavorite = async (fact: IslamicFact) => {
+  // Remove a miracle from favorites in Firestore
+  const removeFavorite = async (miracle: QuranicMiracle) => {
     if (!user) return;
     const ref = doc(db, "favorites", user.uid);
     try {
-      await updateDoc(ref, { facts: arrayRemove(fact) });
+      await updateDoc(ref, { miracles: arrayRemove(miracle) });
       setFavorites((prev) =>
-        prev.filter((f) => !(f.Fact === fact.Fact && f.Source === fact.Source))
+        prev.filter(
+          (m) => !(m.title === miracle.title && m.type === miracle.type)
+        )
       );
     } catch {
       setError("Failed to remove favorite");

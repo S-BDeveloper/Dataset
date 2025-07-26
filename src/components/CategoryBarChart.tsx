@@ -1,18 +1,18 @@
 import React from "react";
-import type { IslamicFact } from "../types/Types";
+import type { QuranicMiracle } from "../types/Types";
 import { ResponsiveBar } from "@nivo/bar";
 
 interface CategoryBarChartProps {
-  data: IslamicFact[];
+  data: QuranicMiracle[];
 }
 
 // CategoryBarChart displays a Nivo bar chart of facts by category
 export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({ data }) => {
-  // Group by category
+  // Group by miracle type
   const counts: Record<string, number> = {};
-  data.forEach((fact) => {
-    const cat = fact.Category || "Unknown";
-    counts[cat] = (counts[cat] || 0) + 1;
+  data.forEach((miracle) => {
+    const type = miracle.type || "Unknown";
+    counts[type] = (counts[type] || 0) + 1;
   });
   const chartData = Object.entries(counts).map(([category, count]) => ({
     category,
@@ -23,7 +23,7 @@ export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({ data }) => {
     <div
       className="rounded-2xl shadow border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 p-4 sm:p-6"
       style={{ height: 320 }}
-      aria-label="Bar chart of facts by category"
+      aria-label="Bar chart of Quranic miracles by type"
     >
       <ResponsiveBar
         data={chartData}
@@ -60,8 +60,8 @@ export const CategoryBarChart: React.FC<CategoryBarChartProps> = ({ data }) => {
           },
         }}
         role="img"
-        ariaLabel="Facts by category bar chart"
-        barAriaLabel={(e) => `${e.data.category}: ${e.data.count} facts`}
+        ariaLabel="Quranic miracles by type bar chart"
+        barAriaLabel={(e) => `${e.data.category}: ${e.data.count} miracles`}
       />
     </div>
   );

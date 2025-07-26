@@ -49,14 +49,3 @@ export interface QuranicMiracle {
   source?: string;
   [key: string]: unknown;
 }
-
-// Legacy interface for backward compatibility
-export interface IslamicFact {
-  Fact: string;
-  Source?: string;
-  Category?: string;
-  Status?: string;
-  Year?: string;
-  Tags?: string[];
-  [key: string]: unknown;
-}

@@ -2,8 +2,6 @@ import { useRef, useState } from "react";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import SubmitFact from "./pages/SubmitFact";
-import AdminReview from "./pages/AdminReview";
 import Favorites from "./pages/Favorites";
 import QuranicPairs from "./pages/QuranicPairs";
 import LoadingSkeleton from "./components/LoadingSkeleton";
@@ -138,8 +136,7 @@ function App({ loadingDelay = 1000 }) {
               />
             }
           />
-          <Route path="/submit" element={<SubmitFact />} />
-          <Route path="/admin" element={<AdminReview />} />
+
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/quranic-pairs" element={<QuranicPairs />} />
           <Route path="/login" element={<Login />} />
