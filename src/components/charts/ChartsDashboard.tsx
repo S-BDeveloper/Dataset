@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SignTypesChart } from "./SignTypesChart";
 import { WordPairsChart } from "./WordPairsChart";
+import { CorrelationScatterPlot } from "./CorrelationScatterPlot";
 import type { QuranicMiracle } from "../../types/Types";
 
 interface ChartsDashboardProps {
@@ -15,12 +16,26 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
     {
       id: "types",
       name: "Sign Types",
-      component: <SignTypesChart data={data} />,
+      component: (
+        <SignTypesChart data={data} isActive={activeChart === "types"} />
+      ),
     },
     {
       id: "pairs",
       name: "Word Pairs",
-      component: <WordPairsChart data={data} />,
+      component: (
+        <WordPairsChart data={data} isActive={activeChart === "pairs"} />
+      ),
+    },
+    {
+      id: "correlation",
+      name: "Correlation Analysis",
+      component: (
+        <CorrelationScatterPlot
+          data={data}
+          isActive={activeChart === "correlation"}
+        />
+      ),
     },
   ];
 
@@ -71,34 +86,36 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
         ))}
       </div>
 
-      {/* Chart Information */}
-      <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
-        <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">
-          Chart Features
-        </h4>
-        <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
-          <li>
-            • <strong>Interactive:</strong> Hover over chart elements to see
-            detailed information
-          </li>
-          <li>
-            • <strong>Responsive:</strong> Charts adapt to different screen
-            sizes
-          </li>
-          <li>
-            • <strong>Accessible:</strong> Screen reader friendly with proper
-            ARIA labels
-          </li>
-          <li>
-            • <strong>Dark Mode:</strong> All charts support light and dark
-            themes
-          </li>
-          <li>
-            • <strong>Export Ready:</strong> Charts can be saved as images
-            (coming soon)
-          </li>
-        </ul>
-      </div>
+      {/* Chart Information - Only show when "All Charts" is selected */}
+      {activeChart === "all" && (
+        <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
+          <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">
+            Chart Features
+          </h4>
+          <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
+            <li>
+              • <strong>Interactive:</strong> Hover over chart elements to see
+              detailed information
+            </li>
+            <li>
+              • <strong>Responsive:</strong> Charts adapt to different screen
+              sizes
+            </li>
+            <li>
+              • <strong>Accessible:</strong> Screen reader friendly with proper
+              ARIA labels
+            </li>
+            <li>
+              • <strong>Dark Mode:</strong> All charts support light and dark
+              themes
+            </li>
+            <li>
+              • <strong>Export Ready:</strong> Charts can be saved as images
+              (coming soon)
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
