@@ -4,6 +4,7 @@ import { Stats } from "./Stats";
 import { DatasetOverview } from "./DatasetOverview";
 import { DataPreview } from "./DataPreview";
 import { SearchBar } from "./SearchBar";
+import { ChartsDashboard } from "./charts/ChartsDashboard";
 import Masonry from "react-masonry-css";
 import PaginationButton from "./PaginationButton";
 import SectionTabs from "./SectionTabs";
@@ -496,13 +497,7 @@ export default function HomePage({
               </Tooltip>
             </h2>
             <div className="w-16 mb-6 border-b-2 border-green-200 dark:border-green-700 rounded-full" />
-            <div className="text-center py-12 text-stone-500 dark:text-stone-400">
-              <p className="text-lg">Visualizations coming soon...</p>
-              <p className="text-sm mt-2">
-                Charts and graphs will be added here to show patterns in Quranic
-                signs.
-              </p>
-            </div>
+            <ChartsDashboard data={miracles} />
           </section>
         </>
       </SectionTabs>
