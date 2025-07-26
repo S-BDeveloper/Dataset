@@ -32,7 +32,7 @@ const QuranicPairsBarChart: React.FC<QuranicPairsBarChartProps> = ({
 
   // Placeholder chart (replace with Nivo if available)
   return (
-    <div className="rounded-2xl shadow border border-stone-200 bg-white p-4 sm:p-6 w-full">
+    <div className="rounded-2xl shadow border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 p-4 sm:p-6 w-full">
       <div className="w-full h-48 flex items-end gap-4">
         {chartData.map((d) => (
           <div key={d.pair} className="flex flex-col items-center w-12">
@@ -41,7 +41,7 @@ const QuranicPairsBarChart: React.FC<QuranicPairsBarChartProps> = ({
               style={{ height: `${d.count * 10}px` }}
               aria-label={`Pair: ${d.pair}, Count: ${d.count}`}
             />
-            <span className="text-xs mt-2 text-orange-700 font-semibold text-center break-words">
+            <span className="text-xs mt-2 text-orange-700 dark:text-orange-400 font-semibold text-center break-words">
               {d.pair}
             </span>
           </div>

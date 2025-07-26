@@ -115,12 +115,12 @@ export default function HomePage({
       >
         {/* Overview Tab */}
         <>
-          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white rounded-2xl shadow">
-            <h2 className="text-xl sm:text-2xl font-bold text-green-700 mb-2 text-left tracking-tight flex items-center gap-2">
+          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+            <h2 className="text-xl sm:text-2xl font-bold text-green-700 dark:text-green-400 mb-2 text-left tracking-tight flex items-center gap-2">
               Dataset Summary
               <Tooltip content="Summary of the entire dataset, including total signs and guidance and last updated date.">
                 <svg
-                  className="w-5 h-5 text-green-500 cursor-help"
+                  className="w-5 h-5 text-green-500 dark:text-green-400 cursor-help"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -143,7 +143,7 @@ export default function HomePage({
                 </svg>
               </Tooltip>
             </h2>
-            <div className="w-16 mb-6 border-b-2 border-green-200 rounded-full" />
+            <div className="w-16 mb-6 border-b-2 border-green-200 dark:border-green-700 rounded-full" />
             <DatasetOverview
               data={miracles}
               description="A comprehensive collection of signs and guidance from the Holy Quran, including fulfilled prophecies, mathematical patterns, and divine guidance for humanity."
@@ -161,12 +161,12 @@ export default function HomePage({
 
         {/* Statistics Tab */}
         <>
-          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white rounded-2xl shadow">
-            <h2 className="text-xl sm:text-2xl font-bold text-green-700 mb-2 text-left tracking-tight flex items-center gap-2">
+          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+            <h2 className="text-xl sm:text-2xl font-bold text-green-700 dark:text-green-400 mb-2 text-left tracking-tight flex items-center gap-2">
               Statistics
               <Tooltip content="Key statistics about the dataset, such as total miracles, filtered count, and more.">
                 <svg
-                  className="w-5 h-5 text-green-500 cursor-help"
+                  className="w-5 h-5 text-green-500 dark:text-green-400 cursor-help"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -189,19 +189,19 @@ export default function HomePage({
                 </svg>
               </Tooltip>
             </h2>
-            <div className="w-16 mb-6 border-b-2 border-green-200 rounded-full" />
+            <div className="w-16 mb-6 border-b-2 border-green-200 dark:border-green-700 rounded-full" />
             <Stats miracles={miracles} filteredCount={sortedMiracles.length} />
           </section>
         </>
 
         {/* Search/Filter Tab */}
         <>
-          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white rounded-2xl shadow">
-            <h2 className="text-xl sm:text-2xl font-bold text-green-700 mb-2 text-left tracking-tight flex items-center gap-2">
+          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+            <h2 className="text-xl sm:text-2xl font-bold text-green-700 dark:text-green-400 mb-2 text-left tracking-tight flex items-center gap-2">
               Search & Filter
               <Tooltip content="Search signs and guidance by keyword, filter by type, and sort the results.">
                 <svg
-                  className="w-5 h-5 text-green-500 cursor-help"
+                  className="w-5 h-5 text-green-500 dark:text-green-400 cursor-help"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -224,7 +224,7 @@ export default function HomePage({
                 </svg>
               </Tooltip>
             </h2>
-            <div className="w-16 mb-6 border-b-2 border-green-200 rounded-full" />
+            <div className="w-16 mb-6 border-b-2 border-green-200 dark:border-green-700 rounded-full" />
             <SearchBar
               filters={filters}
               onFiltersChange={setFilters}
@@ -235,12 +235,12 @@ export default function HomePage({
           {/* Show message if no results */}
           {sortedMiracles.length === 0 ? (
             <div
-              className="bg-white rounded-xl shadow p-8 text-center flex flex-col items-center gap-2 border-2 border-dashed border-green-200"
+              className="bg-white dark:bg-stone-800 rounded-xl shadow p-8 text-center flex flex-col items-center gap-2 border-2 border-dashed border-green-200 dark:border-green-700"
               aria-live="polite"
               role="status"
             >
               <svg
-                className="w-10 h-10 text-green-400 mb-2"
+                className="w-10 h-10 text-green-400 dark:text-green-500 mb-2"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -252,10 +252,10 @@ export default function HomePage({
                   d="M9 17v-2a4 4 0 014-4h2a4 4 0 014 4v2M7 17v-2a6 6 0 016-6h2a6 6 0 016 6v2M3 17v-2a8 8 0 018-8h2a8 8 0 018 8v2"
                 />
               </svg>
-              <div className="text-lg font-bold text-green-700">
+              <div className="text-lg font-bold text-green-700 dark:text-green-400">
                 No signs found
               </div>
-              <div className="text-green-600 text-sm">
+              <div className="text-green-600 dark:text-green-300 text-sm">
                 Try adjusting your search, filters, or sorting options.
               </div>
             </div>
@@ -264,13 +264,13 @@ export default function HomePage({
               {/* Miracles list with ref for scrolling */}
               <section
                 ref={miraclesListRef}
-                className="mb-6 bg-stone-50 rounded-2xl shadow"
+                className="mb-6 bg-stone-50 dark:bg-stone-800 rounded-2xl shadow"
               >
-                <h2 className="text-2xl font-bold text-green-700 mb-2 text-left tracking-tight flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-2 text-left tracking-tight flex items-center gap-2">
                   Browse All Signs & Guidance
                   <Tooltip content="Browse all signs and guidance that match your current filters and search.">
                     <svg
-                      className="w-5 h-5 text-green-500 cursor-help"
+                      className="w-5 h-5 text-green-500 dark:text-green-400 cursor-help"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -293,7 +293,7 @@ export default function HomePage({
                     </svg>
                   </Tooltip>
                 </h2>
-                <div className="w-16 mb-6 border-b-2 border-green-200 rounded-full" />
+                <div className="w-16 mb-6 border-b-2 border-green-200 dark:border-green-700 rounded-full" />
                 <Masonry
                   breakpointCols={{
                     default: 4,
@@ -339,12 +339,12 @@ export default function HomePage({
                 >
                   <label
                     htmlFor="goToPage"
-                    className="text-green-800 font-semibold text-sm sm:text-base flex items-center gap-1"
+                    className="text-green-800 dark:text-green-300 font-semibold text-sm sm:text-base flex items-center gap-1"
                   >
                     Go to page:
                     <Tooltip content="Enter a page number to jump directly to that page of results.">
                       <svg
-                        className="w-4 h-4 text-green-500 cursor-help"
+                        className="w-4 h-4 text-green-500 dark:text-green-400 cursor-help"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
@@ -374,11 +374,11 @@ export default function HomePage({
                     max={totalPages}
                     value={goToPage}
                     onChange={(e) => setGoToPage(e.target.value)}
-                    className={`w-16 sm:w-20 px-2 py-1 border rounded focus:ring-2 focus:ring-green-500 text-sm sm:text-base ${
+                    className={`w-16 sm:w-20 px-2 py-1 border rounded focus:ring-2 focus:ring-green-500 text-sm sm:text-base bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 ${
                       goToPage &&
                       (Number(goToPage) < 1 || Number(goToPage) > totalPages)
-                        ? "border-red-500 bg-red-50"
-                        : "border-green-700"
+                        ? "border-red-500 dark:border-red-400 bg-red-50 dark:bg-red-900/30"
+                        : "border-green-700 dark:border-green-600"
                     }`}
                     placeholder="#"
                     aria-label="Page number to go to"
@@ -467,12 +467,12 @@ export default function HomePage({
 
         {/* Visualizations Tab */}
         <>
-          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white rounded-2xl shadow">
-            <h2 className="text-xl sm:text-2xl font-bold text-green-700 mb-2 text-left tracking-tight flex items-center gap-2">
+          <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+            <h2 className="text-xl sm:text-2xl font-bold text-green-700 dark:text-green-400 mb-2 text-left tracking-tight flex items-center gap-2">
               Charts & Graphs
               <Tooltip content="Interactive charts and graphs showing patterns in Quranic signs and guidance.">
                 <svg
-                  className="w-5 h-5 text-green-500 cursor-help"
+                  className="w-5 h-5 text-green-500 dark:text-green-400 cursor-help"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -495,8 +495,8 @@ export default function HomePage({
                 </svg>
               </Tooltip>
             </h2>
-            <div className="w-16 mb-6 border-b-2 border-green-200 rounded-full" />
-            <div className="text-center py-12 text-stone-500">
+            <div className="w-16 mb-6 border-b-2 border-green-200 dark:border-green-700 rounded-full" />
+            <div className="text-center py-12 text-stone-500 dark:text-stone-400">
               <p className="text-lg">Visualizations coming soon...</p>
               <p className="text-sm mt-2">
                 Charts and graphs will be added here to show patterns in Quranic

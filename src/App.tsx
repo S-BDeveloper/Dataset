@@ -81,8 +81,8 @@ function App({ loadingDelay = 1000 }) {
 
   if (loading) {
     return (
-      <main className="container mx-auto max-w-6xl px-4 py-12 bg-stone-50 rounded-2xl shadow-lg mt-8 mb-12">
-        <h2 className="text-2xl font-bold text-green-700 mb-6 text-left tracking-tight">
+      <main className="container mx-auto max-w-6xl px-4 py-12 bg-stone-50 dark:bg-stone-800 rounded-2xl shadow-lg mt-8 mb-12">
+        <h2 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-6 text-left tracking-tight">
           Loading Quranic Signs & Guidance...
         </h2>
         <LoadingSkeleton count={8} />
@@ -92,9 +92,9 @@ function App({ loadingDelay = 1000 }) {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stone-50">
-        <div className="flex flex-col items-center bg-red-100 border border-red-400 rounded p-6 shadow">
-          <span className="text-red-700 font-semibold text-lg mb-2">
+      <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-stone-900">
+        <div className="flex flex-col items-center bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 rounded p-6 shadow">
+          <span className="text-red-700 dark:text-red-300 font-semibold text-lg mb-2">
             {error}
           </span>
           <button

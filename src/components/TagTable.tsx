@@ -55,27 +55,29 @@ const TagTable: React.FC<TagTableProps> = ({ data }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto mt-8">
-      <h2 className="text-xl font-bold mb-4">Tags Table</h2>
+    <div className="bg-white dark:bg-stone-800 rounded-xl shadow-lg p-6 max-w-2xl mx-auto mt-8">
+      <h2 className="text-xl font-bold mb-4 text-stone-900 dark:text-stone-100">
+        Tags Table
+      </h2>
       <input
         type="text"
         placeholder="Filter tags..."
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        className="mb-4 px-3 py-2 border border-stone-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="mb-4 px-3 py-2 border border-stone-300 dark:border-stone-600 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-400"
       />
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
           <thead>
             <tr>
               <th
-                className="px-4 py-2 cursor-pointer text-left select-none"
+                className="px-4 py-2 cursor-pointer text-left select-none text-stone-900 dark:text-stone-100"
                 onClick={() => handleSort("tag")}
               >
                 Tag {sortBy === "tag" ? (sortDir === "asc" ? "▲" : "▼") : ""}
               </th>
               <th
-                className="px-4 py-2 cursor-pointer text-left select-none"
+                className="px-4 py-2 cursor-pointer text-left select-none text-stone-900 dark:text-stone-100"
                 onClick={() => handleSort("count")}
               >
                 Count{" "}
@@ -88,7 +90,7 @@ const TagTable: React.FC<TagTableProps> = ({ data }) => {
               <tr>
                 <td
                   colSpan={2}
-                  className="px-4 py-2 text-stone-400 italic text-center"
+                  className="px-4 py-2 text-stone-400 dark:text-stone-500 italic text-center"
                 >
                   No tags found
                 </td>
@@ -96,8 +98,12 @@ const TagTable: React.FC<TagTableProps> = ({ data }) => {
             ) : (
               filteredTags.map(({ tag, count }) => (
                 <tr key={tag}>
-                  <td className="px-4 py-2 whitespace-nowrap">{tag}</td>
-                  <td className="px-4 py-2">{count}</td>
+                  <td className="px-4 py-2 whitespace-nowrap text-stone-900 dark:text-stone-100">
+                    {tag}
+                  </td>
+                  <td className="px-4 py-2 text-stone-900 dark:text-stone-100">
+                    {count}
+                  </td>
                 </tr>
               ))
             )}

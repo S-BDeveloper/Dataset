@@ -10,9 +10,11 @@ const Favorites: React.FC = () => {
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
       <Breadcrumb />
-      <h1 className="text-3xl font-bold text-green-700 mb-6">Saved Signs</h1>
+      <h1 className="text-3xl font-bold text-green-700 dark:text-green-400 mb-6">
+        Saved Signs
+      </h1>
       {favorites.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow border border-stone-200 p-8 text-center text-green-700">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow border border-stone-200 dark:border-stone-700 p-8 text-center text-green-700 dark:text-green-400">
           You have no saved signs yet.
         </div>
       ) : (

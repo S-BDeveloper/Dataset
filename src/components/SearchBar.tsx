@@ -22,14 +22,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <form
-      className="flex flex-wrap gap-4 items-center bg-gradient-to-br from-white to-stone-50 rounded-2xl shadow-lg border border-stone-200 p-6"
+      className="flex flex-wrap gap-4 items-center bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6"
       aria-label="Search and filter signs and guidance"
     >
       {/* Search Input */}
       <div className="flex-1 min-w-[200px]">
         <label
           htmlFor="search-input"
-          className="block text-sm font-semibold text-green-700 mb-2"
+          className="block text-sm font-semibold text-green-700 dark:text-green-400 mb-2"
         >
           Search Signs & Guidance
         </label>
@@ -39,7 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           value={filters.searchTerm}
           onChange={handleChange}
           placeholder="Enter keywords to search signs and guidance..."
-          className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 bg-white shadow-sm hover:shadow-md"
+          className="w-full border-2 border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 dark:text-stone-100 bg-white dark:bg-stone-800 shadow-sm hover:shadow-md"
           data-cy="search-input"
           aria-label="Search signs and guidance"
         />
@@ -49,7 +49,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       <div className="min-w-[180px]">
         <label
           htmlFor="type-select"
-          className="block text-sm font-semibold text-green-700 mb-2"
+          className="block text-sm font-semibold text-green-700 dark:text-green-400 mb-2"
         >
           Type
         </label>
@@ -58,7 +58,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           name="type"
           value={filters.type}
           onChange={handleChange}
-          className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 bg-white shadow-sm hover:shadow-md"
+          className="w-full border-2 border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 dark:text-stone-100 bg-white dark:bg-stone-800 shadow-sm hover:shadow-md"
           data-cy="type-select"
           aria-label="Filter by type"
         >
@@ -75,7 +75,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       <div className="min-w-[160px]">
         <label
           htmlFor="sort-select"
-          className="block text-sm font-semibold text-green-700 mb-2"
+          className="block text-sm font-semibold text-green-700 dark:text-green-400 mb-2"
         >
           Sort By
         </label>
@@ -84,7 +84,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           name="sortBy"
           value={filters.sortBy}
           onChange={handleChange}
-          className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 bg-white shadow-sm hover:shadow-md"
+          className="w-full border-2 border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 dark:text-stone-100 bg-white dark:bg-stone-800 shadow-sm hover:shadow-md"
           aria-label="Sort signs and guidance"
         >
           <option value="title">Title</option>

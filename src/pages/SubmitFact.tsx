@@ -52,54 +52,64 @@ const SubmitFact: React.FC = () => {
 
   return (
     <main className="max-w-xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-green-700 mb-6">
+      <h1 className="text-3xl font-bold text-green-700 dark:text-green-400 mb-6">
         Submit a New Fact
       </h1>
       <form
-        className="bg-white rounded-2xl shadow border border-stone-200 p-6 flex flex-col gap-5"
+        className="bg-white dark:bg-stone-800 rounded-2xl shadow border border-stone-200 dark:border-stone-700 p-6 flex flex-col gap-5"
         onSubmit={handleSubmit}
         aria-label="Submit fact form"
       >
         <label className="flex flex-col gap-1">
-          <span className="text-sm font-semibold text-stone-700">Fact</span>
+          <span className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+            Fact
+          </span>
           <textarea
             value={fact}
             onChange={(e) => setFact(e.target.value)}
-            className="border border-stone-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 bg-stone-50"
+            className="border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 dark:text-stone-100 bg-stone-50 dark:bg-stone-700"
             required
             rows={3}
           />
         </label>
         <label className="flex flex-col gap-1">
-          <span className="text-sm font-semibold text-stone-700">Source</span>
+          <span className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+            Source
+          </span>
           <input
             value={source}
             onChange={(e) => setSource(e.target.value)}
-            className="border border-stone-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 bg-stone-50"
+            className="border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 dark:text-stone-100 bg-stone-50 dark:bg-stone-700"
             required
           />
         </label>
         <label className="flex flex-col gap-1">
-          <span className="text-sm font-semibold text-stone-700">Category</span>
+          <span className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+            Category
+          </span>
           <input
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="border border-stone-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 bg-stone-50"
+            className="border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 dark:text-stone-100 bg-stone-50 dark:bg-stone-700"
             required
           />
         </label>
         <label className="flex flex-col gap-1">
-          <span className="text-sm font-semibold text-stone-700">Status</span>
+          <span className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+            Status
+          </span>
           <input
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="border border-stone-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 bg-stone-50"
+            className="border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 dark:text-stone-100 bg-stone-50 dark:bg-stone-700"
             required
           />
         </label>
-        {error && <div className="text-red-600 text-sm">{error}</div>}
+        {error && (
+          <div className="text-red-600 dark:text-red-400 text-sm">{error}</div>
+        )}
         {success && (
-          <div className="text-green-700 text-sm">
+          <div className="text-green-700 dark:text-green-400 text-sm">
             Fact submitted for review!
           </div>
         )}

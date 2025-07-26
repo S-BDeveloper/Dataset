@@ -14,7 +14,7 @@ const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({ count = 8 }) => {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="bg-stone-100 animate-pulse rounded-2xl h-36 w-full shadow border border-stone-200"
+          className="bg-stone-100 dark:bg-stone-700 animate-pulse rounded-2xl h-36 w-full shadow border border-stone-200 dark:border-stone-600"
           aria-label="Loading..."
         />
       ))}

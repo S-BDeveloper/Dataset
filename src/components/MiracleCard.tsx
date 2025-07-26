@@ -74,33 +74,39 @@ export const MiracleCard: React.FC<MiracleCardProps> = ({
 
       {/* Sources */}
       {miracle.sources && (
-        <div className="bg-stone-50 rounded-lg p-3 border border-stone-200">
-          <h4 className="font-semibold text-stone-800 mb-2 text-sm">
+        <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 border border-stone-200 dark:border-stone-600">
+          <h4 className="font-semibold text-stone-800 dark:text-stone-200 mb-2 text-sm">
             Sources & References:
           </h4>
           <div className="space-y-2 text-xs">
             <div>
-              <span className="font-medium text-stone-700">Primary:</span>
-              <span className="text-stone-600 ml-1">
+              <span className="font-medium text-stone-700 dark:text-stone-300">
+                Primary:
+              </span>
+              <span className="text-stone-600 dark:text-stone-400 ml-1">
                 {miracle.sources.primary}
               </span>
             </div>
             <div>
-              <span className="font-medium text-stone-700">Methodology:</span>
-              <span className="text-stone-600 ml-1">
+              <span className="font-medium text-stone-700 dark:text-stone-300">
+                Methodology:
+              </span>
+              <span className="text-stone-600 dark:text-stone-400 ml-1">
                 {miracle.sources.methodology}
               </span>
             </div>
             <div>
-              <span className="font-medium text-stone-700">Academic:</span>
-              <span className="text-stone-600 ml-1">
+              <span className="font-medium text-stone-700 dark:text-stone-300">
+                Academic:
+              </span>
+              <span className="text-stone-600 dark:text-stone-400 ml-1">
                 {miracle.sources.academic}
               </span>
             </div>
             {miracle.sources.references &&
               miracle.sources.references.length > 0 && (
                 <div>
-                  <span className="font-medium text-stone-700">
+                  <span className="font-medium text-stone-700 dark:text-stone-300">
                     References:
                   </span>
                   <div className="mt-1 space-y-1">
@@ -110,7 +116,7 @@ export const MiracleCard: React.FC<MiracleCardProps> = ({
                         href={ref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block text-green-600 hover:text-green-800 underline text-xs break-all"
+                        className="block text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 underline text-xs break-all"
                       >
                         {ref}
                       </a>
@@ -125,9 +131,9 @@ export const MiracleCard: React.FC<MiracleCardProps> = ({
       {/* Favorite button */}
       <div className="flex justify-end mt-2">
         <button
-          className={`text-green-700 hover:text-green-900 text-2xl focus:outline-none focus:ring-2 focus:ring-green-400 rounded-full transition-all duration-150 shadow-sm border border-green-100 bg-green-50/50 hover:bg-green-100/80 px-2 py-1 ${
+          className={`text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 text-2xl focus:outline-none focus:ring-2 focus:ring-green-400 rounded-full transition-all duration-150 shadow-sm border border-green-100 dark:border-green-700 bg-green-50/50 dark:bg-green-900/30 hover:bg-green-100/80 dark:hover:bg-green-900/50 px-2 py-1 ${
             isFavorite
-              ? "font-bold bg-yellow-100 border-yellow-300 text-yellow-600"
+              ? "font-bold bg-yellow-100 dark:bg-yellow-900/30 border-yellow-300 dark:border-yellow-600 text-yellow-600 dark:text-yellow-400"
               : ""
           }`}
           data-cy="favorite-btn"

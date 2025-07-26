@@ -77,12 +77,16 @@ const AdminReview: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="text-center mt-12 text-green-700">Loading...</div>;
+    return (
+      <div className="text-center mt-12 text-green-700 dark:text-green-400">
+        Loading...
+      </div>
+    );
   }
 
   if (!user) {
     return (
-      <div className="max-w-lg mx-auto mt-12 p-8 bg-white rounded-2xl shadow border text-center">
+      <div className="max-w-lg mx-auto mt-12 p-8 bg-white dark:bg-stone-800 rounded-2xl shadow border dark:border-stone-700 text-center text-stone-900 dark:text-stone-100">
         Please log in as an admin.
       </div>
     );
@@ -91,10 +95,14 @@ const AdminReview: React.FC = () => {
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
       <Breadcrumb />
-      <h1 className="text-3xl font-bold text-green-700 mb-6">Content Review</h1>
-      {error && <div className="text-red-600 mb-4">{error}</div>}
+      <h1 className="text-3xl font-bold text-green-700 dark:text-green-400 mb-6">
+        Content Review
+      </h1>
+      {error && (
+        <div className="text-red-600 dark:text-red-400 mb-4">{error}</div>
+      )}
       {submissions.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow border p-8 text-center text-green-700">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow border dark:border-stone-700 p-8 text-center text-green-700 dark:text-green-400">
           No submissions to review.
         </div>
       ) : (
@@ -102,12 +110,12 @@ const AdminReview: React.FC = () => {
           {submissions.map((sub) => (
             <li
               key={sub.id}
-              className="bg-stone-50 rounded-2xl p-6 shadow border border-stone-200 flex flex-col gap-2"
+              className="bg-stone-50 dark:bg-stone-800 rounded-2xl p-6 shadow border border-stone-200 dark:border-stone-700 flex flex-col gap-2"
             >
-              <div className="text-lg font-semibold text-stone-700 mb-1">
+              <div className="text-lg font-semibold text-stone-700 dark:text-stone-200 mb-1">
                 {sub.fact}
               </div>
-              <div className="flex flex-wrap gap-4 text-sm text-stone-600">
+              <div className="flex flex-wrap gap-4 text-sm text-stone-600 dark:text-stone-400">
                 <span>
                   <span className="font-semibold">Source:</span> {sub.source}
                 </span>

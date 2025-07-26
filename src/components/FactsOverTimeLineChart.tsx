@@ -33,7 +33,7 @@ export const FactsOverTimeLineChart: React.FC<FactsOverTimeLineChartProps> = ({
 
   return (
     <div
-      className="rounded-2xl shadow border border-stone-200 bg-white p-4 sm:p-6"
+      className="rounded-2xl shadow border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 p-4 sm:p-6"
       style={{ height: 320 }}
     >
       <ResponsiveLine

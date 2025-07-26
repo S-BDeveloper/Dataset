@@ -22,7 +22,7 @@ export const StatusPieChart: React.FC<StatusPieChartProps> = ({ data }) => {
 
   return (
     <div
-      className="rounded-2xl shadow border border-stone-200 bg-white p-4 sm:p-6"
+      className="rounded-2xl shadow border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 p-4 sm:p-6"
       style={{ height: 270 }}
       aria-label="Pie chart of facts by status"
     >

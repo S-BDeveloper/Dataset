@@ -10,11 +10,11 @@ const QuranicPairs: React.FC = () => {
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
       <Breadcrumb />
-      <h1 className="text-3xl font-bold text-green-700 mb-6">
+      <h1 className="text-3xl font-bold text-green-700 dark:text-green-400 mb-6">
         Mathematical Patterns
       </h1>
-      <div className="bg-white rounded-2xl shadow border border-stone-200 p-6 mb-8">
-        <div className="text-stone-700 mb-4">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow border border-stone-200 dark:border-stone-700 p-6 mb-8">
+        <div className="text-stone-700 dark:text-stone-300 mb-4">
           This chart visualizes the frequency of special word pairs found in the
           Quran, showing mathematical patterns and symmetries.
         </div>
