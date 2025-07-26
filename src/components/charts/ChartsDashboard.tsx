@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { SignTypesChart } from "./SignTypesChart";
 import { WordPairsChart } from "./WordPairsChart";
 import { CorrelationScatterPlot } from "./CorrelationScatterPlot";
+import { PropheticTimelineChart } from "./PropheticTimelineChart";
+import { PropheticStatusChart } from "./PropheticStatusChart";
+import { SpatialProphecyMap } from "./SpatialProphecyMap";
 import type { QuranicMiracle } from "../../types/Types";
 
 interface ChartsDashboardProps {
@@ -35,6 +38,33 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
           data={data}
           isActive={activeChart === "correlation"}
         />
+      ),
+    },
+    {
+      id: "prophecy",
+      name: "Prophetic Timeline",
+      component: (
+        <PropheticTimelineChart
+          data={data}
+          isActive={activeChart === "prophecy"}
+        />
+      ),
+    },
+    {
+      id: "prophetic-status",
+      name: "Prophetic Status",
+      component: (
+        <PropheticStatusChart
+          data={data}
+          isActive={activeChart === "prophetic-status"}
+        />
+      ),
+    },
+    {
+      id: "spatial",
+      name: "Spatial Map",
+      component: (
+        <SpatialProphecyMap data={data} isActive={activeChart === "spatial"} />
       ),
     },
   ];
