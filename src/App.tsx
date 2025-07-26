@@ -11,6 +11,7 @@ import type { MiracleFilters } from "./hooks/useFactFilters";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
+import DataIntegrationPage from "./pages/DataIntegrationPage";
 
 // Utility to convert array of objects to CSV
 function toCSV<T extends object>(data: T[]): string {
@@ -141,6 +142,9 @@ function App({ loadingDelay = 1000 }) {
           <Route path="/quranic-pairs" element={<QuranicPairs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+
+          {/* Data Integration Route */}
+          <Route path="/data-integration" element={<DataIntegrationPage />} />
         </Routes>
 
         {/* Toast notification */}
