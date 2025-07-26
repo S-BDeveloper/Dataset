@@ -1,0 +1,40 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Public facts: anyone can read, no one can write from frontend
+    match /facts/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // User profiles: only the user can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // User favorites: only the user can read/write their own favorites
+    match /favorites/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // User submissions: only the user can create/read/update/delete their own, admins can manage all
+    match /submissions/{submissionId} {
+      // Allow any logged-in user to create a submission
+      allow create: if request.auth != null;
+      // Allow user to read/update/delete their own submission
+      allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      // Allow admin to read/update/delete any submission
+      allow read, update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Admin-only collections (e.g., moderation, settings)
+    match /admin/{document=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Default: Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

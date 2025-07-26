@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme colors */
+  --background: rgb(245 245 244);
+  --foreground: oklch(0.145 0 0);
+  --primary: #166534;
+  --primary-foreground: #fff;
+  --secondary: #fbbf24;
+  --secondary-foreground: #92400e;
+  --accent: #059669;
+  --accent-foreground: #fff;
+  --yellow: #fde68a;
+  --orange: #ff6f3c;
+  --stone: #f5f5f4;
+  --success: #347433;
+
+  /* Additional light theme variables */
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border-light: #f3f4f6;
+  --border-medium: #d1d5db;
+  --hover-bg: #f9fafb;
+  --hover-bg-green: #f0fdf4;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Dark theme colors */
+[data-theme="dark"] {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #22c55e;
+  --primary-foreground: #0f172a;
+  --secondary: #f59e0b;
+  --secondary-foreground: #0f172a;
+  --accent: #10b981;
+  --accent-foreground: #0f172a;
+  --yellow: #fbbf24;
+  --orange: #fb923c;
+  --stone: #1e293b;
+  --success: #4ade80;
+
+  /* Additional dark theme variables */
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --border-light: #334155;
+  --border-medium: #475569;
+  --hover-bg: #334155;
+  --hover-bg-green: #064e3b;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3),
+    0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* Masonry layout styles */
+.masonry-column {
+  background-clip: padding-box;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--border-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Dark mode scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--border-light);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--accent);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
