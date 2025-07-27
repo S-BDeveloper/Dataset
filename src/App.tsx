@@ -1,17 +1,19 @@
 import { useRef, useState } from "react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import Favorites from "./pages/Favorites";
-import QuranicPairs from "./pages/QuranicPairs";
+
 import LoadingSkeleton from "./components/LoadingSkeleton";
 import { useMiracles } from "./hooks/useFacts";
 import { useMiracleFilters } from "./hooks/useFactFilters";
-import type { MiracleFilters } from "./hooks/useFactFilters";
+import type { MiracleFilters } from "./types/Types";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
-import DataIntegrationPage from "./pages/DataIntegrationPage";
+import SubmitDiscovery from "./pages/SubmitDiscovery";
+import AdminReview from "./pages/AdminReview";
 
 // Utility to convert array of objects to CSV
 function toCSV<T extends object>(data: T[]): string {
@@ -49,8 +51,8 @@ function App({ loadingDelay = 1000 }) {
     handleGoToPage,
   } = useMiracleFilters(miracles, initialFilters, 8);
 
-  const miraclesListRef = useRef(null);
-  const [activeTab, setActiveTab] = useState(0);
+  const miraclesListRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState("all");
   const [toast, setToast] = useState<string | null>(null);
 
   // Export functions
@@ -60,7 +62,7 @@ function App({ loadingDelay = 1000 }) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "quranic-signs-guidance.csv";
+    a.download = "islamic-signs-guidance.csv";
     a.click();
     window.URL.revokeObjectURL(url);
     setToast("CSV exported successfully!");
@@ -72,7 +74,7 @@ function App({ loadingDelay = 1000 }) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "quranic-signs-guidance.json";
+    a.download = "islamic-signs-guidance.json";
     a.click();
     window.URL.revokeObjectURL(url);
     setToast("JSON exported successfully!");
@@ -82,7 +84,7 @@ function App({ loadingDelay = 1000 }) {
     return (
       <main className="container mx-auto max-w-6xl px-4 py-12 bg-stone-50 dark:bg-stone-800 rounded-2xl shadow-lg mt-8 mb-12">
         <h2 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-6 text-left tracking-tight">
-          Loading Quranic Signs & Guidance...
+          Loading Islamic Signs and Guidance...
         </h2>
         <LoadingSkeleton count={8} />
       </main>
@@ -109,43 +111,48 @@ function App({ loadingDelay = 1000 }) {
 
   return (
     <DarkModeProvider>
-      <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300">
+      <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col">
         <Navbar />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                miracles={miracles}
-                sortedMiracles={sortedMiracles}
-                paginatedMiracles={paginatedMiracles}
-                filters={filters}
-                setFilters={setFilters}
-                types={types}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPages={totalPages}
-                goToPage={goToPage}
-                setGoToPage={setGoToPage}
-                handleGoToPage={handleGoToPage}
-                handleExportCSV={handleExportCSV}
-                handleExportJSON={handleExportJSON}
-                setToast={setToast}
-                miraclesListRef={miraclesListRef}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
-            }
-          />
+        <main className="flex-1">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  miracles={miracles}
+                  sortedMiracles={sortedMiracles}
+                  paginatedMiracles={paginatedMiracles}
+                  filters={filters}
+                  setFilters={setFilters}
+                  types={types}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  totalPages={totalPages}
+                  goToPage={goToPage}
+                  setGoToPage={setGoToPage}
+                  handleGoToPage={() => handleGoToPage(Number(goToPage))}
+                  handleExportCSV={handleExportCSV}
+                  handleExportJSON={handleExportJSON}
+                  setToast={setToast}
+                  miraclesListRef={miraclesListRef}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                />
+              }
+            />
 
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/quranic-pairs" element={<QuranicPairs />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
-          {/* Data Integration Route */}
-          <Route path="/data-integration" element={<DataIntegrationPage />} />
-        </Routes>
+            {/* Submit Discovery Route */}
+            <Route path="/submit-discovery" element={<SubmitDiscovery />} />
+
+            {/* Admin Review Route */}
+            <Route path="/admin" element={<AdminReview />} />
+          </Routes>
+        </main>
+        <Footer />
 
         {/* Toast notification */}
         {toast && (

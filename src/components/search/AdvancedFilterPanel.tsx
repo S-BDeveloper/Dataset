@@ -7,6 +7,9 @@ interface FilterState {
   searchFields: string[];
   sortBy: string;
   sortOrder: "asc" | "desc";
+  fulfillmentStatus: string[];
+  prophecyCategories: string[];
+  yearRange: { min: number; max: number };
 }
 
 interface AdvancedFilterPanelProps {
@@ -38,20 +41,37 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
     new Set(data.map((item) => item.category).filter(Boolean))
   ) as string[];
 
-  // Search field options
+  // NEW: Extract unique fulfillment statuses
+  const uniqueFulfillmentStatuses = Array.from(
+    new Set(data.map((item) => item.fulfillmentStatus).filter(Boolean))
+  ) as string[];
+
+  // NEW: Extract unique prophecy categories
+  const uniqueProphecyCategories = Array.from(
+    new Set(data.map((item) => item.prophecyCategory).filter(Boolean))
+  ) as string[];
+
+  // Enhanced search field options
   const searchFieldOptions = [
     { value: "title", label: "Title" },
     { value: "description", label: "Description" },
     { value: "type", label: "Type" },
     { value: "category", label: "Category" },
     { value: "content", label: "Full Content" },
+    { value: "notes", label: "Notes" },
+    { value: "sources", label: "Sources" },
+    { value: "pairs", label: "Word Pairs" },
+    { value: "prophecy", label: "Prophecy Info" },
   ];
 
-  // Sort options
+  // Enhanced sort options
   const sortOptions = [
     { value: "title", label: "Title" },
     { value: "type", label: "Type" },
     { value: "category", label: "Category" },
+    { value: "yearRevealed", label: "Year Revealed" },
+    { value: "yearFulfilled", label: "Year Fulfilled" },
+    { value: "fulfillmentStatus", label: "Fulfillment Status" },
     { value: "relevance", label: "Relevance" },
   ];
 
@@ -104,7 +124,10 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
       filters.types.length +
       filters.categories.length +
       filters.searchFields.length +
-      (filters.sortBy !== "title" ? 1 : 0)
+      filters.fulfillmentStatus.length +
+      filters.prophecyCategories.length +
+      (filters.sortBy !== "title" ? 1 : 0) +
+      (filters.yearRange.min > 0 || filters.yearRange.max < 2024 ? 1 : 0)
     );
   };
 
@@ -215,7 +238,112 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
             </div>
           )}
 
-          {/* Search Fields Filter */}
+          {/* NEW: Fulfillment Status Filter */}
+          {uniqueFulfillmentStatuses.length > 0 && (
+            <div>
+              <h4 className="font-semibold text-stone-900 dark:text-stone-100 mb-3">
+                Filter by Fulfillment Status
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {uniqueFulfillmentStatuses.map((status) => (
+                  <label
+                    key={status}
+                    className="flex items-center gap-2 p-2 rounded-lg border border-stone-200 dark:border-stone-600 hover:bg-stone-50 dark:hover:bg-stone-700 cursor-pointer transition-colors"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={filters.fulfillmentStatus.includes(status)}
+                      onChange={() =>
+                        handleMultiSelectToggle("fulfillmentStatus", status)
+                      }
+                      className="rounded border-stone-300 dark:border-stone-600 text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-sm text-stone-700 dark:text-stone-300 capitalize">
+                      {status.replace("-", " ")}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* NEW: Prophecy Category Filter */}
+          {uniqueProphecyCategories.length > 0 && (
+            <div>
+              <h4 className="font-semibold text-stone-900 dark:text-stone-100 mb-3">
+                Filter by Prophecy Category
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {uniqueProphecyCategories.map((category) => (
+                  <label
+                    key={category}
+                    className="flex items-center gap-2 p-2 rounded-lg border border-stone-200 dark:border-stone-600 hover:bg-stone-50 dark:hover:bg-stone-700 cursor-pointer transition-colors"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={filters.prophecyCategories.includes(category)}
+                      onChange={() =>
+                        handleMultiSelectToggle("prophecyCategories", category)
+                      }
+                      className="rounded border-stone-300 dark:border-stone-600 text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-sm text-stone-700 dark:text-stone-300 capitalize">
+                      {category}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* NEW: Year Range Filter */}
+          <div>
+            <h4 className="font-semibold text-stone-900 dark:text-stone-100 mb-3">
+              Filter by Year Range
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-stone-700 dark:text-stone-300 mb-1">
+                  Min Year
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="2024"
+                  value={filters.yearRange.min}
+                  onChange={(e) =>
+                    handleFilterChange("yearRange", {
+                      ...filters.yearRange,
+                      min: parseInt(e.target.value) || 0,
+                    })
+                  }
+                  className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  placeholder="0"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-stone-700 dark:text-stone-300 mb-1">
+                  Max Year
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="2024"
+                  value={filters.yearRange.max}
+                  onChange={(e) =>
+                    handleFilterChange("yearRange", {
+                      ...filters.yearRange,
+                      max: parseInt(e.target.value) || 2024,
+                    })
+                  }
+                  className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  placeholder="2024"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced Search Fields Filter */}
           <div>
             <h4 className="font-semibold text-stone-900 dark:text-stone-100 mb-3">
               Search in Fields
@@ -242,7 +370,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
             </div>
           </div>
 
-          {/* Sort Options */}
+          {/* Enhanced Sort Options */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-stone-900 dark:text-stone-100 mb-2">

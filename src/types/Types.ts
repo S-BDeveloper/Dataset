@@ -77,11 +77,12 @@ export interface QuranicMiracle {
 }
 
 export interface MiracleFilters {
-  type?: string;
+  type: string;
   status?: string;
   fulfillmentStatus?: string;
   prophecyCategory?: string;
-  searchTerm?: string;
+  searchTerm: string;
+  sortBy: string;
 }
 
 export interface User {

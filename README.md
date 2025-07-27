@@ -1,15 +1,15 @@
-# Quranic Miracles App
+# Islamic Signs and Guidance App
 
 A comprehensive web application showcasing the mathematical, linguistic, and structural miracles of the Holy Quran.
 
 ## Features
 
-- **Quranic Pairs**: Discover word pairs mentioned equal numbers of times (e.g., Life & Death: 145 times each)
+- **Islamic Word Pairs**: Discover word pairs mentioned equal numbers of times (e.g., Life & Death: 145 times each)
 - **Mathematical Miracles**: Explore numerical patterns and the significance of numbers like 19
 - **Structural Miracles**: Learn about the symmetrical organization of Quranic chapters
 - **Linguistic Miracles**: Understand the perfect Arabic grammar maintained throughout
 - **Prophetic Miracles**: Read about accurate future predictions in the Quran
-- **Interactive Search**: Filter and search through different types of miracles
+- **Interactive Search**: Filter and search through different types of Islamic signs and guidance
 - **Responsive Design**: Works beautifully on desktop, tablet, and mobile devices
 
 ## Technology Stack
@@ -62,7 +62,7 @@ src/
 
 ## Data Sources
 
-The app uses carefully researched data about Quranic miracles, including:
+The app uses carefully researched data about Islamic signs and guidance, including:
 
 - Word frequency counts from authentic sources
 - Mathematical patterns and structures
@@ -75,4 +75,4 @@ This project is designed to be educational and informative. All data is sourced 
 
 ## License
 
-This project is for educational purposes and to showcase the miraculous nature of the Holy Quran.
+This project is for educational purposes and to showcase the miraculous signs and guidance found in Islamic teachings.

@@ -1,7 +1,6 @@
 import React from "react";
 import type { QuranicMiracle } from "../types/Types";
 import { CorrelationMatrix } from "./CorrelationMatrix";
-import { DataQualityAnalysis } from "./DataQualityAnalysis";
 
 interface StatsProps {
   miracles: QuranicMiracle[];
@@ -207,11 +206,6 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
       {/* Correlation Matrix Analysis */}
       <div className="mt-8">
         <CorrelationMatrix miracles={miracles} />
-      </div>
-
-      {/* Data Quality Analysis */}
-      <div className="mt-8">
-        <DataQualityAnalysis miracles={miracles} />
       </div>
     </>
   );

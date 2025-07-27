@@ -154,33 +154,33 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
       </div>
 
       {/* Statistics Overview */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
+          <div className="text-xl font-bold text-green-600 dark:text-green-400">
             {totalProphecies}
           </div>
           <div className="text-xs text-green-600 dark:text-green-400">
             Total
           </div>
         </div>
-        <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+        <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
+          <div className="text-xl font-bold text-green-600 dark:text-green-400">
             {fulfilledCount}
           </div>
           <div className="text-xs text-green-600 dark:text-green-400">
             Fulfilled
           </div>
         </div>
-        <div className="text-center p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-700">
-          <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+        <div className="text-center p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-700">
+          <div className="text-xl font-bold text-amber-600 dark:text-amber-400">
             {inProgressCount}
           </div>
           <div className="text-xs text-amber-600 dark:text-amber-400">
             In Progress
           </div>
         </div>
-        <div className="text-center p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
-          <div className="text-2xl font-bold text-stone-600 dark:text-stone-400">
+        <div className="text-center p-2 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
+          <div className="text-xl font-bold text-stone-600 dark:text-stone-400">
             {pendingCount}
           </div>
           <div className="text-xs text-stone-600 dark:text-stone-400">
@@ -202,11 +202,11 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
       </div>
 
       {/* Pie Chart */}
-      <div className="h-80">
+      <div className="h-64">
         {chartData.length > 0 ? (
           <ResponsivePie
             data={chartData}
-            margin={{ top: 20, right: 80, bottom: 20, left: 80 }}
+            margin={{ top: 10, right: 60, bottom: 10, left: 60 }}
             innerRadius={0.5}
             padAngle={0.7}
             cornerRadius={3}

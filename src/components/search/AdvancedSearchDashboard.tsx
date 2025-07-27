@@ -10,6 +10,9 @@ interface FilterState {
   searchFields: string[];
   sortBy: string;
   sortOrder: "asc" | "desc";
+  fulfillmentStatus: string[];
+  prophecyCategories: string[];
+  yearRange: { min: number; max: number };
 }
 
 interface AdvancedSearchDashboardProps {
@@ -26,14 +29,17 @@ export const AdvancedSearchDashboard: React.FC<
   const [filters, setFilters] = useState<FilterState>({
     types: [],
     categories: [],
-    searchFields: ["title", "description", "type"],
+    searchFields: ["title", "description", "type", "notes", "sources"], // Enhanced search fields
     sortBy: "title",
     sortOrder: "asc",
+    fulfillmentStatus: [],
+    prophecyCategories: [],
+    yearRange: { min: 0, max: 2024 },
   });
   const [filteredResults, setFilteredResults] = useState<QuranicMiracle[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  // Advanced search function with multiple criteria
+  // Enhanced search function with comprehensive criteria
   const performSearch = useCallback(
     (query: string, filterState: FilterState) => {
       setIsSearching(true);
@@ -42,7 +48,7 @@ export const AdvancedSearchDashboard: React.FC<
       setTimeout(() => {
         let results = [...data];
 
-        // Apply search query
+        // Apply search query with enhanced field coverage
         if (query.trim()) {
           const searchTerms = query
             .toLowerCase()
@@ -52,7 +58,7 @@ export const AdvancedSearchDashboard: React.FC<
           results = results.filter((miracle) => {
             const searchableFields = [];
 
-            // Add fields based on searchFields filter
+            // Enhanced searchable fields
             if (filterState.searchFields.includes("title") && miracle.title) {
               searchableFields.push(miracle.title.toLowerCase());
             }
@@ -76,6 +82,42 @@ export const AdvancedSearchDashboard: React.FC<
               miracle.content
             ) {
               searchableFields.push((miracle.content as string).toLowerCase());
+            }
+            // NEW: Include notes field
+            if (filterState.searchFields.includes("notes") && miracle.notes) {
+              searchableFields.push(miracle.notes.toLowerCase());
+            }
+            // NEW: Include sources information
+            if (
+              filterState.searchFields.includes("sources") &&
+              miracle.sources
+            ) {
+              searchableFields.push(miracle.sources.primary.toLowerCase());
+              searchableFields.push(miracle.sources.verification.toLowerCase());
+              searchableFields.push(miracle.sources.methodology.toLowerCase());
+              searchableFields.push(miracle.sources.academic.toLowerCase());
+              miracle.sources.references.forEach((ref) => {
+                searchableFields.push(ref.toLowerCase());
+              });
+            }
+            // NEW: Include pair information
+            if (filterState.searchFields.includes("pairs") && miracle.pair) {
+              miracle.pair.forEach((pairItem) => {
+                searchableFields.push(pairItem.toLowerCase());
+              });
+            }
+            // NEW: Include prophetic fulfillment information
+            if (
+              filterState.searchFields.includes("prophecy") &&
+              miracle.fulfillmentEvidence
+            ) {
+              searchableFields.push(miracle.fulfillmentEvidence.toLowerCase());
+            }
+            if (
+              filterState.searchFields.includes("prophecy") &&
+              miracle.prophecyCategory
+            ) {
+              searchableFields.push(miracle.prophecyCategory.toLowerCase());
             }
 
             const searchableText = searchableFields.join(" ");
@@ -102,7 +144,40 @@ export const AdvancedSearchDashboard: React.FC<
           );
         }
 
-        // Apply sorting
+        // NEW: Apply fulfillment status filters
+        if (filterState.fulfillmentStatus.length > 0) {
+          results = results.filter(
+            (miracle) =>
+              miracle.fulfillmentStatus &&
+              filterState.fulfillmentStatus.includes(miracle.fulfillmentStatus)
+          );
+        }
+
+        // NEW: Apply prophecy category filters
+        if (filterState.prophecyCategories.length > 0) {
+          results = results.filter(
+            (miracle) =>
+              miracle.prophecyCategory &&
+              filterState.prophecyCategories.includes(miracle.prophecyCategory)
+          );
+        }
+
+        // NEW: Apply year range filters
+        if (filterState.yearRange.min > 0 || filterState.yearRange.max < 2024) {
+          results = results.filter((miracle) => {
+            const yearRevealed = miracle.yearRevealed || 0;
+            const yearFulfilled = miracle.yearFulfilled || 0;
+
+            return (
+              (yearRevealed >= filterState.yearRange.min &&
+                yearRevealed <= filterState.yearRange.max) ||
+              (yearFulfilled >= filterState.yearRange.min &&
+                yearFulfilled <= filterState.yearRange.max)
+            );
+          });
+        }
+
+        // Enhanced sorting options
         results.sort((a, b) => {
           let aValue: string | number = "";
           let bValue: string | number = "";
@@ -120,6 +195,18 @@ export const AdvancedSearchDashboard: React.FC<
               aValue = (a.category as string) || "";
               bValue = (b.category as string) || "";
               break;
+            case "yearRevealed":
+              aValue = a.yearRevealed || 0;
+              bValue = b.yearRevealed || 0;
+              break;
+            case "yearFulfilled":
+              aValue = a.yearFulfilled || 0;
+              bValue = b.yearFulfilled || 0;
+              break;
+            case "fulfillmentStatus":
+              aValue = a.fulfillmentStatus || "";
+              bValue = b.fulfillmentStatus || "";
+              break;
             case "relevance":
               // For relevance, we'll use the number of search term matches
               if (query.trim()) {
@@ -130,15 +217,15 @@ export const AdvancedSearchDashboard: React.FC<
                 aValue = searchTerms.filter(
                   (term) =>
                     a.title?.toLowerCase().includes(term) ||
-                    false ||
                     a.description?.toLowerCase().includes(term) ||
+                    a.notes?.toLowerCase().includes(term) ||
                     false
                 ).length;
                 bValue = searchTerms.filter(
                   (term) =>
                     b.title?.toLowerCase().includes(term) ||
-                    false ||
                     b.description?.toLowerCase().includes(term) ||
+                    b.notes?.toLowerCase().includes(term) ||
                     false
                 ).length;
               } else {
@@ -190,9 +277,12 @@ export const AdvancedSearchDashboard: React.FC<
     const defaultFilters: FilterState = {
       types: [],
       categories: [],
-      searchFields: ["title", "description", "type"],
+      searchFields: ["title", "description", "type", "notes", "sources"], // Enhanced default
       sortBy: "title",
       sortOrder: "asc",
+      fulfillmentStatus: [],
+      prophecyCategories: [],
+      yearRange: { min: 0, max: 2024 },
     };
     setFilters(defaultFilters);
     performSearch(searchQuery, defaultFilters);
@@ -211,9 +301,10 @@ export const AdvancedSearchDashboard: React.FC<
           Advanced Search
         </h2>
         <p className="text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-          Search through all Quranic signs and guidance with powerful filtering
+          Search through all Islamic signs and guidance with powerful filtering
           options. Use auto-complete suggestions, save search presets, and
-          explore patterns in the data.
+          explore patterns in the data. Now with enhanced search capabilities
+          including notes, sources, and prophetic information.
         </p>
       </div>
 
@@ -222,7 +313,7 @@ export const AdvancedSearchDashboard: React.FC<
         <SmartSearchBar
           data={data}
           onSearch={handleSearch}
-          placeholder="Search for prophecies, numerical patterns, linguistic miracles..."
+          placeholder="Search for prophecies, numerical patterns, linguistic miracles, notes, sources..."
         />
       </div>
 
@@ -244,7 +335,7 @@ export const AdvancedSearchDashboard: React.FC<
         isLoading={isSearching}
       />
 
-      {/* Search Statistics */}
+      {/* Enhanced Search Statistics */}
       {filteredResults.length > 0 && (
         <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
           <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
@@ -277,7 +368,10 @@ export const AdvancedSearchDashboard: React.FC<
             </div>
             <div>
               <div className="text-2xl font-bold text-orange-700 dark:text-orange-400">
-                {filters.types.length + filters.categories.length}
+                {filters.types.length +
+                  filters.categories.length +
+                  filters.fulfillmentStatus.length +
+                  filters.prophecyCategories.length}
               </div>
               <div className="text-stone-600 dark:text-stone-400">
                 Active Filters
@@ -287,47 +381,62 @@ export const AdvancedSearchDashboard: React.FC<
         </div>
       )}
 
-      {/* Keyboard Shortcuts Help */}
+      {/* Enhanced Keyboard Shortcuts Help */}
       <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
         <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
-          Keyboard Shortcuts
+          Enhanced Search Features
         </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-1 bg-stone-200 dark:bg-stone-600 rounded text-xs">
-                Ctrl + K
-              </kbd>
-              <span className="text-stone-600 dark:text-stone-400">
-                Focus search bar
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-1 bg-stone-200 dark:bg-stone-600 rounded text-xs">
-                ↑↓
-              </kbd>
-              <span className="text-stone-600 dark:text-stone-400">
-                Navigate suggestions
-              </span>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div className="space-y-3">
+            <h5 className="font-medium text-stone-700 dark:text-stone-300">
+              Search Fields
+            </h5>
+            <ul className="space-y-1 text-stone-600 dark:text-stone-400">
+              <li>
+                • <strong>Title:</strong> Miracle titles and names
+              </li>
+              <li>
+                • <strong>Description:</strong> Detailed explanations
+              </li>
+              <li>
+                • <strong>Notes:</strong> Additional insights and context
+              </li>
+              <li>
+                • <strong>Sources:</strong> Academic references and methodology
+              </li>
+              <li>
+                • <strong>Pairs:</strong> Word pair relationships
+              </li>
+              <li>
+                • <strong>Prophecy:</strong> Fulfillment evidence and categories
+              </li>
+            </ul>
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-1 bg-stone-200 dark:bg-stone-600 rounded text-xs">
-                Enter
-              </kbd>
-              <span className="text-stone-600 dark:text-stone-400">
-                Select suggestion
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-1 bg-stone-200 dark:bg-stone-600 rounded text-xs">
-                Esc
-              </kbd>
-              <span className="text-stone-600 dark:text-stone-400">
-                Close suggestions
-              </span>
-            </div>
+          <div className="space-y-3">
+            <h5 className="font-medium text-stone-700 dark:text-stone-300">
+              Advanced Filters
+            </h5>
+            <ul className="space-y-1 text-stone-600 dark:text-stone-400">
+              <li>
+                • <strong>Type:</strong> Pair, numerical, linguistic, etc.
+              </li>
+              <li>
+                • <strong>Fulfillment Status:</strong> Fulfilled, pending,
+                in-progress
+              </li>
+              <li>
+                • <strong>Prophecy Category:</strong> Historical, scientific,
+                social
+              </li>
+              <li>
+                • <strong>Year Range:</strong> Filter by revelation or
+                fulfillment years
+              </li>
+              <li>
+                • <strong>Sort Options:</strong> By relevance, year, type, or
+                title
+              </li>
+            </ul>
           </div>
         </div>
       </div>

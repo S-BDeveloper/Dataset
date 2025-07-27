@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Masonry from "react-masonry-css";
 import { SignTypesChart } from "./SignTypesChart";
 import { WordPairsChart } from "./WordPairsChart";
 import { CorrelationScatterPlot } from "./CorrelationScatterPlot";
@@ -6,12 +7,13 @@ import { PropheticTimelineChart } from "./PropheticTimelineChart";
 import { PropheticStatusChart } from "./PropheticStatusChart";
 import { SpatialProphecyMap } from "./SpatialProphecyMap";
 import type { QuranicMiracle } from "../../types/Types";
+import "./ChartsDashboard.css";
 
 interface ChartsDashboardProps {
   data: QuranicMiracle[];
 }
 
-// ChartsDashboard displays a collection of interactive charts
+// ChartsDashboard displays a collection of interactive charts in masonry layout
 export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
   const [activeChart, setActiveChart] = useState<string>("all");
 
@@ -74,6 +76,13 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
       ? charts
       : charts.filter((chart) => chart.id === activeChart);
 
+  // Masonry breakpoints for responsive design
+  const breakpointColumns = {
+    default: 3,
+    1100: 2,
+    700: 1,
+  };
+
   return (
     <div className="space-y-6">
       {/* Chart Navigation */}
@@ -103,18 +112,28 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
         ))}
       </div>
 
-      {/* Charts Grid */}
-      <div
-        className={`grid gap-6 ${
-          activeChart === "all" ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1"
-        }`}
-      >
-        {filteredCharts.map((chart) => (
-          <div key={chart.id} className="w-full">
-            {chart.component}
-          </div>
-        ))}
-      </div>
+      {/* Charts Layout - Masonry only for "All Charts" */}
+      {activeChart === "all" ? (
+        <Masonry
+          breakpointCols={breakpointColumns}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {filteredCharts.map((chart) => (
+            <div key={chart.id} className="mb-6">
+              {chart.component}
+            </div>
+          ))}
+        </Masonry>
+      ) : (
+        <div className="max-w-4xl mx-auto">
+          {filteredCharts.map((chart) => (
+            <div key={chart.id} className="mb-6">
+              {chart.component}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Chart Information - Only show when "All Charts" is selected */}
       {activeChart === "all" && (
@@ -123,6 +142,10 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
             Chart Features
           </h4>
           <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
+            <li>
+              • <strong>Masonry Layout:</strong> Charts arranged in an optimal
+              visual flow
+            </li>
             <li>
               • <strong>Interactive:</strong> Hover over chart elements to see
               detailed information

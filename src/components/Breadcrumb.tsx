@@ -24,8 +24,6 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [] }) => {
       return [{ label: "Home", path: "/" }, { label: "Content Review" }];
     } else if (path === "/profile") {
       return [{ label: "Home", path: "/" }, { label: "My Profile" }];
-    } else if (path === "/quranic-pairs") {
-      return [{ label: "Home", path: "/" }, { label: "Mathematical Patterns" }];
     }
 
     return [{ label: "Home", path: "/" }];

@@ -145,19 +145,21 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             <p>Try searching for:</p>
             <ul className="mt-1 space-y-1">
               <li>• Specific types like "prophecy" or "numerical"</li>
-              <li>• Keywords from titles or descriptions</li>
+              <li>• Keywords from titles, descriptions, or notes</li>
+              <li>• Source information like "Dr. Rashad Khalifa"</li>
+              <li>• Pair words like "Life" or "Death"</li>
               <li>• Broader terms to find more results</li>
             </ul>
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {results.map((miracle) => (
             <div
               key={miracle.title}
               className="bg-white dark:bg-stone-800 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700 overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
-              {/* Enhanced Miracle Card with Search Highlighting */}
+              {/* Enhanced Miracle Card with Comprehensive Information */}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
@@ -199,10 +201,166 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                   </button>
                 </div>
 
+                {/* Enhanced Description */}
                 {miracle.description && (
                   <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mb-4">
                     {highlightText(miracle.description, searchQuery)}
                   </p>
+                )}
+
+                {/* NEW: Notes Section */}
+                {miracle.notes && (
+                  <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <h4 className="text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2 uppercase tracking-wide">
+                      Notes
+                    </h4>
+                    <p className="text-sm text-blue-800 dark:text-blue-200">
+                      {highlightText(miracle.notes, searchQuery)}
+                    </p>
+                  </div>
+                )}
+
+                {/* NEW: Pair Information */}
+                {miracle.pair && miracle.pair.length > 0 && (
+                  <div className="mb-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                    <h4 className="text-xs font-semibold text-purple-700 dark:text-purple-300 mb-2 uppercase tracking-wide">
+                      Word Pair
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {miracle.pair.map((pairItem, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 text-xs rounded-full"
+                        >
+                          {highlightText(pairItem, searchQuery)}
+                        </span>
+                      ))}
+                    </div>
+                    {/* Display counts if available */}
+                    {miracle.lifeCount && miracle.deathCount && (
+                      <div className="mt-2 text-xs text-purple-600 dark:text-purple-400">
+                        Count: {miracle.lifeCount} / {miracle.deathCount}
+                      </div>
+                    )}
+                    {miracle.manCount && miracle.womanCount && (
+                      <div className="mt-2 text-xs text-purple-600 dark:text-purple-400">
+                        Count: {miracle.manCount} / {miracle.womanCount}
+                      </div>
+                    )}
+                    {miracle.heavenCount && miracle.hellCount && (
+                      <div className="mt-2 text-xs text-purple-600 dark:text-purple-400">
+                        Count: {miracle.heavenCount} / {miracle.hellCount}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* NEW: Prophetic Information */}
+                {miracle.fulfillmentStatus && (
+                  <div className="mb-4 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                    <h4 className="text-xs font-semibold text-orange-700 dark:text-orange-300 mb-2 uppercase tracking-wide">
+                      Prophetic Status
+                    </h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="text-orange-600 dark:text-orange-400">
+                          Status:
+                        </span>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            miracle.fulfillmentStatus === "fulfilled"
+                              ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                              : miracle.fulfillmentStatus === "in-progress"
+                              ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200"
+                              : miracle.fulfillmentStatus === "pending"
+                              ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200"
+                              : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                          }`}
+                        >
+                          {miracle.fulfillmentStatus}
+                        </span>
+                      </div>
+                      {miracle.yearRevealed && (
+                        <div className="text-orange-600 dark:text-orange-400">
+                          Revealed: {miracle.yearRevealed}
+                        </div>
+                      )}
+                      {miracle.yearFulfilled && (
+                        <div className="text-orange-600 dark:text-orange-400">
+                          Fulfilled: {miracle.yearFulfilled}
+                        </div>
+                      )}
+                      {miracle.prophecyCategory && (
+                        <div className="text-orange-600 dark:text-orange-400">
+                          Category: {miracle.prophecyCategory}
+                        </div>
+                      )}
+                      {miracle.fulfillmentEvidence && (
+                        <div className="text-xs text-orange-700 dark:text-orange-300 mt-2">
+                          <strong>Evidence:</strong>{" "}
+                          {highlightText(
+                            miracle.fulfillmentEvidence,
+                            searchQuery
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* NEW: Sources Information */}
+                {miracle.sources && (
+                  <div className="mb-4 p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
+                    <h4 className="text-xs font-semibold text-stone-700 dark:text-stone-300 mb-2 uppercase tracking-wide">
+                      Sources
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div>
+                        <span className="text-stone-600 dark:text-stone-400">
+                          Primary:
+                        </span>
+                        <span className="text-stone-800 dark:text-stone-200 ml-1">
+                          {highlightText(miracle.sources.primary, searchQuery)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-stone-600 dark:text-stone-400">
+                          Methodology:
+                        </span>
+                        <span className="text-stone-800 dark:text-stone-200 ml-1">
+                          {highlightText(
+                            miracle.sources.methodology,
+                            searchQuery
+                          )}
+                        </span>
+                      </div>
+                      {miracle.sources.references &&
+                        miracle.sources.references.length > 0 && (
+                          <div>
+                            <span className="text-stone-600 dark:text-stone-400">
+                              References:
+                            </span>
+                            <div className="mt-1 space-y-1">
+                              {miracle.sources.references
+                                .slice(0, 2)
+                                .map((ref, index) => (
+                                  <div
+                                    key={index}
+                                    className="text-stone-800 dark:text-stone-200 truncate"
+                                  >
+                                    {highlightText(ref, searchQuery)}
+                                  </div>
+                                ))}
+                              {miracle.sources.references.length > 2 && (
+                                <div className="text-stone-500 dark:text-stone-400">
+                                  +{miracle.sources.references.length - 2} more
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  </div>
                 )}
 
                 {/* Search Match Indicators */}
@@ -232,11 +390,21 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                           </span>
                         </div>
                       )}
-                      {miracle.type
+                      {miracle.notes
                         ?.toLowerCase()
                         .includes(searchQuery.toLowerCase()) && (
                         <div className="flex items-center gap-2">
                           <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                          <span className="text-stone-600 dark:text-stone-400">
+                            Notes
+                          </span>
+                        </div>
+                      )}
+                      {miracle.type
+                        ?.toLowerCase()
+                        .includes(searchQuery.toLowerCase()) && (
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
                           <span className="text-stone-600 dark:text-stone-400">
                             Type
                           </span>
@@ -249,6 +417,11 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 {/* Additional Details */}
                 <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
                   <span>Type: {miracle.type || "Unknown"}</span>
+                  {miracle.fulfillmentStatus && (
+                    <span className="capitalize">
+                      {miracle.fulfillmentStatus}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -256,14 +429,20 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
         </div>
       )}
 
-      {/* Search Tips */}
+      {/* Enhanced Search Tips */}
       {searchQuery.trim() && results.length > 0 && (
         <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
           <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-2">
-            Search Tips
+            Enhanced Search Tips
           </h4>
           <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
             <li>• Use quotes for exact phrase matching</li>
+            <li>• Search in notes for detailed explanations</li>
+            <li>• Search source names like "Dr. Rashad Khalifa"</li>
+            <li>• Search pair words like "Life", "Death", "Man", "Woman"</li>
+            <li>
+              • Use prophetic terms like "fulfilled", "pending", "evidence"
+            </li>
             <li>• Try different keywords to find more results</li>
             <li>• Use the advanced filters to narrow down results</li>
             <li>• Save your search as a preset for quick access</li>
