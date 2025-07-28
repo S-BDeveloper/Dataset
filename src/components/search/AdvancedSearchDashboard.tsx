@@ -2,7 +2,17 @@ import React, { useState, useEffect, useCallback } from "react";
 import { SmartSearchBar } from "./SmartSearchBar";
 import { AdvancedFilterPanel } from "./AdvancedFilterPanel";
 import { SearchResults } from "./SearchResults";
-import type { QuranicMiracle } from "../../types/Types";
+import type { QuranicMiracle, QuranAyah, HadithEntry } from "../../types/Types";
+
+// Unified search result interface
+interface UnifiedSearchResult {
+  id: string;
+  type: "miracle" | "quran" | "hadith";
+  title: string;
+  content: string;
+  source: string;
+  data: QuranicMiracle | QuranAyah | HadithEntry;
+}
 
 interface FilterState {
   types: string[];
@@ -13,40 +23,168 @@ interface FilterState {
   fulfillmentStatus: string[];
   prophecyCategories: string[];
   yearRange: { min: number; max: number };
+  dataSources: ("miracle" | "quran" | "hadith")[];
+  // New Quran-specific filters
+  quranSurahs: string[];
+  quranVerseRange: { min: number; max: number };
+  quranPlaceOfRevelation: string[];
+  // New Hadith-specific filters
+  hadithNumberRange: { min: number; max: number };
+  hadithCategories: string[];
 }
 
 interface AdvancedSearchDashboardProps {
   data: QuranicMiracle[];
+  quranData?: QuranAyah[];
+  hadithData?: HadithEntry[];
   onFavorite: (miracle: QuranicMiracle) => void;
   isFavorite: (miracle: QuranicMiracle) => boolean;
 }
 
-// AdvancedSearchDashboard provides a comprehensive search experience
+// AdvancedSearchDashboard provides a comprehensive search experience across all Islamic data
 export const AdvancedSearchDashboard: React.FC<
   AdvancedSearchDashboardProps
-> = ({ data, onFavorite, isFavorite }) => {
+> = ({ data, quranData = [], hadithData = [], onFavorite, isFavorite }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<FilterState>({
     types: [],
     categories: [],
-    searchFields: ["title", "description", "type", "notes", "sources"], // Enhanced search fields
+    searchFields: [
+      "title",
+      "description",
+      "type",
+      "notes",
+      "sources",
+      "content",
+    ], // Enhanced search fields
     sortBy: "title",
     sortOrder: "asc",
     fulfillmentStatus: [],
     prophecyCategories: [],
     yearRange: { min: 0, max: 2024 },
+    dataSources: ["miracle", "quran", "hadith"], // Default to search all sources
+    // Initialize new Quran filters
+    quranSurahs: [],
+    quranVerseRange: { min: 1, max: 6236 }, // Default Quran verse range
+    quranPlaceOfRevelation: [],
+    // Initialize new Hadith filters
+    hadithNumberRange: { min: 1, max: 1000 }, // Default Hadith range
+    hadithCategories: [],
   });
-  const [filteredResults, setFilteredResults] = useState<QuranicMiracle[]>([]);
+  const [filteredResults, setFilteredResults] = useState<UnifiedSearchResult[]>(
+    []
+  );
   const [isSearching, setIsSearching] = useState(false);
 
-  // Enhanced search function with comprehensive criteria
+  // Enhanced search function with comprehensive criteria across all data types
   const performSearch = useCallback(
     (query: string, filterState: FilterState) => {
       setIsSearching(true);
 
       // Simulate search delay for better UX
       setTimeout(() => {
-        let results = [...data];
+        let results: UnifiedSearchResult[] = [];
+
+        // Process Miracles data
+        if (filterState.dataSources.includes("miracle")) {
+          const miracleResults = data.map((miracle) => ({
+            id: `miracle-${miracle.title}`,
+            type: "miracle" as const,
+            title: miracle.title,
+            content: [
+              miracle.description || "",
+              miracle.notes || "",
+              miracle.sources?.primary || "",
+              miracle.sources?.verification || "",
+              miracle.sources?.methodology || "",
+              miracle.sources?.source || "",
+              miracle.fulfillmentEvidence || "",
+              miracle.prophecyCategory || "",
+            ].join(" "),
+            source: miracle.sources?.source || "Quranic Miracle",
+            data: miracle,
+          }));
+          results.push(...miracleResults);
+        }
+
+        // Process Quran data with enhanced filtering
+        if (filterState.dataSources.includes("quran")) {
+          let quranResults = quranData.map((ayah) => ({
+            id: `quran-${ayah.surah_no}-${ayah.ayah_no_surah}`,
+            type: "quran" as const,
+            title: `${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
+            content: [
+              ayah.ayah_en,
+              ayah.ayah_ar,
+              ayah.surah_name_en,
+              ayah.surah_name_ar,
+              ayah.place_of_revelation,
+            ].join(" "),
+            source: `Quran - ${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
+            data: ayah,
+          }));
+
+          // Apply Quran-specific filters
+          if (filterState.quranSurahs.length > 0) {
+            quranResults = quranResults.filter((result) => {
+              const ayah = result.data as QuranAyah;
+              return filterState.quranSurahs.includes(ayah.surah_name_en);
+            });
+          }
+
+          if (
+            filterState.quranVerseRange.min > 1 ||
+            filterState.quranVerseRange.max < 6236
+          ) {
+            quranResults = quranResults.filter((result) => {
+              const ayah = result.data as QuranAyah;
+              const verseNumber = parseInt(ayah.ayah_no_surah);
+              return (
+                verseNumber >= filterState.quranVerseRange.min &&
+                verseNumber <= filterState.quranVerseRange.max
+              );
+            });
+          }
+
+          if (filterState.quranPlaceOfRevelation.length > 0) {
+            quranResults = quranResults.filter((result) => {
+              const ayah = result.data as QuranAyah;
+              return filterState.quranPlaceOfRevelation.includes(
+                ayah.place_of_revelation
+              );
+            });
+          }
+
+          results.push(...quranResults);
+        }
+
+        // Process Hadith data with enhanced filtering
+        if (filterState.dataSources.includes("hadith")) {
+          let hadithResults = hadithData.map((hadith, index) => ({
+            id: `hadith-${index}`,
+            type: "hadith" as const,
+            title: `Hadith ${index + 1}`,
+            content: Object.values(hadith).join(" "),
+            source: "Sahih Bukhari",
+            data: hadith,
+          }));
+
+          // Apply Hadith-specific filters
+          if (
+            filterState.hadithNumberRange.min > 1 ||
+            filterState.hadithNumberRange.max < hadithData.length
+          ) {
+            hadithResults = hadithResults.filter((result) => {
+              const hadithIndex = parseInt(result.id.split("-")[1]);
+              return (
+                hadithIndex >= filterState.hadithNumberRange.min &&
+                hadithIndex <= filterState.hadithNumberRange.max
+              );
+            });
+          }
+
+          results.push(...hadithResults);
+        }
 
         // Apply search query with enhanced field coverage
         if (query.trim()) {
@@ -55,121 +193,91 @@ export const AdvancedSearchDashboard: React.FC<
             .split(" ")
             .filter((term) => term.length > 0);
 
-          results = results.filter((miracle) => {
-            const searchableFields = [];
-
-            // Enhanced searchable fields
-            if (filterState.searchFields.includes("title") && miracle.title) {
-              searchableFields.push(miracle.title.toLowerCase());
-            }
-            if (
-              filterState.searchFields.includes("description") &&
-              miracle.description
-            ) {
-              searchableFields.push(miracle.description.toLowerCase());
-            }
-            if (filterState.searchFields.includes("type") && miracle.type) {
-              searchableFields.push(miracle.type.toLowerCase());
-            }
-            if (
-              filterState.searchFields.includes("category") &&
-              miracle.category
-            ) {
-              searchableFields.push((miracle.category as string).toLowerCase());
-            }
-            if (
-              filterState.searchFields.includes("content") &&
-              miracle.content
-            ) {
-              searchableFields.push((miracle.content as string).toLowerCase());
-            }
-            // NEW: Include notes field
-            if (filterState.searchFields.includes("notes") && miracle.notes) {
-              searchableFields.push(miracle.notes.toLowerCase());
-            }
-            // NEW: Include sources information
-            if (
-              filterState.searchFields.includes("sources") &&
-              miracle.sources
-            ) {
-              searchableFields.push(miracle.sources.primary.toLowerCase());
-              searchableFields.push(miracle.sources.verification.toLowerCase());
-              searchableFields.push(miracle.sources.methodology.toLowerCase());
-              searchableFields.push(miracle.sources.source.toLowerCase());
-              miracle.sources.references.forEach((ref) => {
-                searchableFields.push(ref.toLowerCase());
-              });
-            }
-            // NEW: Include pair information
-
-            // NEW: Include prophetic fulfillment information
-            if (
-              filterState.searchFields.includes("prophecy") &&
-              miracle.fulfillmentEvidence
-            ) {
-              searchableFields.push(miracle.fulfillmentEvidence.toLowerCase());
-            }
-            if (
-              filterState.searchFields.includes("prophecy") &&
-              miracle.prophecyCategory
-            ) {
-              searchableFields.push(miracle.prophecyCategory.toLowerCase());
-            }
-
-            const searchableText = searchableFields.join(" ");
+          results = results.filter((result) => {
+            const searchableText = [
+              result.title.toLowerCase(),
+              result.content.toLowerCase(),
+              result.source.toLowerCase(),
+            ].join(" ");
 
             // Check if all search terms are found
             return searchTerms.every((term) => searchableText.includes(term));
           });
         }
 
-        // Apply type filters
+        // Apply type filters (for miracles only)
         if (filterState.types.length > 0) {
-          results = results.filter(
-            (miracle) =>
-              miracle.type && filterState.types.includes(miracle.type)
-          );
+          results = results.filter((result) => {
+            if (result.type === "miracle") {
+              const miracle = result.data as QuranicMiracle;
+              return miracle.type && filterState.types.includes(miracle.type);
+            }
+            return true; // Keep non-miracle results
+          });
         }
 
-        // Apply category filters
+        // Apply category filters (for miracles only)
         if (filterState.categories.length > 0) {
-          results = results.filter(
-            (miracle) =>
-              miracle.category &&
-              filterState.categories.includes(miracle.category as string)
-          );
+          results = results.filter((result) => {
+            if (result.type === "miracle") {
+              const miracle = result.data as QuranicMiracle;
+              return (
+                miracle.category &&
+                filterState.categories.includes(miracle.category as string)
+              );
+            }
+            return true; // Keep non-miracle results
+          });
         }
 
-        // NEW: Apply fulfillment status filters
+        // Apply fulfillment status filters (for miracles only)
         if (filterState.fulfillmentStatus.length > 0) {
-          results = results.filter(
-            (miracle) =>
-              miracle.fulfillmentStatus &&
-              filterState.fulfillmentStatus.includes(miracle.fulfillmentStatus)
-          );
+          results = results.filter((result) => {
+            if (result.type === "miracle") {
+              const miracle = result.data as QuranicMiracle;
+              return (
+                miracle.fulfillmentStatus &&
+                filterState.fulfillmentStatus.includes(
+                  miracle.fulfillmentStatus
+                )
+              );
+            }
+            return true; // Keep non-miracle results
+          });
         }
 
-        // NEW: Apply prophecy category filters
+        // Apply prophecy category filters (for miracles only)
         if (filterState.prophecyCategories.length > 0) {
-          results = results.filter(
-            (miracle) =>
-              miracle.prophecyCategory &&
-              filterState.prophecyCategories.includes(miracle.prophecyCategory)
-          );
+          results = results.filter((result) => {
+            if (result.type === "miracle") {
+              const miracle = result.data as QuranicMiracle;
+              return (
+                miracle.prophecyCategory &&
+                filterState.prophecyCategories.includes(
+                  miracle.prophecyCategory
+                )
+              );
+            }
+            return true; // Keep non-miracle results
+          });
         }
 
-        // NEW: Apply year range filters
+        // Apply year range filters (for miracles only)
         if (filterState.yearRange.min > 0 || filterState.yearRange.max < 2024) {
-          results = results.filter((miracle) => {
-            const yearRevealed = miracle.yearRevealed || 0;
-            const yearFulfilled = miracle.yearFulfilled || 0;
+          results = results.filter((result) => {
+            if (result.type === "miracle") {
+              const miracle = result.data as QuranicMiracle;
+              const yearRevealed = miracle.yearRevealed || 0;
+              const yearFulfilled = miracle.yearFulfilled || 0;
 
-            return (
-              (yearRevealed >= filterState.yearRange.min &&
-                yearRevealed <= filterState.yearRange.max) ||
-              (yearFulfilled >= filterState.yearRange.min &&
-                yearFulfilled <= filterState.yearRange.max)
-            );
+              return (
+                (yearRevealed >= filterState.yearRange.min &&
+                  yearRevealed <= filterState.yearRange.max) ||
+                (yearFulfilled >= filterState.yearRange.min &&
+                  yearFulfilled <= filterState.yearRange.max)
+              );
+            }
+            return true; // Keep non-miracle results
           });
         }
 
@@ -187,21 +295,9 @@ export const AdvancedSearchDashboard: React.FC<
               aValue = a.type || "";
               bValue = b.type || "";
               break;
-            case "category":
-              aValue = (a.category as string) || "";
-              bValue = (b.category as string) || "";
-              break;
-            case "yearRevealed":
-              aValue = a.yearRevealed || 0;
-              bValue = b.yearRevealed || 0;
-              break;
-            case "yearFulfilled":
-              aValue = a.yearFulfilled || 0;
-              bValue = b.yearFulfilled || 0;
-              break;
-            case "fulfillmentStatus":
-              aValue = a.fulfillmentStatus || "";
-              bValue = b.fulfillmentStatus || "";
+            case "source": // New sort option
+              aValue = a.source || "";
+              bValue = b.source || "";
               break;
             case "relevance":
               // For relevance, we'll use the number of search term matches
@@ -213,15 +309,13 @@ export const AdvancedSearchDashboard: React.FC<
                 aValue = searchTerms.filter(
                   (term) =>
                     a.title?.toLowerCase().includes(term) ||
-                    a.description?.toLowerCase().includes(term) ||
-                    a.notes?.toLowerCase().includes(term) ||
+                    a.content?.toLowerCase().includes(term) ||
                     false
                 ).length;
                 bValue = searchTerms.filter(
                   (term) =>
                     b.title?.toLowerCase().includes(term) ||
-                    b.description?.toLowerCase().includes(term) ||
-                    b.notes?.toLowerCase().includes(term) ||
+                    b.content?.toLowerCase().includes(term) ||
                     false
                 ).length;
               } else {
@@ -247,7 +341,7 @@ export const AdvancedSearchDashboard: React.FC<
         setIsSearching(false);
       }, 300);
     },
-    [data]
+    [data, quranData, hadithData]
   );
 
   // Handle search query changes
@@ -273,12 +367,27 @@ export const AdvancedSearchDashboard: React.FC<
     const defaultFilters: FilterState = {
       types: [],
       categories: [],
-      searchFields: ["title", "description", "type", "notes", "sources"], // Enhanced default
+      searchFields: [
+        "title",
+        "description",
+        "type",
+        "notes",
+        "sources",
+        "content",
+      ], // Enhanced default
       sortBy: "title",
       sortOrder: "asc",
       fulfillmentStatus: [],
       prophecyCategories: [],
       yearRange: { min: 0, max: 2024 },
+      dataSources: ["miracle", "quran", "hadith"], // Default to search all sources
+      // Initialize new Quran filters
+      quranSurahs: [],
+      quranVerseRange: { min: 1, max: 6236 }, // Default Quran verse range
+      quranPlaceOfRevelation: [],
+      // Initialize new Hadith filters
+      hadithNumberRange: { min: 1, max: 1000 }, // Default Hadith range
+      hadithCategories: [],
     };
     setFilters(defaultFilters);
     performSearch(searchQuery, defaultFilters);
@@ -286,8 +395,57 @@ export const AdvancedSearchDashboard: React.FC<
 
   // Initialize with all data
   useEffect(() => {
-    setFilteredResults(data);
-  }, [data]);
+    const allData = [
+      ...data.map((miracle) => ({
+        id: `miracle-${miracle.title}`,
+        type: "miracle" as const,
+        title: miracle.title,
+        content: [
+          miracle.description || "",
+          miracle.notes || "",
+          miracle.sources?.primary || "",
+          miracle.sources?.verification || "",
+          miracle.sources?.methodology || "",
+          miracle.sources?.source || "",
+          miracle.fulfillmentEvidence || "",
+          miracle.prophecyCategory || "",
+        ].join(" "),
+        source: miracle.sources?.source || "Quranic Miracle",
+        data: miracle,
+      })),
+      ...quranData.map((ayah) => ({
+        id: `quran-${ayah.surah_no}-${ayah.ayah_no_surah}`,
+        type: "quran" as const,
+        title: `${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
+        content: [
+          ayah.ayah_en,
+          ayah.ayah_ar,
+          ayah.surah_name_en,
+          ayah.surah_name_ar,
+          ayah.place_of_revelation,
+        ].join(" "),
+        source: `Quran - ${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
+        data: ayah,
+      })),
+      ...hadithData.map((hadith, index) => ({
+        id: `hadith-${index}`,
+        type: "hadith" as const,
+        title: `Hadith ${index + 1}`,
+        content: Object.values(hadith).join(" "),
+        source: "Sahih Bukhari",
+        data: hadith,
+      })),
+    ];
+    setFilteredResults(allData);
+  }, [data, quranData, hadithData]);
+
+  // Calculate statistics
+  const totalDataCount = data.length + quranData.length + hadithData.length;
+  const miracleCount = filteredResults.filter(
+    (r) => r.type === "miracle"
+  ).length;
+  const quranCount = filteredResults.filter((r) => r.type === "quran").length;
+  const hadithCount = filteredResults.filter((r) => r.type === "hadith").length;
 
   return (
     <div className="space-y-6">
@@ -299,18 +457,17 @@ export const AdvancedSearchDashboard: React.FC<
               Advanced Search
             </h2>
             <p className="text-stone-600 dark:text-stone-400 max-w-2xl">
-              Search through all Islamic signs and guidance with powerful
-              filtering options. Use auto-complete suggestions, save search
-              presets, and explore patterns in the data. Now with enhanced
-              search capabilities including notes, sources, and prophetic
-              information.
+              Search across all Islamic knowledge including Quranic miracles,
+              Quran verses, and Sahih Bukhari hadiths. Use powerful filtering
+              options to cross-reference data and discover connections between
+              different Islamic sources.
             </p>
           </div>
           <div className="lg:w-96">
             <SmartSearchBar
-              data={data}
+              data={data} // Still passes miracle data for auto-complete, might need adjustment later
               onSearch={handleSearch}
-              placeholder="Search for prophecies, numerical patterns, linguistic miracles, notes, sources..."
+              placeholder="Search across Quran, Hadith, and miracles..."
             />
           </div>
         </div>
@@ -319,6 +476,8 @@ export const AdvancedSearchDashboard: React.FC<
       {/* Advanced Filter Panel */}
       <AdvancedFilterPanel
         data={data}
+        quranData={quranData}
+        hadithData={hadithData}
         filters={filters}
         onFiltersChange={handleFiltersChange}
         onClearFilters={handleClearFilters}
@@ -338,102 +497,96 @@ export const AdvancedSearchDashboard: React.FC<
       {filteredResults.length > 0 && (
         <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
           <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
-            Search Statistics
+            Cross-Reference Search Statistics
           </h4>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
             <div>
               <div className="text-2xl font-bold text-green-700 dark:text-green-400">
                 {filteredResults.length}
               </div>
               <div className="text-stone-600 dark:text-stone-400">
-                Results Found
+                Total Results
               </div>
             </div>
             <div>
               <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
-                {((filteredResults.length / data.length) * 100).toFixed(1)}%
+                {miracleCount}
               </div>
-              <div className="text-stone-600 dark:text-stone-400">
-                Of Total Data
-              </div>
+              <div className="text-stone-600 dark:text-stone-400">Miracles</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
-                {Array.from(new Set(filteredResults.map((r) => r.type))).length}
+                {quranCount}
               </div>
               <div className="text-stone-600 dark:text-stone-400">
-                Types Found
+                Quran Verses
               </div>
             </div>
             <div>
               <div className="text-2xl font-bold text-orange-700 dark:text-orange-400">
-                {filters.types.length +
-                  filters.categories.length +
-                  filters.fulfillmentStatus.length +
-                  filters.prophecyCategories.length}
+                {hadithCount}
+              </div>
+              <div className="text-stone-600 dark:text-stone-400">Hadiths</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-stone-700 dark:text-stone-300">
+                {((filteredResults.length / totalDataCount) * 100).toFixed(1)}%
               </div>
               <div className="text-stone-600 dark:text-stone-400">
-                Active Filters
+                Of Total Data
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Enhanced Keyboard Shortcuts Help */}
+      {/* Enhanced Search Features */}
       <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
         <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
-          Enhanced Search Features
+          Cross-Reference Search Features
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
           <div className="space-y-3">
             <h5 className="font-medium text-stone-700 dark:text-stone-300">
-              Search Fields
+              Data Sources
             </h5>
             <ul className="space-y-1 text-stone-600 dark:text-stone-400">
               <li>
-                • <strong>Title:</strong> Miracle titles and names
+                • <strong>Miracles:</strong> Quranic signs and scientific
+                discoveries
               </li>
               <li>
-                • <strong>Description:</strong> Detailed explanations
+                • <strong>Quran Verses:</strong> Complete Quran with English
+                translations
               </li>
               <li>
-                • <strong>Notes:</strong> Additional insights and context
+                • <strong>Hadiths:</strong> Sahih Bukhari authentic narrations
               </li>
               <li>
-                • <strong>Sources:</strong> Academic references and methodology
-              </li>
-              <li>
-                • <strong>Pairs:</strong> Word pair relationships
-              </li>
-              <li>
-                • <strong>Prophecy:</strong> Fulfillment evidence and categories
+                • <strong>Cross-Reference:</strong> Find connections between
+                sources
               </li>
             </ul>
           </div>
           <div className="space-y-3">
             <h5 className="font-medium text-stone-700 dark:text-stone-300">
-              Advanced Filters
+              Advanced Filtering
             </h5>
             <ul className="space-y-1 text-stone-600 dark:text-stone-400">
               <li>
-                • <strong>Type:</strong> Pair, numerical, linguistic, etc.
+                • <strong>Quran Filters:</strong> By Surah, verse number, place
+                of revelation
               </li>
               <li>
-                • <strong>Fulfillment Status:</strong> Fulfilled, pending,
-                in-progress
+                • <strong>Hadith Filters:</strong> By hadith number range
               </li>
               <li>
-                • <strong>Prophecy Category:</strong> Historical, scientific,
-                social
+                • <strong>Miracle Filters:</strong> By type, category,
+                fulfillment status
               </li>
               <li>
-                • <strong>Year Range:</strong> Filter by revelation or
-                fulfillment years
-              </li>
-              <li>
-                • <strong>Sort Options:</strong> By relevance, year, type, or
-                title
+                • <strong>Unified Search:</strong> Search across all Islamic
+                sources
               </li>
             </ul>
           </div>

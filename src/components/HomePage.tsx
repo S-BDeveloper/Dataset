@@ -4,6 +4,8 @@ import { ChartsDashboard } from "./charts/ChartsDashboard";
 import { MiracleCard } from "./MiracleCard";
 import PaginationButton from "./PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
+import { useQuranData } from "../hooks/useQuranData";
+import { useHadithData } from "../hooks/useHadithData";
 import type { QuranicMiracle, MiracleFilters } from "../types/Types";
 import type { Dispatch, SetStateAction } from "react";
 import Masonry from "react-masonry-css";
@@ -53,6 +55,10 @@ export default function HomePage({
   // Use the proper favorites hook instead of local state
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
+  // Use Quran and Hadith data hooks for unified search
+  const { data: quranData } = useQuranData();
+  const { hadithData } = useHadithData();
+
   // Handle favorite toggle using the proper favorites system
   const handleFavorite = async (miracle: QuranicMiracle) => {
     const isCurrentlyFavorite = favorites.some(
@@ -98,106 +104,105 @@ export default function HomePage({
             Authentic Islamic Knowledge
           </h1>
           <p className="text-lg text-stone-600 dark:text-stone-400 max-w-3xl leading-relaxed">
-            Discover the miraculous signs of Allah through Quranic revelations,
-            prophetic guidance, and divine wisdom. Explore mathematical
-            patterns, linguistic miracles, and fulfilled prophecies that
-            demonstrate the truth of Islam.
+            Discover the miraculous signs of Allah through authentic Quranic
+            verses, Sahih Bukhari hadiths, and scientific discoveries. Explore
+            cross-references between different Islamic sources to deepen your
+            understanding.
           </p>
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl sm:text-3xl font-bold text-green-700 dark:text-green-400">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl font-bold text-green-700 dark:text-green-400">
               {miracles.length}
             </div>
-            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
+            <div className="text-sm text-stone-600 dark:text-stone-400">
               Authentic Signs
             </div>
           </div>
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl sm:text-3xl font-bold text-blue-700 dark:text-blue-400">
-              {types.length}
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
+              {quranData.length}
             </div>
-            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
-              Categories
+            <div className="text-sm text-stone-600 dark:text-stone-400">
+              Quran Verses
             </div>
           </div>
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl sm:text-3xl font-bold text-purple-700 dark:text-purple-400">
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+              {hadithData.length}
+            </div>
+            <div className="text-sm text-stone-600 dark:text-stone-400">
+              Hadiths
+            </div>
+          </div>
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl font-bold text-orange-700 dark:text-orange-400">
               {favorites.length}
             </div>
-            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
-              Saved
-            </div>
-          </div>
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl sm:text-3xl font-bold text-orange-700 dark:text-orange-400">
-              {
-                miracles.filter((m) => m.fulfillmentStatus === "fulfilled")
-                  .length
-              }
-            </div>
-            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
-              Fulfilled
+            <div className="text-sm text-stone-600 dark:text-stone-400">
+              Favorites
             </div>
           </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="bg-white dark:bg-stone-800 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700 mb-8">
-          <div className="flex flex-wrap border-b border-stone-200 dark:border-stone-700">
-            <button
-              onClick={() => setActiveTab("all")}
-              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
-                activeTab === "all"
-                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
-              }`}
-            >
-              All Signs
-            </button>
-            <button
-              onClick={() => setActiveTab("search")}
-              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
-                activeTab === "search"
-                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
-              }`}
-            >
-              Advanced Search
-            </button>
-            <button
-              onClick={() => setActiveTab("charts")}
-              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
-                activeTab === "charts"
-                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
-              }`}
-            >
-              Charts & Graphs
-            </button>
-
-            <button
-              onClick={() => setActiveTab("quran")}
-              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
-                activeTab === "quran"
-                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
-              }`}
-            >
-              Quran
-            </button>
-            <button
-              onClick={() => setActiveTab("hadith")}
-              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
-                activeTab === "hadith"
-                  ? "text-transparent dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
-              }`}
-            >
-              Hadith
-            </button>
+        {/* Main Content */}
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700">
+          {/* Tab Navigation */}
+          <div className="border-b border-stone-200 dark:border-stone-700">
+            <div className="flex flex-wrap gap-1 p-4">
+              <button
+                onClick={() => setActiveTab("all")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === "all"
+                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                    : "text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
+                }`}
+              >
+                All Signs
+              </button>
+              <button
+                onClick={() => setActiveTab("search")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === "search"
+                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                    : "text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
+                }`}
+              >
+                Cross-Reference Search
+              </button>
+              <button
+                onClick={() => setActiveTab("charts")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === "charts"
+                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                    : "text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
+                }`}
+              >
+                Charts & Graphs
+              </button>
+              <button
+                onClick={() => setActiveTab("quran")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === "quran"
+                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                    : "text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
+                }`}
+              >
+                Quran
+              </button>
+              <button
+                onClick={() => setActiveTab("hadith")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === "hadith"
+                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                    : "text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
+                }`}
+              >
+                Hadith
+              </button>
+            </div>
           </div>
 
           {/* Tab Content */}
@@ -299,27 +304,6 @@ export default function HomePage({
                                 Previous
                               </PaginationButton>
                             </li>
-                            {Array.from(
-                              { length: totalPages },
-                              (_, i) => i + 1
-                            ).map((page) => (
-                              <li key={page}>
-                                <PaginationButton
-                                  onClick={() => {
-                                    setCurrentPage(page);
-                                    scrollToTop();
-                                  }}
-                                  isActive={page === currentPage}
-                                  ariaLabel={`Go to page ${page}${
-                                    page === currentPage
-                                      ? " (current page)"
-                                      : ""
-                                  }`}
-                                >
-                                  {page}
-                                </PaginationButton>
-                              </li>
-                            ))}
                             <li>
                               <PaginationButton
                                 onClick={() => {
@@ -390,6 +374,8 @@ export default function HomePage({
                 <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
                   <AdvancedSearchDashboard
                     data={miracles}
+                    quranData={quranData}
+                    hadithData={hadithData}
                     onFavorite={handleFavorite}
                     isFavorite={isFavorite}
                   />
