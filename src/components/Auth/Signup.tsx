@@ -1,18 +1,43 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/useAuth";
 
-const Signup: React.FC = () => {
+interface SignupProps {
+  onClose: () => void;
+  onSwitchToLogin: () => void;
+}
+
+const Signup: React.FC<SignupProps> = ({ onClose, onSwitchToLogin }) => {
+  const { signup, error, loading } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [validationError, setValidationError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signup logic here
-    console.log("Signup attempt:", formData);
+    setValidationError("");
+
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setValidationError("Passwords do not match");
+      return;
+    }
+
+    // Validate password strength
+    if (formData.password.length < 6) {
+      setValidationError("Password must be at least 6 characters long");
+      return;
+    }
+
+    try {
+      await signup(formData.email, formData.password);
+      onClose();
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,99 +48,139 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-stone-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-green-700 dark:text-green-400">
-            Create your account
-          </h2>
-          <p className="mt-2 text-sm text-stone-600 dark:text-stone-400">
-            Or{" "}
-            <Link
-              to="/login"
-              className="font-medium text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
-            >
-              sign in to your existing account
-            </Link>
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-green-700 dark:text-green-400">
+          Create your account
+        </h2>
+        <button
+          onClick={onClose}
+          className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {(error || validationError) && (
+        <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 rounded-lg">
+          <p className="text-sm text-red-700 dark:text-red-300">
+            {validationError || error}
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Full name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-stone-300 dark:border-stone-600 placeholder-stone-500 dark:placeholder-stone-400 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-800 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                placeholder="Full name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-stone-300 dark:border-stone-600 placeholder-stone-500 dark:placeholder-stone-400 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-800 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-stone-300 dark:border-stone-600 placeholder-stone-500 dark:placeholder-stone-400 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-800 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="confirmPassword" className="sr-only">
-                Confirm password
-              </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-stone-300 dark:border-stone-600 placeholder-stone-500 dark:placeholder-stone-400 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-800 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                placeholder="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+      )}
 
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-offset-stone-800"
-            >
-              Create account
-            </button>
-          </div>
-        </form>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div>
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1"
+          >
+            Full name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            required
+            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Enter your full name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1"
+          >
+            Email address
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            required
+            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1"
+          >
+            Confirm password
+          </label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            required
+            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Confirm your password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          {loading ? "Creating account..." : "Create account"}
+        </button>
+      </form>
+
+      <div className="mt-4 text-center">
+        <p className="text-sm text-stone-600 dark:text-stone-400">
+          Already have an account?{" "}
+          <button
+            onClick={onSwitchToLogin}
+            className="font-medium text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
+          >
+            Sign in here
+          </button>
+        </p>
       </div>
     </div>
   );

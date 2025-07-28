@@ -4,7 +4,6 @@ import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import Favorites from "./pages/Favorites";
-
 import LoadingSkeleton from "./components/LoadingSkeleton";
 import { useMiracles } from "./hooks/useFacts";
 import { useMiracleFilters } from "./hooks/useFactFilters";
@@ -15,6 +14,7 @@ import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import SubmitDiscovery from "./pages/SubmitDiscovery";
 import AdminReview from "./pages/AdminReview";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // Utility to convert array of objects to CSV
 function toCSV<T extends object>(data: T[]): string {
@@ -121,59 +121,71 @@ function App({ loadingDelay = 1000 }) {
   }
 
   return (
-    <LanguageProvider>
-      <DarkModeProvider>
-        <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col w-full overflow-hidden">
-          <Navbar />
-          <main className="flex-1 w-full overflow-hidden">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <HomePage
-                    miracles={miracles}
-                    paginatedMiracles={paginatedMiracles}
-                    filters={filters}
-                    setFilters={setFilters}
-                    types={types}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    totalPages={totalPages}
-                    goToPage={goToPage}
-                    setGoToPage={setGoToPage}
-                    handleGoToPage={() => handleGoToPage(Number(goToPage))}
-                    handleExportCSV={handleExportCSV}
-                    handleExportJSON={handleExportJSON}
-                    setToast={setToast}
-                    miraclesListRef={miraclesListRef}
-                    activeTab={activeTab}
-                    setActiveTab={setActiveTab}
-                  />
-                }
-              />
+    <ErrorBoundary>
+      <LanguageProvider>
+        <DarkModeProvider>
+          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col w-full overflow-hidden">
+            <Navbar />
+            <main className="flex-1 w-full overflow-hidden">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <HomePage
+                      miracles={miracles}
+                      paginatedMiracles={paginatedMiracles}
+                      filters={filters}
+                      setFilters={setFilters}
+                      types={types}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage}
+                      totalPages={totalPages}
+                      goToPage={goToPage}
+                      setGoToPage={setGoToPage}
+                      handleGoToPage={() => handleGoToPage(Number(goToPage))}
+                      handleExportCSV={handleExportCSV}
+                      handleExportJSON={handleExportJSON}
+                      setToast={setToast}
+                      miraclesListRef={miraclesListRef}
+                      activeTab={activeTab}
+                      setActiveTab={setActiveTab}
+                    />
+                  }
+                />
 
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route
+                  path="/login"
+                  element={
+                    <Login onClose={() => {}} onSwitchToSignup={() => {}} />
+                  }
+                />
+                <Route
+                  path="/signup"
+                  element={
+                    <Signup onClose={() => {}} onSwitchToLogin={() => {}} />
+                  }
+                />
 
-              {/* Submit Discovery Route */}
-              <Route path="/submit-discovery" element={<SubmitDiscovery />} />
+                {/* Submit Discovery Route */}
+                <Route path="/submit-discovery" element={<SubmitDiscovery />} />
 
-              {/* Admin Review Route */}
-              <Route path="/admin" element={<AdminReview />} />
-            </Routes>
-          </main>
-          <Footer />
+                {/* Admin Review Route */}
+                <Route path="/admin" element={<AdminReview />} />
+              </Routes>
+            </main>
+            <Footer />
 
-          {/* Toast notification */}
-          {toast && (
-            <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
-              {toast}
-            </div>
-          )}
-        </div>
-      </DarkModeProvider>
-    </LanguageProvider>
+            {/* Toast notification */}
+            {toast && (
+              <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+                {toast}
+              </div>
+            )}
+          </div>
+        </DarkModeProvider>
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }
 

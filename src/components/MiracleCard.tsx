@@ -1,123 +1,205 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import type { QuranicMiracle } from "../types/Types";
+import { AccessibleButton } from "./ui/AccessibleButton";
 
 interface MiracleCardProps {
   miracle: QuranicMiracle;
-  onFavorite?: (miracle: QuranicMiracle) => void;
-  isFavorite?: boolean;
+  onFavorite: (miracle: QuranicMiracle) => void;
+  isFavorite: boolean;
 }
 
-// MiracleCard displays a single miracle with all details, favorite button, and accessibility features
-export const MiracleCard: React.FC<MiracleCardProps> = ({
-  miracle,
-  onFavorite,
-  isFavorite,
-}) => {
-  return (
-    <div
-      className="w-full h-full bg-white dark:bg-stone-800 rounded-2xl shadow-xl border border-stone-200 dark:border-stone-700 p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 transition-all duration-200 hover:shadow-2xl focus-within:ring-2 focus-within:ring-green-500"
-      data-cy="miracle-card"
-      tabIndex={0}
-      aria-label={`Miracle: ${miracle.title}`}
-    >
-      {/* Miracle title */}
-      <div className="font-bold text-green-800 dark:text-green-300 text-lg sm:text-xl break-words leading-tight">
-        {miracle.title || "N/A"}
-      </div>
-
-      {/* Type */}
-      <div className="flex flex-wrap gap-2 sm:gap-3 items-center text-sm sm:text-base text-stone-700 dark:text-stone-300">
-        <span className="font-semibold text-stone-500 dark:text-stone-400">
-          Type:
-        </span>
-        <span className="text-green-700 dark:text-green-400 font-medium capitalize">
-          {miracle.type || "N/A"}
-        </span>
-      </div>
-
-      {/* Description */}
-      {miracle.description && (
-        <div className="text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
-          {miracle.description}
-        </div>
-      )}
-
-      {/* Notes */}
-      <div className="text-stone-600 dark:text-stone-400 text-sm sm:text-base leading-relaxed flex-1">
-        {miracle.notes}
-      </div>
-
-      {/* Sources */}
-      {miracle.sources && (
-        <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 sm:p-4 border border-stone-200 dark:border-stone-600">
-          <h4 className="font-semibold text-stone-800 dark:text-stone-200 mb-2 text-base sm:text-lg">
-            Sources & References:
-          </h4>
-          <div className="space-y-2 text-xs sm:text-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-              <span className="font-medium text-stone-700 dark:text-stone-300">
-                Primary:
-              </span>
-              <span className="text-stone-600 dark:text-stone-400">
-                {miracle.sources.primary}
-              </span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-              <span className="font-medium text-stone-700 dark:text-stone-300">
-                Methodology:
-              </span>
-              <span className="text-stone-600 dark:text-stone-400">
-                {miracle.sources.methodology}
-              </span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-              <span className="font-medium text-stone-700 dark:text-stone-300">
-                Source:
-              </span>
-              <span className="text-stone-600 dark:text-stone-400">
-                {miracle.sources.source}
-              </span>
-            </div>
-            {miracle.sources.references &&
-              miracle.sources.references.length > 0 && (
-                <div>
-                  <span className="font-medium text-stone-700 dark:text-stone-300">
-                    References:
-                  </span>
-                  <div className="mt-1 space-y-1">
-                    {miracle.sources.references.map((ref, index) => (
-                      <a
-                        key={index}
-                        href={ref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 underline text-xs break-all"
-                      >
-                        {ref}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-          </div>
-        </div>
-      )}
-
-      {/* Favorite button */}
-      <div className="flex justify-end mt-auto">
-        <button
-          className={`text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 text-xl sm:text-2xl focus:outline-none focus:ring-2 focus:ring-green-400 rounded-full transition-all duration-150 shadow-sm border border-green-100 dark:border-green-700 bg-green-50/50 dark:bg-green-900/30 hover:bg-green-100/80 dark:hover:bg-green-900/50 px-2 py-1 ${
-            isFavorite
-              ? "font-bold bg-yellow-100 dark:bg-yellow-900/30 border-yellow-300 dark:border-yellow-600 text-yellow-600 dark:text-yellow-400"
-              : ""
-          }`}
-          data-cy="favorite-btn"
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-          onClick={() => onFavorite && onFavorite(miracle)}
-        >
-          {isFavorite ? "\u2605" : "\u2606"}
-        </button>
-      </div>
-    </div>
-  );
+const getTypeColor = (type: string) => {
+  const colors = {
+    prophecy:
+      "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-200",
+    scientific:
+      "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200",
+    numerical:
+      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200",
+    linguistic:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200",
+    structure:
+      "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-200",
+    middle:
+      "bg-stone-100 text-stone-800 dark:bg-stone-900/30 dark:text-stone-200",
+  };
+  return colors[type as keyof typeof colors] || colors.middle;
 };
+
+const getStatusColor = (status?: string) => {
+  const colors = {
+    fulfilled:
+      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200",
+    pending:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200",
+    "in-progress":
+      "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200",
+    proven:
+      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200",
+    "yet-to-happen":
+      "bg-stone-100 text-stone-800 dark:bg-stone-900/30 dark:text-stone-200",
+  };
+  return colors[status as keyof typeof colors] || colors.pending;
+};
+
+export const MiracleCard = memo<MiracleCardProps>(
+  ({ miracle, onFavorite, isFavorite }) => {
+    const handleFavoriteClick = useCallback(() => {
+      onFavorite(miracle);
+    }, [miracle, onFavorite]);
+
+    const handleCardClick = useCallback(() => {
+      // Could implement card expansion or modal opening here
+      console.log("Card clicked:", miracle.title);
+    }, [miracle.title]);
+
+    return (
+      <div
+        className="bg-white dark:bg-stone-800 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 hover:shadow-xl transition-shadow cursor-pointer"
+        onClick={handleCardClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleCardClick();
+          }
+        }}
+        aria-label={`View details for ${miracle.title}`}
+      >
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
+              {miracle.title}
+            </h3>
+            <div className="flex flex-wrap gap-2 mb-3">
+              <span
+                className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(
+                  miracle.type
+                )}`}
+              >
+                {miracle.type.charAt(0).toUpperCase() + miracle.type.slice(1)}
+              </span>
+              {miracle.status && (
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                    miracle.status
+                  )}`}
+                >
+                  {miracle.status.charAt(0).toUpperCase() +
+                    miracle.status.slice(1)}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <AccessibleButton
+            variant="ghost"
+            size="sm"
+            onClick={handleFavoriteClick}
+            aria-label={
+              isFavorite
+                ? `Remove ${miracle.title} from favorites`
+                : `Add ${miracle.title} to favorites`
+            }
+            aria-pressed={isFavorite}
+            className="flex-shrink-0"
+          >
+            <svg
+              className={`w-5 h-5 ${
+                isFavorite ? "text-red-500 fill-current" : "text-stone-400"
+              }`}
+              fill={isFavorite ? "currentColor" : "none"}
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </AccessibleButton>
+        </div>
+
+        <div className="space-y-3">
+          {miracle.description && (
+            <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
+              {miracle.description}
+            </p>
+          )}
+
+          <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
+            {miracle.notes}
+          </p>
+
+          {miracle.source && (
+            <div className="text-xs text-stone-500 dark:text-stone-500">
+              <span className="font-medium">Source:</span> {miracle.source}
+            </div>
+          )}
+
+          {miracle.fulfillmentStatus && (
+            <div className="text-xs text-stone-500 dark:text-stone-500">
+              <span className="font-medium">Fulfillment:</span>{" "}
+              {miracle.fulfillmentStatus}
+            </div>
+          )}
+
+          {miracle.fulfillmentEvidence && (
+            <details className="mt-3">
+              <summary className="text-xs font-medium text-stone-600 dark:text-stone-400 cursor-pointer hover:text-stone-800 dark:hover:text-stone-200">
+                View Evidence
+              </summary>
+              <p className="text-xs text-stone-600 dark:text-stone-400 mt-2 leading-relaxed">
+                {miracle.fulfillmentEvidence}
+              </p>
+            </details>
+          )}
+
+          {miracle.sources && (
+            <details className="mt-3">
+              <summary className="text-xs font-medium text-stone-600 dark:text-stone-400 cursor-pointer hover:text-stone-800 dark:hover:text-stone-200">
+                View Sources
+              </summary>
+              <div className="text-xs text-stone-600 dark:text-stone-400 mt-2 space-y-1">
+                <div>
+                  <span className="font-medium">Primary:</span>{" "}
+                  {miracle.sources.primary}
+                </div>
+                <div>
+                  <span className="font-medium">Methodology:</span>{" "}
+                  {miracle.sources.methodology}
+                </div>
+                {miracle.sources.references &&
+                  miracle.sources.references.length > 0 && (
+                    <div>
+                      <span className="font-medium">References:</span>
+                      <ul className="list-disc list-inside mt-1">
+                        {miracle.sources.references.map((ref, index) => (
+                          <li key={index}>
+                            <a
+                              href={ref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-green-600 dark:text-green-400 hover:underline"
+                            >
+                              {ref}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+              </div>
+            </details>
+          )}
+        </div>
+      </div>
+    );
+  }
+);
+
+MiracleCard.displayName = "MiracleCard";

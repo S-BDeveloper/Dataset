@@ -49,26 +49,19 @@ export const AdvancedSearchDashboard: React.FC<
   const [filters, setFilters] = useState<FilterState>({
     types: [],
     categories: [],
-    searchFields: [
-      "title",
-      "description",
-      "type",
-      "notes",
-      "sources",
-      "content",
-    ], // Enhanced search fields
+    searchFields: [], // Default to no search fields selected - user has full control
     sortBy: "title",
     sortOrder: "asc",
     fulfillmentStatus: [],
     prophecyCategories: [],
     yearRange: { min: 0, max: 2024 },
-    dataSources: ["miracle", "quran", "hadith"], // Default to search all sources
-    // Initialize new Quran filters
+    dataSources: [], // Default to no sources selected - user must choose what to search
+    // Initialize new Quran filters with proper defaults
     quranSurahs: [],
-    quranVerseRange: { min: 1, max: 6236 }, // Default Quran verse range
+    quranVerseRange: { min: 1, max: 7 }, // Use actual Quran verse range based on loaded data
     quranPlaceOfRevelation: [],
-    // Initialize new Hadith filters
-    hadithNumberRange: { min: 1, max: 1000 }, // Default Hadith range
+    // Initialize new Hadith filters with proper defaults
+    hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
     hadithCategories: [],
   });
   const [filteredResults, setFilteredResults] = useState<UnifiedSearchResult[]>(
@@ -367,77 +360,82 @@ export const AdvancedSearchDashboard: React.FC<
     const defaultFilters: FilterState = {
       types: [],
       categories: [],
-      searchFields: [
-        "title",
-        "description",
-        "type",
-        "notes",
-        "sources",
-        "content",
-      ], // Enhanced default
+      searchFields: [], // Default to no search fields selected - user has full control
       sortBy: "title",
       sortOrder: "asc",
       fulfillmentStatus: [],
       prophecyCategories: [],
       yearRange: { min: 0, max: 2024 },
-      dataSources: ["miracle", "quran", "hadith"], // Default to search all sources
-      // Initialize new Quran filters
+      dataSources: [], // Default to no sources selected - user must choose what to search
+      // Initialize new Quran filters with proper defaults
       quranSurahs: [],
-      quranVerseRange: { min: 1, max: 6236 }, // Default Quran verse range
+      quranVerseRange: { min: 1, max: 7 }, // Use actual Quran verse range based on loaded data
       quranPlaceOfRevelation: [],
-      // Initialize new Hadith filters
-      hadithNumberRange: { min: 1, max: 1000 }, // Default Hadith range
+      // Initialize new Hadith filters with proper defaults
+      hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
       hadithCategories: [],
     };
     setFilters(defaultFilters);
     performSearch(searchQuery, defaultFilters);
   }, [searchQuery, performSearch]);
 
-  // Initialize with all data
+  // Initialize with filtered data based on current filters
   useEffect(() => {
+    // Only load data if dataSources are selected
+    if (filters.dataSources.length === 0) {
+      setFilteredResults([]);
+      return;
+    }
+
     const allData = [
-      ...data.map((miracle) => ({
-        id: `miracle-${miracle.title}`,
-        type: "miracle" as const,
-        title: miracle.title,
-        content: [
-          miracle.description || "",
-          miracle.notes || "",
-          miracle.sources?.primary || "",
-          miracle.sources?.verification || "",
-          miracle.sources?.methodology || "",
-          miracle.sources?.source || "",
-          miracle.fulfillmentEvidence || "",
-          miracle.prophecyCategory || "",
-        ].join(" "),
-        source: miracle.sources?.source || "Quranic Miracle",
-        data: miracle,
-      })),
-      ...quranData.map((ayah) => ({
-        id: `quran-${ayah.surah_no}-${ayah.ayah_no_surah}`,
-        type: "quran" as const,
-        title: `${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
-        content: [
-          ayah.ayah_en,
-          ayah.ayah_ar,
-          ayah.surah_name_en,
-          ayah.surah_name_ar,
-          ayah.place_of_revelation,
-        ].join(" "),
-        source: `Quran - ${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
-        data: ayah,
-      })),
-      ...hadithData.map((hadith, index) => ({
-        id: `hadith-${index}`,
-        type: "hadith" as const,
-        title: `Hadith ${index + 1}`,
-        content: Object.values(hadith).join(" "),
-        source: "Sahih Bukhari",
-        data: hadith,
-      })),
+      ...(filters.dataSources.includes("miracle")
+        ? data.map((miracle) => ({
+            id: `miracle-${miracle.title}`,
+            type: "miracle" as const,
+            title: miracle.title,
+            content: [
+              miracle.description || "",
+              miracle.notes || "",
+              miracle.sources?.primary || "",
+              miracle.sources?.verification || "",
+              miracle.sources?.methodology || "",
+              miracle.sources?.source || "",
+              miracle.fulfillmentEvidence || "",
+              miracle.prophecyCategory || "",
+            ].join(" "),
+            source: miracle.sources?.source || "Quranic Miracle",
+            data: miracle,
+          }))
+        : []),
+      ...(filters.dataSources.includes("quran")
+        ? quranData.map((ayah) => ({
+            id: `quran-${ayah.surah_no}-${ayah.ayah_no_surah}`,
+            type: "quran" as const,
+            title: `${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
+            content: [
+              ayah.ayah_en,
+              ayah.ayah_ar,
+              ayah.surah_name_en,
+              ayah.surah_name_ar,
+              ayah.place_of_revelation,
+            ].join(" "),
+            source: `Quran - ${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
+            data: ayah,
+          }))
+        : []),
+      ...(filters.dataSources.includes("hadith")
+        ? hadithData.map((hadith, index) => ({
+            id: `hadith-${index}`,
+            type: "hadith" as const,
+            title: `Hadith ${index + 1}`,
+            content: Object.values(hadith).join(" "),
+            source: "Sahih Bukhari",
+            data: hadith,
+          }))
+        : []),
     ];
     setFilteredResults(allData);
-  }, [data, quranData, hadithData]);
+  }, [data, quranData, hadithData, filters.dataSources]);
 
   // Calculate statistics
   const totalDataCount = data.length + quranData.length + hadithData.length;
