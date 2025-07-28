@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Masonry from "react-masonry-css";
 import { SignTypesChart } from "./SignTypesChart";
-import { WordPairsChart } from "./WordPairsChart";
-import { CorrelationScatterPlot } from "./CorrelationScatterPlot";
 import { PropheticTimelineChart } from "./PropheticTimelineChart";
 import { PropheticStatusChart } from "./PropheticStatusChart";
 import { SpatialProphecyMap } from "./SpatialProphecyMap";
@@ -23,23 +21,6 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
       name: "Sign Types",
       component: (
         <SignTypesChart data={data} isActive={activeChart === "types"} />
-      ),
-    },
-    {
-      id: "pairs",
-      name: "Word Pairs",
-      component: (
-        <WordPairsChart data={data} isActive={activeChart === "pairs"} />
-      ),
-    },
-    {
-      id: "correlation",
-      name: "Correlation Analysis",
-      component: (
-        <CorrelationScatterPlot
-          data={data}
-          isActive={activeChart === "correlation"}
-        />
       ),
     },
     {

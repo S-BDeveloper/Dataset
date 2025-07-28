@@ -11,7 +11,7 @@ interface StatsProps {
 export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
   // Calculate statistics
   const totalSigns = miracles.length;
-  const pairSigns = miracles.filter((m) => m.type === "pair").length;
+  const pairSigns = 0; // No longer have pair data
   const numericalSigns = miracles.filter((m) => m.type === "numerical").length;
   const structuralSigns = miracles.filter((m) => m.type === "structure").length;
   const linguisticSigns = miracles.filter(

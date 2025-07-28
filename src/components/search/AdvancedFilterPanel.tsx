@@ -60,7 +60,6 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
     { value: "content", label: "Full Content" },
     { value: "notes", label: "Notes" },
     { value: "sources", label: "Sources" },
-    { value: "pairs", label: "Word Pairs" },
     { value: "prophecy", label: "Prophecy Info" },
   ];
 

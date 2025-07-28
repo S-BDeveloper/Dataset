@@ -20,16 +20,3 @@
     padding-left: 12px; /* gutter size */
   }
 }
-
-/* Size classes for masonry items - let content determine height */
-.masonry-item-small {
-  /* Let content determine height */
-}
-
-.masonry-item-medium {
-  /* Let content determine height */
-}
-
-.masonry-item-large {
-  /* Let content determine height */
-}

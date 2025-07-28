@@ -132,7 +132,6 @@ function App({ loadingDelay = 1000 }) {
                 element={
                   <HomePage
                     miracles={miracles}
-                    sortedMiracles={sortedMiracles}
                     paginatedMiracles={paginatedMiracles}
                     filters={filters}
                     setFilters={setFilters}

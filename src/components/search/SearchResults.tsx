@@ -146,7 +146,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             <ul className="mt-1 space-y-1">
               <li>• Specific types like "prophecy" or "numerical"</li>
               <li>• Keywords from titles, descriptions, or notes</li>
-              <li>• Source information like "Dr. Rashad Khalifa"</li>
+              <li>• Source information like "Sahih Bukhari"</li>
               <li>• Pair words like "Life" or "Death"</li>
               <li>• Broader terms to find more results</li>
             </ul>
@@ -217,41 +217,6 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                     <p className="text-sm text-blue-800 dark:text-blue-200">
                       {highlightText(miracle.notes, searchQuery)}
                     </p>
-                  </div>
-                )}
-
-                {/* NEW: Pair Information */}
-                {miracle.pair && miracle.pair.length > 0 && (
-                  <div className="mb-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <h4 className="text-xs font-semibold text-purple-700 dark:text-purple-300 mb-2 uppercase tracking-wide">
-                      Word Pair
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {miracle.pair.map((pairItem, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-1 bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 text-xs rounded-full"
-                        >
-                          {highlightText(pairItem, searchQuery)}
-                        </span>
-                      ))}
-                    </div>
-                    {/* Display counts if available */}
-                    {miracle.lifeCount && miracle.deathCount && (
-                      <div className="mt-2 text-xs text-purple-600 dark:text-purple-400">
-                        Count: {miracle.lifeCount} / {miracle.deathCount}
-                      </div>
-                    )}
-                    {miracle.manCount && miracle.womanCount && (
-                      <div className="mt-2 text-xs text-purple-600 dark:text-purple-400">
-                        Count: {miracle.manCount} / {miracle.womanCount}
-                      </div>
-                    )}
-                    {miracle.heavenCount && miracle.hellCount && (
-                      <div className="mt-2 text-xs text-purple-600 dark:text-purple-400">
-                        Count: {miracle.heavenCount} / {miracle.hellCount}
-                      </div>
-                    )}
                   </div>
                 )}
 
@@ -438,7 +403,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
           <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
             <li>• Use quotes for exact phrase matching</li>
             <li>• Search in notes for detailed explanations</li>
-            <li>• Search source names like "Dr. Rashad Khalifa"</li>
+            <li>• Search source names like "Sahih Bukhari"</li>
             <li>• Search pair words like "Life", "Death", "Man", "Woman"</li>
             <li>
               • Use prophetic terms like "fulfilled", "pending", "evidence"

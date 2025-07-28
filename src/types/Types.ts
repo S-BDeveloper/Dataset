@@ -1,7 +1,6 @@
 // Types for the Quranic Signs & Guidance app
 export interface QuranicMiracle {
   type:
-    | "pair"
     | "middle"
     | "numerical"
     | "structure"
@@ -15,30 +14,9 @@ export interface QuranicMiracle {
     verification: string;
     methodology: string;
     references: string[];
-    academic: string;
+    source: string;
   };
-  // For pairs
-  pair?: string[];
-  lifeCount?: number;
-  deathCount?: number;
-  manCount?: number;
-  womanCount?: number;
-  heavenCount?: number;
-  hellCount?: number;
-  worldCount?: number;
-  hereafterCount?: number;
-  angelsCount?: number;
-  devilsCount?: number;
-  goodCount?: number;
-  evilCount?: number;
-  lightCount?: number;
-  darknessCount?: number;
-  guidanceCount?: number;
-  misguidanceCount?: number;
-  dayCount?: number;
-  nightCount?: number;
-  patienceCount?: number;
-  impatienceCount?: number;
+
   // For other types
   description?: string;
   location?: string;
@@ -71,7 +49,6 @@ export interface QuranicMiracle {
     evidence: string;
   }[];
   fulfillmentConfidence?: "high" | "medium" | "low";
-  academicSources?: string[];
 
   [key: string]: unknown;
 }

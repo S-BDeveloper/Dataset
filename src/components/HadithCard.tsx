@@ -16,13 +16,13 @@ export function HadithCard({ hadith, index }: HadithCardProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div className="flex items-center space-x-3">
-          <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center flex-shrink-0">
-            <span className="text-purple-700 dark:text-purple-400 font-bold text-base sm:text-lg">
+          <div className="bg-stone-100 dark:bg-purple-900/30 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center flex-shrink-0">
+            <span className="text-stone-700 dark:text-purple-400 font-bold text-base sm:text-lg">
               {index + 1}
             </span>
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="text-base sm:text-lg font-bold text-purple-700 dark:text-purple-400 truncate">
+            <h3 className="text-base sm:text-lg font-bold text-stone-700 dark:text-purple-400 truncate">
               Hadith #{index + 1}
             </h3>
             <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400">

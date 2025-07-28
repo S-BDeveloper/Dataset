@@ -33,7 +33,7 @@ export function HadithDashboard() {
   if (loading) {
     return (
       <div className="py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-700 mb-4"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stone-600 mb-4"></div>
         <p className="text-stone-600 dark:text-stone-400">
           Loading Hadith data...
         </p>
@@ -55,7 +55,7 @@ export function HadithDashboard() {
     <div className="space-y-6">
       {/* Header */}
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-2">
+        <h2 className="text-3xl font-bold text-stone-700 dark:text-purple-400 mb-2">
           Sahih Bukhari Hadith Collection
         </h2>
         <p className="text-lg text-stone-600 dark:text-stone-400">
@@ -66,7 +66,7 @@ export function HadithDashboard() {
       {/* Statistics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
         <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-          <div className="text-xl sm:text-2xl font-bold text-purple-700 dark:text-purple-400">
+          <div className="text-xl sm:text-2xl font-bold text-stone-700 dark:text-purple-400">
             {stats.totalHadiths.toLocaleString()}
           </div>
           <div className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 font-medium">
@@ -104,11 +104,11 @@ export function HadithDashboard() {
                 placeholder="Search through hadith content..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-l-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
+                className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-l-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
               />
               <button
                 type="submit"
-                className="px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-r-lg hover:bg-purple-700 transition-colors text-sm sm:text-base"
+                className="px-3 sm:px-4 py-2 bg-stone-600 text-white rounded-r-lg hover:bg-stone-700 transition-colors text-sm sm:text-base"
               >
                 Search
               </button>
@@ -125,7 +125,7 @@ export function HadithDashboard() {
               name="hadith-sort"
               value={filters.sortBy}
               onChange={handleSortChange}
-              className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
+              className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
             >
               <option value="index">Original Order</option>
               <option value="length">Length (Longest First)</option>

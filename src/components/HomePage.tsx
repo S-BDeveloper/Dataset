@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { AdvancedSearchDashboard } from "./search/AdvancedSearchDashboard";
 import { ChartsDashboard } from "./charts/ChartsDashboard";
-import { Stats } from "./Stats";
 import { MiracleCard } from "./MiracleCard";
 import PaginationButton from "./PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
@@ -14,7 +13,6 @@ import { scrollToTop } from "../utils/scrollUtils";
 
 interface HomePageProps {
   miracles: QuranicMiracle[];
-  sortedMiracles: QuranicMiracle[];
   paginatedMiracles: QuranicMiracle[];
   filters: MiracleFilters;
   setFilters: Dispatch<SetStateAction<MiracleFilters>>;
@@ -35,7 +33,6 @@ interface HomePageProps {
 
 export default function HomePage({
   miracles,
-  sortedMiracles,
   paginatedMiracles,
   filters,
   setFilters,
@@ -115,7 +112,7 @@ export default function HomePage({
               {miracles.length}
             </div>
             <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
-              Total Signs
+              Authentic Signs
             </div>
           </div>
           <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
@@ -180,16 +177,7 @@ export default function HomePage({
             >
               Charts & Graphs
             </button>
-            <button
-              onClick={() => setActiveTab("stats")}
-              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
-                activeTab === "stats"
-                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
-              }`}
-            >
-              Statistics
-            </button>
+
             <button
               onClick={() => setActiveTab("quran")}
               className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
@@ -204,7 +192,7 @@ export default function HomePage({
               onClick={() => setActiveTab("hadith")}
               className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
                 activeTab === "hadith"
-                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
+                  ? "text-transparent dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
                   : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
               }`}
             >
@@ -414,18 +402,6 @@ export default function HomePage({
               <>
                 <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
                   <ChartsDashboard data={miracles} />
-                </section>
-              </>
-            )}
-
-            {/* Statistics Tab */}
-            {activeTab === "stats" && (
-              <>
-                <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
-                  <Stats
-                    miracles={miracles}
-                    filteredCount={sortedMiracles.length}
-                  />
                 </section>
               </>
             )}

@@ -112,11 +112,7 @@ export const DataPreview: React.FC<DataPreviewProps> = ({
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-stone-600 dark:text-stone-400 max-w-xs">
-                    {miracle.type === "pair" ? (
-                      <span className="text-green-700 dark:text-green-400 font-medium">
-                        {miracle.pair?.join(" & ")}
-                      </span>
-                    ) : miracle.status ? (
+                    {miracle.status ? (
                       <span
                         className={`inline-block px-2 py-1 text-xs font-semibold rounded-full capitalize ${
                           miracle.status === "Fulfilled"
@@ -139,20 +135,7 @@ export const DataPreview: React.FC<DataPreviewProps> = ({
                     )}
                   </td>
                   <td className="px-4 py-3 text-sm text-stone-700 dark:text-stone-300 font-medium">
-                    {miracle.type === "pair" ? (
-                      <span className="text-orange-700 dark:text-orange-400">
-                        {miracle.lifeCount ||
-                          miracle.manCount ||
-                          miracle.heavenCount ||
-                          miracle.worldCount ||
-                          miracle.angelsCount ||
-                          miracle.goodCount ||
-                          miracle.patienceCount ||
-                          "N/A"}
-                      </span>
-                    ) : (
-                      "N/A"
-                    )}
+                    N/A
                   </td>
                   <td className="px-4 py-3 text-sm text-stone-600 dark:text-stone-400 max-w-xs">
                     <div className="flex items-center justify-between">
@@ -219,26 +202,6 @@ export const DataPreview: React.FC<DataPreviewProps> = ({
                               Additional Details
                             </h4>
                             <div className="space-y-2 text-sm text-stone-600 dark:text-stone-400">
-                              {miracle.type === "pair" && (
-                                <>
-                                  <p>
-                                    <strong>Word Pair:</strong>{" "}
-                                    {miracle.pair?.join(" & ")}
-                                  </p>
-                                  <p>
-                                    <strong>Frequency:</strong>{" "}
-                                    {miracle.lifeCount ||
-                                      miracle.manCount ||
-                                      miracle.heavenCount ||
-                                      miracle.worldCount ||
-                                      miracle.angelsCount ||
-                                      miracle.goodCount ||
-                                      miracle.patienceCount ||
-                                      "N/A"}{" "}
-                                    times each
-                                  </p>
-                                </>
-                              )}
                               {miracle.status && (
                                 <p>
                                   <strong>Status:</strong>{" "}
@@ -296,8 +259,8 @@ export const DataPreview: React.FC<DataPreviewProps> = ({
                               </div>
                               <div>
                                 <p>
-                                  <strong>Academic:</strong>{" "}
-                                  {miracle.sources.academic}
+                                  <strong>Source:</strong>{" "}
+                                  {miracle.sources.source}
                                 </p>
                                 {miracle.sources.references &&
                                   miracle.sources.references.length > 0 && (

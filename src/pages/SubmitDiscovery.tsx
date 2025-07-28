@@ -85,7 +85,7 @@ const SubmitDiscovery: React.FC = () => {
           verification: formData.verification,
           references: formData.references,
           methodology: "Community Submission",
-          academic: "Pending Review",
+          source: "Pending Review",
         },
       };
 
@@ -229,7 +229,7 @@ const SubmitDiscovery: React.FC = () => {
                 value={formData.references.join(", ")}
                 onChange={(e) => handleReferencesChange(e.target.value)}
                 className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
-                placeholder="e.g., Dr. Rashad Khalifa, Dr. Maurice Bucaille, etc."
+                placeholder="e.g., Sahih Bukhari, Dr. Keith Moore, etc."
               />
             </div>
 

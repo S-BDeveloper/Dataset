@@ -95,17 +95,13 @@ export const AdvancedSearchDashboard: React.FC<
               searchableFields.push(miracle.sources.primary.toLowerCase());
               searchableFields.push(miracle.sources.verification.toLowerCase());
               searchableFields.push(miracle.sources.methodology.toLowerCase());
-              searchableFields.push(miracle.sources.academic.toLowerCase());
+              searchableFields.push(miracle.sources.source.toLowerCase());
               miracle.sources.references.forEach((ref) => {
                 searchableFields.push(ref.toLowerCase());
               });
             }
             // NEW: Include pair information
-            if (filterState.searchFields.includes("pairs") && miracle.pair) {
-              miracle.pair.forEach((pairItem) => {
-                searchableFields.push(pairItem.toLowerCase());
-              });
-            }
+
             // NEW: Include prophetic fulfillment information
             if (
               filterState.searchFields.includes("prophecy") &&

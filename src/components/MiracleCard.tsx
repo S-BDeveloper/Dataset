@@ -35,31 +35,6 @@ export const MiracleCard: React.FC<MiracleCardProps> = ({
         </span>
       </div>
 
-      {/* Word Pair Display */}
-      {miracle.type === "pair" && miracle.pair && (
-        <div className="bg-green-50 dark:bg-green-900/30 rounded-lg p-3 sm:p-4 border border-green-200 dark:border-green-700">
-          <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2 text-base sm:text-lg">
-            Word Pair:
-          </h4>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-            <span className="text-base sm:text-lg font-medium text-green-700 dark:text-green-400">
-              {miracle.pair[0]}
-            </span>
-            <span className="text-stone-400 dark:text-stone-500 text-xs sm:text-sm">
-              vs
-            </span>
-            <span className="text-base sm:text-lg font-medium text-green-700 dark:text-green-400">
-              {miracle.pair[1]}
-            </span>
-          </div>
-          {miracle.lifeCount && miracle.deathCount && (
-            <div className="mt-2 text-sm sm:text-base text-stone-600 dark:text-stone-400">
-              Count: {miracle.lifeCount} each
-            </div>
-          )}
-        </div>
-      )}
-
       {/* Description */}
       {miracle.description && (
         <div className="text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
@@ -97,10 +72,10 @@ export const MiracleCard: React.FC<MiracleCardProps> = ({
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-1">
               <span className="font-medium text-stone-700 dark:text-stone-300">
-                Academic:
+                Source:
               </span>
               <span className="text-stone-600 dark:text-stone-400">
-                {miracle.sources.academic}
+                {miracle.sources.source}
               </span>
             </div>
             {miracle.sources.references &&
