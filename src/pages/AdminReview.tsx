@@ -91,10 +91,10 @@ const AdminReview: React.FC = () => {
       <div className="container mx-auto max-w-6xl px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-green-700 dark:text-green-400 mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-4">
             Content Review Panel
           </h1>
-          <p className="text-lg text-stone-600 dark:text-stone-400">
+          <p className="text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
             Review and moderate community submissions for accuracy and quality.
           </p>
         </div>

@@ -96,3 +96,37 @@ export interface User {
     language?: string;
   };
 }
+
+export interface QuranAyah {
+  surah_no: number;
+  surah_name_en: string;
+  surah_name_ar: string;
+  surah_name_roman: string;
+  ayah_no_surah: number;
+  ayah_no_quran: number;
+  ayah_ar: string;
+  ayah_en: string; // English translation
+  hizb_quarter: number;
+  total_ayah_surah: number;
+  total_ayah_quran: number;
+  place_of_revelation: string;
+  sajah_ayah: boolean;
+  sajdah_no: string;
+  no_of_word_ayah: number;
+}
+
+export interface HadithEntry {
+  [key: string]: string; // Dynamic key-value pairs for hadith content
+}
+
+export interface QuranFilters {
+  surah?: number;
+  searchTerm: string;
+  placeOfRevelation?: string;
+  sortBy: string;
+}
+
+export interface HadithFilters {
+  searchTerm: string;
+  sortBy: string;
+}

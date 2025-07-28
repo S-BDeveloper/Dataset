@@ -7,6 +7,10 @@ import PaginationButton from "./PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
 import type { QuranicMiracle, MiracleFilters } from "../types/Types";
 import type { Dispatch, SetStateAction } from "react";
+import Masonry from "react-masonry-css";
+import { QuranDashboard } from "./QuranDashboard";
+import { HadithDashboard } from "./HadithDashboard";
+import { scrollToTop } from "../utils/scrollUtils";
 
 interface HomePageProps {
   miracles: QuranicMiracle[];
@@ -81,15 +85,22 @@ export default function HomePage({
     }
   }, [currentPage, miraclesListRef]);
 
+  // Masonry breakpoints
+  const breakpointColumns = {
+    default: 3,
+    1200: 2,
+    768: 1,
+  };
+
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300">
-      <div className="container mx-auto max-w-7xl px-4 py-8">
+      <div className="container mx-auto max-w-7xl px-2 sm:px-4 py-8 w-full overflow-hidden">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-green-700 dark:text-green-400 mb-4">
-            Islamic Signs and Guidance
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-green-700 dark:text-green-400 mb-4">
+            Authentic Islamic Knowledge
           </h1>
-          <p className="text-lg text-stone-600 dark:text-stone-400 max-w-3xl mx-auto">
+          <p className="text-lg text-stone-600 dark:text-stone-400 max-w-3xl leading-relaxed">
             Discover the miraculous signs of Allah through Quranic revelations,
             prophetic guidance, and divine wisdom. Explore mathematical
             patterns, linguistic miracles, and fulfilled prophecies that
@@ -98,39 +109,39 @@ export default function HomePage({
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-green-700 dark:text-green-400">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl sm:text-3xl font-bold text-green-700 dark:text-green-400">
               {miracles.length}
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
               Total Signs
             </div>
           </div>
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl sm:text-3xl font-bold text-blue-700 dark:text-blue-400">
               {types.length}
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
               Categories
             </div>
           </div>
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl sm:text-3xl font-bold text-purple-700 dark:text-purple-400">
               {favorites.length}
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
               Saved
             </div>
           </div>
-          <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-orange-700 dark:text-orange-400">
+          <div className="bg-white dark:bg-stone-800 rounded-xl p-3 sm:p-4 shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="text-2xl sm:text-3xl font-bold text-orange-700 dark:text-orange-400">
               {
                 miracles.filter((m) => m.fulfillmentStatus === "fulfilled")
                   .length
               }
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-xs sm:text-base text-stone-600 dark:text-stone-400 font-medium">
               Fulfilled
             </div>
           </div>
@@ -141,7 +152,7 @@ export default function HomePage({
           <div className="flex flex-wrap border-b border-stone-200 dark:border-stone-700">
             <button
               onClick={() => setActiveTab("all")}
-              className={`px-6 py-4 text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
                 activeTab === "all"
                   ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
                   : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
@@ -151,7 +162,7 @@ export default function HomePage({
             </button>
             <button
               onClick={() => setActiveTab("search")}
-              className={`px-6 py-4 text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
                 activeTab === "search"
                   ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
                   : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
@@ -161,7 +172,7 @@ export default function HomePage({
             </button>
             <button
               onClick={() => setActiveTab("charts")}
-              className={`px-6 py-4 text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
                 activeTab === "charts"
                   ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
                   : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
@@ -171,13 +182,33 @@ export default function HomePage({
             </button>
             <button
               onClick={() => setActiveTab("stats")}
-              className={`px-6 py-4 text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
                 activeTab === "stats"
                   ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
                   : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
               }`}
             >
               Statistics
+            </button>
+            <button
+              onClick={() => setActiveTab("quran")}
+              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
+                activeTab === "quran"
+                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
+                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
+              }`}
+            >
+              Quran
+            </button>
+            <button
+              onClick={() => setActiveTab("hadith")}
+              className={`px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition-colors ${
+                activeTab === "hadith"
+                  ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400"
+                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
+              }`}
+            >
+              Hadith
             </button>
           </div>
 
@@ -187,14 +218,14 @@ export default function HomePage({
             {activeTab === "all" && (
               <>
                 {/* Filters and Controls */}
-                <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div className="mb-6 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center justify-between">
                   <div className="flex flex-wrap gap-2">
                     <select
                       value={filters.type || ""}
                       onChange={(e) =>
                         setFilters({ ...filters, type: e.target.value })
                       }
-                      className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
                     >
                       <option value="">All Types</option>
                       {types.map((type) => (
@@ -208,7 +239,7 @@ export default function HomePage({
                       onChange={(e) =>
                         setFilters({ ...filters, status: e.target.value })
                       }
-                      className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
                     >
                       <option value="">All Status</option>
                       <option value="fulfilled">Fulfilled</option>
@@ -219,13 +250,13 @@ export default function HomePage({
                   <div className="flex gap-2">
                     <button
                       onClick={handleExportCSV}
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
+                      className="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-xs sm:text-sm"
                     >
                       Export CSV
                     </button>
                     <button
                       onClick={handleExportJSON}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                      className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm"
                     >
                       Export JSON
                     </button>
@@ -233,27 +264,35 @@ export default function HomePage({
                 </div>
 
                 {/* Miracles List */}
-                <div ref={miraclesListRef}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div ref={miraclesListRef} className="w-full overflow-hidden">
+                  <Masonry
+                    breakpointCols={breakpointColumns}
+                    className="flex w-full"
+                    columnClassName="bg-clip-padding pr-2 sm:pr-4"
+                  >
                     {paginatedMiracles.map((miracle) => (
-                      <MiracleCard
-                        key={miracle.title}
-                        miracle={miracle}
-                        isFavorite={isFavorite(miracle)}
-                        onFavorite={handleFavorite}
-                      />
+                      <div key={miracle.title} className="mb-4">
+                        <MiracleCard
+                          miracle={miracle}
+                          isFavorite={isFavorite(miracle)}
+                          onFavorite={handleFavorite}
+                        />
+                      </div>
                     ))}
-                  </div>
+                  </Masonry>
 
                   {/* Pagination */}
                   {totalPages > 1 && (
                     <>
                       <div className="mt-8 flex items-center justify-center">
-                        <nav className="flex items-center space-x-2">
-                          <ul className="flex items-center space-x-1">
+                        <nav className="flex items-center space-x-1 sm:space-x-2">
+                          <ul className="flex items-center space-x-1 flex-wrap justify-center">
                             <li>
                               <PaginationButton
-                                onClick={() => setCurrentPage(1)}
+                                onClick={() => {
+                                  setCurrentPage(1);
+                                  scrollToTop();
+                                }}
                                 disabled={currentPage === 1}
                                 ariaLabel="First page"
                               >
@@ -262,9 +301,10 @@ export default function HomePage({
                             </li>
                             <li>
                               <PaginationButton
-                                onClick={() =>
-                                  setCurrentPage(Math.max(1, currentPage - 1))
-                                }
+                                onClick={() => {
+                                  setCurrentPage(Math.max(1, currentPage - 1));
+                                  scrollToTop();
+                                }}
                                 disabled={currentPage === 1}
                                 ariaLabel="Previous page"
                               >
@@ -277,7 +317,10 @@ export default function HomePage({
                             ).map((page) => (
                               <li key={page}>
                                 <PaginationButton
-                                  onClick={() => setCurrentPage(page)}
+                                  onClick={() => {
+                                    setCurrentPage(page);
+                                    scrollToTop();
+                                  }}
                                   isActive={page === currentPage}
                                   ariaLabel={`Go to page ${page}${
                                     page === currentPage
@@ -291,11 +334,12 @@ export default function HomePage({
                             ))}
                             <li>
                               <PaginationButton
-                                onClick={() =>
+                                onClick={() => {
                                   setCurrentPage(
                                     Math.min(totalPages, currentPage + 1)
-                                  )
-                                }
+                                  );
+                                  scrollToTop();
+                                }}
                                 disabled={currentPage === totalPages}
                                 ariaLabel="Next page"
                               >
@@ -304,7 +348,10 @@ export default function HomePage({
                             </li>
                             <li>
                               <PaginationButton
-                                onClick={() => setCurrentPage(totalPages)}
+                                onClick={() => {
+                                  setCurrentPage(totalPages);
+                                  scrollToTop();
+                                }}
                                 disabled={currentPage === totalPages}
                                 ariaLabel="Last page"
                               >
@@ -316,27 +363,32 @@ export default function HomePage({
                       </div>
 
                       {/* Go to Page Input */}
-                      <div className="mt-4 flex items-center justify-center gap-2">
-                        <span className="text-sm text-stone-600 dark:text-stone-400">
+                      <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2">
+                        <span className="text-xs sm:text-sm text-stone-600 dark:text-stone-400">
                           Go to page:
                         </span>
-                        <input
-                          type="number"
-                          min="1"
-                          max={totalPages}
-                          value={goToPage}
-                          onChange={(e) => setGoToPage(e.target.value)}
-                          onKeyPress={(e) =>
-                            e.key === "Enter" && handleGoToPage()
-                          }
-                          className="w-16 px-2 py-1 border border-stone-300 dark:border-stone-600 rounded bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 text-sm"
-                        />
-                        <button
-                          onClick={handleGoToPage}
-                          className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm"
-                        >
-                          Go
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="number"
+                            min="1"
+                            max={totalPages}
+                            value={goToPage}
+                            onChange={(e) => setGoToPage(e.target.value)}
+                            onKeyPress={(e) =>
+                              e.key === "Enter" && handleGoToPage()
+                            }
+                            className="w-16 px-2 py-1 border border-stone-300 dark:border-stone-600 rounded bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 text-xs sm:text-sm"
+                          />
+                          <button
+                            onClick={() => {
+                              handleGoToPage();
+                              scrollToTop();
+                            }}
+                            className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-xs sm:text-sm"
+                          >
+                            Go
+                          </button>
+                        </div>
                       </div>
                     </>
                   )}
@@ -374,6 +426,24 @@ export default function HomePage({
                     miracles={miracles}
                     filteredCount={sortedMiracles.length}
                   />
+                </section>
+              </>
+            )}
+
+            {/* Quran Tab */}
+            {activeTab === "quran" && (
+              <>
+                <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+                  <QuranDashboard />
+                </section>
+              </>
+            )}
+
+            {/* Hadith Tab */}
+            {activeTab === "hadith" && (
+              <>
+                <section className="mb-6 sm:mb-12 p-3 sm:p-6 bg-white dark:bg-stone-800 rounded-2xl shadow">
+                  <HadithDashboard />
                 </section>
               </>
             )}

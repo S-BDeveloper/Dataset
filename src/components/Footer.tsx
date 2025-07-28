@@ -5,8 +5,8 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-stone-900 dark:bg-stone-950 text-stone-300">
-      <div className="container mx-auto max-w-7xl px-4 py-12">
+    <footer className="bg-stone-900 dark:bg-stone-950 text-stone-300 w-full overflow-hidden">
+      <div className="container mx-auto max-w-7xl px-2 sm:px-4 py-12 w-full overflow-hidden">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* App Info */}
@@ -256,7 +256,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Mission Statement */}
-          <div className="mt-6 text-center">
+          <div className="mt-6">
             <p className="text-stone-500 text-xs leading-relaxed max-w-2xl mx-auto">
               Our mission is to showcase the miraculous signs of Allah through
               evidence-based discoveries, fostering a deeper understanding and

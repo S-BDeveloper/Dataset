@@ -20,7 +20,7 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`px-3 py-1 rounded-lg font-semibold text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400 border ${
+      className={`px-2 sm:px-3 py-1 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400 border ${
         isActive
           ? "bg-green-700 text-white border-green-700 shadow-md"
           : disabled

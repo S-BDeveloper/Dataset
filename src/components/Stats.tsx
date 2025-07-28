@@ -101,7 +101,7 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 dark:bg-stone-800">
-        <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/30 rounded-xl p-4 text-center border border-green-200 dark:border-green-700">
+        <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/30 rounded-xl p-4 border border-green-200 dark:border-green-700">
           <div className="text-2xl font-bold text-green-700 dark:text-green-400">
             {totalSigns}
           </div>
@@ -110,7 +110,7 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/30 rounded-xl p-4 text-center border border-blue-200 dark:border-blue-700">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/30 rounded-xl p-4 border border-blue-200 dark:border-blue-700">
           <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
             {filteredCount}
           </div>
@@ -119,7 +119,7 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/30 rounded-xl p-4 text-center border border-orange-200 dark:border-orange-700">
+        <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/30 rounded-xl p-4 border border-orange-200 dark:border-orange-700">
           <div className="text-2xl font-bold text-orange-700 dark:text-orange-400">
             {pairSigns}
           </div>
@@ -128,7 +128,7 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/30 rounded-xl p-4 text-center border border-purple-200 dark:border-purple-700">
+        <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/30 rounded-xl p-4 border border-purple-200 dark:border-purple-700">
           <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
             {numericalSigns +
               structuralSigns +
@@ -155,17 +155,17 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
             ?
           </span>
         </h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm text-left">
+        <div className="w-full">
+          <table className="w-full text-sm">
             <thead>
               <tr className="bg-green-50 dark:bg-stone-800">
-                <th className="px-2 py-1 font-semibold">Field</th>
-                <th className="px-2 py-1 font-semibold">Mean</th>
-                <th className="px-2 py-1 font-semibold">Median</th>
-                <th className="px-2 py-1 font-semibold">Mode</th>
-                <th className="px-2 py-1 font-semibold">Min</th>
-                <th className="px-2 py-1 font-semibold">Max</th>
-                <th className="px-2 py-1 font-semibold">Std Dev</th>
+                <th className="px-3 py-2 font-semibold text-left">Field</th>
+                <th className="px-3 py-2 font-semibold text-center">Mean</th>
+                <th className="px-3 py-2 font-semibold text-center">Median</th>
+                <th className="px-3 py-2 font-semibold text-center">Mode</th>
+                <th className="px-3 py-2 font-semibold text-center">Min</th>
+                <th className="px-3 py-2 font-semibold text-center">Max</th>
+                <th className="px-3 py-2 font-semibold text-center">Std Dev</th>
               </tr>
             </thead>
             <tbody>
@@ -182,18 +182,24 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
                     key={field}
                     className="border-b border-green-100 dark:border-stone-700"
                   >
-                    <td className="px-2 py-1 font-medium text-green-800 dark:text-green-200">
+                    <td className="px-3 py-2 font-medium text-green-800 dark:text-green-200 text-left">
                       {field.replace(/Count$/, " Count")}
                     </td>
                     {/* Inline explanation: Each cell below shows a different statistical metric for this field. */}
-                    <td className="px-2 py-1">{mean(values).toFixed(2)}</td>
-                    <td className="px-2 py-1">{median(values).toFixed(2)}</td>
-                    <td className="px-2 py-1">
+                    <td className="px-3 py-2 text-center">
+                      {mean(values).toFixed(2)}
+                    </td>
+                    <td className="px-3 py-2 text-center">
+                      {median(values).toFixed(2)}
+                    </td>
+                    <td className="px-3 py-2 text-center">
                       {mode(values) !== null ? mode(values) : "-"}
                     </td>
-                    <td className="px-2 py-1">{min(values)}</td>
-                    <td className="px-2 py-1">{max(values)}</td>
-                    <td className="px-2 py-1">{stddev(values).toFixed(2)}</td>
+                    <td className="px-3 py-2 text-center">{min(values)}</td>
+                    <td className="px-3 py-2 text-center">{max(values)}</td>
+                    <td className="px-3 py-2 text-center">
+                      {stddev(values).toFixed(2)}
+                    </td>
                   </tr>
                 );
               })}
@@ -204,7 +210,7 @@ export const Stats: React.FC<StatsProps> = ({ miracles, filteredCount }) => {
       </div>
 
       {/* Correlation Matrix Analysis */}
-      <div className="mt-8">
+      <div className="mt-8 chart-container">
         <CorrelationMatrix miracles={miracles} />
       </div>
     </>

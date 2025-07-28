@@ -138,7 +138,7 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
   );
 
   return (
-    <div className="bg-white dark:bg-stone-900 rounded-xl p-4 border border-green-200 dark:border-green-700 shadow">
+    <div className="bg-white dark:bg-stone-900 rounded-xl p-4 border border-green-200 dark:border-green-700 shadow chart-container">
       <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-4 flex items-center gap-2">
         Correlation Matrix Analysis
         <span
@@ -150,12 +150,12 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
       </h3>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full text-xs">
+        <table className="min-w-full text-sm">
           <thead>
             <tr>
-              <th className="px-1 py-1 font-semibold text-left">Field</th>
+              <th className="px-2 py-2 font-semibold text-left">Field</th>
               {NUMERICAL_FIELDS.map((field) => (
-                <th key={field} className="px-1 py-1 font-semibold text-center">
+                <th key={field} className="px-2 py-2 font-semibold text-center">
                   {field.replace(/Count$/, "").slice(0, 8)}
                 </th>
               ))}
@@ -164,7 +164,7 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
           <tbody>
             {NUMERICAL_FIELDS.map((field, rowIndex) => (
               <tr key={field}>
-                <td className="px-1 py-1 font-medium text-green-800 dark:text-green-200 text-left">
+                <td className="px-2 py-2 font-medium text-green-800 dark:text-green-200 text-left">
                   {field.replace(/Count$/, "").slice(0, 8)}
                 </td>
                 {NUMERICAL_FIELDS.map((_, colIndex) => {
@@ -178,7 +178,7 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
                   return (
                     <td
                       key={colIndex}
-                      className={`px-1 py-1 text-center border ${
+                      className={`px-2 py-2 text-center border ${
                         isDiagonal
                           ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 font-bold"
                           : isKnownPairCell && correlation === 1.0
@@ -210,31 +210,31 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
       </div>
 
       {/* Legend explaining correlation values */}
-      <div className="mt-4 p-3 bg-gray-50 dark:bg-stone-800 rounded-lg">
-        <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+      <div className="mt-4 p-4 bg-gray-50 dark:bg-stone-800 rounded-lg">
+        <h4 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3">
           Correlation Interpretation:
         </h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-gray-100 dark:bg-gray-800 rounded"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-gray-100 dark:bg-gray-800 rounded"></div>
             <span className="text-gray-600 dark:text-gray-400">
               0.0-0.1: No correlation
             </span>
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-blue-100 dark:bg-blue-900/30 rounded"></div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-blue-100 dark:bg-blue-900/30 rounded"></div>
             <span className="text-gray-600 dark:text-gray-400">
               0.1-0.3: Weak
             </span>
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-blue-200 dark:bg-blue-800/40 rounded"></div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-blue-200 dark:bg-blue-800/40 rounded"></div>
             <span className="text-gray-600 dark:text-gray-400">
               0.3-0.5: Moderate
             </span>
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-green-200 dark:bg-green-800/40 rounded"></div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-200 dark:bg-green-800/40 rounded"></div>
             <span className="text-gray-600 dark:text-gray-400">
               1.000: Quranic Miracle!
             </span>
@@ -242,11 +242,11 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
         </div>
 
         {/* Explanation of what the matrix shows */}
-        <div className="mt-3 p-2 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-700">
-          <h5 className="text-xs font-semibold text-green-800 dark:text-green-200 mb-1">
+        <div className="mt-3 p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-700">
+          <h5 className="text-sm font-semibold text-green-800 dark:text-green-200 mb-2">
             Understanding This Matrix:
           </h5>
-          <ul className="text-xs text-green-700 dark:text-green-300 space-y-1">
+          <ul className="text-sm text-green-700 dark:text-green-300 space-y-2">
             <li>
               • <strong>Diagonal (1.000):</strong> A field perfectly correlates
               with itself (expected)
@@ -266,7 +266,7 @@ export const CorrelationMatrix: React.FC<CorrelationMatrixProps> = ({
           </ul>
         </div>
 
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
           Hover over cells to see exact correlation values. Green cells with
           1.000 reveal Quranic mathematical miracles!
         </p>

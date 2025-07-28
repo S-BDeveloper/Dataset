@@ -266,7 +266,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
 
       {/* Quick Search Tips */}
       {!query && (
-        <div className="mt-2 text-xs text-stone-500 dark:text-stone-400 text-center">
+        <div className="mt-2 text-xs text-stone-500 dark:text-stone-400">
           <span className="font-medium">Quick tips:</span> Try searching by
           type, title, or keywords
         </div>

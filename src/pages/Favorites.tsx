@@ -43,11 +43,11 @@ const Favorites: React.FC = () => {
         <Breadcrumb />
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-green-700 dark:text-green-400 mb-4">
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-4">
             My Saved Favorites
           </h1>
-          <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl leading-relaxed">
             Your personally saved Islamic signs and guidance. These miracles
             have been saved for quick access and reference.
           </p>
@@ -56,29 +56,29 @@ const Favorites: React.FC = () => {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-green-700 dark:text-green-400">
+            <div className="text-3xl font-bold text-green-700 dark:text-green-400">
               {favorites.length}
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-base text-stone-600 dark:text-stone-400 font-medium">
               Total Saved
             </div>
           </div>
           <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
+            <div className="text-3xl font-bold text-blue-700 dark:text-blue-400">
               {Array.from(new Set(favorites.map((f) => f.type))).length}
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-base text-stone-600 dark:text-stone-400 font-medium">
               Categories
             </div>
           </div>
           <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
-            <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+            <div className="text-3xl font-bold text-purple-700 dark:text-purple-400">
               {
                 favorites.filter((f) => f.fulfillmentStatus === "fulfilled")
                   .length
               }
             </div>
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="text-base text-stone-600 dark:text-stone-400 font-medium">
               Fulfilled
             </div>
           </div>

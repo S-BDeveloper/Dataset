@@ -295,26 +295,29 @@ export const AdvancedSearchDashboard: React.FC<
 
   return (
     <div className="space-y-6">
-      {/* Search Header */}
-      <div className="text-center space-y-4">
-        <h2 className="text-2xl font-bold text-green-700 dark:text-green-400">
-          Advanced Search
-        </h2>
-        <p className="text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-          Search through all Islamic signs and guidance with powerful filtering
-          options. Use auto-complete suggestions, save search presets, and
-          explore patterns in the data. Now with enhanced search capabilities
-          including notes, sources, and prophetic information.
-        </p>
-      </div>
-
-      {/* Smart Search Bar */}
+      {/* Search Header with Inline Search Bar */}
       <div className="space-y-4">
-        <SmartSearchBar
-          data={data}
-          onSearch={handleSearch}
-          placeholder="Search for prophecies, numerical patterns, linguistic miracles, notes, sources..."
-        />
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold text-green-700 dark:text-green-400">
+              Advanced Search
+            </h2>
+            <p className="text-stone-600 dark:text-stone-400 max-w-2xl">
+              Search through all Islamic signs and guidance with powerful
+              filtering options. Use auto-complete suggestions, save search
+              presets, and explore patterns in the data. Now with enhanced
+              search capabilities including notes, sources, and prophetic
+              information.
+            </p>
+          </div>
+          <div className="lg:w-96">
+            <SmartSearchBar
+              data={data}
+              onSearch={handleSearch}
+              placeholder="Search for prophecies, numerical patterns, linguistic miracles, notes, sources..."
+            />
+          </div>
+        </div>
       </div>
 
       {/* Advanced Filter Panel */}

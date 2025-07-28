@@ -43,13 +43,13 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
 
   return (
     <div
-      className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6"
+      className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 chart-container"
       aria-label="Interactive bar chart showing distribution of sign types"
     >
       <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6 text-center">
         Signs by Type Distribution
       </h3>
-      <div className="h-80">
+      <div className="h-80 nivo-chart">
         <ResponsiveBar
           data={chartData}
           keys={["count"]}

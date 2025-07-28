@@ -142,7 +142,7 @@ export const CorrelationScatterPlot: React.FC<CorrelationScatterPlotProps> = ({
   };
 
   return (
-    <div className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6">
+    <div className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 chart-container">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
         <h3 className="text-lg font-bold text-green-700 dark:text-green-400 text-center sm:text-left">
           Correlation Analysis: {currentPair.name}
@@ -187,7 +187,7 @@ export const CorrelationScatterPlot: React.FC<CorrelationScatterPlotProps> = ({
       </div>
 
       {/* Scatter Plot */}
-      <div className="h-80">
+      <div className="h-80 nivo-chart">
         {scatterData.length > 0 ? (
           <ResponsiveScatterPlot
             data={chartData}

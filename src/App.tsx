@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
@@ -12,6 +12,7 @@ import type { MiracleFilters } from "./types/Types";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import SubmitDiscovery from "./pages/SubmitDiscovery";
 import AdminReview from "./pages/AdminReview";
 
@@ -54,6 +55,16 @@ function App({ loadingDelay = 1000 }) {
   const miraclesListRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("all");
   const [toast, setToast] = useState<string | null>(null);
+
+  // Auto-clear toast after 3 seconds
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   // Export functions
   const handleExportCSV = () => {
@@ -110,58 +121,60 @@ function App({ loadingDelay = 1000 }) {
   }
 
   return (
-    <DarkModeProvider>
-      <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col">
-        <Navbar />
-        <main className="flex-1">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage
-                  miracles={miracles}
-                  sortedMiracles={sortedMiracles}
-                  paginatedMiracles={paginatedMiracles}
-                  filters={filters}
-                  setFilters={setFilters}
-                  types={types}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  totalPages={totalPages}
-                  goToPage={goToPage}
-                  setGoToPage={setGoToPage}
-                  handleGoToPage={() => handleGoToPage(Number(goToPage))}
-                  handleExportCSV={handleExportCSV}
-                  handleExportJSON={handleExportJSON}
-                  setToast={setToast}
-                  miraclesListRef={miraclesListRef}
-                  activeTab={activeTab}
-                  setActiveTab={setActiveTab}
-                />
-              }
-            />
+    <LanguageProvider>
+      <DarkModeProvider>
+        <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col w-full overflow-hidden">
+          <Navbar />
+          <main className="flex-1 w-full overflow-hidden">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomePage
+                    miracles={miracles}
+                    sortedMiracles={sortedMiracles}
+                    paginatedMiracles={paginatedMiracles}
+                    filters={filters}
+                    setFilters={setFilters}
+                    types={types}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                    goToPage={goToPage}
+                    setGoToPage={setGoToPage}
+                    handleGoToPage={() => handleGoToPage(Number(goToPage))}
+                    handleExportCSV={handleExportCSV}
+                    handleExportJSON={handleExportJSON}
+                    setToast={setToast}
+                    miraclesListRef={miraclesListRef}
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                  />
+                }
+              />
 
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
 
-            {/* Submit Discovery Route */}
-            <Route path="/submit-discovery" element={<SubmitDiscovery />} />
+              {/* Submit Discovery Route */}
+              <Route path="/submit-discovery" element={<SubmitDiscovery />} />
 
-            {/* Admin Review Route */}
-            <Route path="/admin" element={<AdminReview />} />
-          </Routes>
-        </main>
-        <Footer />
+              {/* Admin Review Route */}
+              <Route path="/admin" element={<AdminReview />} />
+            </Routes>
+          </main>
+          <Footer />
 
-        {/* Toast notification */}
-        {toast && (
-          <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
-            {toast}
-          </div>
-        )}
-      </div>
-    </DarkModeProvider>
+          {/* Toast notification */}
+          {toast && (
+            <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+              {toast}
+            </div>
+          )}
+        </div>
+      </DarkModeProvider>
+    </LanguageProvider>
   );
 }
 

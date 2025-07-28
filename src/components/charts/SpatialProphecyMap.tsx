@@ -147,7 +147,7 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
     totalLocations;
 
   return (
-    <div className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6">
+    <div className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 chart-container">
       <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6 text-center">
         Spatial Prophecy Mapping
       </h3>
