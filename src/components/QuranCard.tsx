@@ -34,7 +34,10 @@ export function QuranCard({ ayah }: QuranCardProps) {
       {/* Arabic Text */}
       <div className="mb-4 flex-1">
         <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 sm:p-4 border border-stone-200 dark:border-stone-600">
-          <p className="text-right text-lg sm:text-2xl leading-relaxed text-stone-800 dark:text-stone-200 font-arabic">
+          <p
+            className="text-right text-lg sm:text-2xl leading-relaxed text-stone-800 dark:text-stone-200 font-arabic"
+            dir="rtl"
+          >
             {ayah.ayah_ar}
           </p>
         </div>
@@ -44,10 +47,16 @@ export function QuranCard({ ayah }: QuranCardProps) {
       {ayah.ayah_en && (
         <div className="mb-4">
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 sm:p-4 border border-blue-200 dark:border-blue-700">
-            <h4 className="text-xs sm:text-sm font-semibold text-blue-700 dark:text-blue-400 mb-2">
+            <h4
+              className="text-xs sm:text-sm font-semibold text-blue-700 dark:text-blue-400 mb-2 text-left"
+              dir="ltr"
+            >
               English Translation:
             </h4>
-            <p className="text-sm sm:text-base leading-relaxed text-blue-800 dark:text-blue-300">
+            <p
+              className="text-sm sm:text-base leading-relaxed text-blue-800 dark:text-blue-300 text-left"
+              dir="ltr"
+            >
               {ayah.ayah_en}
             </p>
           </div>
@@ -92,7 +101,10 @@ export function QuranCard({ ayah }: QuranCardProps) {
 
       {/* Arabic Name */}
       <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-600">
-        <p className="text-sm sm:text-lg text-stone-600 dark:text-stone-400 font-arabic">
+        <p
+          className="text-sm sm:text-lg text-stone-600 dark:text-stone-400 font-arabic text-right"
+          dir="rtl"
+        >
           {ayah.surah_name_ar}
         </p>
       </div>

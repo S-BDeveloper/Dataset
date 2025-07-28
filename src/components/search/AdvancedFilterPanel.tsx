@@ -46,9 +46,10 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
   // Get unique values for filters
   const uniqueTypes = [...new Set(data.map((miracle) => miracle.type))];
-  const uniqueCategories = [
-    ...new Set(data.map((miracle) => miracle.category).filter(Boolean)),
-  ];
+  // Remove category filter since QuranicMiracle doesn't have a category property
+  // const uniqueCategories = [
+  //   ...new Set(data.map((miracle) => miracle.category).filter(Boolean)),
+  // ];
   const uniqueFulfillmentStatuses = [
     ...new Set(
       data.map((miracle) => miracle.fulfillmentStatus).filter(Boolean)
@@ -66,7 +67,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
     ...new Set(quranData.map((ayah) => ayah.place_of_revelation)),
   ];
   const quranVerseNumbers = quranData
-    .map((ayah) => parseInt(ayah.ayah_no_surah))
+    .map((ayah) => parseInt(ayah.ayah_no_surah.toString()))
     .filter(Boolean);
   const quranMinVerse =
     quranVerseNumbers.length > 0 ? Math.min(...quranVerseNumbers) : 1;
@@ -112,7 +113,10 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
   ];
 
   // Handle filter changes
-  const handleFilterChange = (key: keyof FilterState, value: any) => {
+  const handleFilterChange = (
+    key: keyof FilterState,
+    value: FilterState[keyof FilterState]
+  ) => {
     onFiltersChange({ ...filters, [key]: value });
   };
 
@@ -304,9 +308,33 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
                   {/* Surah Filter */}
                   <div>
-                    <label className="block text-xs text-stone-600 dark:text-stone-400 mb-2">
-                      Surah Selection
-                    </label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-xs text-stone-600 dark:text-stone-400">
+                        Surah Selection
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newFilters = { ...filters };
+                          if (
+                            filters.quranSurahs.length ===
+                            uniqueQuranSurahs.length
+                          ) {
+                            // If all are selected, clear selection
+                            newFilters.quranSurahs = [];
+                          } else {
+                            // Select all surahs
+                            newFilters.quranSurahs = uniqueQuranSurahs;
+                          }
+                          onFiltersChange(newFilters);
+                        }}
+                        className="text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                      >
+                        {filters.quranSurahs.length === uniqueQuranSurahs.length
+                          ? "Clear All"
+                          : "Select All"}
+                      </button>
+                    </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto">
                       {uniqueQuranSurahs.map((surah) => (
                         <label
@@ -331,9 +359,25 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
                   {/* Verse Number Range */}
                   <div>
-                    <label className="block text-xs text-stone-600 dark:text-stone-400 mb-2">
-                      Verse Number Range
-                    </label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-xs text-stone-600 dark:text-stone-400">
+                        Verse Number Range
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newFilters = { ...filters };
+                          newFilters.quranVerseRange = {
+                            min: quranMinVerse,
+                            max: quranMaxVerse,
+                          };
+                          onFiltersChange(newFilters);
+                        }}
+                        className="text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                      >
+                        Full Range
+                      </button>
+                    </div>
                     <div className="flex gap-2">
                       <input
                         type="number"
@@ -373,9 +417,35 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
                   {/* Place of Revelation */}
                   <div>
-                    <label className="block text-xs text-stone-600 dark:text-stone-400 mb-2">
-                      Place of Revelation
-                    </label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-xs text-stone-600 dark:text-stone-400">
+                        Place of Revelation
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newFilters = { ...filters };
+                          if (
+                            filters.quranPlaceOfRevelation.length ===
+                            uniqueQuranPlaces.length
+                          ) {
+                            // If all are selected, clear selection
+                            newFilters.quranPlaceOfRevelation = [];
+                          } else {
+                            // Select all places
+                            newFilters.quranPlaceOfRevelation =
+                              uniqueQuranPlaces;
+                          }
+                          onFiltersChange(newFilters);
+                        }}
+                        className="text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                      >
+                        {filters.quranPlaceOfRevelation.length ===
+                        uniqueQuranPlaces.length
+                          ? "Clear All"
+                          : "Select All"}
+                      </button>
+                    </div>
                     <div className="grid grid-cols-2 gap-2">
                       {uniqueQuranPlaces.map((place) => (
                         <label
@@ -492,8 +562,8 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                     </div>
                   )}
 
-                  {/* Category Filter */}
-                  {uniqueCategories.length > 0 && (
+                  {/* Category Filter - Removed since QuranicMiracle doesn't have category property */}
+                  {/* {uniqueCategories.length > 0 && (
                     <div>
                       <label className="block text-xs text-stone-600 dark:text-stone-400 mb-2">
                         Categories
@@ -519,7 +589,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                         ))}
                       </div>
                     </div>
-                  )}
+                  )} */}
 
                   {/* Fulfillment Status Filter */}
                   {uniqueFulfillmentStatuses.length > 0 && (
@@ -536,12 +606,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                             <input
                               type="checkbox"
                               checked={filters.fulfillmentStatus.includes(
-                                status
+                                status || ""
                               )}
                               onChange={() =>
                                 handleMultiSelectToggle(
                                   "fulfillmentStatus",
-                                  status
+                                  status || ""
                                 )
                               }
                               className="rounded border-stone-300 text-green-600 focus:ring-green-500"
@@ -570,12 +640,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                             <input
                               type="checkbox"
                               checked={filters.prophecyCategories.includes(
-                                category
+                                category || ""
                               )}
                               onChange={() =>
                                 handleMultiSelectToggle(
                                   "prophecyCategories",
-                                  category
+                                  category || ""
                                 )
                               }
                               className="rounded border-stone-300 text-green-600 focus:ring-green-500"

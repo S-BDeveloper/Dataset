@@ -40,7 +40,10 @@ export function HadithCard({ hadith, index }: HadithCardProps) {
       {/* Main Content */}
       <div className="mb-4 flex-1">
         <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 sm:p-4 border border-stone-200 dark:border-stone-600">
-          <p className="text-right text-sm sm:text-lg leading-relaxed text-stone-800 dark:text-stone-200 font-arabic">
+          <p
+            className="text-right text-sm sm:text-lg leading-relaxed text-stone-800 dark:text-stone-200 font-arabic"
+            dir="rtl"
+          >
             {value}
           </p>
         </div>
@@ -49,10 +52,16 @@ export function HadithCard({ hadith, index }: HadithCardProps) {
       {/* English Translation Placeholder */}
       <div className="mb-4">
         <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3 sm:p-4 border border-yellow-200 dark:border-yellow-700">
-          <h4 className="text-xs sm:text-sm font-semibold text-yellow-700 dark:text-yellow-400 mb-2">
+          <h4
+            className="text-xs sm:text-sm font-semibold text-yellow-700 dark:text-yellow-400 mb-2 text-left"
+            dir="ltr"
+          >
             English Translation:
           </h4>
-          <p className="text-xs sm:text-sm text-yellow-600 dark:text-yellow-300 italic">
+          <p
+            className="text-xs sm:text-sm text-yellow-600 dark:text-yellow-300 italic text-left"
+            dir="ltr"
+          >
             English translations for Hadith are not currently available in this
             dataset. This feature will be added when translation data becomes
             available.
@@ -63,7 +72,10 @@ export function HadithCard({ hadith, index }: HadithCardProps) {
       {/* Additional Entries */}
       {entries.length > 1 && (
         <div className="mb-4">
-          <h4 className="text-xs sm:text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+          <h4
+            className="text-xs sm:text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2 text-left"
+            dir="ltr"
+          >
             Additional Content:
           </h4>
           <div className="space-y-2">
@@ -72,12 +84,18 @@ export function HadithCard({ hadith, index }: HadithCardProps) {
                 key={idx}
                 className="bg-stone-50 dark:bg-stone-700 rounded p-2 sm:p-3 border border-stone-200 dark:border-stone-600"
               >
-                <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mb-1">
+                <p
+                  className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mb-1 text-left"
+                  dir="ltr"
+                >
                   {entryKey.length > 50
                     ? `${entryKey.substring(0, 50)}...`
                     : entryKey}
                 </p>
-                <p className="text-right text-xs sm:text-base leading-relaxed text-stone-800 dark:text-stone-200 font-arabic">
+                <p
+                  className="text-right text-xs sm:text-base leading-relaxed text-stone-800 dark:text-stone-200 font-arabic"
+                  dir="rtl"
+                >
                   {entryValue.length > 200
                     ? `${entryValue.substring(0, 200)}...`
                     : entryValue}

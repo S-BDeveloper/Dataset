@@ -56,7 +56,7 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
           indexBy="type"
           margin={{ top: 20, right: 30, bottom: 80, left: 60 }}
           padding={0.3}
-          colors={({ data }) => data.color}
+          colors={({ data }: { data: { color: string } }) => data.color}
           borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
           axisTop={null}
           axisRight={null}
@@ -139,8 +139,10 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
             },
           }}
           role="img"
-          barAriaLabel={(e) => `${e.data.type}: ${e.data.count} signs`}
-          tooltip={({ data }) => (
+          barAriaLabel={(e: { data: { type: string; count: number } }) =>
+            `${e.data.type}: ${e.data.count} signs`
+          }
+          tooltip={({ data }: { data: { type: string; count: number } }) => (
             <div className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-lg p-3 shadow-lg">
               <div className="font-semibold text-stone-900 dark:text-stone-100">
                 {data.type}

@@ -238,7 +238,11 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
                 },
               },
             }}
-            tooltip={({ datum }) => (
+            tooltip={({
+              datum,
+            }: {
+              datum: { label: string; value: number; color: string };
+            }) => (
               <div className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-lg p-3 shadow-lg">
                 <div className="font-semibold text-stone-900 dark:text-stone-100">
                   {datum.label}

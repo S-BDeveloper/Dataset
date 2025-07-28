@@ -62,11 +62,13 @@ export function useQuranData() {
   const parseCSV = useCallback((csvText: string): QuranAyah[] => {
     try {
       const lines = csvText.split("\n");
+
       if (lines.length < 2) {
         throw new Error("Invalid CSV format: insufficient data");
       }
 
       const headers = lines[0].split(",").map((h) => h.trim());
+
       const requiredHeaders = ["surah_no", "surah_name_en", "ayah_ar"];
       const missingHeaders = requiredHeaders.filter(
         (h) => !headers.includes(h)
@@ -78,7 +80,7 @@ export function useQuranData() {
         );
       }
 
-      return lines
+      const parsedLines = lines
         .slice(1)
         .map((line, index) => {
           try {
@@ -114,6 +116,8 @@ export function useQuranData() {
         .filter(
           (ayah): ayah is QuranAyah => ayah !== null && ayah.surah_no > 0
         );
+
+      return parsedLines;
     } catch (parseError) {
       throw new Error(
         `CSV parsing failed: ${

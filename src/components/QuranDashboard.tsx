@@ -121,7 +121,7 @@ export function QuranDashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" dir="ltr">
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
@@ -218,11 +218,13 @@ export function QuranDashboard() {
           }}
           className="flex w-full"
           columnClassName="bg-clip-padding pr-2 sm:pr-4"
+          dir="rtl"
         >
           {paginatedData.map((ayah) => (
             <div
               key={`${ayah.surah_no}-${ayah.ayah_no_surah}`}
               className="mb-4"
+              dir="ltr"
             >
               <QuranCard ayah={ayah} />
             </div>

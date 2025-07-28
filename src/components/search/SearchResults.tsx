@@ -79,16 +79,21 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
       <div className="space-y-6">
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700 mx-auto mb-4"></div>
-          <p className="text-stone-600 dark:text-stone-400">Searching...</p>
+          <p className="text-stone-600 dark:text-stone-400">
+            Searching across all Islamic sources...
+          </p>
+          <p className="text-sm text-stone-500 dark:text-stone-500 mt-2">
+            This may take a moment for large datasets
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-h-screen overflow-y-auto">
       {/* Search Results Header */}
-      <div className="bg-white dark:bg-stone-800 rounded-xl p-4 border border-stone-200 dark:border-stone-700">
+      <div className="bg-white dark:bg-stone-800 rounded-xl p-4 border border-stone-200 dark:border-stone-700 sticky top-0 z-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-green-700 dark:text-green-400">
@@ -478,7 +483,10 @@ const QuranDetails: React.FC<{ ayah: QuranAyah; searchQuery: string }> = ({
         <h4 className="text-xs font-semibold text-green-700 dark:text-green-300 mb-2 uppercase tracking-wide">
           Arabic Text
         </h4>
-        <p className="text-sm text-green-800 dark:text-green-200 text-right leading-relaxed">
+        <p
+          className="text-sm text-green-800 dark:text-green-200 text-left leading-relaxed"
+          dir="ltr"
+        >
           {highlightText(ayah.ayah_ar, searchQuery)}
         </p>
       </div>

@@ -22,10 +22,16 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   // Debounced search function
+  const timeoutRef = useRef<NodeJS.Timeout>();
   const debouncedSearch = useCallback(
-    debounce((searchQuery: string) => {
-      onSearch(searchQuery);
-    }, 300),
+    (searchQuery: string) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        onSearch(searchQuery);
+      }, 300);
+    },
     [onSearch]
   );
 
@@ -274,15 +280,3 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
     </div>
   );
 };
-
-// Debounce utility function
-function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
-  return (...args: Parameters<T>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-}

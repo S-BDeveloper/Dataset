@@ -52,7 +52,7 @@ export function HadithDashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" dir="ltr">
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-stone-700 dark:text-purple-400 mb-2">
@@ -152,9 +152,10 @@ export function HadithDashboard() {
           }}
           className="flex w-full"
           columnClassName="bg-clip-padding pr-2 sm:pr-4"
+          dir="rtl"
         >
           {paginatedData.map((hadith, index) => (
-            <div key={index} className="mb-4">
+            <div key={index} className="mb-4" dir="ltr">
               <HadithCard
                 hadith={hadith}
                 index={(currentPage - 1) * 20 + index}

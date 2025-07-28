@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { SmartSearchBar } from "./SmartSearchBar";
 import { AdvancedFilterPanel } from "./AdvancedFilterPanel";
 import { SearchResults } from "./SearchResults";
@@ -68,14 +68,18 @@ export const AdvancedSearchDashboard: React.FC<
     []
   );
   const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   // Enhanced search function with comprehensive criteria across all data types
   const performSearch = useCallback(
     (query: string, filterState: FilterState) => {
       setIsSearching(true);
+      setHasSearched(true);
 
       // Simulate search delay for better UX
       setTimeout(() => {
+        // Scroll to top after search starts
+        window.scrollTo({ top: 0, behavior: "smooth" });
         let results: UnifiedSearchResult[] = [];
 
         // Process Miracles data
@@ -131,7 +135,7 @@ export const AdvancedSearchDashboard: React.FC<
           ) {
             quranResults = quranResults.filter((result) => {
               const ayah = result.data as QuranAyah;
-              const verseNumber = parseInt(ayah.ayah_no_surah);
+              const verseNumber = parseInt(ayah.ayah_no_surah.toString());
               return (
                 verseNumber >= filterState.quranVerseRange.min &&
                 verseNumber <= filterState.quranVerseRange.max
@@ -209,19 +213,19 @@ export const AdvancedSearchDashboard: React.FC<
           });
         }
 
-        // Apply category filters (for miracles only)
-        if (filterState.categories.length > 0) {
-          results = results.filter((result) => {
-            if (result.type === "miracle") {
-              const miracle = result.data as QuranicMiracle;
-              return (
-                miracle.category &&
-                filterState.categories.includes(miracle.category as string)
-              );
-            }
-            return true; // Keep non-miracle results
-          });
-        }
+        // Apply category filters (for miracles only) - Removed since QuranicMiracle doesn't have category property
+        // if (filterState.categories.length > 0) {
+        //   results = results.filter((result) => {
+        //     if (result.type === "miracle") {
+        //       const miracle = result.data as QuranicMiracle;
+        //       return (
+        //         miracle.category &&
+        //         filterState.categories.includes(miracle.category as string)
+        //       );
+        //     }
+        //     return true; // Keep non-miracle results
+        //   });
+        // }
 
         // Apply fulfillment status filters (for miracles only)
         if (filterState.fulfillmentStatus.length > 0) {
@@ -337,25 +341,17 @@ export const AdvancedSearchDashboard: React.FC<
     [data, quranData, hadithData]
   );
 
-  // Handle search query changes
-  const handleSearch = useCallback(
-    (query: string) => {
-      setSearchQuery(query);
-      performSearch(query, filters);
-    },
-    [filters, performSearch]
-  );
+  // Handle search query changes - only update state, don't trigger search
+  const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
 
-  // Handle filter changes
-  const handleFiltersChange = useCallback(
-    (newFilters: FilterState) => {
-      setFilters(newFilters);
-      performSearch(searchQuery, newFilters);
-    },
-    [searchQuery, performSearch]
-  );
+  // Handle filter changes - only update state, don't trigger search
+  const handleFiltersChange = useCallback((newFilters: FilterState) => {
+    setFilters(newFilters);
+  }, []);
 
-  // Handle clear filters
+  // Handle clear filters - only update state, don't trigger search
   const handleClearFilters = useCallback(() => {
     const defaultFilters: FilterState = {
       types: [],
@@ -369,73 +365,24 @@ export const AdvancedSearchDashboard: React.FC<
       dataSources: [], // Default to no sources selected - user must choose what to search
       // Initialize new Quran filters with proper defaults
       quranSurahs: [],
-      quranVerseRange: { min: 1, max: 7 }, // Use actual Quran verse range based on loaded data
+      quranVerseRange: { min: 1, max: 6236 }, // Use actual Quran verse range based on loaded data
       quranPlaceOfRevelation: [],
       // Initialize new Hadith filters with proper defaults
       hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
       hadithCategories: [],
     };
     setFilters(defaultFilters);
-    performSearch(searchQuery, defaultFilters);
-  }, [searchQuery, performSearch]);
+  }, []);
 
-  // Initialize with filtered data based on current filters
-  useEffect(() => {
-    // Only load data if dataSources are selected
-    if (filters.dataSources.length === 0) {
-      setFilteredResults([]);
-      return;
-    }
-
-    const allData = [
-      ...(filters.dataSources.includes("miracle")
-        ? data.map((miracle) => ({
-            id: `miracle-${miracle.title}`,
-            type: "miracle" as const,
-            title: miracle.title,
-            content: [
-              miracle.description || "",
-              miracle.notes || "",
-              miracle.sources?.primary || "",
-              miracle.sources?.verification || "",
-              miracle.sources?.methodology || "",
-              miracle.sources?.source || "",
-              miracle.fulfillmentEvidence || "",
-              miracle.prophecyCategory || "",
-            ].join(" "),
-            source: miracle.sources?.source || "Quranic Miracle",
-            data: miracle,
-          }))
-        : []),
-      ...(filters.dataSources.includes("quran")
-        ? quranData.map((ayah) => ({
-            id: `quran-${ayah.surah_no}-${ayah.ayah_no_surah}`,
-            type: "quran" as const,
-            title: `${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
-            content: [
-              ayah.ayah_en,
-              ayah.ayah_ar,
-              ayah.surah_name_en,
-              ayah.surah_name_ar,
-              ayah.place_of_revelation,
-            ].join(" "),
-            source: `Quran - ${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
-            data: ayah,
-          }))
-        : []),
-      ...(filters.dataSources.includes("hadith")
-        ? hadithData.map((hadith, index) => ({
-            id: `hadith-${index}`,
-            type: "hadith" as const,
-            title: `Hadith ${index + 1}`,
-            content: Object.values(hadith).join(" "),
-            source: "Sahih Bukhari",
-            data: hadith,
-          }))
-        : []),
-    ];
-    setFilteredResults(allData);
-  }, [data, quranData, hadithData, filters.dataSources]);
+  // Remove automatic filtering - only filter when user clicks "Confirm Search"
+  // useEffect(() => {
+  //   // Only load data if dataSources are selected
+  //   if (filters.dataSources.length === 0) {
+  //     setFilteredResults([]);
+  //     return;
+  //   }
+  //   // ... rest of automatic filtering logic removed
+  // }, [data, quranData, hadithData, filters.dataSources]);
 
   // Calculate statistics
   const totalDataCount = data.length + quranData.length + hadithData.length;
@@ -481,18 +428,127 @@ export const AdvancedSearchDashboard: React.FC<
         onClearFilters={handleClearFilters}
       />
 
-      {/* Search Results */}
-      <SearchResults
-        results={filteredResults}
-        searchQuery={searchQuery}
-        totalResults={filteredResults.length}
-        onFavorite={onFavorite}
-        isFavorite={isFavorite}
-        isLoading={isSearching}
-      />
+      {/* Confirm Search Button */}
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={() => performSearch(searchQuery, filters)}
+          disabled={isSearching || filters.dataSources.length === 0}
+          className="px-8 py-3 bg-green-600 hover:bg-green-700 disabled:bg-stone-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors duration-200 flex items-center gap-2"
+        >
+          {isSearching ? (
+            <>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              Searching...
+            </>
+          ) : (
+            <>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              Confirm Search
+            </>
+          )}
+        </button>
+
+        {hasSearched && (
+          <button
+            onClick={() => {
+              setHasSearched(false);
+              setFilteredResults([]);
+              setSearchQuery("");
+              setFilters({
+                types: [],
+                categories: [],
+                searchFields: [],
+                sortBy: "title",
+                sortOrder: "asc",
+                fulfillmentStatus: [],
+                prophecyCategories: [],
+                yearRange: { min: 0, max: 2024 },
+                dataSources: [],
+                quranSurahs: [],
+                quranVerseRange: { min: 1, max: 6236 },
+                quranPlaceOfRevelation: [],
+                hadithNumberRange: { min: 1, max: 13143 },
+                hadithCategories: [],
+              });
+            }}
+            className="px-6 py-3 bg-stone-500 hover:bg-stone-600 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center gap-2"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            New Search
+          </button>
+        )}
+      </div>
+
+      {/* Search Results - Only show if user has searched */}
+      {!hasSearched ? (
+        <div className="text-center py-12 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700">
+          <div className="max-w-md mx-auto">
+            <svg
+              className="w-16 h-16 text-stone-400 mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <h3 className="text-lg font-semibold text-stone-700 dark:text-stone-300 mb-2">
+              Ready to Search
+            </h3>
+            <p className="text-stone-600 dark:text-stone-400 mb-4">
+              Configure your search filters above and click "Confirm Search" to
+              begin exploring Islamic knowledge across Quran, Hadith, and
+              miracles.
+            </p>
+            <div className="text-sm text-stone-500 dark:text-stone-500">
+              <p>• Select data sources (Quran, Hadith, Miracles)</p>
+              <p>• Choose specific filters for each source</p>
+              <p>• Enter search terms (optional)</p>
+              <p>• Click "Confirm Search" when ready</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <SearchResults
+          results={filteredResults}
+          searchQuery={searchQuery}
+          totalResults={filteredResults.length}
+          onFavorite={onFavorite}
+          isFavorite={isFavorite}
+          isLoading={isSearching}
+        />
+      )}
 
       {/* Enhanced Search Statistics */}
-      {filteredResults.length > 0 && (
+      {hasSearched && filteredResults.length > 0 && (
         <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
           <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
             Cross-Reference Search Statistics
