@@ -1,9 +1,12 @@
 import React from "react";
 
+// Backward compatibility types
+export type ButtonVariant = "primary" | "secondary" | "danger" | "ghost";
+
 interface AccessibleButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "danger" | "ghost";
+  variant?: ButtonVariant;
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   icon?: React.ReactNode;
@@ -98,3 +101,10 @@ export const AccessibleButton: React.FC<AccessibleButtonProps> = ({
     </button>
   );
 };
+
+// Backward compatibility export
+const Button: React.FC<AccessibleButtonProps> = (props) => {
+  return <AccessibleButton {...props} />;
+};
+
+export default Button;

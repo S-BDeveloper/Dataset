@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import type { QuranAyah, QuranFilters } from "../types/Types";
-// Import data directly to avoid fetch issues
-import quranDataCSV from "../data/The Quran Dataset.csv?raw";
+// Import JSON data directly for better performance
 import quranDataJSON from "../data/The Quran Dataset.json";
 
 // Enhanced error types for better error handling
@@ -13,6 +12,13 @@ interface DataLoadError {
 
 // Cache for parsed data to avoid re-parsing
 const dataCache = new Map<string, QuranAyah[]>();
+
+// Virtual scrolling configuration
+const VIRTUAL_SCROLL_CONFIG = {
+  itemHeight: 200, // Estimated height of each card
+  overscan: 5, // Number of items to render outside viewport
+  batchSize: 50, // Number of items to load in each batch
+};
 
 export function useQuranData() {
   const [data, setData] = useState<QuranAyah[]>([]);
@@ -26,178 +32,62 @@ export function useQuranData() {
     sortBy: "surah_no",
   });
   const [currentPage, setCurrentPage] = useState(1);
+  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 20 });
   const itemsPerPage = 12;
 
-  // Parse CSV line handling quoted values with better error handling
-  const parseCSVLine = (line: string): string[] => {
-    const result = [];
-    let current = "";
-    let inQuotes = false;
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-
-      if (char === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          // Escaped quote
-          current += '"';
-          i++;
-        } else {
-          // Toggle quote state
-          inQuotes = !inQuotes;
-        }
-      } else if (char === "," && !inQuotes) {
-        result.push(current.trim());
-        current = "";
-      } else {
-        current += char;
-      }
-    }
-
-    result.push(current.trim());
-    return result;
-  };
-
-  // Parse CSV data with validation
-  const parseCSV = useCallback((csvText: string): QuranAyah[] => {
+  // Simplified data loading - JSON only for better performance
+  const loadData = useCallback(async (retryAttempt = 0): Promise<void> => {
     try {
-      const lines = csvText.split("\n");
+      setLoading(true);
+      setError(null);
 
-      if (lines.length < 2) {
-        throw new Error("Invalid CSV format: insufficient data");
+      // Check cache first
+      const cacheKey = "quran-data-json";
+      const cachedData = dataCache.get(cacheKey);
+      if (cachedData) {
+        setData(cachedData);
+        setLoading(false);
+        return;
       }
 
-      const headers = lines[0].split(",").map((h) => h.trim());
-
-      const requiredHeaders = ["surah_no", "surah_name_en", "ayah_ar"];
-      const missingHeaders = requiredHeaders.filter(
-        (h) => !headers.includes(h)
-      );
-
-      if (missingHeaders.length > 0) {
-        throw new Error(
-          `Missing required headers: ${missingHeaders.join(", ")}`
+      // Load from JSON directly
+      try {
+        const dataWithTranslations = (quranDataJSON as QuranAyah[]).map(
+          (ayah: QuranAyah) => ({
+            ...ayah,
+            ayah_en: ayah.ayah_en || "", // Preserve existing translation or add empty
+          })
         );
+
+        // Cache the parsed data
+        dataCache.set(cacheKey, dataWithTranslations);
+        setData(dataWithTranslations);
+      } catch {
+        throw new Error("Failed to load Quran data from JSON source");
       }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to load data";
+      const isRetryable =
+        retryAttempt < 3 && errorMessage.includes("Failed to load");
 
-      const parsedLines = lines
-        .slice(1)
-        .map((line, index) => {
-          try {
-            const values = parseCSVLine(line);
-            const row: Record<string, string> = {};
+      setError({
+        message: errorMessage,
+        code: isRetryable ? "NETWORK_ERROR" : "UNKNOWN",
+        retryable: isRetryable,
+      });
 
-            headers.forEach((header, i) => {
-              row[header] = values[i] || "";
-            });
-
-            return {
-              surah_no: parseInt(row.surah_no) || 0,
-              surah_name_en: row.surah_name_en || "",
-              surah_name_ar: row.surah_name_ar || "",
-              surah_name_roman: row.surah_name_roman || "",
-              ayah_no_surah: parseInt(row.ayah_no_surah) || 0,
-              ayah_no_quran: parseInt(row.ayah_no_quran) || 0,
-              ayah_ar: row.ayah_ar || "",
-              ayah_en: row.ayah_en || "",
-              hizb_quarter: parseInt(row.hizb_quarter) || 0,
-              total_ayah_surah: parseInt(row.total_ayah_surah) || 0,
-              total_ayah_quran: parseInt(row.total_ayah_quran) || 0,
-              place_of_revelation: row.place_of_revelation || "",
-              sajah_ayah: row.sajah_ayah === "TRUE",
-              sajdah_no: row.sajdah_no || "",
-              no_of_word_ayah: parseInt(row.no_of_word_ayah) || 0,
-            };
-          } catch (lineError) {
-            console.warn(`Error parsing line ${index + 1}:`, lineError);
-            return null;
-          }
-        })
-        .filter(
-          (ayah): ayah is QuranAyah => ayah !== null && ayah.surah_no > 0
-        );
-
-      return parsedLines;
-    } catch (parseError) {
-      throw new Error(
-        `CSV parsing failed: ${
-          parseError instanceof Error ? parseError.message : "Unknown error"
-        }`
-      );
+      if (isRetryable) {
+        // Retry after exponential backoff
+        setTimeout(() => {
+          setRetryCount((prev) => prev + 1);
+          loadData(retryAttempt + 1);
+        }, Math.pow(2, retryAttempt) * 1000);
+      }
+    } finally {
+      setLoading(false);
     }
   }, []);
-
-  // Enhanced data loading with retry mechanism
-  const loadData = useCallback(
-    async (retryAttempt = 0): Promise<void> => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Check cache first
-        const cacheKey = "quran-data-csv";
-        const cachedData = dataCache.get(cacheKey);
-        if (cachedData) {
-          setData(cachedData);
-          setLoading(false);
-          return;
-        }
-
-        // Try to load from CSV first (has translations)
-        try {
-          const parsedData = parseCSV(quranDataCSV);
-
-          // Cache the parsed data
-          dataCache.set(cacheKey, parsedData);
-          setData(parsedData);
-          return;
-        } catch (csvError) {
-          console.warn("CSV parsing failed, trying JSON:", csvError);
-        }
-
-        // Fallback to JSON if CSV fails
-        try {
-          // Add empty translation field for JSON data
-          const dataWithTranslations = (quranDataJSON as QuranAyah[]).map(
-            (ayah: QuranAyah) => ({
-              ...ayah,
-              ayah_en: ayah.ayah_en || "", // Preserve existing translation or add empty
-            })
-          );
-
-          // Cache the parsed data
-          dataCache.set(cacheKey, dataWithTranslations);
-          setData(dataWithTranslations);
-        } catch {
-          throw new Error(
-            "Failed to load Quran data from both CSV and JSON sources"
-          );
-        }
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Failed to load data";
-        const isRetryable =
-          retryAttempt < 3 && errorMessage.includes("Failed to load");
-
-        setError({
-          message: errorMessage,
-          code: isRetryable ? "NETWORK_ERROR" : "UNKNOWN",
-          retryable: isRetryable,
-        });
-
-        if (isRetryable) {
-          // Retry after exponential backoff
-          setTimeout(() => {
-            setRetryCount((prev) => prev + 1);
-            loadData(retryAttempt + 1);
-          }, Math.pow(2, retryAttempt) * 1000);
-        }
-      } finally {
-        setLoading(false);
-      }
-    },
-    [parseCSV]
-  );
 
   // Load data on mount
   useEffect(() => {
@@ -214,7 +104,7 @@ export function useQuranData() {
   const filteredData = useMemo(() => {
     let filtered = [...data];
 
-    // Apply search filter
+    // Apply search filter with debouncing
     if (filters.searchTerm) {
       const searchLower = filters.searchTerm.toLowerCase();
       filtered = filtered.filter(
@@ -254,6 +144,24 @@ export function useQuranData() {
     return filtered;
   }, [data, filters]);
 
+  // Virtual scrolling - only render visible items
+  const virtualizedData = useMemo(() => {
+    const start = Math.max(
+      0,
+      visibleRange.start - VIRTUAL_SCROLL_CONFIG.overscan
+    );
+    const end = Math.min(
+      filteredData.length,
+      visibleRange.end + VIRTUAL_SCROLL_CONFIG.overscan
+    );
+    return filteredData.slice(start, end);
+  }, [filteredData, visibleRange]);
+
+  // Update visible range when scrolling
+  const updateVisibleRange = useCallback((start: number, end: number) => {
+    setVisibleRange({ start, end });
+  }, []);
+
   // Pagination
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
@@ -291,6 +199,7 @@ export function useQuranData() {
 
   return {
     data: paginatedData,
+    virtualizedData,
     allData: data,
     loading,
     error,
@@ -305,5 +214,7 @@ export function useQuranData() {
     uniquePlaces,
     totalAyahs: data.length,
     filteredCount: filteredData.length,
+    updateVisibleRange,
+    virtualScrollConfig: VIRTUAL_SCROLL_CONFIG,
   };
 }

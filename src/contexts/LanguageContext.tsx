@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
-import { LanguageContext, type Language } from "./LanguageContextTypes";
+import { LanguageContext, type Language } from "../types/ContextTypes";
 
 // Translation dictionary
 const translations: Record<Language, Record<string, string>> = {

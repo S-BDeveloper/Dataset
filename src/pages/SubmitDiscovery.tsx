@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/useAuth";
+import { useAuth } from "../hooks/useContext";
 import type { QuranicMiracle } from "../types/Types";
 
 interface SubmissionForm {

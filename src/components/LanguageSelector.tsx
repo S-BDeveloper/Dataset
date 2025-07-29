@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useLanguage } from "../hooks/useLanguage";
-import type { Language } from "../contexts/LanguageContextTypes";
+import React from "react";
+import { useLanguage } from "../hooks/useContext";
+import type { Language } from "../types/ContextTypes";
 
 export function LanguageSelector() {
   const { language, setLanguage, t } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const languages: { code: Language; name: string; flag: string }[] = [
     { code: "en", name: t("lang.en"), flag: "🇺🇸" },

@@ -484,8 +484,8 @@ const QuranDetails: React.FC<{ ayah: QuranAyah; searchQuery: string }> = ({
           Arabic Text
         </h4>
         <p
-          className="text-sm text-green-800 dark:text-green-200 text-left leading-relaxed"
-          dir="ltr"
+          className="text-sm text-green-800 dark:text-green-200 text-right leading-relaxed font-arabic"
+          dir="rtl"
         >
           {highlightText(ayah.ayah_ar, searchQuery)}
         </p>
@@ -526,25 +526,62 @@ const QuranDetails: React.FC<{ ayah: QuranAyah; searchQuery: string }> = ({
 const HadithDetails: React.FC<{ hadith: HadithEntry; searchQuery: string }> = ({
   hadith,
   searchQuery,
-}) => (
-  <div className="space-y-3">
-    {/* Hadith Content */}
-    <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-      <h4 className="text-xs font-semibold text-purple-700 dark:text-purple-300 mb-2 uppercase tracking-wide">
-        Hadith Content
-      </h4>
-      <div className="space-y-2 text-sm">
-        {Object.entries(hadith).map(([key, value]) => (
-          <div key={key}>
-            <span className="text-purple-600 dark:text-purple-400 font-medium">
-              {key}:
-            </span>
-            <span className="text-purple-800 dark:text-purple-200 ml-1">
-              {highlightText(value, searchQuery)}
-            </span>
-          </div>
-        ))}
+}) => {
+  // Helper function to check if a field has meaningful content
+  const hasContent = (value: string | undefined): boolean => {
+    if (!value) return false;
+    const trimmed = value.trim();
+    return (
+      trimmed.length > 0 &&
+      trimmed !== "Unknown" &&
+      trimmed !== "Sahih Bukhari" &&
+      trimmed !== "Sahih" &&
+      !trimmed.includes("placeholder") &&
+      !trimmed.includes("not available")
+    );
+  };
+
+  // Helper function to check if text contains Arabic characters
+  const isArabicText = (text: string): boolean => {
+    return /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(
+      text
+    );
+  };
+
+  // Get fields that actually have content
+  const contentFields = Object.entries(hadith).filter(([key, value]) => {
+    if (key === "id") return false; // Skip id field
+    return hasContent(value);
+  });
+
+  return (
+    <div className="space-y-3">
+      {/* Hadith Content */}
+      <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+        <h4 className="text-xs font-semibold text-purple-700 dark:text-purple-300 mb-2 uppercase tracking-wide">
+          Hadith Content
+        </h4>
+        <div className="space-y-2 text-sm">
+          {contentFields.map(([key, value]) => {
+            const isArabic = isArabicText(value);
+            return (
+              <div key={key}>
+                <span className="text-purple-600 dark:text-purple-400 font-medium">
+                  {key.charAt(0).toUpperCase() + key.slice(1)}:
+                </span>
+                <span
+                  className={`text-purple-800 dark:text-purple-200 ml-1 ${
+                    isArabic ? "font-arabic" : ""
+                  }`}
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  {highlightText(value, searchQuery)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

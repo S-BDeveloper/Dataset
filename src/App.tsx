@@ -12,9 +12,13 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import SubmitDiscovery from "./pages/SubmitDiscovery";
 import AdminReview from "./pages/AdminReview";
-import ErrorBoundary from "./components/ErrorBoundary";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { recordPerformanceMetric } from "./utils/performanceMonitor";
+import { sanitizeInput } from "./utils/securityUtils";
 
 // Utility to convert array of objects to CSV
 function toCSV<T extends object>(data: T[]): string {
@@ -56,6 +60,16 @@ function App({ loadingDelay = 1000 }) {
   const [activeTab, setActiveTab] = useState("all");
   const [toast, setToast] = useState<string | null>(null);
 
+  // Performance monitoring
+  useEffect(() => {
+    recordPerformanceMetric({
+      name: "App Render",
+      value: performance.now(),
+      unit: "ms",
+      category: "custom",
+    });
+  }, []);
+
   // Auto-clear toast after 3 seconds
   useEffect(() => {
     if (toast) {
@@ -66,29 +80,39 @@ function App({ loadingDelay = 1000 }) {
     }
   }, [toast]);
 
-  // Export functions
+  // Export functions with security validation
   const handleExportCSV = () => {
-    const csv = toCSV(sortedMiracles);
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "islamic-signs-guidance.csv";
-    a.click();
-    window.URL.revokeObjectURL(url);
-    setToast("CSV exported successfully!");
+    try {
+      const csv = toCSV(sortedMiracles);
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = sanitizeInput("islamic-signs-guidance.csv");
+      a.click();
+      window.URL.revokeObjectURL(url);
+      setToast("CSV exported successfully!");
+    } catch (error) {
+      console.error("Export failed:", error);
+      setToast("Export failed. Please try again.");
+    }
   };
 
   const handleExportJSON = () => {
-    const json = JSON.stringify(sortedMiracles, null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "islamic-signs-guidance.json";
-    a.click();
-    window.URL.revokeObjectURL(url);
-    setToast("JSON exported successfully!");
+    try {
+      const json = JSON.stringify(sortedMiracles, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = sanitizeInput("islamic-signs-guidance.json");
+      a.click();
+      window.URL.revokeObjectURL(url);
+      setToast("JSON exported successfully!");
+    } catch (error) {
+      console.error("Export failed:", error);
+      setToast("Export failed. Please try again.");
+    }
   };
 
   if (loading) {
@@ -122,69 +146,86 @@ function App({ loadingDelay = 1000 }) {
 
   return (
     <ErrorBoundary>
-      <LanguageProvider>
-        <DarkModeProvider>
-          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col w-full overflow-hidden">
-            <Navbar />
-            <main className="flex-1 w-full overflow-hidden">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <HomePage
-                      miracles={miracles}
-                      paginatedMiracles={paginatedMiracles}
-                      filters={filters}
-                      setFilters={setFilters}
-                      types={types}
-                      currentPage={currentPage}
-                      setCurrentPage={setCurrentPage}
-                      totalPages={totalPages}
-                      goToPage={goToPage}
-                      setGoToPage={setGoToPage}
-                      handleGoToPage={() => handleGoToPage(Number(goToPage))}
-                      handleExportCSV={handleExportCSV}
-                      handleExportJSON={handleExportJSON}
-                      setToast={setToast}
-                      miraclesListRef={miraclesListRef}
-                      activeTab={activeTab}
-                      setActiveTab={setActiveTab}
+      <AuthProvider>
+        <AccessibilityProvider>
+          <LanguageProvider>
+            <DarkModeProvider>
+              <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300 flex flex-col w-full overflow-hidden">
+                <Navbar />
+                <main
+                  className="flex-1 w-full overflow-hidden"
+                  id="main-content"
+                  tabIndex={-1}
+                >
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <HomePage
+                          miracles={miracles}
+                          paginatedMiracles={paginatedMiracles}
+                          filters={filters}
+                          setFilters={setFilters}
+                          types={types}
+                          currentPage={currentPage}
+                          setCurrentPage={setCurrentPage}
+                          totalPages={totalPages}
+                          goToPage={goToPage}
+                          setGoToPage={setGoToPage}
+                          handleGoToPage={() =>
+                            handleGoToPage(Number(goToPage))
+                          }
+                          handleExportCSV={handleExportCSV}
+                          handleExportJSON={handleExportJSON}
+                          setToast={setToast}
+                          miraclesListRef={miraclesListRef}
+                          activeTab={activeTab}
+                          setActiveTab={setActiveTab}
+                        />
+                      }
                     />
-                  }
-                />
 
-                <Route path="/favorites" element={<Favorites />} />
-                <Route
-                  path="/login"
-                  element={
-                    <Login onClose={() => {}} onSwitchToSignup={() => {}} />
-                  }
-                />
-                <Route
-                  path="/signup"
-                  element={
-                    <Signup onClose={() => {}} onSwitchToLogin={() => {}} />
-                  }
-                />
+                    <Route path="/favorites" element={<Favorites />} />
+                    <Route
+                      path="/login"
+                      element={
+                        <Login onClose={() => {}} onSwitchToSignup={() => {}} />
+                      }
+                    />
+                    <Route
+                      path="/signup"
+                      element={
+                        <Signup onClose={() => {}} onSwitchToLogin={() => {}} />
+                      }
+                    />
 
-                {/* Submit Discovery Route */}
-                <Route path="/submit-discovery" element={<SubmitDiscovery />} />
+                    {/* Submit Discovery Route */}
+                    <Route
+                      path="/submit-discovery"
+                      element={<SubmitDiscovery />}
+                    />
 
-                {/* Admin Review Route */}
-                <Route path="/admin" element={<AdminReview />} />
-              </Routes>
-            </main>
-            <Footer />
+                    {/* Admin Review Route */}
+                    <Route path="/admin" element={<AdminReview />} />
+                  </Routes>
+                </main>
+                <Footer />
 
-            {/* Toast notification */}
-            {toast && (
-              <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
-                {toast}
+                {/* Toast notification */}
+                {toast && (
+                  <div
+                    className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    {toast}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </DarkModeProvider>
-      </LanguageProvider>
+            </DarkModeProvider>
+          </LanguageProvider>
+        </AccessibilityProvider>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }

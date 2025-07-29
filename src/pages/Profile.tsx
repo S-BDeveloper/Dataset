@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAuth } from "../contexts/useAuth";
-import Button from "../components/Button";
+import { useAuth } from "../hooks/useContext";
+import Button from "../components/ui/AccessibleButton";
 import Breadcrumb from "../components/Breadcrumb";
 
 const Profile: React.FC = () => {

@@ -3,7 +3,9 @@
 declare module "d3-cloud" {
   export interface CloudLayout {
     size: (size: [number, number]) => CloudLayout;
-    words: (words: any[]) => CloudLayout;
+    words: (
+      words: Array<{ text: string; size: number; [key: string]: unknown }>
+    ) => CloudLayout;
     padding: (padding: number) => CloudLayout;
     rotate: (rotate: () => number) => CloudLayout;
     font: (font: string) => CloudLayout;
@@ -17,7 +19,7 @@ declare module "d3-cloud" {
 
 declare module "sinonjs_fake-timers" {
   export interface FakeTimers {
-    install: (config?: any) => void;
+    install: (config?: { now?: number | Date; toFake?: string[] }) => void;
     uninstall: () => void;
     tick: (ms: number) => void;
     next: () => void;
@@ -32,7 +34,10 @@ declare module "sinonjs_fake-timers" {
     now?: number | Date,
     loopLimit?: number
   ): FakeTimers;
-  export function install(config?: any): FakeTimers;
+  export function install(config?: {
+    now?: number | Date;
+    toFake?: string[];
+  }): FakeTimers;
 }
 
 declare module "sizzle" {
@@ -49,7 +54,7 @@ declare module "sizzle" {
 declare module "yauzl" {
   export interface ZipFile {
     readEntry(): void;
-    on(event: string, callback: (entry: any) => void): void;
+    on(event: string, callback: (entry: Entry) => void): void;
     close(): void;
   }
 
@@ -70,7 +75,14 @@ declare module "yauzl" {
     callback: (err: Error | null, zipfile: ZipFile) => void
   ): void;
   export function fromRandomAccessReader(
-    reader: any,
+    reader: {
+      read: (
+        offset: number,
+        length: number,
+        callback: (err: Error | null, buffer: Buffer) => void
+      ) => void;
+      close: () => void;
+    },
     totalSize: number,
     callback: (err: Error | null, zipfile: ZipFile) => void
   ): void;
@@ -78,20 +90,47 @@ declare module "yauzl" {
 
 // Declare missing D3 modules
 declare module "d3-color" {
-  export function rgb(r: number, g: number, b: number): any;
-  export function hsl(h: number, s: number, l: number): any;
-  export function lab(l: number, a: number, b: number): any;
-  export function hcl(h: number, c: number, l: number): any;
-  export function cubehelix(h: number, s: number, l: number): any;
+  export function rgb(
+    r: number,
+    g: number,
+    b: number
+  ): { r: number; g: number; b: number; toString(): string };
+  export function hsl(
+    h: number,
+    s: number,
+    l: number
+  ): { h: number; s: number; l: number; toString(): string };
+  export function lab(
+    l: number,
+    a: number,
+    b: number
+  ): { l: number; a: number; b: number; toString(): string };
+  export function hcl(
+    h: number,
+    c: number,
+    l: number
+  ): { h: number; c: number; l: number; toString(): string };
+  export function cubehelix(
+    h: number,
+    s: number,
+    l: number
+  ): { h: number; s: number; l: number; toString(): string };
 }
 
 declare module "d3-delaunay" {
-  export function delaunay(points: [number, number][]): any;
-  export function voronoi(points: [number, number][]): any;
+  export function delaunay(points: [number, number][]): {
+    triangles: [number, number, number][];
+    points: [number, number][];
+  };
+  export function voronoi(points: [number, number][]): {
+    polygons: [number, number][][];
+    triangles: [number, number, number][];
+    edges: [number, number][];
+  };
 }
 
 declare module "d3-interpolate" {
-  export function interpolate(a: any, b: any): (t: number) => any;
+  export function interpolate<T>(a: T, b: T): (t: number) => T;
   export function interpolateNumber(
     a: number,
     b: number
@@ -105,7 +144,12 @@ declare module "d3-interpolate" {
 }
 
 declare module "d3-path" {
-  export function path(): any;
+  export function path(): {
+    moveTo: (x: number, y: number) => void;
+    lineTo: (x: number, y: number) => void;
+    closePath: () => void;
+    toString: () => string;
+  };
 }
 
 declare module "d3-scale-chromatic" {
@@ -121,19 +165,64 @@ declare module "d3-scale-chromatic" {
 
 declare module "d3-time" {
   export function timeInterval(
-    floor: any,
-    offset: any,
-    count: any,
-    field: any
-  ): any;
-  export function timeMillisecond(): any;
-  export function timeSecond(): any;
-  export function timeMinute(): any;
-  export function timeHour(): any;
-  export function timeDay(): any;
-  export function timeWeek(): any;
-  export function timeMonth(): any;
-  export function timeYear(): any;
+    floor: (date: Date) => Date,
+    offset: (date: Date, step: number) => Date,
+    count: (start: Date, stop: Date) => number,
+    field: (date: Date) => number
+  ): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeMillisecond(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeSecond(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeMinute(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeHour(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeDay(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeWeek(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeMonth(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
+  export function timeYear(): {
+    floor: (date: Date) => Date;
+    ceil: (date: Date) => Date;
+    offset: (date: Date, step: number) => Date;
+    range: (start: Date, stop: Date, step?: number) => Date[];
+  };
 }
 
 declare module "d3-time-format" {

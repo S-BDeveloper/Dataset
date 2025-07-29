@@ -9,7 +9,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
-import { useAuth } from "../contexts/useAuth";
+import { useAuth } from "./useContext";
 
 // useFavorites manages the user's favorite Quranic miracles in Firestore
 export function useFavorites() {
@@ -21,9 +21,20 @@ export function useFavorites() {
   // Load favorites from Firestore on mount or when user changes
   useEffect(() => {
     if (!user) {
-      setFavorites([]);
+      // Fallback to localStorage when user is not authenticated
+      try {
+        const localFavorites = localStorage.getItem("localFavorites");
+        if (localFavorites) {
+          setFavorites(JSON.parse(localFavorites));
+        } else {
+          setFavorites([]);
+        }
+      } catch {
+        setFavorites([]);
+      }
       return;
     }
+
     setLoading(true);
     const ref = doc(db, "favorites", user.uid);
     getDoc(ref)
@@ -42,9 +53,31 @@ export function useFavorites() {
       });
   }, [user]);
 
-  // Add a miracle to favorites in Firestore
+  // Add a miracle to favorites
   const addFavorite = async (miracle: QuranicMiracle) => {
-    if (!user) return;
+    if (!user) {
+      // Use localStorage when not authenticated
+      try {
+        const localFavorites = JSON.parse(
+          localStorage.getItem("localFavorites") || "[]"
+        );
+        const updatedFavorites = localFavorites.some(
+          (m: QuranicMiracle) =>
+            m.title === miracle.title && m.type === miracle.type
+        )
+          ? localFavorites
+          : [...localFavorites, miracle];
+        localStorage.setItem(
+          "localFavorites",
+          JSON.stringify(updatedFavorites)
+        );
+        setFavorites(updatedFavorites);
+      } catch {
+        setError("Failed to add favorite to local storage");
+      }
+      return;
+    }
+
     const ref = doc(db, "favorites", user.uid);
     try {
       await setDoc(ref, { miracles: arrayUnion(miracle) }, { merge: true });
@@ -58,9 +91,29 @@ export function useFavorites() {
     }
   };
 
-  // Remove a miracle from favorites in Firestore
+  // Remove a miracle from favorites
   const removeFavorite = async (miracle: QuranicMiracle) => {
-    if (!user) return;
+    if (!user) {
+      // Use localStorage when not authenticated
+      try {
+        const localFavorites = JSON.parse(
+          localStorage.getItem("localFavorites") || "[]"
+        );
+        const updatedFavorites = localFavorites.filter(
+          (m: QuranicMiracle) =>
+            !(m.title === miracle.title && m.type === miracle.type)
+        );
+        localStorage.setItem(
+          "localFavorites",
+          JSON.stringify(updatedFavorites)
+        );
+        setFavorites(updatedFavorites);
+      } catch {
+        setError("Failed to remove favorite from local storage");
+      }
+      return;
+    }
+
     const ref = doc(db, "favorites", user.uid);
     try {
       await updateDoc(ref, { miracles: arrayRemove(miracle) });

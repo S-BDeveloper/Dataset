@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../../contexts/useAuth";
+import { useAuth } from "../../hooks/useContext";
 
 interface SignupProps {
   onClose: () => void;

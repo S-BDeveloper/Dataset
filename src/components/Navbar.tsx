@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../contexts/useAuth";
+import { useAuth } from "../hooks/useContext";
 import { useFavorites } from "../hooks/useFavorites";
 import DarkModeToggle from "./DarkModeToggle";
 import { LanguageSelector } from "./LanguageSelector";
-import { useLanguage } from "../hooks/useLanguage";
+import { useLanguage } from "../hooks/useContext";
 import { Logo } from "./Logo";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import { hasPermission } from "../utils/authUtils";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -86,7 +87,7 @@ export default function Navbar() {
                 )}
               </NavLink>
               <NavLink to="/submit-discovery">{t("nav.submit")}</NavLink>
-              {user?.email === "admin@example.com" && (
+              {hasPermission(user, "moderate:content") && (
                 <NavLink to="/admin">{t("nav.admin")}</NavLink>
               )}
             </div>

@@ -4,7 +4,14 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "types": ["jest", "@testing-library/jest-dom"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
   },
   "files": [],
   "references": [

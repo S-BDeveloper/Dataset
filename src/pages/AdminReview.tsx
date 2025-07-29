@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../contexts/useAuth";
+import { useAuth } from "../hooks/useContext";
 import { useNavigate } from "react-router-dom";
 
 interface Submission {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DarkModeContext } from "./DarkModeContextDef";
+import { DarkModeContext } from "../types/ContextTypes";
 
 interface DarkModeProviderProps {
   children: React.ReactNode;

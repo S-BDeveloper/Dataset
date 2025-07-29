@@ -115,11 +115,11 @@ export const DataPreview: React.FC<DataPreviewProps> = ({
                     {miracle.status ? (
                       <span
                         className={`inline-block px-2 py-1 text-xs font-semibold rounded-full capitalize ${
-                          miracle.status === "Fulfilled"
+                          miracle.status === "fulfilled"
                             ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
-                            : miracle.status === "Yet to Happen"
+                            : miracle.status === "yet-to-happen"
                             ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300"
-                            : miracle.status === "Proven"
+                            : miracle.status === "proven"
                             ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
                             : "bg-stone-100 dark:bg-stone-700 text-stone-800 dark:text-stone-300"
                         }`}
@@ -207,11 +207,11 @@ export const DataPreview: React.FC<DataPreviewProps> = ({
                                   <strong>Status:</strong>{" "}
                                   <span
                                     className={`inline-block px-2 py-1 text-xs font-semibold rounded-full capitalize ${
-                                      miracle.status === "Fulfilled"
+                                      miracle.status === "fulfilled"
                                         ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
-                                        : miracle.status === "Yet to Happen"
+                                        : miracle.status === "yet-to-happen"
                                         ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300"
-                                        : miracle.status === "Proven"
+                                        : miracle.status === "proven"
                                         ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
                                         : "bg-stone-100 dark:bg-stone-700 text-stone-800 dark:text-stone-300"
                                     }`}

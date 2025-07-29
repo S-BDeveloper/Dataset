@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import type { HadithEntry, HadithFilters } from "../types/Types";
+// Import JSON data directly for better performance
+import hadithDataJSON from "../data/Sahih Bukhari.json";
 
 export function useHadithData() {
   const [hadithData, setHadithData] = useState<HadithEntry[]>([]);
@@ -12,26 +14,25 @@ export function useHadithData() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  // Load Hadith data
+  // Load Hadith data from JSON directly
   useEffect(() => {
     const loadHadithData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/src/data/Sahih Bukhari.json");
-        if (!response.ok) {
-          // Try alternative path
-          const altResponse = await fetch("./src/data/Sahih Bukhari.json");
-          if (!altResponse.ok) {
-            throw new Error("Failed to load Hadith data");
-          }
-          const data = await altResponse.json();
-          setHadithData(data);
-          return;
-        }
-        if (!response.ok) {
-          throw new Error("Failed to load Hadith data");
-        }
-        const data = await response.json();
+        // Load from JSON directly - much faster than fetch
+        // Transform the data to match HadithEntry interface
+        const data = Object.entries(hadithDataJSON).map(([key, value]) => ({
+          id: key,
+          number: key,
+          book: "Sahih Bukhari",
+          chapter: "Unknown",
+          narrator: "Unknown",
+          text: typeof value === "string" ? value : JSON.stringify(value),
+          arabic: typeof value === "string" ? value : "",
+          translation: "",
+          grade: "Sahih",
+          reference: key,
+        })) as HadithEntry[];
         setHadithData(data);
       } catch (err) {
         setError(

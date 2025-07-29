@@ -7,42 +7,35 @@ interface PropheticStatusChartProps {
   isActive?: boolean;
 }
 
-// PropheticStatusChart displays the distribution of prophetic fulfillment statuses
 export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
   data,
   isActive = false,
 }) => {
-  const [selectedView, setSelectedView] = useState<"status" | "category">(
-    "status"
-  );
+  const [viewMode, setViewMode] = useState<"status" | "category">("status");
 
-  // Filter prophecies
-  const prophecies = data.filter((miracle) => miracle.type === "prophecy");
-
-  // Prepare data based on selected view
   const getChartData = () => {
-    if (selectedView === "status") {
-      const statusCounts = prophecies.reduce((acc, prophecy) => {
+    if (viewMode === "status") {
+      const statusCounts: Record<string, number> = {};
+      data.forEach((prophecy) => {
         const status = prophecy.fulfillmentStatus || "unknown";
-        acc[status] = (acc[status] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+        statusCounts[status] = (statusCounts[status] || 0) + 1;
+      });
 
       return Object.entries(statusCounts).map(([status, count]) => ({
-        id: getStatusLabel(status),
+        id: status,
         label: getStatusLabel(status),
         value: count,
         color: getStatusColor(status),
       }));
     } else {
-      const categoryCounts = prophecies.reduce((acc, prophecy) => {
+      const categoryCounts: Record<string, number> = {};
+      data.forEach((prophecy) => {
         const category = prophecy.prophecyCategory || "unknown";
-        acc[category] = (acc[category] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      });
 
       return Object.entries(categoryCounts).map(([category, count]) => ({
-        id: category.charAt(0).toUpperCase() + category.slice(1),
+        id: category,
         label: category.charAt(0).toUpperCase() + category.slice(1),
         value: count,
         color: getCategoryColor(category),
@@ -50,163 +43,77 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
     }
   };
 
-  // Get color based on fulfillment status
   const getStatusColor = (status: string): string => {
-    switch (status) {
-      case "fulfilled":
-        return "#10b981"; // Green
-      case "in-progress":
-        return "#f59e0b"; // Amber
-      case "partially-fulfilled":
-        return "#3b82f6"; // Blue
-      case "pending":
-        return "#6b7280"; // Gray
-      default:
-        return "#6b7280";
-    }
+    const colors: Record<string, string> = {
+      fulfilled: "#10b981", // Green
+      "in-progress": "#f59e0b", // Amber
+      pending: "#3b82f6", // Blue
+      "partially-fulfilled": "#8b5cf6", // Purple
+      unknown: "#6b7280", // Gray
+    };
+    return colors[status] || colors.unknown;
   };
 
-  // Get color based on prophecy category
   const getCategoryColor = (category: string): string => {
-    const colors = {
+    const colors: Record<string, string> = {
       historical: "#ef4444", // Red
       scientific: "#3b82f6", // Blue
-      social: "#8b5cf6", // Purple
-      natural: "#10b981", // Green
-      cosmological: "#f59e0b", // Amber
+      social: "#10b981", // Green
+      natural: "#f59e0b", // Amber
+      cosmological: "#8b5cf6", // Purple
       technological: "#06b6d4", // Cyan
       unknown: "#6b7280", // Gray
     };
-    return colors[category as keyof typeof colors] || colors.unknown;
+    return colors[category] || colors.unknown;
   };
 
-  // Get status label
   const getStatusLabel = (status: string): string => {
-    switch (status) {
-      case "fulfilled":
-        return "Fulfilled";
-      case "in-progress":
-        return "In Progress";
-      case "partially-fulfilled":
-        return "Partially Fulfilled";
-      case "pending":
-        return "Pending";
-      default:
-        return "Unknown";
-    }
+    const labels: Record<string, string> = {
+      fulfilled: "Fulfilled",
+      "in-progress": "In Progress",
+      pending: "Pending",
+      "partially-fulfilled": "Partially Fulfilled",
+      unknown: "Unknown",
+    };
+    return labels[status] || "Unknown";
   };
-
-  // Calculate statistics
-  const totalProphecies = prophecies.length;
-  const fulfilledCount = prophecies.filter(
-    (p) => p.fulfillmentStatus === "fulfilled"
-  ).length;
-  const inProgressCount = prophecies.filter(
-    (p) => p.fulfillmentStatus === "in-progress"
-  ).length;
-  const pendingCount = prophecies.filter(
-    (p) => p.fulfillmentStatus === "pending"
-  ).length;
-  const partiallyFulfilledCount = prophecies.filter(
-    (p) => p.fulfillmentStatus === "partially-fulfilled"
-  ).length;
-
-  const fulfillmentRate =
-    totalProphecies > 0
-      ? (
-          ((fulfilledCount + partiallyFulfilledCount) / totalProphecies) *
-          100
-        ).toFixed(1)
-      : "0";
 
   const chartData = getChartData();
 
   return (
-    <div className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 chart-container">
-      <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6 text-center">
-        Prophetic Status Distribution
-      </h3>
-
-      {/* View Toggle */}
-      <div className="flex justify-center mb-6">
-        <div className="flex bg-stone-100 dark:bg-stone-700 rounded-lg p-1">
+    <div className="h-full">
+      {/* Chart Controls */}
+      <div className="mb-4 flex justify-center">
+        <div className="flex rounded-lg bg-stone-100 dark:bg-stone-700 p-1">
           <button
-            onClick={() => setSelectedView("status")}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-              selectedView === "status"
-                ? "bg-green-600 text-white shadow-md"
+            onClick={() => setViewMode("status")}
+            className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+              viewMode === "status"
+                ? "bg-white dark:bg-stone-600 text-stone-900 dark:text-stone-100 shadow-sm"
                 : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
             }`}
           >
-            By Status
+            Status
           </button>
           <button
-            onClick={() => setSelectedView("category")}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-              selectedView === "category"
-                ? "bg-green-600 text-white shadow-md"
+            onClick={() => setViewMode("category")}
+            className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+              viewMode === "category"
+                ? "bg-white dark:bg-stone-600 text-stone-900 dark:text-stone-100 shadow-sm"
                 : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
             }`}
           >
-            By Category
+            Category
           </button>
         </div>
       </div>
 
-      {/* Statistics Overview */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-        <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
-          <div className="text-xl font-bold text-green-600 dark:text-green-400">
-            {totalProphecies}
-          </div>
-          <div className="text-xs text-green-600 dark:text-green-400">
-            Total
-          </div>
-        </div>
-        <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
-          <div className="text-xl font-bold text-green-600 dark:text-green-400">
-            {fulfilledCount}
-          </div>
-          <div className="text-xs text-green-600 dark:text-green-400">
-            Fulfilled
-          </div>
-        </div>
-        <div className="text-center p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-700">
-          <div className="text-xl font-bold text-amber-600 dark:text-amber-400">
-            {inProgressCount}
-          </div>
-          <div className="text-xs text-amber-600 dark:text-amber-400">
-            In Progress
-          </div>
-        </div>
-        <div className="text-center p-2 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
-          <div className="text-xl font-bold text-stone-600 dark:text-stone-400">
-            {pendingCount}
-          </div>
-          <div className="text-xs text-stone-600 dark:text-stone-400">
-            Pending
-          </div>
-        </div>
-      </div>
-
-      {/* Fulfillment Rate */}
-      <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg border border-green-200 dark:border-green-700">
-        <div className="text-center">
-          <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-1">
-            {fulfillmentRate}%
-          </div>
-          <div className="text-sm text-green-600 dark:text-green-400">
-            Overall Fulfillment Rate
-          </div>
-        </div>
-      </div>
-
-      {/* Pie Chart */}
+      {/* Chart */}
       <div className="h-64">
         {chartData.length > 0 ? (
           <ResponsivePie
             data={chartData}
-            margin={{ top: 10, right: 60, bottom: 10, left: 60 }}
+            margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
             innerRadius={0.5}
             padAngle={0.7}
             cornerRadius={3}
@@ -238,20 +145,14 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
                 },
               },
             }}
-            tooltip={({
-              datum,
-            }: {
-              datum: { label: string; value: number; color: string };
-            }) => (
-              <div className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-lg p-3 shadow-lg">
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            tooltip={({ datum }: any) => (
+              <div className="bg-white dark:bg-stone-800 p-3 rounded-lg shadow-lg border border-stone-200 dark:border-stone-700">
                 <div className="font-semibold text-stone-900 dark:text-stone-100">
                   {datum.label}
                 </div>
                 <div className="text-stone-600 dark:text-stone-400">
-                  {datum.value} prophecies
-                </div>
-                <div className="text-xs text-stone-500 dark:text-stone-500">
-                  {((datum.value / totalProphecies) * 100).toFixed(1)}% of total
+                  {datum.value} signs
                 </div>
               </div>
             )}
