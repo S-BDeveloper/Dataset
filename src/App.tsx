@@ -1,37 +1,25 @@
-import { useRef, useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { useState, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import Favorites from "./pages/Favorites";
-import LoadingSkeleton from "./components/LoadingSkeleton";
-import { useMiracles } from "./hooks/useFacts";
-import { useMiracleFilters } from "./hooks/useFactFilters";
-import type { MiracleFilters } from "./types/Types";
-import Login from "./components/Auth/Login";
-import Signup from "./components/Auth/Signup";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import { useMiracles } from "./hooks/domain/miracles";
+import { useMiracleFilters } from "./hooks/domain/filters";
+import LoadingSkeleton from "./components/common/LoadingSkeleton";
+import Login from "./components/features/auth/Login";
+import Signup from "./components/features/auth/Signup";
+import { recordPerformanceMetric } from "./utils/performanceMonitor";
+import { sanitizeInput } from "./utils/securityUtils";
+import { ErrorBoundary } from "./components/layout/ErrorBoundary";
+import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import { AccessibilityProvider } from "./contexts/AccessibilityContext";
+import HomePage from "./components/HomePage";
+import Favorites from "./pages/Favorites";
 import SubmitDiscovery from "./pages/SubmitDiscovery";
 import AdminReview from "./pages/AdminReview";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { recordPerformanceMetric } from "./utils/performanceMonitor";
-import { sanitizeInput } from "./utils/securityUtils";
-
-// Utility to convert array of objects to CSV
-function toCSV<T extends object>(data: T[]): string {
-  if (!data.length) return "";
-  const keys = Object.keys(data[0]) as (keyof T)[];
-  const csvRows = [keys.join(",")];
-  for (const row of data) {
-    csvRows.push(
-      keys.map((k) => `"${String(row[k] ?? "").replace(/"/g, '""')}"`).join(",")
-    );
-  }
-  return csvRows.join("\n");
-}
+import { toCSV } from "./utils/exportUtils";
+import type { MiracleFilters } from "./types/Types";
 
 function App({ loadingDelay = 1000 }) {
   const initialFilters: MiracleFilters = {
@@ -92,23 +80,6 @@ function App({ loadingDelay = 1000 }) {
       a.click();
       window.URL.revokeObjectURL(url);
       setToast("CSV exported successfully!");
-    } catch (error) {
-      console.error("Export failed:", error);
-      setToast("Export failed. Please try again.");
-    }
-  };
-
-  const handleExportJSON = () => {
-    try {
-      const json = JSON.stringify(sortedMiracles, null, 2);
-      const blob = new Blob([json], { type: "application/json" });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = sanitizeInput("islamic-signs-guidance.json");
-      a.click();
-      window.URL.revokeObjectURL(url);
-      setToast("JSON exported successfully!");
     } catch (error) {
       console.error("Export failed:", error);
       setToast("Export failed. Please try again.");
@@ -176,7 +147,7 @@ function App({ loadingDelay = 1000 }) {
                             handleGoToPage(Number(goToPage))
                           }
                           handleExportCSV={handleExportCSV}
-                          handleExportJSON={handleExportJSON}
+                          handleExportJSON={() => {}}
                           setToast={setToast}
                           miraclesListRef={miraclesListRef}
                           activeTab={activeTab}

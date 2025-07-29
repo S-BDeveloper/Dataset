@@ -1,7 +1,7 @@
 import React from "react";
 import { useFavorites } from "../hooks/useFavorites";
-import Breadcrumb from "../components/Breadcrumb";
-import { MiracleCard } from "../components/MiracleCard";
+import Breadcrumb from "../components/common/Breadcrumb";
+import { MiracleCard } from "../components/features/miracles/MiracleCard";
 import { useAuth } from "../hooks/useContext";
 
 // Favorites page displays the user's favorited Quranic miracles
@@ -176,3 +176,4 @@ const Favorites: React.FC = () => {
 };
 
 export default Favorites;
+

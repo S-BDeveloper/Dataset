@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useContext";
 import Button from "../components/ui/AccessibleButton";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/common/Breadcrumb";
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
@@ -98,3 +98,4 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
