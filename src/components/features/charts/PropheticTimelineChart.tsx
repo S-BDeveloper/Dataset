@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
+import { getChartTheme } from "../../providers/ChartThemeProvider";
 import type { QuranicMiracle } from "../../../types/Types";
 
 interface PropheticTimelineChartProps {
@@ -14,6 +15,7 @@ export const PropheticTimelineChart: React.FC<PropheticTimelineChartProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
+  const theme = getChartTheme();
 
   // Filter prophecies and prepare timeline data
   const prophecies = data.filter((miracle) => miracle.type === "prophecy");
@@ -191,30 +193,7 @@ export const PropheticTimelineChart: React.FC<PropheticTimelineChartProps> = ({
             pointBorderColor={{ from: "serieColor" }}
             pointLabelYOffset={-12}
             useMesh={true}
-            theme={{
-              axis: {
-                ticks: {
-                  text: {
-                    fill: "#6b7280",
-                    fontSize: 12,
-                    fontWeight: 600,
-                  },
-                },
-                legend: {
-                  text: {
-                    fill: "#166534",
-                    fontSize: 14,
-                    fontWeight: 700,
-                  },
-                },
-              },
-              grid: {
-                line: {
-                  stroke: "#e5e7eb",
-                  strokeWidth: 1,
-                },
-              },
-            }}
+            theme={theme}
             tooltip={({ point }) => (
               <div className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-lg p-3 shadow-lg">
                 <div className="font-semibold text-stone-900 dark:text-stone-100 mb-1">

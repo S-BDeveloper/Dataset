@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
+import { getChartTheme } from "../../providers/ChartThemeProvider";
 import type { QuranicMiracle } from "../../../types/Types";
 
 interface PropheticStatusChartProps {
@@ -19,6 +20,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
   isActive = false,
 }) => {
   const [viewMode, setViewMode] = useState<"status" | "category">("status");
+  const theme = getChartTheme();
 
   const getChartData = (): ChartDataItem[] => {
     if (viewMode === "status") {
@@ -154,25 +156,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
               symbolShape: "circle",
             },
           ]}
-          theme={{
-            legends: {
-              text: {
-                fill: "#6b7280",
-                fontSize: 12,
-                fontWeight: 600,
-              },
-            },
-            tooltip: {
-              container: {
-                background: "#ffffff",
-                color: "#333333",
-                fontSize: 12,
-                borderRadius: 8,
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                border: "1px solid #e5e7eb",
-              },
-            },
-          }}
+          theme={theme}
           tooltip={({ datum }) => (
             <div className="bg-white dark:bg-stone-800 p-3 rounded-lg shadow-lg border border-stone-200 dark:border-stone-700">
               <div className="font-semibold text-stone-900 dark:text-stone-100">

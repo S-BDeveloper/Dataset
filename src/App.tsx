@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -9,17 +9,19 @@ import Login from "./components/features/auth/Login";
 import Signup from "./components/features/auth/Signup";
 import { recordPerformanceMetric } from "./utils/performanceMonitor";
 import { sanitizeInput } from "./utils/securityUtils";
+import { toCSV } from "./utils/exportUtils";
 import { ErrorBoundary } from "./components/layout/ErrorBoundary";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import HomePage from "./components/HomePage";
-import Favorites from "./pages/Favorites";
-import SubmitDiscovery from "./pages/SubmitDiscovery";
-import AdminReview from "./pages/AdminReview";
-import { toCSV } from "./utils/exportUtils";
 import type { MiracleFilters } from "./types/Types";
+
+// Lazy load large components
+const HomePage = lazy(() => import("./components/HomePage"));
+const Favorites = lazy(() => import("./pages/Favorites"));
+const SubmitDiscovery = lazy(() => import("./pages/SubmitDiscovery"));
+const AdminReview = lazy(() => import("./pages/AdminReview"));
 
 function App({ loadingDelay = 1000 }) {
   const initialFilters: MiracleFilters = {
@@ -128,57 +130,65 @@ function App({ loadingDelay = 1000 }) {
                   id="main-content"
                   tabIndex={-1}
                 >
-                  <Routes>
-                    <Route
-                      path="/"
-                      element={
-                        <HomePage
-                          miracles={miracles}
-                          paginatedMiracles={paginatedMiracles}
-                          filters={filters}
-                          setFilters={setFilters}
-                          types={types}
-                          currentPage={currentPage}
-                          setCurrentPage={setCurrentPage}
-                          totalPages={totalPages}
-                          goToPage={goToPage}
-                          setGoToPage={setGoToPage}
-                          handleGoToPage={() =>
-                            handleGoToPage(Number(goToPage))
-                          }
-                          handleExportCSV={handleExportCSV}
-                          handleExportJSON={() => {}}
-                          setToast={setToast}
-                          miraclesListRef={miraclesListRef}
-                          activeTab={activeTab}
-                          setActiveTab={setActiveTab}
-                        />
-                      }
-                    />
+                  <Suspense fallback={<LoadingSkeleton count={8} />}>
+                    <Routes>
+                      <Route
+                        path="/"
+                        element={
+                          <HomePage
+                            miracles={miracles}
+                            paginatedMiracles={paginatedMiracles}
+                            filters={filters}
+                            setFilters={setFilters}
+                            types={types}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            totalPages={totalPages}
+                            goToPage={goToPage}
+                            setGoToPage={setGoToPage}
+                            handleGoToPage={() =>
+                              handleGoToPage(Number(goToPage))
+                            }
+                            handleExportCSV={handleExportCSV}
+                            handleExportJSON={() => {}}
+                            setToast={setToast}
+                            miraclesListRef={miraclesListRef}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                          />
+                        }
+                      />
 
-                    <Route path="/favorites" element={<Favorites />} />
-                    <Route
-                      path="/login"
-                      element={
-                        <Login onClose={() => {}} onSwitchToSignup={() => {}} />
-                      }
-                    />
-                    <Route
-                      path="/signup"
-                      element={
-                        <Signup onClose={() => {}} onSwitchToLogin={() => {}} />
-                      }
-                    />
+                      <Route path="/favorites" element={<Favorites />} />
+                      <Route
+                        path="/login"
+                        element={
+                          <Login
+                            onClose={() => {}}
+                            onSwitchToSignup={() => {}}
+                          />
+                        }
+                      />
+                      <Route
+                        path="/signup"
+                        element={
+                          <Signup
+                            onClose={() => {}}
+                            onSwitchToLogin={() => {}}
+                          />
+                        }
+                      />
 
-                    {/* Submit Discovery Route */}
-                    <Route
-                      path="/submit-discovery"
-                      element={<SubmitDiscovery />}
-                    />
+                      {/* Submit Discovery Route */}
+                      <Route
+                        path="/submit-discovery"
+                        element={<SubmitDiscovery />}
+                      />
 
-                    {/* Admin Review Route */}
-                    <Route path="/admin" element={<AdminReview />} />
-                  </Routes>
+                      {/* Admin Review Route */}
+                      <Route path="/admin" element={<AdminReview />} />
+                    </Routes>
+                  </Suspense>
                 </main>
                 <Footer />
 

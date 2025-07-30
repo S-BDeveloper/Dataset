@@ -10,7 +10,7 @@ import type {
 } from "../types/Types";
 
 interface AppState {
-  // Data state
+  // Data state with lazy loading support
   miracles: QuranicMiracle[];
   quranData: QuranAyah[];
   hadithData: HadithEntry[];
@@ -31,13 +31,20 @@ interface AppState {
   quranFilters: QuranFilters;
   hadithFilters: HadithFilters;
 
-  // Pagination states
+  // Pagination states with virtual scrolling support
   currentPage: number;
   itemsPerPage: number;
+  virtualScrollEnabled: boolean;
+  virtualScrollItemHeight: number;
 
   // UI state
   activeTab: string;
   toast: string | null;
+
+  // Caching and performance
+  dataCache: Map<string, any>;
+  lastFetchTime: number;
+  cacheExpiryTime: number;
 
   // Actions
   setMiracles: (miracles: QuranicMiracle[]) => void;
@@ -65,12 +72,23 @@ interface AppState {
   removeFavorite: (miracle: QuranicMiracle) => void;
   isFavorite: (miracle: QuranicMiracle) => boolean;
 
-  // Computed values
+  // Performance optimizations
+  setVirtualScrollEnabled: (enabled: boolean) => void;
+  setVirtualScrollItemHeight: (height: number) => void;
+  clearCache: () => void;
+  getCachedData: (key: string) => any;
+  setCachedData: (key: string, data: any) => void;
+
+  // Computed values with memoization
   filteredMiracles: QuranicMiracle[];
   filteredQuranData: QuranAyah[];
   filteredHadithData: HadithEntry[];
   totalPages: number;
   paginatedMiracles: QuranicMiracle[];
+
+  // Virtual scrolling helpers
+  getVisibleItems: (startIndex: number, endIndex: number) => any[];
+  getTotalItemCount: () => number;
 }
 
 const initialMiracleFilters: MiracleFilters = {
@@ -115,9 +133,16 @@ export const useAppStore = create<AppState>()(
 
         currentPage: 1,
         itemsPerPage: 8,
+        virtualScrollEnabled: false,
+        virtualScrollItemHeight: 50, // Default height for virtual scrolling
 
         activeTab: "all",
         toast: null,
+
+        // Caching and performance
+        dataCache: new Map(),
+        lastFetchTime: 0,
+        cacheExpiryTime: 3600000, // 1 hour
 
         // Actions
         setMiracles: (miracles) => set({ miracles }),
@@ -178,6 +203,16 @@ export const useAppStore = create<AppState>()(
             (fav) => fav.title === miracle.title && fav.type === miracle.type
           );
         },
+
+        // Performance optimizations
+        setVirtualScrollEnabled: (enabled) =>
+          set({ virtualScrollEnabled: enabled }),
+        setVirtualScrollItemHeight: (height) =>
+          set({ virtualScrollItemHeight: height }),
+        clearCache: () => set({ dataCache: new Map() }),
+        getCachedData: (key) => get().dataCache.get(key),
+        setCachedData: (key, data) =>
+          set({ dataCache: get().dataCache.set(key, data) }),
 
         // Computed values
         get filteredMiracles() {
@@ -299,6 +334,16 @@ export const useAppStore = create<AppState>()(
             startIndex,
             startIndex + state.itemsPerPage
           );
+        },
+
+        // Virtual scrolling helpers
+        getVisibleItems: (startIndex, endIndex) => {
+          const state = get();
+          return state.filteredMiracles.slice(startIndex, endIndex);
+        },
+        getTotalItemCount: () => {
+          const state = get();
+          return state.filteredMiracles.length;
         },
       }),
       {

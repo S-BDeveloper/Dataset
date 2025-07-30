@@ -1,5 +1,6 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
+import { getChartTheme } from "../../providers/ChartThemeProvider";
 import type { QuranicMiracle } from "../../../types/Types";
 
 interface SignTypesChartProps {
@@ -12,6 +13,7 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
   data,
   isActive = false,
 }) => {
+  const theme = getChartTheme();
   // Process data to count signs by type
   const typeCounts = data.reduce((acc, miracle) => {
     const type = miracle.type || "Unknown";
@@ -103,41 +105,7 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
               ],
             },
           ]}
-          theme={{
-            axis: {
-              ticks: {
-                text: {
-                  fill: "#6b7280",
-                  fontSize: 12,
-                  fontWeight: 600,
-                },
-              },
-              legend: {
-                text: {
-                  fill: "#166534",
-                  fontSize: 14,
-                  fontWeight: 700,
-                },
-              },
-            },
-            legends: {
-              text: {
-                fill: "#6b7280",
-                fontSize: 12,
-                fontWeight: 600,
-              },
-            },
-            tooltip: {
-              container: {
-                background: "#ffffff",
-                color: "#333333",
-                fontSize: 12,
-                borderRadius: 8,
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                border: "1px solid #e5e7eb",
-              },
-            },
-          }}
+          theme={theme}
           role="img"
           barAriaLabel={(data) => `${data.data.type}: ${data.data.count} signs`}
           tooltip={({ data }) => (
