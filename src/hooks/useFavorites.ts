@@ -151,7 +151,7 @@ export function useFavorites() {
             );
             if (pageDoc.exists()) {
               const pageData = pageDoc.data();
-              allFavorites = [...allFavorites, ...(pageData.miracles || [])];
+              allFavorites = [...allFavorites, ...(pageData.islamicData || [])];
             }
           }
         }
@@ -255,7 +255,7 @@ export function useFavorites() {
         setFavorites([item]);
       } else {
         const data = currentDoc.data();
-        const currentFavorites = data.miracles || [];
+        const currentFavorites = data.islamicData || [];
 
         // Check if item already exists
         const exists = currentFavorites.some((m: FavoriteItem) =>
@@ -266,7 +266,7 @@ export function useFavorites() {
           // Add to current page if there's space
           if (currentFavorites.length < FAVORITES_PER_DOC) {
             await updateDoc(userFavoritesRef, {
-              miracles: arrayUnion(item),
+              islamicData: arrayUnion(item),
               totalCount: data.totalCount + 1,
               lastUpdated: new Date(),
             });
@@ -336,7 +336,7 @@ export function useFavorites() {
 
       if (currentDoc.exists()) {
         const data = currentDoc.data();
-        const currentFavorites = data.miracles || [];
+        const currentFavorites = data.islamicData || [];
 
         // Check if item is in main document
         const itemIndex = currentFavorites.findIndex((m: FavoriteItem) =>
@@ -346,7 +346,7 @@ export function useFavorites() {
         if (itemIndex !== -1) {
           // Remove from main document
           await updateDoc(userFavoritesRef, {
-            miracles: arrayRemove(item),
+            islamicData: arrayRemove(item),
             totalCount: data.totalCount - 1,
             lastUpdated: new Date(),
           });
@@ -358,7 +358,7 @@ export function useFavorites() {
 
             if (nextPageDoc.exists()) {
               const nextPageData = nextPageDoc.data();
-              const nextPageFavorites = nextPageData.miracles || [];
+              const nextPageFavorites = nextPageData.islamicData || [];
 
               if (nextPageFavorites.length > 0) {
                 // Move first item from next page to main document
@@ -369,7 +369,7 @@ export function useFavorites() {
 
                 // Remove item from next page
                 await updateDoc(nextPageRef, {
-                  miracles: arrayRemove(itemToMove),
+                  islamicData: arrayRemove(itemToMove),
                 });
 
                 // If next page is empty, delete it and update total pages
@@ -394,7 +394,7 @@ export function useFavorites() {
 
             if (pageDoc.exists()) {
               const pageData = pageDoc.data();
-              const pageFavorites = pageData.miracles || [];
+              const pageFavorites = pageData.islamicData || [];
 
               const pageItemIndex = pageFavorites.findIndex((m: FavoriteItem) =>
                 isSameItem(m, item)
@@ -403,7 +403,7 @@ export function useFavorites() {
               if (pageItemIndex !== -1) {
                 // Remove from this page
                 await updateDoc(pageRef, {
-                  miracles: arrayRemove(item),
+                  islamicData: arrayRemove(item),
                 });
 
                 // Update main document count

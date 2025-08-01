@@ -7,7 +7,7 @@ export interface IslamicDataFilters {
   sortBy: string;
 }
 
-// useMiracleFilters custom hook encapsulates all client-side filtering, sorting, and pagination logic
+// useIslamicDataFilters custom hook encapsulates all client-side filtering, sorting, and pagination logic
 export function useIslamicDataFilters(
   islamicData: IslamicData[],
   initialFilters: IslamicDataFilters,
@@ -24,7 +24,7 @@ export function useIslamicDataFilters(
     [islamicData]
   );
 
-  // Filter and sort miracles
+  // Filter and sort Islamic data
   const sortedIslamicData = useMemo(() => {
     let filtered = islamicData.filter(
       (m) =>
@@ -93,7 +93,7 @@ export function useFactFilters(
   initialFilters: FactFilters,
   pageSize: number
 ) {
-  // Convert FactFilters to MiracleFilters
+  // Convert FactFilters to IslamicDataFilters
   const convertedFilters: IslamicDataFilters = {
     searchTerm: initialFilters.searchTerm,
     type: initialFilters.category, // Map category to type

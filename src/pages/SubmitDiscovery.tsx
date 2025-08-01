@@ -91,7 +91,7 @@ const SubmitData: React.FC = () => {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setToast("Thank you! Your discovery has been submitted for review.");
+      setToast("Thank you! Your Islamic data has been submitted for review.");
 
       // Reset form
       setFormData({
@@ -273,7 +273,7 @@ const SubmitData: React.FC = () => {
             <li>• Ensure accuracy and provide reliable sources</li>
             <li>• Include specific references and verification methods</li>
             <li>• All submissions will be reviewed by our team</li>
-            <li>• Approved discoveries will be added to the main database</li>
+            <li>• Approved data will be added to the main database</li>
           </ul>
         </div>
       </div>

@@ -15,16 +15,16 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Logout",
 
     // Homepage
-    "home.title": "Islamic Signs and Guidance",
+    "home.title": "Authentic Islamic Knowledge",
     "home.subtitle":
-      "Discover the miraculous signs of Allah through Quranic revelations, prophetic guidance, and divine wisdom.",
-    "home.stats.total": "Total Signs",
+    "Discover the miraculous signs of Allah through Quranic verses, Sahih Bukhari's hadith collection, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding.",
+    "home.stats.total": "Authentic Islamic Data",
     "home.stats.categories": "Categories",
     "home.stats.saved": "Saved",
     "home.stats.fulfilled": "Fulfilled",
 
     // Tabs
-    "tabs.all": "All Signs",
+    "tabs.all": "Authentic Islamic Data",
     "tabs.search": "Advanced Search",
     "tabs.charts": "Charts & Graphs",
     "tabs.stats": "Statistics",

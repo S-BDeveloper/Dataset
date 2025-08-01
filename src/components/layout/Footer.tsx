@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Logo } from "../common";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -12,29 +13,13 @@ const Footer: React.FC = () => {
           {/* App Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                  />
-                </svg>
-              </div>
-              <span className="text-xl font-bold text-white">
-                Islamic Signs and Guidance
-              </span>
+             
+            
+              <Logo />
+              
             </div>
             <p className="text-stone-400 text-sm leading-relaxed">
-              Discovering and showcasing the miraculous signs of Allah through
-              scientific, mathematical, and linguistic phenomena in the Quran
-              and Hadith.
+              Showcasing the miraculous signs of Allah through the Quran, Hadith, and scientific discoveries.
             </p>
             <div className="flex space-x-4">
               <a
@@ -109,7 +94,7 @@ const Footer: React.FC = () => {
                   to="/favorites"
                   className="text-stone-400 hover:text-green-400 transition-colors text-sm"
                 >
-                  Saved Signs
+                  Saved favorites
                 </Link>
               </li>
 
@@ -118,7 +103,7 @@ const Footer: React.FC = () => {
                   to="/submit-discovery"
                   className="text-stone-400 hover:text-green-400 transition-colors text-sm"
                 >
-                  Submit Discovery
+                  Submit Islamic Data
                 </Link>
               </li>
               <li>
@@ -136,30 +121,20 @@ const Footer: React.FC = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Categories</h3>
             <ul className="space-y-2">
-              <li>
-                <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
-                  Mathematical Miracles
-                </span>
-              </li>
+             
               <li>
                 <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
                   Scientific Discoveries
                 </span>
               </li>
-              <li>
-                <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
-                  Linguistic Phenomena
-                </span>
-              </li>
+            
               <li>
                 <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
                   Historical Prophecies
                 </span>
               </li>
               <li>
-                <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
-                  Structural Patterns
-                </span>
+             
               </li>
             </ul>
           </div>
@@ -185,7 +160,7 @@ const Footer: React.FC = () => {
                   />
                 </svg>
                 <span className="text-stone-400 text-sm">
-                  contact@islamicsigns.com
+                  contact@islamicdata.com
                 </span>
               </div>
               <div className="flex items-center space-x-3">
@@ -229,7 +204,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="text-stone-400 text-sm">
-              © {currentYear} Islamic Signs and Guidance. All rights reserved.
+              © {currentYear} Reflect & Implement. All rights reserved.
             </div>
 
             {/* Legal Links */}
@@ -259,9 +234,8 @@ const Footer: React.FC = () => {
           <div className="mt-6">
             <p className="text-stone-500 text-xs leading-relaxed max-w-2xl mx-auto">
               Our mission is to showcase the miraculous signs of Allah through
-              evidence-based discoveries, fostering a deeper understanding and
-              appreciation of Islamic knowledge while promoting unity and
-              enlightenment among believers and seekers of truth.
+              authentic Islamic data, fostering a deeper true understanding and
+              appreciation of Islamic knowledge while promoting enlightenment among believers and seekers of truth.
             </p>
           </div>
         </div>

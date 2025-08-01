@@ -10,7 +10,7 @@ export const HomePageTabs: React.FC<HomePageTabsProps> = ({
   setActiveTab,
 }) => {
   const tabs = [
-    { id: "all", label: "All Signs", icon: "📖" },
+    { id: "all", label: "Data", icon: "📖" },
     { id: "search", label: "Cross-Reference Search", icon: "🔍" },
     { id: "charts", label: "Charts & Analytics", icon: "📊" },
     { id: "quran", label: "Quran", icon: "📜" },

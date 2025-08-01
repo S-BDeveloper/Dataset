@@ -1,9 +1,9 @@
 // Application constants and configuration
 export const APP_CONFIG = {
-  name: "Quranic Signs Guidance App",
+  name: "Authentic Islamic Knowledge",
   version: "1.0.0",
   description:
-    "Discover the miraculous signs of Allah through Quranic revelations",
+    "Discover the miraculous signs of Allah through Quranic verses, Sahih Bukhari's hadith collection, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding",
 } as const;
 
 export const PAGINATION = {
@@ -59,7 +59,7 @@ export const ROUTES = {
 } as const;
 
 export const API_ENDPOINTS = {
-  miracles: "/api/miracles",
+  IslamicData: "/api/islamicData",
   quran: "/api/quran",
   hadith: "/api/hadith",
   favorites: "/api/favorites",

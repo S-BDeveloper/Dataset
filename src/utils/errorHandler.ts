@@ -223,7 +223,7 @@ export class ErrorHandler {
 
   // Private methods
   private generateErrorId(): string {
-    return `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `error_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   private notifyListeners(error: AppError): void {
