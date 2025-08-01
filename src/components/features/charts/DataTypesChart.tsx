@@ -21,10 +21,28 @@ export const DataTypesChart: React.FC<DataTypesChartProps> = ({
 
   // Convert to chart data format compatible with Nivo BarDatum
   const chartData = Object.entries(typeCounts).map(([type, count]) => ({
-    type: type.charAt(0).toUpperCase() + type.slice(1), // Capitalize first letter
+    type: formatTypeLabel(type), // Use optimized label formatting
     count,
     color: getTypeColor(type), // Custom colors for each type
   }));
+
+  // Format type labels for better readability
+  function formatTypeLabel(type: string): string {
+    const labels = {
+      pair: "Pair Signs",
+      numerical: "Numerical Signs",
+      structural: "Structural Signs",
+      linguistic: "Linguistic Signs",
+      prophecy: "Prophecies",
+      middle: "Middle Signs",
+      scientific: "Scientific Signs",
+      unknown: "Unknown Type",
+    };
+    return (
+      labels[type as keyof typeof labels] ||
+      type.charAt(0).toUpperCase() + type.slice(1)
+    );
+  }
 
   // Custom colors for different sign types
   function getTypeColor(type: string): string {
@@ -54,7 +72,7 @@ export const DataTypesChart: React.FC<DataTypesChartProps> = ({
           data={chartData}
           keys={["count"]}
           indexBy="type"
-          margin={{ top: 20, right: 30, bottom: 80, left: 60 }}
+          margin={{ top: 20, right: 30, bottom: 100, left: 60 }}
           padding={0.3}
           colors={({ data }) => data.color}
           borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
@@ -62,19 +80,19 @@ export const DataTypesChart: React.FC<DataTypesChartProps> = ({
           axisRight={null}
           axisBottom={{
             tickSize: 5,
-            tickPadding: 5,
-            tickRotation: -45,
-            legend: "Data Type",
+            tickPadding: 8,
+            tickRotation: -30,
+            legend: "📊 Data Categories",
             legendPosition: "middle",
-            legendOffset: 60,
+            legendOffset: 90,
           }}
           axisLeft={{
             tickSize: 5,
-            tickPadding: 5,
+            tickPadding: 8,
             tickRotation: 0,
-            legend: "Number of data",
+            legend: "📈 Count",
             legendPosition: "middle",
-            legendOffset: -40,
+            legendOffset: -60,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
