@@ -58,7 +58,7 @@ export default function HomePage({
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   // Use Quran and Hadith data hooks for unified search
-  const { data: quranData } = useQuranData();
+  const { allData: quranData } = useQuranData(); // Use allData for full Quran dataset
   const { hadithData } = useHadithData();
 
   // Add loading state tracking

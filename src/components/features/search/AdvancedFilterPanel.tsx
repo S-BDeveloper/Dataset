@@ -44,9 +44,14 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
   ];
 
   // Quran-specific unique values
-  const uniqueQuranSurahs = [
-    ...new Set(quranData.map((ayah) => ayah.surah_name_en)),
-  ];
+  const uniqueQuranSurahs = Array.from(
+    new Map<number, string>(
+      quranData.map((ayah) => [ayah.surah_no, ayah.surah_name_en])
+    ).entries()
+  )
+    .sort(([a], [b]) => a - b)
+    .map(([number, name]) => ({ number, name }));
+  
   const uniqueQuranPlaces = [
     ...new Set(quranData.map((ayah) => ayah.place_of_revelation)),
   ];
@@ -285,9 +290,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
               {/* Quran-Specific Filters */}
               {filters.dataSources.includes("quran") && (
+               
+              
                 <div className="space-y-4">
                   <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300">
-                    Quran Filters
+                 
+
                   </h4>
 
                   {/* Surah Filter */}
@@ -308,7 +316,9 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                             newFilters.quranSurahs = [];
                           } else {
                             // Select all surahs
-                            newFilters.quranSurahs = uniqueQuranSurahs;
+                            newFilters.quranSurahs = uniqueQuranSurahs.map(
+                              ({ name }) => name
+                            );
                           }
                           onFiltersChange(newFilters);
                         }}
@@ -320,24 +330,20 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                       </button>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto">
-                      {uniqueQuranSurahs.map((surah) => (
-                        <label
-                          key={surah}
-                          className="flex items-center space-x-2 cursor-pointer"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={filters.quranSurahs.includes(surah)}
-                            onChange={() =>
-                              handleMultiSelectToggle("quranSurahs", surah)
-                            }
-                            className="rounded border-stone-300 text-blue-600 focus:ring-blue-500"
-                          />
-                          <span className="text-xs text-stone-600 dark:text-stone-400">
-                            {surah}
-                          </span>
-                        </label>
-                      ))}
+                    {uniqueQuranSurahs.map(({ number, name }) => (
+  <label key={number} className="flex items-center space-x-2 cursor-pointer">
+    <input
+      type="checkbox"
+      checked={filters.quranSurahs.includes(name)}
+      onChange={() => handleMultiSelectToggle("quranSurahs", name)}
+      className="rounded border-stone-300 text-blue-600 focus:ring-blue-500"
+    />
+    <span className="text-xs text-stone-600 dark:text-stone-400">
+      {number}. {name}
+    </span>
+  </label>
+))}
+
                     </div>
                   </div>
 
