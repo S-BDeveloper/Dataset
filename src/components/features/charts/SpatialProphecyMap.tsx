@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from "react";
-import type { QuranicMiracle } from "../../../types/Types";
+import type { IslamicData } from "../../../types/Types";
 
 interface SpatialProphecyMapProps {
-  data: QuranicMiracle[];
+  data: IslamicData[];
   isActive?: boolean;
 }
 

@@ -1,31 +1,13 @@
 import React, { useState } from "react";
 import type {
-  QuranicMiracle,
+  IslamicData,
   QuranAyah,
   HadithEntry,
+  FilterState,
 } from "../../../types/Types";
 
-interface FilterState {
-  types: string[];
-  categories: string[];
-  searchFields: string[];
-  sortBy: string;
-  sortOrder: "asc" | "desc";
-  fulfillmentStatus: string[];
-  prophecyCategories: string[];
-  yearRange: { min: number; max: number };
-  dataSources: ("miracle" | "quran" | "hadith")[];
-  // New Quran-specific filters
-  quranSurahs: string[];
-  quranVerseRange: { min: number; max: number };
-  quranPlaceOfRevelation: string[];
-  // New Hadith-specific filters
-  hadithNumberRange: { min: number; max: number };
-  hadithCategories: string[];
-}
-
 interface AdvancedFilterPanelProps {
-  data: QuranicMiracle[];
+  data: IslamicData[];
   quranData?: QuranAyah[];
   hadithData?: HadithEntry[];
   filters: FilterState;
@@ -49,18 +31,16 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
   const [presetName, setPresetName] = useState("");
 
   // Get unique values for filters
-  const uniqueTypes = [...new Set(data.map((miracle) => miracle.type))];
+  const uniqueTypes = [...new Set(data.map((data) => data.type))];
   // Remove category filter since QuranicMiracle doesn't have a category property
   // const uniqueCategories = [
   //   ...new Set(data.map((miracle) => miracle.category).filter(Boolean)),
   // ];
   const uniqueFulfillmentStatuses = [
-    ...new Set(
-      data.map((miracle) => miracle.fulfillmentStatus).filter(Boolean)
-    ),
+    ...new Set(data.map((data) => data.fulfillmentStatus).filter(Boolean)),
   ];
   const uniqueProphecyCategories = [
-    ...new Set(data.map((miracle) => miracle.prophecyCategory).filter(Boolean)),
+    ...new Set(data.map((data) => data.prophecyCategory).filter(Boolean)),
   ];
 
   // Quran-specific unique values
@@ -99,7 +79,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
   // Data source options
   const dataSourceOptions = [
-    { value: "miracle", label: "Miracles" },
+    { value: "data", label: "Data" },
     { value: "quran", label: "Quran Verses" },
     { value: "hadith", label: "Hadiths" },
   ];
@@ -288,7 +268,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                       <input
                         type="checkbox"
                         checked={filters.dataSources.includes(
-                          option.value as "miracle" | "quran" | "hadith"
+                          option.value as "islamic data" | "quran" | "hadith"
                         )}
                         onChange={() =>
                           handleMultiSelectToggle("dataSources", option.value)
@@ -530,18 +510,18 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 </div>
               )}
 
-              {/* Miracle-Specific Filters */}
-              {filters.dataSources.includes("miracle") && (
+              {/* Islamic Data-Specific Filters */}
+              {filters.dataSources.includes("islamic data") && (
                 <div className="space-y-4">
                   <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300">
-                    Miracle Filters
+                    Islamic Data Filters
                   </h4>
 
                   {/* Type Filter */}
                   {uniqueTypes.length > 0 && (
                     <div>
                       <label className="block text-xs text-stone-600 dark:text-stone-400 mb-2">
-                        Miracle Types
+                        Card Types
                       </label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {uniqueTypes.map((type) => (

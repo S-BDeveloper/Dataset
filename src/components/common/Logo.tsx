@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import bookImage from "../../assets/5179ed07851a80de976e57843ec0f946.png";
 
 interface LogoProps {
   className?: string;
@@ -13,87 +14,33 @@ export function Logo({ className = "", showText = true }: LogoProps) {
     >
       {/* Knowledge from Darkness Icon */}
       <div className="relative">
-        {/* Black Circle (Darkness) */}
-        <svg
-          className="w-8 h-8 text-stone-900 dark:text-stone-100"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <circle cx="12" cy="12" r="10" />
-        </svg>
+        {/* Dark Circle Background */}
+        <div className="w-12 h-12 bg-blue-900 dark:bg-blue-950 rounded-full flex items-center justify-center relative overflow-hidden">
+          {/* Enhanced yellow illuminating glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-yellow-400/40 via-yellow-300/25 to-transparent rounded-full"></div>
 
-        {/* Light Bulb with Illumination Effect */}
-        <svg
-          className="absolute -top-1 -right-1 w-6 h-6 text-yellow-400 dark:text-yellow-300"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          {/* Light Rays - Illumination Effect */}
-          <path
-            d="M12 2 L14 4 L16 2 L18 4 L20 2"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            fill="none"
-            opacity="0.6"
-          />
-          <path
-            d="M12 2 L10 4 L8 2 L6 4 L4 2"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            fill="none"
-            opacity="0.6"
-          />
-          <path
-            d="M12 2 L13 5 L14 8"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            fill="none"
-            opacity="0.6"
-          />
-          <path
-            d="M12 2 L11 5 L10 8"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            fill="none"
-            opacity="0.6"
-          />
+          {/* Additional glow rings with more intensity */}
+          <div className="absolute inset-0 border-2 border-yellow-400/50 rounded-full"></div>
+          <div className="absolute inset-1 border border-yellow-300/40 rounded-full"></div>
+          <div className="absolute inset-2 border border-yellow-200/30 rounded-full"></div>
 
-          {/* Bulb Glass */}
-          <path d="M8 6 Q12 4 16 6 Q16 12 16 14 Q12 16 8 14 Q8 12 8 6 Z" />
-
-          {/* Base/Screw */}
-          <rect x="9" y="14" width="6" height="3" rx="1" />
-
-          {/* Filament */}
-          <path
-            d="M10 8 Q12 6 14 8"
-            stroke="currentColor"
-            strokeWidth="1"
-            fill="none"
+          {/* Book image */}
+          <img
+            src={bookImage}
+            alt="Quran Book"
+            className="w-8 h-8 object-contain z-10 relative"
           />
-          <path
-            d="M10 9 Q12 7 14 9"
-            stroke="currentColor"
-            strokeWidth="1"
-            fill="none"
-          />
-
-          {/* Inner Glow */}
-          <path
-            d="M9 7 Q12 5 15 7 Q15 13 15 15 Q12 17 9 15 Q9 13 9 7 Z"
-            className="opacity-30"
-          />
-        </svg>
+        </div>
       </div>
 
       {/* App Name */}
       {showText && (
         <div className="flex flex-col">
           <span className="text-xl font-bold text-green-700 dark:text-green-400 leading-tight">
-            Islamic Signs
+            Reflect
           </span>
           <span className="text-xs text-stone-500 dark:text-stone-400 leading-tight">
-            & Guidance
+            & Implement
           </span>
         </div>
       )}

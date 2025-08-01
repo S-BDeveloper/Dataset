@@ -1,33 +1,36 @@
 // Domain-specific hooks for filtering and pagination
 import { useState, useMemo } from "react";
-import type { QuranicMiracle } from "../../types/Types";
+import type { IslamicData } from "../../types/Types";
 
-export interface MiracleFilters {
+export interface IslamicFilters {
   searchTerm: string;
   type: string;
   sortBy: string;
 }
 
-// useMiracleFilters custom hook encapsulates all client-side filtering, sorting, and pagination logic
-export function useMiracleFilters(
-  miracles: QuranicMiracle[],
-  initialFilters: MiracleFilters,
+// Alias for backward compatibility
+export type IslamicDataFilters = IslamicFilters;
+
+// useIslamicFilters custom hook encapsulates all client-side filtering, sorting, and pagination logic
+export function useIslamicFilters(
+  islamicData: IslamicData[],
+  initialFilters: IslamicFilters,
   pageSize: number
 ) {
-  const [filters, setFilters] = useState<MiracleFilters>(initialFilters);
+  const [filters, setFilters] = useState<IslamicFilters>(initialFilters);
   const [currentPage, setCurrentPage] = useState(1);
   const [goToPage, setGoToPage] = useState("");
 
   // Get unique types
   const types = useMemo(
     () =>
-      Array.from(new Set(miracles.map((m) => m.type || ""))).filter(Boolean),
-    [miracles]
+      Array.from(new Set(islamicData.map((m) => m.type || ""))).filter(Boolean),
+    [islamicData]
   );
 
-  // Filter and sort miracles
-  const sortedMiracles = useMemo(() => {
-    let filtered = miracles.filter(
+  // Filter and sort islamic data
+  const sortedIslamicData = useMemo(() => {
+    let filtered = islamicData.filter(
       (m) =>
         (!filters.searchTerm ||
           (m.title || "")
@@ -48,14 +51,17 @@ export function useMiracleFilters(
         .sort((a, b) => (a.title || "").localeCompare(b.title || ""));
     }
     return filtered;
-  }, [miracles, filters]);
+  }, [islamicData, filters]);
 
   // Pagination
-  const totalPages = Math.max(1, Math.ceil(sortedMiracles.length / pageSize));
-  const paginatedMiracles = useMemo(() => {
+  const totalPages = Math.max(
+    1,
+    Math.ceil(sortedIslamicData.length / pageSize)
+  );
+  const paginatedIslamicData = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
-    return sortedMiracles.slice(start, start + pageSize);
-  }, [sortedMiracles, currentPage, pageSize]);
+    return sortedIslamicData.slice(start, start + pageSize);
+  }, [sortedIslamicData, currentPage, pageSize]);
 
   // Go to page handler
   const handleGoToPage = (pageNum: number) => {
@@ -70,8 +76,8 @@ export function useMiracleFilters(
     filters,
     setFilters,
     types,
-    paginatedMiracles,
-    sortedMiracles,
+    paginatedIslamicData,
+    sortedIslamicData,
     currentPage,
     setCurrentPage,
     totalPages,
@@ -94,16 +100,12 @@ export function useFactFilters(
   initialFilters: FactFilters,
   pageSize: number
 ) {
-  // Convert FactFilters to MiracleFilters
-  const convertedFilters: MiracleFilters = {
+  // Convert FactFilters to IslamicFilters
+  const convertedFilters: IslamicFilters = {
     searchTerm: initialFilters.searchTerm,
     type: initialFilters.category, // Map category to type
     sortBy: initialFilters.sortBy,
   };
 
-  return useMiracleFilters(
-    facts as QuranicMiracle[],
-    convertedFilters,
-    pageSize
-  );
+  return useIslamicFilters(facts as IslamicData[], convertedFilters, pageSize);
 }

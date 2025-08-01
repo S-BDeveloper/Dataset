@@ -7,8 +7,8 @@ export const HomePageHeader: React.FC = () => {
         Authentic Islamic Knowledge
       </h1>
       <p className="text-lg text-stone-600 dark:text-stone-400 max-w-3xl leading-relaxed">
-        Discover the miraculous signs of Allah through authentic Quranic verses,
-        Sahih Bukhari hadiths, and scientific discoveries. Explore
+        Discover the miraculous signs of Allah through Quranic verses,
+        Sahih Bukhari's hadith collection, and scientific discoveries. Explore
         cross-references between different Islamic sources to deepen your
         understanding.
       </p>

@@ -1,19 +1,19 @@
 import React, { memo } from "react";
-import type { QuranicMiracle } from "../../../types/Types";
+import type { IslamicData } from "../../../types/Types";
 
-interface MiracleCardProps {
-  miracle: QuranicMiracle;
-  onFavorite: (miracle: QuranicMiracle) => void;
+interface DataCardProps {
+  card: IslamicData;
+  onFavorite: (card: IslamicData) => void;
   isFavorite: boolean;
 }
 
-// Memoized MiracleCard component for better performance
-export const MiracleCard: React.FC<MiracleCardProps> = memo(
-  ({ miracle, onFavorite, isFavorite }) => {
+// Memoized DataCard component for better performance
+export const DataCard: React.FC<DataCardProps> = memo(
+  ({ card, onFavorite, isFavorite }) => {
     const handleFavoriteClick = (e: React.MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      onFavorite(miracle);
+      onFavorite(card);
     };
 
     return (
@@ -22,7 +22,7 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
         <div className="p-4 border-b border-stone-200 dark:border-stone-700">
           <div className="flex items-center justify-between">
             <span className="inline-block px-2 py-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200 text-xs font-medium rounded-full">
-              {miracle.type}
+              {card.type}
             </span>
             <button
               onClick={handleFavoriteClick}
@@ -55,30 +55,30 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
         {/* Content */}
         <div className="p-4">
           <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-3">
-            {miracle.title}
+            {card.title}
           </h3>
 
           {/* Description */}
-          {miracle.description && (
+          {card.description && (
             <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mb-4">
-              {miracle.description}
+              {card.description}
             </p>
           )}
 
           {/* Notes */}
-          {miracle.notes && (
+          {card.notes && (
             <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
               <h4 className="text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2 uppercase tracking-wide">
                 Notes
               </h4>
               <p className="text-sm text-blue-800 dark:text-blue-200">
-                {miracle.notes}
+                {card.notes}
               </p>
             </div>
           )}
 
           {/* Prophetic Information */}
-          {miracle.fulfillmentStatus && (
+          {card.fulfillmentStatus && (
             <div className="p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800 mb-4">
               <h4 className="text-xs font-semibold text-orange-700 dark:text-orange-300 mb-2 uppercase tracking-wide">
                 Prophetic Status
@@ -90,36 +90,36 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
                   </span>
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      miracle.fulfillmentStatus === "fulfilled"
+                      card.fulfillmentStatus === "fulfilled"
                         ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
-                        : miracle.fulfillmentStatus === "in-progress"
+                        : card.fulfillmentStatus === "in-progress"
                         ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200"
-                        : miracle.fulfillmentStatus === "pending"
+                        : card.fulfillmentStatus === "pending"
                         ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200"
                         : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                     }`}
                   >
-                    {miracle.fulfillmentStatus}
+                    {card.fulfillmentStatus}
                   </span>
                 </div>
-                {miracle.yearRevealed && (
+                {card.yearRevealed && (
                   <div className="text-orange-600 dark:text-orange-400">
-                    Revealed: {miracle.yearRevealed}
+                    Revealed: {card.yearRevealed}
                   </div>
                 )}
-                {miracle.yearFulfilled && (
+                {card.yearFulfilled && (
                   <div className="text-orange-600 dark:text-orange-400">
-                    Fulfilled: {miracle.yearFulfilled}
+                    Fulfilled: {card.yearFulfilled}
                   </div>
                 )}
-                {miracle.prophecyCategory && (
+                {card.prophecyCategory && (
                   <div className="text-orange-600 dark:text-orange-400">
-                    Category: {miracle.prophecyCategory}
+                    Category: {card.prophecyCategory}
                   </div>
                 )}
-                {miracle.fulfillmentEvidence && (
+                {card.fulfillmentEvidence && (
                   <div className="text-xs text-orange-700 dark:text-orange-300 mt-2">
-                    <strong>Evidence:</strong> {miracle.fulfillmentEvidence}
+                    <strong>Evidence:</strong> {card.fulfillmentEvidence}
                   </div>
                 )}
               </div>
@@ -127,7 +127,7 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
           )}
 
           {/* Sources Information */}
-          {miracle.sources && (
+          {card.sources && (
             <div className="p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
               <h4 className="text-xs font-semibold text-stone-700 dark:text-stone-300 mb-2 uppercase tracking-wide">
                 Sources
@@ -138,7 +138,7 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
                     Primary:
                   </span>
                   <span className="text-stone-800 dark:text-stone-200 ml-1">
-                    {miracle.sources.primary}
+                    {card.sources.primary}
                   </span>
                 </div>
                 <div>
@@ -146,17 +146,17 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
                     Methodology:
                   </span>
                   <span className="text-stone-800 dark:text-stone-200 ml-1">
-                    {miracle.sources.methodology}
+                    {card.sources.methodology}
                   </span>
                 </div>
-                {miracle.sources.references &&
-                  miracle.sources.references.length > 0 && (
+                {card.sources.references &&
+                  card.sources.references.length > 0 && (
                     <div>
                       <span className="text-stone-600 dark:text-stone-400">
                         References:
                       </span>
                       <div className="mt-1 space-y-1">
-                        {miracle.sources.references
+                        {card.sources.references
                           .slice(0, 2)
                           .map((ref, index) => (
                             <div
@@ -166,9 +166,9 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
                               {ref}
                             </div>
                           ))}
-                        {miracle.sources.references.length > 2 && (
+                        {card.sources.references.length > 2 && (
                           <div className="text-stone-500 dark:text-stone-400">
-                            +{miracle.sources.references.length - 2} more
+                            +{card.sources.references.length - 2} more
                           </div>
                         )}
                       </div>
@@ -183,4 +183,4 @@ export const MiracleCard: React.FC<MiracleCardProps> = memo(
   }
 );
 
-MiracleCard.displayName = "MiracleCard";
+DataCard.displayName = "DataCard";

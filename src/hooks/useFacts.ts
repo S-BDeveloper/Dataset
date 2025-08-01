@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
-import type { QuranicMiracle } from "../types/Types";
-import quranicMiraclesData from "../data/quranic_miracles.json";
+import type { IslamicData } from "../types/Types";
+import IslamicDataCards from "../data/islamic_data.json";
 
 // useMiracles custom hook centralizes data fetching logic, loading, error, and refetch
-export function useMiracles(loadingDelay = 1000) {
-  const [miracles, setMiracles] = useState<QuranicMiracle[]>([]);
+export function useIslamicData(loadingDelay = 1000) {
+  const [islamicData, setIslamicData] = useState<IslamicData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchMiracles = async () => {
+  const fetchIslamicData = async () => {
     setLoading(true);
     setError(null);
     try {
       // Load from local JSON file
-      const loadedMiracles: QuranicMiracle[] =
-        quranicMiraclesData as QuranicMiracle[];
-      setMiracles(loadedMiracles);
+      const loadedIslamicData: IslamicData[] =
+        IslamicDataCards as IslamicData[];
+      setIslamicData(loadedIslamicData);
     } catch {
-      setError("Failed to load Quranic miracles data");
+      setError("Failed to load Islamic data");
     } finally {
       setLoading(false);
     }
@@ -27,19 +27,19 @@ export function useMiracles(loadingDelay = 1000) {
     // Simulate loading delay for UX
     setLoading(true);
     setTimeout(() => {
-      fetchMiracles();
+      fetchIslamicData();
     }, loadingDelay);
   }, [loadingDelay]);
 
   // Refetch handler (re-runs the effect)
   const refetch = () => {
-    fetchMiracles();
+    fetchIslamicData();
   };
 
-  return { miracles, loading, error, refetch };
+  return { islamicData, loading, error, refetch };
 }
 
 // Legacy hook for backward compatibility
 export function useFacts(loadingDelay = 1000) {
-  return useMiracles(loadingDelay);
+  return useIslamicData(loadingDelay);
 }

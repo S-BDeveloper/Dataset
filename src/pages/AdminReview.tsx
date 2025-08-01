@@ -8,7 +8,7 @@ interface Submission {
   type: string;
   submitterName: string;
   submitterEmail: string;
-  status: "pending" | "approved" | "rejected";
+  status: "pending" | "approved" | "rejected" | "proven";
   submittedAt: string;
   notes: string;
 }
@@ -19,24 +19,24 @@ const AdminReview: React.FC = () => {
   const [submissions, setSubmissions] = useState<Submission[]>([
     {
       id: "1",
-      title: "Mathematical Miracle in Surah Al-Fatiha",
-      type: "numerical",
-      submitterName: "Ahmed Hassan",
+      title: "Prophecy",
+      type: "Prophecies",
+      submitterName: "Ahmed Hasan",
       submitterEmail: "ahmed@example.com",
       status: "pending",
       submittedAt: "2024-01-15T10:30:00Z",
       notes:
-        "Discovered a fascinating numerical pattern in the opening chapter...",
+        "Prophecy in Hadith no...",
     },
     {
       id: "2",
-      title: "Linguistic Miracle in Quranic Verses",
-      type: "linguistic",
+      title: "Food",
+      type: "Medicine",
       submitterName: "Fatima Ali",
       submitterEmail: "fatima@example.com",
-      status: "approved",
+      status: "proven",
       submittedAt: "2024-01-14T15:45:00Z",
-      notes: "Analysis of word patterns and linguistic structures...",
+      notes: "Science has proven... is...",
     },
   ]);
 
@@ -77,7 +77,7 @@ const AdminReview: React.FC = () => {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400";
-      case "approved":
+      case "proven":
         return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
       case "rejected":
         return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";

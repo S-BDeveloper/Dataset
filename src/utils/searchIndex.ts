@@ -1,10 +1,10 @@
 // Enhanced search indexing with proper TypeScript types
-import type { QuranicMiracle, QuranAyah, HadithEntry } from "../types/Types";
+import type { IslamicData, QuranAyah, HadithEntry } from "../types/Types";
 
 // Search index interface
 interface SearchIndex {
   [key: string]: {
-    type: "miracle" | "quran" | "hadith";
+    type: "islamic data" | "quran" | "hadith";
     id: string;
     title: string;
     content: string;
@@ -15,13 +15,13 @@ interface SearchIndex {
 
 // Search result interface
 interface SearchResult {
-  type: "miracle" | "quran" | "hadith";
+  type: "islamic data" | "quran" | "hadith";
   id: string;
   title: string;
   content: string;
   score: number;
   highlights: string[];
-  data: QuranicMiracle | QuranAyah | HadithEntry;
+  data: IslamicData | QuranAyah | HadithEntry;
 }
 
 // Debounced function type
@@ -108,15 +108,15 @@ function indexHadithData(hadithData: HadithEntry[]): void {
 }
 
 // Create search index for Miracle data
-function indexMiracleData(miracleData: QuranicMiracle[]): void {
-  miracleData.forEach((miracle) => {
+function indexIslamicData(islamicData: IslamicData[]): void {
+  islamicData.forEach((islamicData) => {
     const tokens = [
-      ...tokenizeText(miracle.title),
-      ...tokenizeText(miracle.notes),
-      ...tokenizeText(miracle.description || ""),
-      ...tokenizeText(miracle.type),
-      ...tokenizeText(miracle.fulfillmentStatus || ""),
-      ...tokenizeText(miracle.prophecyCategory || ""),
+      ...tokenizeText(islamicData.title),
+      ...tokenizeText(islamicData.notes),
+      ...tokenizeText(islamicData.description || ""),
+      ...tokenizeText(islamicData.type),
+      ...tokenizeText(islamicData.fulfillmentStatus || ""),
+      ...tokenizeText(islamicData.prophecyCategory || ""),
     ];
 
     tokens.forEach((token) => {
@@ -125,10 +125,10 @@ function indexMiracleData(miracleData: QuranicMiracle[]): void {
       }
 
       searchIndex[token].push({
-        type: "miracle",
-        id: `${miracle.type}-${miracle.title}`,
-        title: miracle.title,
-        content: miracle.notes,
+        type: "islamic data",
+        id: `${islamicData.type}-${islamicData.title}`,
+        title: islamicData.title,
+        content: islamicData.notes,
         score: 1,
         highlights: [],
       });
@@ -197,7 +197,7 @@ export function debounceSearch<T extends (...args: unknown[]) => unknown>(
 // Unified search function
 export function unifiedSearch(
   query: string,
-  miracleData: QuranicMiracle[],
+  islamicData: IslamicData[],
   quranData: QuranAyah[],
   hadithData: HadithEntry[]
 ): SearchResult[] {
@@ -205,7 +205,7 @@ export function unifiedSearch(
 
   // Build search index if not already built
   if (Object.keys(searchIndex).length === 0) {
-    indexMiracleData(miracleData);
+    indexIslamicData(islamicData);
     indexQuranData(quranData);
     indexHadithData(hadithData);
   }
@@ -222,14 +222,14 @@ export function unifiedSearch(
         existingResult.score += match.score;
       } else {
         // Find the actual data object
-        let data: QuranicMiracle | QuranAyah | HadithEntry;
+        let data: IslamicData | QuranAyah | HadithEntry;
         let content = "";
 
         switch (match.type) {
-          case "miracle": {
-            data = miracleData.find(
+          case "islamic data": {
+            data = islamicData.find(
               (m) => `${m.type}-${m.title}` === match.id
-            ) as QuranicMiracle;
+            ) as IslamicData;
             content = data?.notes || "";
             break;
           }

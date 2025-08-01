@@ -41,10 +41,13 @@ export function useQuranData() {
       setLoading(true);
       setError(null);
 
+      console.log("🔄 Starting Quran data load from local JSON...");
+
       // Check cache first
       const cacheKey = "quran-data-json";
       const cachedData = dataCache.get(cacheKey);
       if (cachedData) {
+        console.log("✅ Using cached Quran data:", cachedData.length, "verses");
         setData(cachedData);
         setLoading(false);
         return;
@@ -52,11 +55,18 @@ export function useQuranData() {
 
       // Load from JSON directly
       try {
+        console.log("📖 Loading Quran data from local JSON...");
         const dataWithTranslations = (quranDataJSON as QuranAyah[]).map(
           (ayah: QuranAyah) => ({
             ...ayah,
             ayah_en: ayah.ayah_en || "", // Preserve existing translation or add empty
           })
+        );
+
+        console.log(
+          "✅ Loaded",
+          dataWithTranslations.length,
+          "verses from local JSON"
         );
 
         // Cache the parsed data
@@ -66,6 +76,7 @@ export function useQuranData() {
         throw new Error("Failed to load Quran data from JSON source");
       }
     } catch (err) {
+      console.error("❌ Quran data load error:", err);
       const errorMessage =
         err instanceof Error ? err.message : "Failed to load data";
       const isRetryable =

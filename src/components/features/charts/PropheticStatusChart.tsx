@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
-import { getChartTheme } from "../../providers/ChartThemeProvider";
-import type { QuranicMiracle } from "../../../types/Types";
+import type { IslamicData } from "../../../types/Types";
 
 interface PropheticStatusChartProps {
-  data: QuranicMiracle[];
+  data: IslamicData[];
   isActive?: boolean;
 }
 
@@ -20,7 +19,6 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
   isActive = false,
 }) => {
   const [viewMode, setViewMode] = useState<"status" | "category">("status");
-  const theme = getChartTheme();
 
   const getChartData = (): ChartDataItem[] => {
     if (viewMode === "status") {
@@ -123,7 +121,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
         </div>
       </div>
 
-      <div className="w-full h-full min-h-[400px] nivo-chart">
+      <div className="w-full h-full min-h-[400px] min-w-[200px] nivo-chart">
         <ResponsivePie
           data={chartData}
           margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
@@ -156,13 +154,12 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
               symbolShape: "circle",
             },
           ]}
-          theme={theme}
           tooltip={({ datum }) => (
-            <div className="bg-white dark:bg-stone-800 p-3 rounded-lg shadow-lg border border-stone-200 dark:border-stone-700">
+            <div className="bg-white dark:bg-stone-800 p-3 rounded-lg shadow-lg border border-stone-200 dark:border-stone-700 dark:text-stone-100">
               <div className="font-semibold text-stone-900 dark:text-stone-100">
                 {datum.label}
               </div>
-              <div className="text-stone-600 dark:text-stone-400">
+              <div className="text-stone-600 dark:text-stone-100">
                 {datum.value} signs
               </div>
             </div>

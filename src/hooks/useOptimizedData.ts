@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { dataService } from "../services/dataService";
+import type { IslamicData } from "../types/Types";
 // import { useAppStore } from "../store/useAppStore";
 
 interface UseOptimizedDataOptions {
@@ -32,11 +33,11 @@ export function useOptimizedData<T extends object>(
   const memoizedFilteredData = useMemo(() => {
     if (!searchTerm.trim()) return data;
 
-    return data.filter((item: any) => {
+    return data.filter((item: unknown) => {
       // Search in common fields
       const searchableFields = ["title", "content", "description", "text"];
       return searchableFields.some((field) => {
-        const value = item[field];
+        const value = (item as Record<string, unknown>)[field];
         return (
           value &&
           String(value).toLowerCase().includes(searchTerm.toLowerCase())
@@ -164,7 +165,7 @@ export function useOptimizedData<T extends object>(
 }
 
 // Specialized hooks for different data types
-export function useQuranData(quranData: any[]) {
+export function useQuranData(quranData: IslamicData[]) {
   return useOptimizedData(quranData, {
     chunkSize: 500, // Smaller chunks for Quran data
     enableVirtualScroll: true,
@@ -172,7 +173,7 @@ export function useQuranData(quranData: any[]) {
   });
 }
 
-export function useHadithData(hadithData: any[]) {
+export function useHadithData(hadithData: IslamicData[]) {
   return useOptimizedData(hadithData, {
     chunkSize: 200, // Even smaller chunks for Hadith data
     enableVirtualScroll: true,
@@ -180,7 +181,7 @@ export function useHadithData(hadithData: any[]) {
   });
 }
 
-export function useMiraclesData(miraclesData: any[]) {
+export function useMiraclesData(miraclesData: IslamicData[]) {
   return useOptimizedData(miraclesData, {
     chunkSize: 100, // Small chunks for miracles
     enableVirtualScroll: false, // Usually not needed for miracles

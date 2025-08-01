@@ -1,19 +1,17 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { getChartTheme } from "../../providers/ChartThemeProvider";
-import type { QuranicMiracle } from "../../../types/Types";
+import type { IslamicData } from "../../../types/Types";
 
-interface SignTypesChartProps {
-  data: QuranicMiracle[];
+interface DataTypesChartProps {
+  data: IslamicData[];
   isActive?: boolean;
 }
 
 // SignTypesChart displays an interactive bar chart of signs by type
-export const SignTypesChart: React.FC<SignTypesChartProps> = ({
+export const DataTypesChart: React.FC<DataTypesChartProps> = ({
   data,
   isActive = false,
 }) => {
-  const theme = getChartTheme();
   // Process data to count signs by type
   const typeCounts = data.reduce((acc, miracle) => {
     const type = miracle.type || "Unknown";
@@ -46,12 +44,12 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
   return (
     <div
       className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 chart-container"
-      aria-label="Interactive bar chart showing distribution of sign types"
+      aria-label="Interactive bar chart showing distribution of data types"
     >
       <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6 text-center">
-        Signs by Type Distribution
+        Data by Type Distribution
       </h3>
-      <div className="w-full h-full min-h-[400px] nivo-chart">
+      <div className="w-full h-full min-h-[400px] min-w-[200px] nivo-chart">
         <ResponsiveBar
           data={chartData}
           keys={["count"]}
@@ -66,7 +64,7 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -45,
-            legend: "Sign Type",
+            legend: "Data Type",
             legendPosition: "middle",
             legendOffset: 60,
           }}
@@ -74,7 +72,7 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "Number of Signs",
+            legend: "Number of data",
             legendPosition: "middle",
             legendOffset: -40,
           }}
@@ -105,16 +103,15 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
               ],
             },
           ]}
-          theme={theme}
           role="img"
-          barAriaLabel={(data) => `${data.data.type}: ${data.data.count} signs`}
+          barAriaLabel={(data) => `${data.data.type}: ${data.data.count} data`}
           tooltip={({ data }) => (
             <div className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-lg p-3 shadow-lg">
               <div className="font-semibold text-stone-900 dark:text-stone-100">
                 {data.type}
               </div>
               <div className="text-stone-600 dark:text-stone-400">
-                {data.count} signs
+                {data.count} data
               </div>
             </div>
           )}
@@ -129,11 +126,11 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
           </h4>
           <ul className="text-xs text-stone-600 dark:text-stone-400 space-y-1">
             <li>
-              • <strong>Distribution:</strong> Shows how Quranic miracles are
+              • <strong>Distribution:</strong> Shows how Islamic data are
               categorized by type
             </li>
             <li>
-              • <strong>Color Coding:</strong> Each miracle type has its own
+              • <strong>Color Coding:</strong> Each data type has its own
               distinct color
             </li>
             <li>
@@ -141,8 +138,8 @@ export const SignTypesChart: React.FC<SignTypesChartProps> = ({
               type
             </li>
             <li>
-              • <strong>Patterns:</strong> Reveals which types of miracles are
-              most common
+              • <strong>Patterns:</strong> Reveals which types of data are most
+              common
             </li>
           </ul>
         </div>

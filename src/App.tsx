@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import { useMiracles } from "./hooks/domain/miracles";
-import { useMiracleFilters } from "./hooks/domain/filters";
+import { useFacts } from "./hooks/useFacts";
+import { useIslamicFilters } from "./hooks/domain/filters";
 import LoadingSkeleton from "./components/common/LoadingSkeleton";
 import Login from "./components/features/auth/Login";
 import Signup from "./components/features/auth/Signup";
@@ -15,7 +15,7 @@ import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import type { MiracleFilters } from "./types/Types";
+import type { IslamicDataFilters } from "./types/Types";
 
 // Lazy load large components
 const HomePage = lazy(() => import("./components/HomePage"));
@@ -24,29 +24,29 @@ const SubmitDiscovery = lazy(() => import("./pages/SubmitDiscovery"));
 const AdminReview = lazy(() => import("./pages/AdminReview"));
 
 function App({ loadingDelay = 1000 }) {
-  const initialFilters: MiracleFilters = {
+  const initialFilters: IslamicDataFilters = {
     searchTerm: "",
     type: "",
     sortBy: "title",
   };
 
-  const { miracles, loading, error, refetch } = useMiracles(loadingDelay);
+  const { islamicData, loading, error, refetch } = useFacts(loadingDelay);
 
   const {
     filters,
     setFilters,
     types,
-    paginatedMiracles,
-    sortedMiracles,
+    paginatedIslamicData,
+    sortedIslamicData,
     currentPage,
     setCurrentPage,
     totalPages,
     goToPage,
     setGoToPage,
     handleGoToPage,
-  } = useMiracleFilters(miracles, initialFilters, 8);
+  } = useIslamicFilters(islamicData, initialFilters, 8);
 
-  const miraclesListRef = useRef<HTMLDivElement>(null);
+  const islamicDataListRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("all");
   const [toast, setToast] = useState<string | null>(null);
 
@@ -73,7 +73,7 @@ function App({ loadingDelay = 1000 }) {
   // Export functions with security validation
   const handleExportCSV = () => {
     try {
-      const csv = toCSV(sortedMiracles);
+      const csv = toCSV(sortedIslamicData);
       const blob = new Blob([csv], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -92,7 +92,7 @@ function App({ loadingDelay = 1000 }) {
     return (
       <main className="container mx-auto max-w-6xl px-4 py-12 bg-stone-50 dark:bg-stone-800 rounded-2xl shadow-lg mt-8 mb-12">
         <h2 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-6 text-left tracking-tight">
-          Loading Islamic Signs and Guidance...
+          Loading available Islamic data...
         </h2>
         <LoadingSkeleton count={8} />
       </main>
@@ -136,8 +136,8 @@ function App({ loadingDelay = 1000 }) {
                         path="/"
                         element={
                           <HomePage
-                            miracles={miracles}
-                            paginatedMiracles={paginatedMiracles}
+                            cards={islamicData}
+                            paginatedCards={paginatedIslamicData}
                             filters={filters}
                             setFilters={setFilters}
                             types={types}
@@ -152,7 +152,7 @@ function App({ loadingDelay = 1000 }) {
                             handleExportCSV={handleExportCSV}
                             handleExportJSON={() => {}}
                             setToast={setToast}
-                            miraclesListRef={miraclesListRef}
+                            cardsListRef={islamicDataListRef}
                             activeTab={activeTab}
                             setActiveTab={setActiveTab}
                           />
@@ -179,9 +179,9 @@ function App({ loadingDelay = 1000 }) {
                         }
                       />
 
-                      {/* Submit Discovery Route */}
+                      {/* Submit Data Route */}
                       <Route
-                        path="/submit-discovery"
+                        path="/submit-data"
                         element={<SubmitDiscovery />}
                       />
 

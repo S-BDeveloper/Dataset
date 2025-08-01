@@ -1,33 +1,33 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {
-  QuranicMiracle,
+  IslamicData,
   QuranAyah,
   HadithEntry,
-  MiracleFilters,
+  IslamicDataFilters,
   QuranFilters,
   HadithFilters,
 } from "../types/Types";
 
 interface AppState {
   // Data state with lazy loading support
-  miracles: QuranicMiracle[];
+  cards: IslamicData[];
   quranData: QuranAyah[];
   hadithData: HadithEntry[];
-  favorites: QuranicMiracle[];
+  favorites: IslamicData[];
 
   // Loading states
-  miraclesLoading: boolean;
+  cardsLoading: boolean;
   quranLoading: boolean;
   hadithLoading: boolean;
 
   // Error states
-  miraclesError: string | null;
+  cardsError: string | null;
   quranError: string | null;
   hadithError: string | null;
 
   // Filter states
-  miracleFilters: MiracleFilters;
+  cardsFilters: IslamicDataFilters;
   quranFilters: QuranFilters;
   hadithFilters: HadithFilters;
 
@@ -42,24 +42,24 @@ interface AppState {
   toast: string | null;
 
   // Caching and performance
-  dataCache: Map<string, any>;
+  dataCache: Map<string, unknown>;
   lastFetchTime: number;
   cacheExpiryTime: number;
 
   // Actions
-  setMiracles: (miracles: QuranicMiracle[]) => void;
+  setCards: (cards: IslamicData[]) => void;
   setQuranData: (data: QuranAyah[]) => void;
   setHadithData: (data: HadithEntry[]) => void;
 
-  setMiraclesLoading: (loading: boolean) => void;
+  setCardsLoading: (loading: boolean) => void;
   setQuranLoading: (loading: boolean) => void;
   setHadithLoading: (loading: boolean) => void;
 
-  setMiraclesError: (error: string | null) => void;
+  setCardsError: (error: string | null) => void;
   setQuranError: (error: string | null) => void;
   setHadithError: (error: string | null) => void;
 
-  setMiracleFilters: (filters: Partial<MiracleFilters>) => void;
+  setCardsFilters: (filters: Partial<IslamicDataFilters>) => void;
   setQuranFilters: (filters: Partial<QuranFilters>) => void;
   setHadithFilters: (filters: Partial<HadithFilters>) => void;
 
@@ -68,30 +68,30 @@ interface AppState {
   setToast: (message: string | null) => void;
 
   // Favorites actions
-  addFavorite: (miracle: QuranicMiracle) => void;
-  removeFavorite: (miracle: QuranicMiracle) => void;
-  isFavorite: (miracle: QuranicMiracle) => boolean;
+  addFavorite: (miracle: IslamicData) => void;
+  removeFavorite: (miracle: IslamicData) => void;
+  isFavorite: (miracle: IslamicData) => boolean;
 
   // Performance optimizations
   setVirtualScrollEnabled: (enabled: boolean) => void;
   setVirtualScrollItemHeight: (height: number) => void;
   clearCache: () => void;
-  getCachedData: (key: string) => any;
-  setCachedData: (key: string, data: any) => void;
+  getCachedData: (key: string) => unknown;
+  setCachedData: (key: string, data: unknown) => void;
 
   // Computed values with memoization
-  filteredMiracles: QuranicMiracle[];
+  filteredCards: IslamicData[];
   filteredQuranData: QuranAyah[];
   filteredHadithData: HadithEntry[];
   totalPages: number;
-  paginatedMiracles: QuranicMiracle[];
+  paginatedCards: IslamicData[];
 
   // Virtual scrolling helpers
-  getVisibleItems: (startIndex: number, endIndex: number) => any[];
+  getVisibleItems: (startIndex: number, endIndex: number) => IslamicData[];
   getTotalItemCount: () => number;
 }
 
-const initialMiracleFilters: MiracleFilters = {
+const initialCardsFilters: IslamicDataFilters = {
   searchTerm: "",
   type: "",
   sortBy: "title",
@@ -114,20 +114,20 @@ export const useAppStore = create<AppState>()(
     persist(
       (set, get) => ({
         // Initial state
-        miracles: [],
+        cards: [],
         quranData: [],
         hadithData: [],
         favorites: [],
 
-        miraclesLoading: false,
+        cardsLoading: false,
         quranLoading: false,
         hadithLoading: false,
 
-        miraclesError: null,
+        cardsError: null,
         quranError: null,
         hadithError: null,
 
-        miracleFilters: initialMiracleFilters,
+        cardsFilters: initialCardsFilters,
         quranFilters: initialQuranFilters,
         hadithFilters: initialHadithFilters,
 
@@ -145,21 +145,21 @@ export const useAppStore = create<AppState>()(
         cacheExpiryTime: 3600000, // 1 hour
 
         // Actions
-        setMiracles: (miracles) => set({ miracles }),
+        setCards: (cards) => set({ cards }),
         setQuranData: (data) => set({ quranData: data }),
         setHadithData: (data) => set({ hadithData: data }),
 
-        setMiraclesLoading: (loading) => set({ miraclesLoading: loading }),
+        setCardsLoading: (loading) => set({ cardsLoading: loading }),
         setQuranLoading: (loading) => set({ quranLoading: loading }),
         setHadithLoading: (loading) => set({ hadithLoading: loading }),
 
-        setMiraclesError: (error) => set({ miraclesError: error }),
+        setCardsError: (error) => set({ cardsError: error }),
         setQuranError: (error) => set({ quranError: error }),
         setHadithError: (error) => set({ hadithError: error }),
 
-        setMiracleFilters: (filters) =>
+        setCardsFilters: (filters) =>
           set((state) => ({
-            miracleFilters: { ...state.miracleFilters, ...filters },
+            cardsFilters: { ...state.cardsFilters, ...filters },
             currentPage: 1, // Reset to first page when filters change
           })),
 
@@ -189,18 +189,17 @@ export const useAppStore = create<AppState>()(
               : [...state.favorites, miracle],
           })),
 
-        removeFavorite: (miracle) =>
+        removeFavorite: (cards) =>
           set((state) => ({
             favorites: state.favorites.filter(
-              (fav) =>
-                !(fav.title === miracle.title && fav.type === miracle.type)
+              (fav) => !(fav.title === cards.title && fav.type === cards.type)
             ),
           })),
 
-        isFavorite: (miracle) => {
+        isFavorite: (cards) => {
           const state = get();
           return state.favorites.some(
-            (fav) => fav.title === miracle.title && fav.type === miracle.type
+            (fav) => fav.title === cards.title && fav.type === cards.type
           );
         },
 
@@ -215,29 +214,29 @@ export const useAppStore = create<AppState>()(
           set({ dataCache: get().dataCache.set(key, data) }),
 
         // Computed values
-        get filteredMiracles() {
+        get filteredCards() {
           const state = get();
-          let filtered = [...state.miracles];
+          let filtered = [...state.cards];
 
           // Apply search filter
-          if (state.miracleFilters.searchTerm) {
-            const searchLower = state.miracleFilters.searchTerm.toLowerCase();
+          if (state.cardsFilters.searchTerm) {
+            const searchLower = state.cardsFilters.searchTerm.toLowerCase();
             filtered = filtered.filter(
-              (miracle) =>
-                miracle.title.toLowerCase().includes(searchLower) ||
-                miracle.notes.toLowerCase().includes(searchLower)
+              (cards) =>
+                cards.title.toLowerCase().includes(searchLower) ||
+                cards.notes.toLowerCase().includes(searchLower)
             );
           }
 
           // Apply type filter
-          if (state.miracleFilters.type) {
+          if (state.cardsFilters.type) {
             filtered = filtered.filter(
-              (miracle) => miracle.type === state.miracleFilters.type
+              (cards) => cards.type === state.cardsFilters.type
             );
           }
 
           // Apply sorting
-          if (state.miracleFilters.sortBy === "type") {
+          if (state.cardsFilters.sortBy === "type") {
             filtered.sort((a, b) => a.type.localeCompare(b.type));
           } else {
             filtered.sort((a, b) => a.title.localeCompare(b.title));
@@ -324,13 +323,13 @@ export const useAppStore = create<AppState>()(
 
         get totalPages() {
           const state = get();
-          return Math.ceil(state.filteredMiracles.length / state.itemsPerPage);
+          return Math.ceil(state.filteredCards.length / state.itemsPerPage);
         },
 
-        get paginatedMiracles() {
+        get paginatedCards() {
           const state = get();
           const startIndex = (state.currentPage - 1) * state.itemsPerPage;
-          return state.filteredMiracles.slice(
+          return state.filteredCards.slice(
             startIndex,
             startIndex + state.itemsPerPage
           );
@@ -339,18 +338,18 @@ export const useAppStore = create<AppState>()(
         // Virtual scrolling helpers
         getVisibleItems: (startIndex, endIndex) => {
           const state = get();
-          return state.filteredMiracles.slice(startIndex, endIndex);
+          return state.filteredCards.slice(startIndex, endIndex);
         },
         getTotalItemCount: () => {
           const state = get();
-          return state.filteredMiracles.length;
+          return state.filteredCards.length;
         },
       }),
       {
         name: "quranic-app-storage",
         partialize: (state) => ({
           favorites: state.favorites,
-          miracleFilters: state.miracleFilters,
+          cardsFilters: state.cardsFilters,
           quranFilters: state.quranFilters,
           hadithFilters: state.hadithFilters,
           activeTab: state.activeTab,

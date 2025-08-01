@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useContext";
-import type { QuranicMiracle } from "../types/Types";
+import type { IslamicData } from "../types/Types";
 
 interface SubmissionForm {
   title: string;
@@ -15,7 +15,7 @@ interface SubmissionForm {
   additionalNotes: string;
 }
 
-const SubmitDiscovery: React.FC = () => {
+const SubmitData: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,11 +34,6 @@ const SubmitDiscovery: React.FC = () => {
   });
 
   const miracleTypes = [
-    "pair",
-    "middle",
-    "numerical",
-    "structure",
-    "linguistic",
     "prophecy",
     "scientific",
   ];
@@ -76,10 +71,10 @@ const SubmitDiscovery: React.FC = () => {
       }
 
       // Create the submission object
-      const submission: Partial<QuranicMiracle> = {
+      const submission: Partial<IslamicData> = {
         title: formData.title,
         notes: formData.notes,
-        type: formData.type as QuranicMiracle["type"],
+        type: formData.type as IslamicData["type"],
         sources: {
           primary: formData.primary,
           verification: formData.verification,
@@ -116,7 +111,7 @@ const SubmitDiscovery: React.FC = () => {
         navigate("/");
       }, 2000);
     } catch {
-      setToast("Error submitting discovery. Please try again.");
+      setToast("Error submitting. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -128,10 +123,10 @@ const SubmitDiscovery: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-4">
-            Submit New Discovery
+            Submit Authentic Data
           </h1>
           <p className="text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
-            Share your findings of Allah's miraculous signs with the community.
+            Help build the database of authentic Islamic data.
             All submissions will be reviewed for accuracy and quality.
           </p>
         </div>
@@ -142,14 +137,14 @@ const SubmitDiscovery: React.FC = () => {
             {/* Title */}
             <div>
               <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                Discovery Title *
+                Title *
               </label>
               <input
                 type="text"
                 value={formData.title}
                 onChange={(e) => handleInputChange("title", e.target.value)}
                 className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
-                placeholder="e.g., The Mathematical Miracle of Surah Al-Fatiha"
+                placeholder="e.g., The health benefits of olive oil mentioned in Hadith no..."
                 required
               />
             </div>
@@ -157,7 +152,7 @@ const SubmitDiscovery: React.FC = () => {
             {/* Type */}
             <div>
               <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                Miracle Type *
+                Type *
               </label>
               <select
                 value={formData.type}
@@ -184,7 +179,7 @@ const SubmitDiscovery: React.FC = () => {
                 onChange={(e) => handleInputChange("notes", e.target.value)}
                 rows={6}
                 className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
-                placeholder="Describe the miracle in detail, including its significance and impact..."
+                placeholder="Describe the data in detail, including its significance and impact..."
                 required
               />
             </div>
@@ -215,7 +210,7 @@ const SubmitDiscovery: React.FC = () => {
                   handleInputChange("verification", e.target.value)
                 }
                 className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
-                placeholder="e.g., Mathematical analysis, Historical verification, etc."
+                placeholder="e.g., Scientific verification, Historical verification, etc."
               />
             </div>
 
@@ -229,7 +224,7 @@ const SubmitDiscovery: React.FC = () => {
                 value={formData.references.join(", ")}
                 onChange={(e) => handleReferencesChange(e.target.value)}
                 className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
-                placeholder="e.g., Sahih Bukhari, Dr. Keith Moore, etc."
+                placeholder="e.g., Sahih Bukhari"
               />
             </div>
 
@@ -245,7 +240,7 @@ const SubmitDiscovery: React.FC = () => {
                 }
                 rows={3}
                 className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
-                placeholder="Any additional context, personal insights, or related discoveries..."
+                placeholder="Any additional context, personal insights, or related data..."
               />
             </div>
 
@@ -256,7 +251,7 @@ const SubmitDiscovery: React.FC = () => {
                 disabled={isSubmitting}
                 className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
               >
-                {isSubmitting ? "Submitting..." : "Submit Discovery"}
+                {isSubmitting ? "Submitting..." : "Submit Data"}
               </button>
               <button
                 type="button"
@@ -276,9 +271,6 @@ const SubmitDiscovery: React.FC = () => {
           </h3>
           <ul className="space-y-2 text-sm text-blue-600 dark:text-blue-300">
             <li>• Ensure accuracy and provide reliable sources</li>
-            <li>
-              • Focus on discoveries that showcase Allah's miraculous signs
-            </li>
             <li>• Include specific references and verification methods</li>
             <li>• All submissions will be reviewed by our team</li>
             <li>• Approved discoveries will be added to the main database</li>
@@ -296,4 +288,4 @@ const SubmitDiscovery: React.FC = () => {
   );
 };
 
-export default SubmitDiscovery;
+export default SubmitData;

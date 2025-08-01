@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { SignTypesChart } from "./SignTypesChart";
+import { DataTypesChart } from "./DataTypesChart";
 import { PropheticStatusChart } from "./PropheticStatusChart";
 import { PropheticTimelineChart } from "./PropheticTimelineChart";
 import { SpatialProphecyMap } from "./SpatialProphecyMap";
 import { ChartThemeProvider } from "../../providers/ChartThemeProvider";
-import type { QuranicMiracle } from "../../../types/Types";
+import type { IslamicData } from "../../../types/Types";
 import Masonry from "react-masonry-css";
 import "./ChartsDashboard.css";
 
 interface ChartsDashboardProps {
-  data: QuranicMiracle[];
+  data: IslamicData[];
 }
 
 // ChartsDashboard displays a collection of interactive charts
@@ -19,11 +19,10 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
   const charts = [
     {
       id: "types",
-      name: "Sign Types Distribution",
-      description:
-        "Visualization of different types of Quranic signs and miracles",
+      name: "Data Types Distribution",
+      description: "Visualization of different types of Islamic data",
       component: (
-        <SignTypesChart data={data} isActive={activeChart === "types"} />
+        <DataTypesChart data={data} isActive={activeChart === "types"} />
       ),
     },
     {
@@ -82,7 +81,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
             Charts & Analytics
           </h2>
           <p className="text-stone-600 dark:text-stone-400 text-lg">
-            Interactive visualizations of Quranic signs and prophetic data
+            Interactive visualizations of Islamic data
           </p>
         </div>
 
@@ -169,14 +168,14 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
         {/* Footer Section */}
         {activeChart === "all" && (
           <div className="mt-12 text-center">
-            <div className="bg-stone-50 dark:bg-stone-800/50 rounded-xl p-6 border border-stone-200 dark:border-stone-700">
+            <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-6 border border-stone-200 dark:border-stone-700">
               <h4 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                 📈 Chart Insights
               </h4>
               <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
-                Explore different aspects of Quranic signs through these
-                interactive visualizations. Each chart provides unique insights
-                into the patterns and distributions of miraculous signs.
+                Explore different aspects of Islamic data through these
+                interactive visualizations. Each chart provides insights
+                into the patterns and distributions of Islamic data.
               </p>
             </div>
           </div>

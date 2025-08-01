@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import type { QuranicMiracle } from "../../../types/Types";
-import type { MiracleFilters } from "../../../hooks/domain/filters";
+import type { IslamicData } from "../../../types/Types";
+import type { IslamicDataFilters } from "../../../hooks/domain/filters";
 
 // Enhanced interface to support both basic and advanced search
 interface SmartSearchBarProps {
-  data: QuranicMiracle[];
+  data: IslamicData[];
   onSearch?: (query: string) => void;
-  filters?: MiracleFilters;
-  onFiltersChange?: (filters: MiracleFilters) => void;
+  filters?: IslamicDataFilters;
+  onFiltersChange?: (filters: IslamicDataFilters) => void;
   types?: string[];
   placeholder?: string;
   mode?: "basic" | "advanced";
@@ -53,16 +53,16 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
     const allSuggestions = new Set<string>();
 
     // Search in titles
-    data.forEach((miracle) => {
-      if (miracle.title?.toLowerCase().includes(query)) {
-        allSuggestions.add(miracle.title);
+    data.forEach((card) => {
+      if (card.title?.toLowerCase().includes(query)) {
+        allSuggestions.add(card.title);
       }
     });
 
     // Search in descriptions
-    data.forEach((miracle) => {
-      if (miracle.description?.toLowerCase().includes(query)) {
-        const words = miracle.description.split(" ");
+    data.forEach((card) => {
+      if (card.description?.toLowerCase().includes(query)) {
+        const words = card.description.split(" ");
         words.forEach((word) => {
           if (word.toLowerCase().includes(query) && word.length > 2) {
             allSuggestions.add(word);
@@ -72,9 +72,9 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
     });
 
     // Search in types
-    data.forEach((miracle) => {
-      if (miracle.type?.toLowerCase().includes(query)) {
-        allSuggestions.add(miracle.type);
+    data.forEach((card) => {
+      if (card.type?.toLowerCase().includes(query)) {
+        allSuggestions.add(card.type);
       }
     });
 
@@ -308,17 +308,17 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
               htmlFor="search-input"
               className="block text-sm font-semibold text-green-700 dark:text-green-400 mb-2"
             >
-              Search Signs & Guidance
+              Search available Islamic Data
             </label>
             <input
               id="search-input"
               name="searchTerm"
               value={filters.searchTerm}
               onChange={handleFilterChange}
-              placeholder="Enter keywords to search signs and guidance..."
+              placeholder="Enter keywords to search available Islamic data..."
               className="w-full border-2 border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 dark:text-stone-100 bg-white dark:bg-stone-800 shadow-sm hover:shadow-md"
               data-cy="search-input"
-              aria-label="Search signs and guidance"
+              aria-label="Search available Islamic data"
             />
           </div>
 
@@ -362,7 +362,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
               value={filters.sortBy}
               onChange={handleFilterChange}
               className="w-full border-2 border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-400 focus:border-green-500 transition-all duration-200 text-sm text-stone-800 dark:text-stone-100 bg-white dark:bg-stone-800 shadow-sm hover:shadow-md"
-              aria-label="Sort signs and guidance"
+              aria-label="Sort available Islamic data"
             >
               <option value="title">Title</option>
               <option value="type">Type</option>

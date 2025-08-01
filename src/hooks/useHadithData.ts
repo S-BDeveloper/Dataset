@@ -19,6 +19,8 @@ export function useHadithData() {
     const loadHadithData = async () => {
       try {
         setLoading(true);
+        console.log("🔄 Loading Hadith data from local JSON...");
+
         // Load from JSON directly - much faster than fetch
         // Transform the data to match HadithEntry interface
         const data = Object.entries(hadithDataJSON).map(([key, value]) => ({
@@ -33,8 +35,11 @@ export function useHadithData() {
           grade: "Sahih",
           reference: key,
         })) as HadithEntry[];
+
+        console.log("✅ Loaded", data.length, "hadiths from local JSON");
         setHadithData(data);
       } catch (err) {
+        console.error("❌ Hadith data load error:", err);
         setError(
           err instanceof Error ? err.message : "Failed to load Hadith data"
         );

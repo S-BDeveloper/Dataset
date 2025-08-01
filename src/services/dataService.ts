@@ -16,7 +16,7 @@ interface CacheEntry<T> {
 
 export class DataService {
   private static instance: DataService;
-  private cache = new Map<string, CacheEntry<any>>();
+  private cache = new Map<string, CacheEntry<unknown>>();
   private chunkSize = 1000; // Process data in chunks
   private cacheExpiry = 30 * 60 * 1000; // 30 minutes
 

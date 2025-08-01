@@ -1,26 +1,16 @@
 import React from "react";
-import type {
-  QuranicMiracle,
-  QuranAyah,
-  HadithEntry,
-} from "../../../types/Types";
+import type { IslamicData, QuranAyah, HadithEntry } from "../../../types/Types";
 
-// Unified search result interface
-interface UnifiedSearchResult {
-  id: string;
-  type: "miracle" | "quran" | "hadith";
-  title: string;
-  content: string;
-  source: string;
-  data: QuranicMiracle | QuranAyah | HadithEntry;
-}
+// Import the canonical UnifiedSearchResult type
+import type { UnifiedSearchResult } from "../../../types/Types";
+import type { FavoriteItem } from "../../../hooks/useFavorites";
 
 interface SearchResultsProps {
   results: UnifiedSearchResult[];
   searchQuery: string;
   totalResults: number;
-  onFavorite: (miracle: QuranicMiracle) => void;
-  isFavorite: (miracle: QuranicMiracle) => boolean;
+  onFavorite: (item: FavoriteItem) => void;
+  isFavorite: (item: FavoriteItem) => boolean;
   isLoading?: boolean;
 }
 
@@ -83,7 +73,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700 mx-auto mb-4"></div>
           <p className="text-stone-600 dark:text-stone-400">
-            Searching across all Islamic sources...
+            Searching across all available Islamic sources...
           </p>
           <p className="text-sm text-stone-500 dark:text-stone-500 mt-2">
             This may take a moment for large datasets
@@ -164,7 +154,10 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             <ul className="mt-1 space-y-1">
               <li>• Quran verses by content or surah name</li>
               <li>• Hadith narrations by keywords</li>
-              <li>• Miracle types like "prophecy" or "numerical"</li>
+              <li>
+                • Prophecies/ Prophetic Medicines types like "prophecy" or
+                "medicine"
+              </li>
               <li>• Source information like "Sahih Bukhari"</li>
               <li>• Broader terms to find more results</li>
             </ul>
@@ -182,52 +175,51 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 <div className="flex items-center justify-between">
                   <span
                     className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
-                      result.type === "miracle"
+                      result.type === "islamic data"
                         ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
                         : result.type === "quran"
                         ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
                         : "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-200"
                     }`}
                   >
-                    {result.type === "miracle"
+                    {result.type === "islamic data"
                       ? "Miracle"
                       : result.type === "quran"
                       ? "Quran Verse"
                       : "Hadith"}
                   </span>
-                  {result.type === "miracle" && (
-                    <button
-                      onClick={() => onFavorite(result.data as QuranicMiracle)}
-                      className={`p-2 rounded-lg transition-colors ${
-                        isFavorite(result.data as QuranicMiracle)
-                          ? "text-red-500 hover:text-red-600"
-                          : "text-stone-400 hover:text-stone-600 dark:hover:text-stone-300"
-                      }`}
-                      aria-label={
-                        isFavorite(result.data as QuranicMiracle)
-                          ? "Remove from favorites"
-                          : "Add to favorites"
+                  {/* Favorite Button - Show for all types */}
+                  <button
+                    onClick={() => onFavorite(result.data as FavoriteItem)}
+                    className={`p-2 rounded-lg transition-colors ${
+                      isFavorite(result.data as FavoriteItem)
+                        ? "text-red-500 hover:text-red-600"
+                        : "text-stone-400 hover:text-stone-600 dark:hover:text-stone-300"
+                    }`}
+                    aria-label={
+                      isFavorite(result.data as FavoriteItem)
+                        ? "Remove from favorites"
+                        : "Add to favorites"
+                    }
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      fill={
+                        isFavorite(result.data as FavoriteItem)
+                          ? "currentColor"
+                          : "none"
                       }
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      <svg
-                        className="h-5 w-5"
-                        fill={
-                          isFavorite(result.data as QuranicMiracle)
-                            ? "currentColor"
-                            : "none"
-                        }
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
-                      </svg>
-                    </button>
-                  )}
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
 
@@ -256,9 +248,9 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 </div>
 
                 {/* Type-specific additional information */}
-                {result.type === "miracle" && (
-                  <MiracleDetails
-                    miracle={result.data as QuranicMiracle}
+                {result.type === "islamic data" && (
+                  <CardDetails
+                    card={result.data as IslamicData}
                     searchQuery={searchQuery}
                   />
                 )}
@@ -328,10 +320,15 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             Cross-Reference Search Tips
           </h4>
           <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
-            <li>• Search across all Islamic sources simultaneously</li>
+            <li>
+              • Search across all available Islamic sources simultaneously
+            </li>
             <li>• Find Quran verses that mention specific topics</li>
             <li>• Discover Hadiths related to your search terms</li>
-            <li>• Cross-reference miracles with Quran and Hadith</li>
+            <li>
+              • Cross-reference Prophecies/ Prophetic Medicines with Quran and
+              Hadith
+            </li>
             <li>• Use quotes for exact phrase matching</li>
             <li>• Try different keywords to find more connections</li>
             <li>• Use the advanced filters to focus on specific sources</li>
@@ -343,39 +340,39 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
 };
 
 // Component for displaying miracle-specific details
-const MiracleDetails: React.FC<{
-  miracle: QuranicMiracle;
+const CardDetails: React.FC<{
+  card: IslamicData;
   searchQuery: string;
-}> = ({ miracle, searchQuery }) => (
+}> = ({ card, searchQuery }) => (
   <div className="space-y-3">
     {/* Type Badge */}
-    {miracle.type && (
+    {card.type && (
       <span className="inline-block px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">
-        {miracle.type}
+        {card.type}
       </span>
     )}
 
     {/* Description */}
-    {miracle.description && (
+    {card.description && (
       <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
-        {highlightText(miracle.description, searchQuery)}
+        {highlightText(card.description, searchQuery)}
       </p>
     )}
 
     {/* Notes */}
-    {miracle.notes && (
+    {card.notes && (
       <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
         <h4 className="text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2 uppercase tracking-wide">
           Notes
         </h4>
         <p className="text-sm text-blue-800 dark:text-blue-200">
-          {highlightText(miracle.notes, searchQuery)}
+          {highlightText(card.notes, searchQuery)}
         </p>
       </div>
     )}
 
     {/* Prophetic Information */}
-    {miracle.fulfillmentStatus && (
+    {card.fulfillmentStatus && (
       <div className="p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
         <h4 className="text-xs font-semibold text-orange-700 dark:text-orange-300 mb-2 uppercase tracking-wide">
           Prophetic Status
@@ -387,37 +384,37 @@ const MiracleDetails: React.FC<{
             </span>
             <span
               className={`px-2 py-1 rounded-full text-xs font-medium ${
-                miracle.fulfillmentStatus === "fulfilled"
+                card.fulfillmentStatus === "fulfilled"
                   ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
-                  : miracle.fulfillmentStatus === "in-progress"
+                  : card.fulfillmentStatus === "in-progress"
                   ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200"
-                  : miracle.fulfillmentStatus === "pending"
+                  : card.fulfillmentStatus === "pending"
                   ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200"
                   : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
               }`}
             >
-              {miracle.fulfillmentStatus}
+              {card.fulfillmentStatus}
             </span>
           </div>
-          {miracle.yearRevealed && (
+          {card.yearRevealed && (
             <div className="text-orange-600 dark:text-orange-400">
-              Revealed: {miracle.yearRevealed}
+              Revealed: {card.yearRevealed}
             </div>
           )}
-          {miracle.yearFulfilled && (
+          {card.yearFulfilled && (
             <div className="text-orange-600 dark:text-orange-400">
-              Fulfilled: {miracle.yearFulfilled}
+              Fulfilled: {card.yearFulfilled}
             </div>
           )}
-          {miracle.prophecyCategory && (
+          {card.prophecyCategory && (
             <div className="text-orange-600 dark:text-orange-400">
-              Category: {miracle.prophecyCategory}
+              Category: {card.prophecyCategory}
             </div>
           )}
-          {miracle.fulfillmentEvidence && (
+          {card.fulfillmentEvidence && (
             <div className="text-xs text-orange-700 dark:text-orange-300 mt-2">
               <strong>Evidence:</strong>{" "}
-              {highlightText(miracle.fulfillmentEvidence, searchQuery)}
+              {highlightText(card.fulfillmentEvidence, searchQuery)}
             </div>
           )}
         </div>
@@ -425,7 +422,7 @@ const MiracleDetails: React.FC<{
     )}
 
     {/* Sources Information */}
-    {miracle.sources && (
+    {card.sources && (
       <div className="p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
         <h4 className="text-xs font-semibold text-stone-700 dark:text-stone-300 mb-2 uppercase tracking-wide">
           Sources
@@ -434,7 +431,7 @@ const MiracleDetails: React.FC<{
           <div>
             <span className="text-stone-600 dark:text-stone-400">Primary:</span>
             <span className="text-stone-800 dark:text-stone-200 ml-1">
-              {highlightText(miracle.sources.primary, searchQuery)}
+              {highlightText(card.sources.primary, searchQuery)}
             </span>
           </div>
           <div>
@@ -442,32 +439,31 @@ const MiracleDetails: React.FC<{
               Methodology:
             </span>
             <span className="text-stone-800 dark:text-stone-200 ml-1">
-              {highlightText(miracle.sources.methodology, searchQuery)}
+              {highlightText(card.sources.methodology, searchQuery)}
             </span>
           </div>
-          {miracle.sources.references &&
-            miracle.sources.references.length > 0 && (
-              <div>
-                <span className="text-stone-600 dark:text-stone-400">
-                  References:
-                </span>
-                <div className="mt-1 space-y-1">
-                  {miracle.sources.references.slice(0, 2).map((ref, index) => (
-                    <div
-                      key={index}
-                      className="text-stone-800 dark:text-stone-200 truncate"
-                    >
-                      {highlightText(ref, searchQuery)}
-                    </div>
-                  ))}
-                  {miracle.sources.references.length > 2 && (
-                    <div className="text-stone-500 dark:text-stone-400">
-                      +{miracle.sources.references.length - 2} more
-                    </div>
-                  )}
-                </div>
+          {card.sources.references && card.sources.references.length > 0 && (
+            <div>
+              <span className="text-stone-600 dark:text-stone-400">
+                References:
+              </span>
+              <div className="mt-1 space-y-1">
+                {card.sources.references.slice(0, 2).map((ref, index) => (
+                  <div
+                    key={index}
+                    className="text-stone-800 dark:text-stone-200 truncate"
+                  >
+                    {highlightText(ref, searchQuery)}
+                  </div>
+                ))}
+                {card.sources.references.length > 2 && (
+                  <div className="text-stone-500 dark:text-stone-400">
+                    +{card.sources.references.length - 2} more
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+          )}
         </div>
       </div>
     )}

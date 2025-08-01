@@ -4,8 +4,17 @@ import PaginationButton from "../../common/PaginationButton";
 import { useQuranData } from "../../../hooks/useQuranData";
 import { scrollToTop } from "../../../utils/scrollUtils";
 import Masonry from "react-masonry-css";
+import type { QuranAyah } from "../../../types/Types";
 
-export function QuranDashboard() {
+interface QuranDashboardProps {
+  onFavorite?: (ayah: QuranAyah) => void;
+  isFavorite?: (ayah: QuranAyah) => boolean;
+}
+
+export function QuranDashboard({
+  onFavorite,
+  isFavorite,
+}: QuranDashboardProps) {
   const {
     data: paginatedData,
     loading,
@@ -226,7 +235,11 @@ export function QuranDashboard() {
               className="mb-4"
               dir="ltr"
             >
-              <QuranCard ayah={ayah} />
+              <QuranCard
+                ayah={ayah}
+                onFavorite={onFavorite}
+                isFavorite={isFavorite}
+              />
             </div>
           ))}
         </Masonry>

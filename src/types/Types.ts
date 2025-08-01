@@ -21,13 +21,9 @@ export interface AuthError {
   message: string;
 }
 
-// Enhanced Quranic Miracle interface with better structure
-export interface QuranicMiracle {
+// Enhanced Data interface with better structure
+export interface IslamicData {
   type:
-    | "middle"
-    | "numerical"
-    | "structure"
-    | "linguistic"
     | "prophecy"
     | "scientific";
   title: string;
@@ -71,13 +67,12 @@ export interface QuranicMiracle {
     description: string;
     evidence: string;
   }[];
-  fulfillmentConfidence?: "high" | "medium" | "low";
 
   // Remove the catch-all index signature for better type safety
   // [key: string]: unknown;
 }
 
-export interface MiracleFilters {
+export interface IslamicDataFilters {
   type: string;
   status?: string;
   fulfillmentStatus?: string;
@@ -149,11 +144,11 @@ export interface HadithFilters {
 // Enhanced search result types
 export interface UnifiedSearchResult {
   id: string;
-  type: "miracle" | "quran" | "hadith";
+  type: "islamic data" | "quran" | "hadith";
   title: string;
   content: string;
   source: string;
-  data: QuranicMiracle | QuranAyah | HadithEntry;
+  data: IslamicData | QuranAyah | HadithEntry;
 }
 
 // Filter state interface for advanced search
@@ -166,7 +161,7 @@ export interface FilterState {
   fulfillmentStatus: string[];
   prophecyCategories: string[];
   yearRange: { min: number; max: number };
-  dataSources: ("miracle" | "quran" | "hadith")[];
+  dataSources: ("islamic data" | "quran" | "hadith")[];
   quranSurahs: string[];
   quranVerseRange: { min: number; max: number };
   quranPlaceOfRevelation: string[];

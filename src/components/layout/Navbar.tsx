@@ -86,7 +86,7 @@ export default function Navbar() {
                   </span>
                 )}
               </NavLink>
-              <NavLink to="/submit-discovery">{t("nav.submit")}</NavLink>
+              <NavLink to="/submit-data">{t("nav.submit")}</NavLink>
               {hasPermission(user, "moderate:content") && (
                 <NavLink to="/admin">{t("nav.admin")}</NavLink>
               )}
@@ -174,7 +174,7 @@ export default function Navbar() {
                   )}
                 </NavLink>
                 <NavLink
-                  to="/submit-discovery"
+                  to="/submit-data"
                   className="block px-3 py-2 rounded-md"
                 >
                   {t("nav.submit")}
@@ -251,4 +251,3 @@ export default function Navbar() {
     </>
   );
 }
-

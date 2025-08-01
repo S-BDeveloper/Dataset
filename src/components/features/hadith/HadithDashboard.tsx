@@ -4,8 +4,17 @@ import PaginationButton from "../../common/PaginationButton";
 import { useHadithData } from "../../../hooks/useHadithData";
 import { scrollToTop } from "../../../utils/scrollUtils";
 import Masonry from "react-masonry-css";
+import type { HadithEntry } from "../../../types/Types";
 
-export function HadithDashboard() {
+interface HadithDashboardProps {
+  onFavorite?: (hadith: HadithEntry) => void;
+  isFavorite?: (hadith: HadithEntry) => boolean;
+}
+
+export function HadithDashboard({
+  onFavorite,
+  isFavorite,
+}: HadithDashboardProps) {
   const {
     paginatedData,
     loading,
@@ -159,6 +168,8 @@ export function HadithDashboard() {
               <HadithCard
                 hadith={hadith}
                 index={(currentPage - 1) * 20 + index}
+                onFavorite={onFavorite}
+                isFavorite={isFavorite}
               />
             </div>
           ))}

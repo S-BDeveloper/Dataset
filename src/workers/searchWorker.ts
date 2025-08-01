@@ -2,13 +2,13 @@
 // This runs in a separate thread to prevent UI blocking
 
 interface SearchMessage {
-  data: any[];
+  data: unknown[];
   searchTerm: string;
   searchFields: string[];
 }
 
 interface SearchResult {
-  data: any[];
+  data: unknown[];
   totalFound: number;
   searchTime: number;
 }
@@ -39,17 +39,17 @@ self.onmessage = (event: MessageEvent<SearchMessage>) => {
 };
 
 function performSearch(
-  data: any[],
+  data: unknown[],
   searchTerm: string,
   searchFields: string[]
-): any[] {
+): unknown[] {
   if (!searchTerm.trim()) return data;
 
   const term = searchTerm.toLowerCase();
 
   return data.filter((item) =>
     searchFields.some((field) => {
-      const value = item[field];
+      const value = (item as Record<string, unknown>)[field];
       if (!value) return false;
 
       const stringValue = String(value).toLowerCase();

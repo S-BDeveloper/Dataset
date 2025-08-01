@@ -8,7 +8,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Navigation
     "nav.home": "Home",
     "nav.favorites": "Favorites",
-    "nav.submit": "Submit Discovery",
+    "nav.submit": "Submit Data",
     "nav.admin": "Admin Review",
     "nav.login": "Login",
     "nav.signup": "Sign Up",

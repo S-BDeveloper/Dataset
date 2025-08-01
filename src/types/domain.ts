@@ -1,5 +1,5 @@
 // Domain-specific types
-export interface QuranicMiracle {
+export interface IslamicData {
   title: string;
   description?: string;
   type: string;
@@ -32,7 +32,7 @@ export interface HadithEntry {
 }
 
 // Filter and search types
-export interface MiracleFilters {
+export interface IslamicDataFilters {
   searchTerm: string;
   type: string;
   sortBy: string;

@@ -12,14 +12,12 @@ export interface UserRole {
 // Admin emails - in production, this should come from a secure database
 const ADMIN_EMAILS = new Set([
   "admin@example.com",
-  "admin@quranic-signs.com",
   // Add more admin emails as needed
 ]);
 
 // Moderator emails
 const MODERATOR_EMAILS = new Set([
   "moderator@example.com",
-  "moderator@quranic-signs.com",
   // Add more moderator emails as needed
 ]);
 

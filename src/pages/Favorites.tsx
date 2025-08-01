@@ -1,7 +1,7 @@
 import React from "react";
 import { useFavorites } from "../hooks/useFavorites";
 import Breadcrumb from "../components/common/Breadcrumb";
-import { MiracleCard } from "../components/features/miracles/MiracleCard";
+import { DataCard } from "../components/features/card/DataCard";
 import { useAuth } from "../hooks/useContext";
 
 // Favorites page displays the user's favorited Quranic miracles
@@ -48,8 +48,8 @@ const Favorites: React.FC = () => {
             My Saved Favorites
           </h1>
           <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl leading-relaxed">
-            Your personally saved Islamic signs and guidance. These miracles
-            have been saved for quick access and reference.
+            Your personally saved Islamic knowledge. These data have been saved
+            for quick access and reference.
           </p>
         </div>
 
@@ -65,7 +65,13 @@ const Favorites: React.FC = () => {
           </div>
           <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
             <div className="text-3xl font-bold text-blue-700 dark:text-blue-400">
-              {Array.from(new Set(favorites.map((f) => f.type))).length}
+              {
+                Array.from(
+                  new Set(
+                    favorites.map((f) => ("type" in f ? f.type : "quran"))
+                  )
+                ).length
+              }
             </div>
             <div className="text-base text-stone-600 dark:text-stone-400 font-medium">
               Categories
@@ -74,8 +80,11 @@ const Favorites: React.FC = () => {
           <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
             <div className="text-3xl font-bold text-purple-700 dark:text-purple-400">
               {
-                favorites.filter((f) => f.fulfillmentStatus === "fulfilled")
-                  .length
+                favorites.filter(
+                  (f) =>
+                    "fulfillmentStatus" in f &&
+                    f.fulfillmentStatus === "fulfilled"
+                ).length
               }
             </div>
             <div className="text-base text-stone-600 dark:text-stone-400 font-medium">
@@ -105,27 +114,33 @@ const Favorites: React.FC = () => {
                 No favorites yet
               </h3>
               <p className="text-stone-500 dark:text-stone-400 mb-6">
-                Start exploring Islamic signs and guidance to save your
-                favorites for quick access.
+                Start exploring Islamic knowledge to save your favorites for
+                quick access.
               </p>
               <a
                 href="/"
                 className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
-                Explore Signs
+                Explore data
               </a>
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {favorites.map((miracle) => (
-              <MiracleCard
-                key={miracle.title + miracle.type}
-                miracle={miracle}
-                isFavorite={true}
-                onFavorite={() => removeFavorite(miracle)}
-              />
-            ))}
+            {favorites.map((item) => {
+              // Only render IslamicData items with DataCard
+              if ("title" in item && "type" in item) {
+                return (
+                  <DataCard
+                    key={item.title + item.type}
+                    card={item}
+                    isFavorite={true}
+                    onFavorite={() => removeFavorite(item)}
+                  />
+                );
+              }
+              return null; // Skip Quran and Hadith items for now
+            })}
           </div>
         )}
 

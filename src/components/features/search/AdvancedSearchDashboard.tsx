@@ -3,46 +3,20 @@ import { SmartSearchBar } from "./SmartSearchBar";
 import { AdvancedFilterPanel } from "./AdvancedFilterPanel";
 import { SearchResults } from "./SearchResults";
 import type {
-  QuranicMiracle,
+  IslamicData,
   QuranAyah,
   HadithEntry,
+  UnifiedSearchResult,
+  FilterState,
 } from "../../../types/Types";
-
-// Unified search result interface
-interface UnifiedSearchResult {
-  id: string;
-  type: "miracle" | "quran" | "hadith";
-  title: string;
-  content: string;
-  source: string;
-  data: QuranicMiracle | QuranAyah | HadithEntry;
-}
-
-interface FilterState {
-  types: string[];
-  categories: string[];
-  searchFields: string[];
-  sortBy: string;
-  sortOrder: "asc" | "desc";
-  fulfillmentStatus: string[];
-  prophecyCategories: string[];
-  yearRange: { min: number; max: number };
-  dataSources: ("miracle" | "quran" | "hadith")[];
-  // New Quran-specific filters
-  quranSurahs: string[];
-  quranVerseRange: { min: number; max: number };
-  quranPlaceOfRevelation: string[];
-  // New Hadith-specific filters
-  hadithNumberRange: { min: number; max: number };
-  hadithCategories: string[];
-}
+import type { FavoriteItem } from "../../../hooks/useFavorites";
 
 interface AdvancedSearchDashboardProps {
-  data: QuranicMiracle[];
+  data: IslamicData[];
   quranData?: QuranAyah[];
   hadithData?: HadithEntry[];
-  onFavorite: (miracle: QuranicMiracle) => void;
-  isFavorite: (miracle: QuranicMiracle) => boolean;
+  onFavorite: (item: FavoriteItem) => void;
+  isFavorite: (item: FavoriteItem) => boolean;
 }
 
 // AdvancedSearchDashboard provides a comprehensive search experience across all Islamic data
@@ -62,7 +36,7 @@ export const AdvancedSearchDashboard: React.FC<
     dataSources: [], // Default to no sources selected - user must choose what to search
     // Initialize new Quran filters with proper defaults
     quranSurahs: [],
-    quranVerseRange: { min: 1, max: 7 }, // Use actual Quran verse range based on loaded data
+    quranVerseRange: { min: 1, max: 114 }, // Use actual Quran verse range based on loaded data
     quranPlaceOfRevelation: [],
     // Initialize new Hadith filters with proper defaults
     hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
@@ -86,26 +60,26 @@ export const AdvancedSearchDashboard: React.FC<
         window.scrollTo({ top: 0, behavior: "smooth" });
         let results: UnifiedSearchResult[] = [];
 
-        // Process Miracles data
-        if (filterState.dataSources.includes("miracle")) {
-          const miracleResults = data.map((miracle) => ({
-            id: `miracle-${miracle.title}`,
-            type: "miracle" as const,
-            title: miracle.title,
+        // Process Islamic data
+        if (filterState.dataSources.includes("islamic data")) {
+          const islamicDataResults = data.map((item) => ({
+            id: `islamic-${item.title}`,
+            type: "islamic data" as const,
+            title: item.title,
             content: [
-              miracle.description || "",
-              miracle.notes || "",
-              miracle.sources?.primary || "",
-              miracle.sources?.verification || "",
-              miracle.sources?.methodology || "",
-              miracle.sources?.source || "",
-              miracle.fulfillmentEvidence || "",
-              miracle.prophecyCategory || "",
+              item.description || "",
+              item.notes || "",
+              item.sources?.primary || "",
+              item.sources?.verification || "",
+              item.sources?.methodology || "",
+              item.sources?.source || "",
+              item.fulfillmentEvidence || "",
+              item.prophecyCategory || "",
             ].join(" "),
-            source: miracle.sources?.source || "Quranic Miracle",
-            data: miracle,
+            source: item.sources?.source || "Islamic Data",
+            data: item,
           }));
-          results.push(...miracleResults);
+          results.push(...islamicDataResults);
         }
 
         // Process Quran data with enhanced filtering
@@ -206,14 +180,16 @@ export const AdvancedSearchDashboard: React.FC<
           });
         }
 
-        // Apply type filters (for miracles only)
+        // Apply type filters (for Islamic data only)
         if (filterState.types.length > 0) {
           results = results.filter((result) => {
-            if (result.type === "miracle") {
-              const miracle = result.data as QuranicMiracle;
-              return miracle.type && filterState.types.includes(miracle.type);
+            if (result.type === "islamic data") {
+              const islamicData = result.data as IslamicData;
+              return (
+                islamicData.type && filterState.types.includes(islamicData.type)
+              );
             }
-            return true; // Keep non-miracle results
+            return true; // Keep non-Islamic data results
           });
         }
 
@@ -231,45 +207,45 @@ export const AdvancedSearchDashboard: React.FC<
         //   });
         // }
 
-        // Apply fulfillment status filters (for miracles only)
+        // Apply fulfillment status filters (for Islamic data only)
         if (filterState.fulfillmentStatus.length > 0) {
           results = results.filter((result) => {
-            if (result.type === "miracle") {
-              const miracle = result.data as QuranicMiracle;
+            if (result.type === "islamic data") {
+              const islamicData = result.data as IslamicData;
               return (
-                miracle.fulfillmentStatus &&
+                islamicData.fulfillmentStatus &&
                 filterState.fulfillmentStatus.includes(
-                  miracle.fulfillmentStatus
+                  islamicData.fulfillmentStatus
                 )
               );
             }
-            return true; // Keep non-miracle results
+            return true; // Keep non-Islamic data results
           });
         }
 
-        // Apply prophecy category filters (for miracles only)
+        // Apply prophecy category filters (for Islamic data only)
         if (filterState.prophecyCategories.length > 0) {
           results = results.filter((result) => {
-            if (result.type === "miracle") {
-              const miracle = result.data as QuranicMiracle;
+            if (result.type === "islamic data") {
+              const islamicData = result.data as IslamicData;
               return (
-                miracle.prophecyCategory &&
+                islamicData.prophecyCategory &&
                 filterState.prophecyCategories.includes(
-                  miracle.prophecyCategory
+                  islamicData.prophecyCategory
                 )
               );
             }
-            return true; // Keep non-miracle results
+            return true; // Keep non-Islamic data results
           });
         }
 
-        // Apply year range filters (for miracles only)
+        // Apply year range filters (for Islamic data only)
         if (filterState.yearRange.min > 0 || filterState.yearRange.max < 2024) {
           results = results.filter((result) => {
-            if (result.type === "miracle") {
-              const miracle = result.data as QuranicMiracle;
-              const yearRevealed = miracle.yearRevealed || 0;
-              const yearFulfilled = miracle.yearFulfilled || 0;
+            if (result.type === "islamic data") {
+              const islamicData = result.data as IslamicData;
+              const yearRevealed = islamicData.yearRevealed || 0;
+              const yearFulfilled = islamicData.yearFulfilled || 0;
 
               return (
                 (yearRevealed >= filterState.yearRange.min &&
@@ -278,7 +254,7 @@ export const AdvancedSearchDashboard: React.FC<
                   yearFulfilled <= filterState.yearRange.max)
               );
             }
-            return true; // Keep non-miracle results
+            return true; // Keep non-Islamic data results
           });
         }
 
@@ -390,8 +366,8 @@ export const AdvancedSearchDashboard: React.FC<
 
   // Calculate statistics
   const totalDataCount = data.length + quranData.length + hadithData.length;
-  const miracleCount = filteredResults.filter(
-    (r) => r.type === "miracle"
+  const islamicDataCount = filteredResults.filter(
+    (r) => r.type === "islamic data"
   ).length;
   const quranCount = filteredResults.filter((r) => r.type === "quran").length;
   const hadithCount = filteredResults.filter((r) => r.type === "hadith").length;
@@ -406,17 +382,16 @@ export const AdvancedSearchDashboard: React.FC<
               Advanced Search
             </h2>
             <p className="text-stone-600 dark:text-stone-400 max-w-2xl">
-              Search across all Islamic knowledge including Quranic miracles,
-              Quran verses, and Sahih Bukhari hadiths. Use powerful filtering
-              options to cross-reference data and discover connections between
-              different Islamic sources.
+              Search across all available Islamic knowledge including
+              Prophecies, Prophetic Medicines, Quran verses, and Sahih Bukhari
+              hadiths.
             </p>
           </div>
           <div className="lg:w-96">
             <SmartSearchBar
               data={data} // Still passes miracle data for auto-complete, might need adjustment later
               onSearch={handleSearch}
-              placeholder="Search across Quran, Hadith, and miracles..."
+              placeholder="Search across Quran and Hadith..."
             />
           </div>
         </div>
@@ -530,10 +505,13 @@ export const AdvancedSearchDashboard: React.FC<
             <p className="text-stone-600 dark:text-stone-400 mb-4">
               Configure your search filters above and click "Confirm Search" to
               begin exploring Islamic knowledge across Quran, Hadith, and
-              miracles.
+              Prophecies/Prophetic Medicines.
             </p>
             <div className="text-sm text-stone-500 dark:text-stone-500">
-              <p>• Select data sources (Quran, Hadith, Miracles)</p>
+              <p>
+                • Select data sources (Quran, Hadith, Prophecies/Prophetic
+                Medicines)
+              </p>
               <p>• Choose specific filters for each source</p>
               <p>• Enter search terms (optional)</p>
               <p>• Click "Confirm Search" when ready</p>
@@ -568,9 +546,11 @@ export const AdvancedSearchDashboard: React.FC<
             </div>
             <div>
               <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">
-                {miracleCount}
+                {islamicDataCount}
               </div>
-              <div className="text-stone-600 dark:text-stone-400">Miracles</div>
+              <div className="text-stone-600 dark:text-stone-400">
+                Islamic Data
+              </div>
             </div>
             <div>
               <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">
@@ -610,8 +590,8 @@ export const AdvancedSearchDashboard: React.FC<
             </h5>
             <ul className="space-y-1 text-stone-600 dark:text-stone-400">
               <li>
-                • <strong>Miracles:</strong> Quranic signs and scientific
-                discoveries
+                • <strong>Prophecies/Prophetic Medicines:</strong> Status of
+                fulfillment
               </li>
               <li>
                 • <strong>Quran Verses:</strong> Complete Quran with English
@@ -622,7 +602,10 @@ export const AdvancedSearchDashboard: React.FC<
               </li>
               <li>
                 • <strong>Cross-Reference:</strong> Find connections between
-                sources
+                sources{" "}
+                <span className="text-red-500 dark:text-red-400">
+                  (always consult Scholars for complex topics)
+                </span>
               </li>
             </ul>
           </div>
@@ -639,12 +622,12 @@ export const AdvancedSearchDashboard: React.FC<
                 • <strong>Hadith Filters:</strong> By hadith number range
               </li>
               <li>
-                • <strong>Miracle Filters:</strong> By type, category,
-                fulfillment status
+                • <strong>Prophecies/Prophetic Medicines Filters:</strong> By
+                type, category, fulfillment status
               </li>
               <li>
-                • <strong>Unified Search:</strong> Search across all Islamic
-                sources
+                • <strong>Unified Search:</strong> Search across all available
+                Islamic sources
               </li>
             </ul>
           </div>

@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AdvancedSearchDashboard } from "./features/search/AdvancedSearchDashboard";
 import { ChartsDashboard } from "./features/charts/ChartsDashboard";
-import { MiracleCard } from "./features/miracles/MiracleCard";
+import { DataCard } from "./features/card/DataCard";
 import PaginationButton from "./common/PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
 import { useQuranData } from "../hooks/useQuranData";
 import { useHadithData } from "../hooks/useHadithData";
-import type { QuranicMiracle, MiracleFilters } from "../types/Types";
+import type { IslamicData, IslamicDataFilters } from "../types/Types";
+import type { FavoriteItem } from "../hooks/useFavorites";
 import type { Dispatch, SetStateAction } from "react";
 import Masonry from "react-masonry-css";
 import { QuranDashboard } from "./features/quran/QuranDashboard";
@@ -15,12 +16,13 @@ import { scrollToTop } from "../utils/scrollUtils";
 import { HomePageStats } from "./home/HomePageStats";
 import { HomePageTabs } from "./home/HomePageTabs";
 import { HomePageHeader } from "./home/HomePageHeader";
+import { DataLoadingState } from "./common/LoadingState";
 
 interface HomePageProps {
-  miracles: QuranicMiracle[];
-  paginatedMiracles: QuranicMiracle[];
-  filters: MiracleFilters;
-  setFilters: Dispatch<SetStateAction<MiracleFilters>>;
+  cards: IslamicData[];
+  paginatedCards: IslamicData[];
+  filters: IslamicDataFilters;
+  setFilters: Dispatch<SetStateAction<IslamicDataFilters>>;
   types: string[];
   currentPage: number;
   setCurrentPage: (page: number) => void;
@@ -31,14 +33,14 @@ interface HomePageProps {
   handleExportCSV: () => void;
   handleExportJSON: () => void;
   setToast: (message: string) => void;
-  miraclesListRef: React.RefObject<HTMLDivElement>;
+  cardsListRef: React.RefObject<HTMLDivElement>;
   activeTab: string;
   setActiveTab: (tab: string) => void;
 }
 
 export default function HomePage({
-  miracles,
-  paginatedMiracles,
+  cards,
+  paginatedCards,
   filters,
   setFilters,
   types,
@@ -48,7 +50,7 @@ export default function HomePage({
   handleExportCSV,
   handleExportJSON,
   setToast,
-  miraclesListRef,
+  cardsListRef,
   activeTab,
   setActiveTab,
 }: HomePageProps) {
@@ -59,34 +61,74 @@ export default function HomePage({
   const { data: quranData } = useQuranData();
   const { hadithData } = useHadithData();
 
+  // Add loading state tracking
+  const [isDataLoading, setIsDataLoading] = useState(true);
+
+  // Check if data is still loading
+  useEffect(() => {
+    const hasData =
+      cards.length > 0 || quranData.length > 0 || hadithData.length > 0;
+    setIsDataLoading(!hasData);
+  }, [cards, quranData, hadithData]);
+
+  // Scroll to top of cards list when currentPage changes
+  useEffect(() => {
+    if (cardsListRef.current) {
+      cardsListRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentPage, cardsListRef]);
+
   // Handle favorite toggle using the proper favorites system
-  const handleFavorite = async (miracle: QuranicMiracle) => {
+  const handleFavorite = async (item: FavoriteItem) => {
     const isCurrentlyFavorite = favorites.some(
-      (fav) => fav.title === miracle.title && fav.type === miracle.type
+      (fav) =>
+        fav === item ||
+        ("title" in fav &&
+          "title" in item &&
+          fav.title === item.title &&
+          "type" in fav &&
+          "type" in item &&
+          fav.type === item.type) ||
+        ("surah_no" in fav &&
+          "surah_no" in item &&
+          fav.surah_no === item.surah_no &&
+          "ayah_no_surah" in fav &&
+          "ayah_no_surah" in item &&
+          fav.ayah_no_surah === item.ayah_no_surah) ||
+        ("number" in fav && "number" in item && fav.number === item.number)
     );
 
     if (isCurrentlyFavorite) {
-      await removeFavorite(miracle);
+      await removeFavorite(item);
       setToast("Removed from favorites");
     } else {
-      await addFavorite(miracle);
+      await addFavorite(item);
       setToast("Added to favorites");
     }
   };
 
-  // Check if a miracle is favorited using the favorites from the hook
-  const isFavorite = (miracle: QuranicMiracle) => {
-    return favorites.some(
-      (fav) => fav.title === miracle.title && fav.type === miracle.type
+  // Check if an item is favorited using the favorites from the hook
+  const isFavorite = (item: FavoriteItem) => {
+    const isFav = favorites.some(
+      (fav) =>
+        fav === item ||
+        ("title" in fav &&
+          "title" in item &&
+          fav.title === item.title &&
+          "type" in fav &&
+          "type" in item &&
+          fav.type === item.type) ||
+        ("surah_no" in fav &&
+          "surah_no" in item &&
+          fav.surah_no === item.surah_no &&
+          "ayah_no_surah" in fav &&
+          "ayah_no_surah" in item &&
+          fav.ayah_no_surah === item.ayah_no_surah) ||
+        ("number" in fav && "number" in item && fav.number === item.number)
     );
-  };
 
-  // Scroll to top of miracles list when currentPage changes
-  useEffect(() => {
-    if (miraclesListRef.current) {
-      miraclesListRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [currentPage, miraclesListRef]);
+    return isFav;
+  };
 
   // Masonry breakpoints
   const breakpointColumns = {
@@ -94,6 +136,15 @@ export default function HomePage({
     1200: 2,
     768: 1,
   };
+
+  // Show loading state if no data is available yet
+  if (isDataLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8 animate-fade-in-up">
+        <DataLoadingState />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300">
@@ -103,7 +154,7 @@ export default function HomePage({
 
         {/* Quick Stats */}
         <HomePageStats
-          miracles={miracles}
+          cards={cards}
           quranData={quranData}
           hadithData={hadithData}
           favorites={favorites}
@@ -117,7 +168,7 @@ export default function HomePage({
           {/* Tab Content */}
           <div className="p-4 sm:p-6">
             {activeTab === "all" && (
-              <div ref={miraclesListRef}>
+              <div ref={cardsListRef}>
                 {/* Filters and Export */}
                 <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                   <div className="flex flex-col sm:flex-row gap-2">
@@ -161,21 +212,18 @@ export default function HomePage({
                   </div>
                 </div>
 
-                {/* Miracles Grid */}
+                {/* Cards Grid */}
                 <Masonry
                   breakpointCols={breakpointColumns}
                   className="flex w-full"
                   columnClassName="bg-clip-padding pr-2 sm:pr-4"
                 >
-                  {paginatedMiracles.map((miracle) => (
-                    <div
-                      key={`${miracle.type}-${miracle.title}`}
-                      className="mb-4"
-                    >
-                      <MiracleCard
-                        miracle={miracle}
+                  {paginatedCards.map((card) => (
+                    <div key={`${card.type}-${card.title}`} className="mb-4">
+                      <DataCard
+                        card={card}
                         onFavorite={handleFavorite}
-                        isFavorite={isFavorite(miracle)}
+                        isFavorite={isFavorite(card)}
                       />
                     </div>
                   ))}
@@ -300,7 +348,7 @@ export default function HomePage({
 
             {activeTab === "search" && (
               <AdvancedSearchDashboard
-                data={miracles}
+                data={cards}
                 quranData={quranData}
                 hadithData={hadithData}
                 onFavorite={handleFavorite}
@@ -308,11 +356,21 @@ export default function HomePage({
               />
             )}
 
-            {activeTab === "charts" && <ChartsDashboard data={miracles} />}
+            {activeTab === "charts" && <ChartsDashboard data={cards} />}
 
-            {activeTab === "quran" && <QuranDashboard />}
+            {activeTab === "quran" && (
+              <QuranDashboard
+                onFavorite={handleFavorite}
+                isFavorite={isFavorite}
+              />
+            )}
 
-            {activeTab === "hadith" && <HadithDashboard />}
+            {activeTab === "hadith" && (
+              <HadithDashboard
+                onFavorite={handleFavorite}
+                isFavorite={isFavorite}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -64,6 +64,3 @@ export const ChartThemeProvider: React.FC<ChartThemeProviderProps> = ({
 }) => {
   return <ThemeProvider theme={basicTheme}>{children}</ThemeProvider>;
 };
-
-// Export the basic theme for direct use
-export const getChartTheme = () => basicTheme;

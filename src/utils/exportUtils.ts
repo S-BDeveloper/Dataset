@@ -1,5 +1,5 @@
 // Export utilities for CSV and JSON
-import type { QuranicMiracle } from "../types/Types";
+import type { IslamicData } from "../types/Types";
 
 // Utility to convert array of objects to CSV
 export function toCSV<T extends object>(data: T[]): string {
@@ -29,13 +29,13 @@ export function toJSON<T>(data: T): string {
 }
 
 // Export miracles data as CSV
-export function exportMiraclesCSV(miracles: QuranicMiracle[]): string {
-  return toCSV(miracles);
+export function exportIslamicDataCSV(islamicData: IslamicData[]): string {
+  return toCSV(islamicData);
 }
 
 // Export miracles data as JSON
-export function exportMiraclesJSON(miracles: QuranicMiracle[]): string {
-  return toJSON(miracles);
+export function exportIslamicDataJSON(islamicData: IslamicData[]): string {
+  return toJSON(islamicData);
 }
 
 // Download file utility
