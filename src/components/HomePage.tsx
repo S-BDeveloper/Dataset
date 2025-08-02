@@ -147,7 +147,7 @@ export default function HomePage({
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 transition-colors duration-300">
+    <div className="min-h-screen bg-stone-100 dark:bg-stone-900 transition-colors duration-300">
       <div className="container mx-auto max-w-7xl px-2 sm:px-4 py-8 w-full overflow-hidden">
         {/* Header */}
         <HomePageHeader />
@@ -161,7 +161,7 @@ export default function HomePage({
         />
 
         {/* Main Content */}
-        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700">
+        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-2xl border border-stone-200 dark:border-stone-700">
           {/* Tab Navigation */}
           <HomePageTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
