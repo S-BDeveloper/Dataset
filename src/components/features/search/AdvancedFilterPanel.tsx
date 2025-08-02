@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import type {
   IslamicData,
   QuranAyah,
@@ -27,134 +27,131 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
   const { t } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(true); // Changed to true to show advanced filters by default
 
-  // Load saved presets
-  const [savedPresets] = useState<
-    Array<{ name: string; filters: FilterState }>
-  >(() => {
+  // Load saved presets - memoized to prevent unnecessary re-computations
+  const savedPresets = useMemo(() => {
     const saved = localStorage.getItem("searchPresets");
     return saved ? JSON.parse(saved) : [];
-  });
+  }, []);
 
-  // Get unique values for filters
-  const uniqueTypes = [...new Set(data.map((data) => data.type))];
-  // Remove category filter since QuranicMiracle doesn't have a category property
-  // const uniqueCategories = [
-  //   ...new Set(data.map((miracle) => miracle.category).filter(Boolean)),
-  // ];
-  const uniqueFulfillmentStatus = [
-    ...new Set(data.map((data) => data.fulfillmentStatus).filter(Boolean)),
-  ];
-  const uniqueProphecyCategories = [
-    ...new Set(data.map((data) => data.prophecyCategory).filter(Boolean)),
-  ];
+  // Memoized unique values for filters to prevent recalculation on every render
+  const uniqueTypes = useMemo(
+    () => [...new Set(data.map((data) => data.type))],
+    [data]
+  );
 
-  // Quran-specific unique values
-  const uniqueQuranSurahs = Array.from(
-    new Map<number, string>(
-      quranData.map((ayah) => [ayah.surah_no, ayah.surah_name_en])
-    ).entries()
-  )
-    .sort(([a], [b]) => a - b)
-    .map(([number, name]) => ({ number, name }));
+  const uniqueFulfillmentStatus = useMemo(
+    () => [
+      ...new Set(data.map((data) => data.fulfillmentStatus).filter(Boolean)),
+    ],
+    [data]
+  );
 
-  const uniqueQuranPlaces = [
-    ...new Set(quranData.map((ayah) => ayah.place_of_revelation)),
-  ];
-  const quranVerseNumbers = quranData
-    .map((ayah) => parseInt(ayah.ayah_no_surah.toString()))
-    .filter(Boolean);
-  const quranMinVerse =
-    quranVerseNumbers.length > 0 ? Math.min(...quranVerseNumbers) : 1;
-  const quranMaxVerse =
-    quranVerseNumbers.length > 0 ? Math.max(...quranVerseNumbers) : 6236;
+  const uniqueProphecyCategories = useMemo(
+    () => [
+      ...new Set(data.map((data) => data.prophecyCategory).filter(Boolean)),
+    ],
+    [data]
+  );
 
-  // Hadith-specific unique values
-  const hadithNumbers = hadithData.map((_, index) => index + 1);
-  const hadithMinNumber =
-    hadithNumbers.length > 0 ? Math.min(...hadithNumbers) : 1;
-  const hadithMaxNumber =
-    hadithNumbers.length > 0 ? Math.max(...hadithNumbers) : 1000;
+  // Memoized Quran-specific unique values
+  const uniqueQuranSurahs = useMemo(
+    () =>
+      Array.from(
+        new Map<number, string>(
+          quranData.map((ayah) => [ayah.surah_no, ayah.surah_name_en])
+        ).entries()
+      )
+        .sort(([a], [b]) => a - b)
+        .map(([number, name]) => ({ number, name })),
+    [quranData]
+  );
 
-  // Enhanced search field options
-  const searchFieldOptions = [
-    { value: "title", label: "Title" },
-    { value: "description", label: "Description" },
-    { value: "source", label: "Source" },
-    { value: "category", label: "Category" },
-    { value: "type", label: "Type" },
-    { value: "fulfillmentStatus", label: "Fulfillment Status" },
-    { value: "prophecyCategory", label: "Prophecy Category" },
-  ];
+  const uniqueQuranPlaces = useMemo(
+    () => [...new Set(quranData.map((ayah) => ayah.place_of_revelation))],
+    [quranData]
+  );
 
-  // Data source options
-  const dataSourceOptions = [
-    { value: "islamic data", label: "Islamic Data" },
-    { value: "quran", label: "Quran Verses" },
-    { value: "hadith", label: "Hadiths" },
-  ];
+  const quranVerseNumbers = useMemo(
+    () =>
+      quranData
+        .map((ayah) => parseInt(ayah.ayah_no_surah.toString()))
+        .filter(Boolean),
+    [quranData]
+  );
 
-  // Enhanced sort options
-  const sortOptions = [
-    { value: "title", label: "Title" },
-    { value: "type", label: "Type" },
-    { value: "category", label: "Category" },
-    { value: "fulfillmentStatus", label: "Fulfillment Status" },
-    { value: "prophecyCategory", label: "Prophecy Category" },
-    { value: "year", label: "Year" },
-  ];
+  const quranMinVerse = useMemo(
+    () => (quranVerseNumbers.length > 0 ? Math.min(...quranVerseNumbers) : 1),
+    [quranVerseNumbers]
+  );
 
-  // Handle filter changes
-  const handleFilterChange = (
-    key: keyof FilterState,
-    value: FilterState[keyof FilterState]
-  ) => {
-    onFiltersChange({ ...filters, [key]: value });
-  };
+  const quranMaxVerse = useMemo(
+    () =>
+      quranVerseNumbers.length > 0 ? Math.max(...quranVerseNumbers) : 6236,
+    [quranVerseNumbers]
+  );
 
-  const handleMultiSelectToggle = (key: keyof FilterState, value: string) => {
-    const currentValues = filters[key] as string[];
-    const newValues = currentValues.includes(value)
-      ? currentValues.filter((v) => v !== value)
-      : [...currentValues, value];
-    handleFilterChange(key, newValues);
-  };
+  // Memoized Hadith-specific unique values
+  const hadithNumbers = useMemo(
+    () => hadithData.map((_, index) => index + 1),
+    [hadithData]
+  );
 
-  const handleRangeChange = (
-    key: keyof FilterState,
-    field: "min" | "max",
-    value: number
-  ) => {
-    const currentRange = filters[key] as { min: number; max: number };
-    const newRange = { ...currentRange, [field]: value };
-    handleFilterChange(key, newRange);
-  };
+  const hadithMinNumber = useMemo(
+    () => (hadithNumbers.length > 0 ? Math.min(...hadithNumbers) : 1),
+    [hadithNumbers]
+  );
 
-  // Save current filters as preset
-  const handleSavePreset = () => {
-    const presetName = prompt("Enter preset name:");
-    if (presetName) {
-      const newPreset = {
-        name: presetName,
-        filters: { ...filters },
-      };
-      const updatedPresets = [...savedPresets, newPreset];
-      localStorage.setItem("searchPresets", JSON.stringify(updatedPresets));
-      window.location.reload(); // Refresh to update the UI
-    }
-  };
+  const hadithMaxNumber = useMemo(
+    () => (hadithNumbers.length > 0 ? Math.max(...hadithNumbers) : 1000),
+    [hadithNumbers]
+  );
 
-  const handleLoadPreset = (preset: { name: string; filters: FilterState }) => {
-    onFiltersChange(preset.filters);
-  };
+  // Memoized static options to prevent recreation on every render
+  const searchFieldOptions = useMemo(
+    () => [
+      { value: "title", label: "Title" },
+      { value: "description", label: "Description" },
+      { value: "source", label: "Source" },
+      { value: "category", label: "Category" },
+      { value: "type", label: "Type" },
+      { value: "fulfillmentStatus", label: "Fulfillment Status" },
+      { value: "prophecyCategory", label: "Prophecy Category" },
+    ],
+    []
+  );
 
-  const handleDeletePreset = (presetName: string) => {
-    const updatedPresets = savedPresets.filter((p) => p.name !== presetName);
-    localStorage.setItem("searchPresets", JSON.stringify(updatedPresets));
-    window.location.reload(); // Refresh to update the UI
-  };
+  const dataSourceOptions = useMemo(
+    () => [
+      { value: "islamic data", label: "Islamic Data" },
+      { value: "quran", label: "Quran Verses" },
+      { value: "hadith", label: "Hadiths" },
+    ],
+    []
+  );
 
-  // Get active filter count
-  const getActiveFilterCount = () => {
+  const sortOptions = useMemo(
+    () => [
+      { value: "title", label: "Title" },
+      { value: "type", label: "Type" },
+      { value: "category", label: "Category" },
+      { value: "fulfillmentStatus", label: "Fulfillment Status" },
+      { value: "prophecyCategory", label: "Prophecy Category" },
+      { value: "year", label: "Year" },
+    ],
+    []
+  );
+
+  // Memoized unique hadith categories to prevent recalculation
+  const uniqueHadithCategories = useMemo(
+    () =>
+      Array.from(
+        new Set(hadithData.map((hadith) => hadith.chapter).filter(Boolean))
+      ).sort(),
+    [hadithData]
+  );
+
+  // Memoized active filter count to prevent recalculation
+  const activeFilterCount = useMemo(() => {
     let count = 0;
     if (filters.types.length > 0) count++;
     if (filters.categories.length > 0) count++;
@@ -179,12 +176,104 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
       count++;
     if (filters.hadithCategories.length > 0) count++;
     return count;
-  };
+  }, [filters, quranMinVerse, quranMaxVerse, hadithMinNumber, hadithMaxNumber]);
+
+  // Memoized event handlers to prevent unnecessary re-renders
+  const handleFilterChange = useCallback(
+    (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
+      onFiltersChange({ ...filters, [key]: value });
+    },
+    [filters, onFiltersChange]
+  );
+
+  const handleMultiSelectToggle = useCallback(
+    (key: keyof FilterState, value: string) => {
+      const currentValues = filters[key] as string[];
+      const newValues = currentValues.includes(value)
+        ? currentValues.filter((v) => v !== value)
+        : [...currentValues, value];
+      handleFilterChange(key, newValues);
+    },
+    [filters, handleFilterChange]
+  );
+
+  const handleRangeChange = useCallback(
+    (key: keyof FilterState, field: "min" | "max", value: number) => {
+      const currentRange = filters[key] as { min: number; max: number };
+      const newRange = { ...currentRange, [field]: value };
+      handleFilterChange(key, newRange);
+    },
+    [filters, handleFilterChange]
+  );
+
+  // Memoized preset handlers
+  const handleSavePreset = useCallback(() => {
+    const presetName = prompt("Enter preset name:");
+    if (presetName) {
+      const newPreset = {
+        name: presetName,
+        filters: { ...filters },
+      };
+      const updatedPresets = [...savedPresets, newPreset];
+      localStorage.setItem("searchPresets", JSON.stringify(updatedPresets));
+      window.location.reload(); // Refresh to update the UI
+    }
+  }, [filters, savedPresets]);
+
+  const handleLoadPreset = useCallback(
+    (preset: { name: string; filters: FilterState }) => {
+      onFiltersChange(preset.filters);
+    },
+    [onFiltersChange]
+  );
+
+  const handleDeletePreset = useCallback(
+    (presetName: string) => {
+      const updatedPresets = savedPresets.filter(
+        (p: { name: string; filters: FilterState }) => p.name !== presetName
+      );
+      localStorage.setItem("searchPresets", JSON.stringify(updatedPresets));
+      window.location.reload(); // Refresh to update the UI
+    },
+    [savedPresets]
+  );
+
+  // Memoized toggle handlers
+  const toggleExpanded = useCallback(() => {
+    setIsExpanded(!isExpanded);
+  }, [isExpanded]);
+
+  const handleQuranSurahToggle = useCallback(() => {
+    const newFilters = { ...filters };
+    if (filters.quranSurahs.length === uniqueQuranSurahs.length) {
+      newFilters.quranSurahs = [];
+    } else {
+      newFilters.quranSurahs = uniqueQuranSurahs.map(({ number }) =>
+        number.toString()
+      );
+    }
+    onFiltersChange(newFilters);
+  }, [filters, uniqueQuranSurahs, onFiltersChange]);
+
+  const handleHadithChapterToggle = useCallback(() => {
+    const newFilters = { ...filters };
+    if (filters.hadithCategories.length === uniqueHadithCategories.length) {
+      newFilters.hadithCategories = [];
+    } else {
+      newFilters.hadithCategories = uniqueHadithCategories;
+    }
+    onFiltersChange(newFilters);
+  }, [filters, uniqueHadithCategories, onFiltersChange]);
+
+  // Early return if no active filters and not expanded
+  if (activeFilterCount === 0 && !isExpanded) {
+    return null;
+  }
 
   return (
     <>
       {/* Only render the panel if there are active filters or if expanded */}
-      {getActiveFilterCount() > 0 || isExpanded ? (
+      {activeFilterCount > 0 || isExpanded ? (
         <div className="mb-6">
           <div className="bg-white dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden">
             {/* Filter Header */}
@@ -194,15 +283,15 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                   <h3 className="text-lg font-semibold text-stone-700 dark:text-stone-300">
                     {t("search.advanced")}
                   </h3>
-                  {getActiveFilterCount() > 0 && (
+                  {activeFilterCount > 0 && (
                     <span className="px-2 py-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200 text-xs font-medium rounded-full">
-                      {getActiveFilterCount()} {t("search.active")}
+                      {activeFilterCount} {t("search.active")}
                     </span>
                   )}
                 </div>
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setIsExpanded(!isExpanded)}
+                    onClick={toggleExpanded}
                     className="text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
                   >
                     {isExpanded ? (
@@ -289,20 +378,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                           {t("quran.filter.surah")}
                         </label>
                         <button
-                          onClick={() => {
-                            const newFilters = { ...filters };
-                            if (
-                              filters.quranSurahs.length ===
-                              uniqueQuranSurahs.length
-                            ) {
-                              newFilters.quranSurahs = [];
-                            } else {
-                              newFilters.quranSurahs = uniqueQuranSurahs.map(
-                                ({ number }) => number.toString()
-                              );
-                            }
-                            onFiltersChange(newFilters);
-                          }}
+                          onClick={handleQuranSurahToggle}
                           className="text-xs text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
                         >
                           {filters.quranSurahs.length ===
@@ -461,41 +537,44 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
                     {/* Hadith Categories Filter */}
                     <div>
-                      <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                        {t("hadith.chapter")}
-                      </label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        {Array.from(
-                          new Set(
-                            hadithData
-                              .map((hadith) => hadith.chapter)
-                              .filter(Boolean)
-                          )
-                        )
-                          .sort()
-                          .map((chapter) => (
-                            <label
-                              key={chapter}
-                              className="flex items-center space-x-2 cursor-pointer"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={filters.hadithCategories.includes(
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-sm font-medium text-stone-700 dark:text-stone-300">
+                          {t("hadith.chapter")}
+                        </label>
+                        <button
+                          onClick={handleHadithChapterToggle}
+                          className="text-xs text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                        >
+                          {filters.hadithCategories.length ===
+                          uniqueHadithCategories.length
+                            ? "Deselect All"
+                            : "Select All"}
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto">
+                        {uniqueHadithCategories.map((chapter) => (
+                          <label
+                            key={chapter}
+                            className="flex items-center space-x-2 cursor-pointer"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={filters.hadithCategories.includes(
+                                chapter
+                              )}
+                              onChange={() =>
+                                handleMultiSelectToggle(
+                                  "hadithCategories",
                                   chapter
-                                )}
-                                onChange={() =>
-                                  handleMultiSelectToggle(
-                                    "hadithCategories",
-                                    chapter
-                                  )
-                                }
-                                className="rounded border-stone-300 text-green-600 focus:ring-green-500"
-                              />
-                              <span className="text-sm text-stone-600 dark:text-stone-400">
-                                {chapter}
-                              </span>
-                            </label>
-                          ))}
+                                )
+                              }
+                              className="rounded border-stone-300 text-green-600 focus:ring-green-500"
+                            />
+                            <span className="text-sm text-stone-600 dark:text-stone-400">
+                              {chapter}
+                            </span>
+                          </label>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -709,25 +788,31 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                     </button>
                   </div>
                   <div className="space-y-2">
-                    {savedPresets.map((preset) => (
-                      <div
-                        key={preset.name}
-                        className="flex items-center justify-between p-2 bg-stone-50 dark:bg-stone-700 rounded"
-                      >
-                        <button
-                          onClick={() => handleLoadPreset(preset)}
-                          className="text-sm text-stone-700 dark:text-stone-300 hover:text-green-600 dark:hover:text-green-400"
+                    {savedPresets.map(
+                      (preset: { name: string; filters: FilterState }) => (
+                        <div
+                          key={preset.name}
+                          className="flex items-center justify-between p-2 bg-stone-50 dark:bg-stone-700 rounded"
                         >
-                          {preset.name}
-                        </button>
-                        <button
-                          onClick={() => handleDeletePreset(preset.name)}
-                          className="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ))}
+                          <button
+                            onClick={() =>
+                              handleLoadPreset(
+                                preset as { name: string; filters: FilterState }
+                              )
+                            }
+                            className="text-sm text-stone-700 dark:text-stone-300 hover:text-green-600 dark:hover:text-green-400"
+                          >
+                            {preset.name}
+                          </button>
+                          <button
+                            onClick={() => handleDeletePreset(preset.name)}
+                            className="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
