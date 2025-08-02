@@ -23,9 +23,7 @@ export interface AuthError {
 
 // Enhanced Data interface with better structure
 export interface IslamicData {
-  type:
-    | "prophecy"
-    | "scientific";
+  type: "prophecy" | "scientific";
   title: string;
   notes: string;
   sources?: {
@@ -138,6 +136,7 @@ export interface QuranFilters {
 
 export interface HadithFilters {
   searchTerm: string;
+  chapter?: string;
   sortBy: string;
 }
 

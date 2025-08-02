@@ -37,6 +37,9 @@ export function HadithCard({
   const contentFields = Object.entries(hadith).filter(([key, value]) => {
     // Skip id field as it's just for identification
     if (key === "id") return false;
+    // Skip text, arabic, and translation fields as they're displayed in dedicated sections
+    if (key === "text" || key === "arabic" || key === "translation")
+      return false;
     return hasContent(value);
   });
 

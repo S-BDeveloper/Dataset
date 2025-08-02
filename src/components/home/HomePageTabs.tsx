@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "../../hooks/useContext";
 
 interface HomePageTabsProps {
   activeTab: string;
@@ -9,12 +10,14 @@ export const HomePageTabs: React.FC<HomePageTabsProps> = ({
   activeTab,
   setActiveTab,
 }) => {
+  const { t } = useLanguage();
+
   const tabs = [
-    { id: "all", label: "Data", icon: "📖" },
-    { id: "search", label: "Cross-Reference Search", icon: "🔍" },
-    { id: "charts", label: "Charts & Analytics", icon: "📊" },
-    { id: "quran", label: "Quran", icon: "📜" },
-    { id: "hadith", label: "Hadith", icon: "📚" },
+    { id: "all", label: t("tabs.data"), icon: "📖" },
+    { id: "search", label: t("tabs.search"), icon: "🔍" },
+    { id: "charts", label: t("tabs.charts"), icon: "📊" },
+    { id: "quran", label: t("tabs.quran"), icon: "📜" },
+    { id: "hadith", label: t("tabs.hadith"), icon: "📚" },
   ];
 
   return (

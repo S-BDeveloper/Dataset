@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AdvancedSearchDashboard } from "./features/search/AdvancedSearchDashboard";
 import { ChartsDashboard } from "./features/charts/ChartsDashboard";
-import { DataCard } from "./features/card/DataCard";
+import { DataCard } from "./features/datacard/DataCard";
 import PaginationButton from "./common/PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
 import { useQuranData } from "../hooks/useQuranData";
@@ -174,7 +174,7 @@ export default function HomePage({
                   <div className="flex flex-col sm:flex-row gap-2">
                     <input
                       type="text"
-                      placeholder="Search miracles..."
+                      placeholder="Search data..."
                       value={filters.searchTerm}
                       onChange={(e) =>
                         setFilters({ ...filters, searchTerm: e.target.value })

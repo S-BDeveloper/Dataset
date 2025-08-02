@@ -1,6 +1,7 @@
 import React from "react";
 import type { IslamicData, QuranAyah, HadithEntry } from "../../types/Types";
 import type { FavoriteItem } from "../../hooks/useFavorites";
+import { useLanguage } from "../../hooks/useContext";
 
 interface HomePageStatsProps {
   cards: IslamicData[];
@@ -15,6 +16,8 @@ export const HomePageStats: React.FC<HomePageStatsProps> = ({
   hadithData,
   favorites,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
       <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
@@ -22,7 +25,7 @@ export const HomePageStats: React.FC<HomePageStatsProps> = ({
           {cards.length}
         </div>
         <div className="text-sm text-stone-600 dark:text-stone-400">
-          Authentic Islamic Data
+          {t("stats.islamicData")}
         </div>
       </div>
       <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
@@ -30,7 +33,7 @@ export const HomePageStats: React.FC<HomePageStatsProps> = ({
           {quranData.length}
         </div>
         <div className="text-sm text-stone-600 dark:text-stone-400">
-          Quran Verses
+          {t("stats.quranVerses")}
         </div>
       </div>
       <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
@@ -38,7 +41,7 @@ export const HomePageStats: React.FC<HomePageStatsProps> = ({
           {hadithData.length}
         </div>
         <div className="text-sm text-stone-600 dark:text-stone-400">
-          Hadiths
+          {t("stats.hadiths")}
         </div>
       </div>
       <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-lg border border-stone-200 dark:border-stone-700">
@@ -46,7 +49,7 @@ export const HomePageStats: React.FC<HomePageStatsProps> = ({
           {favorites.length}
         </div>
         <div className="text-sm text-stone-600 dark:text-stone-400">
-          Favorites
+          {t("stats.favorites")}
         </div>
       </div>
     </div>

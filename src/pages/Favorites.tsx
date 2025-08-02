@@ -1,7 +1,7 @@
 import React from "react";
 import { useFavorites } from "../hooks/useFavorites";
 import Breadcrumb from "../components/common/Breadcrumb";
-import { DataCard } from "../components/features/card/DataCard";
+import { DataCard } from "../components/features/datacard/DataCard";
 import { useAuth } from "../hooks/useContext";
 
 // Favorites page displays the user's favorited Quranic miracles

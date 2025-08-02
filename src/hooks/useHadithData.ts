@@ -21,20 +21,48 @@ export function useHadithData() {
         setLoading(true);
         console.log("🔄 Loading Hadith data from local JSON...");
 
-        // Load from JSON directly - much faster than fetch
-        // Transform the data to match HadithEntry interface
-        const data = Object.entries(hadithDataJSON).map(([key, value]) => ({
-          id: key,
-          number: key,
-          book: "Sahih Bukhari",
-          chapter: "Unknown",
-          narrator: "Unknown",
-          text: typeof value === "string" ? value : JSON.stringify(value),
-          arabic: typeof value === "string" ? value : "",
-          translation: "",
-          grade: "Sahih",
-          reference: key,
-        })) as HadithEntry[];
+        // Check if the data is an array (new format) or object (old format)
+        const isArrayFormat = Array.isArray(hadithDataJSON);
+
+        let data: HadithEntry[];
+
+        if (isArrayFormat) {
+          // New format: Array of hadith objects
+          data = hadithDataJSON.map((hadith: any) => ({
+            id:
+              hadith.id?.toString() ||
+              hadith.hadith_id?.toString() ||
+              "unknown",
+            number:
+              hadith.hadith_no?.toString() ||
+              hadith.id?.toString() ||
+              "unknown",
+            book: hadith.source || "Sahih Bukhari",
+            chapter: hadith.chapter || "Unknown",
+            narrator: hadith.narrators || "Unknown",
+            text: hadith.text_en || hadith.text_ar || "",
+            arabic: hadith.text_ar || "",
+            translation: hadith.text_en || "",
+            grade: "Sahih", // Default grade for Sahih Bukhari
+            reference: `${hadith.source || "Sahih Bukhari"} ${
+              hadith.chapter_no || ""
+            } ${hadith.hadith_no || ""}`.trim(),
+          })) as HadithEntry[];
+        } else {
+          // Old format: Object with key-value pairs
+          data = Object.entries(hadithDataJSON).map(([key, value]) => ({
+            id: key,
+            number: key,
+            book: "Sahih Bukhari",
+            chapter: "Unknown",
+            narrator: "Unknown",
+            text: typeof value === "string" ? value : JSON.stringify(value),
+            arabic: typeof value === "string" ? value : "",
+            translation: "",
+            grade: "Sahih",
+            reference: key,
+          })) as HadithEntry[];
+        }
 
         console.log("✅ Loaded", data.length, "hadiths from local JSON");
         setHadithData(data);
@@ -63,6 +91,15 @@ export function useHadithData() {
         return Object.values(hadith).some((value) =>
           value.toLowerCase().includes(searchLower)
         );
+      });
+    }
+
+    // Apply chapter filter
+    if (filters.chapter && filters.chapter !== "all") {
+      filtered = filtered.filter((hadith) => {
+        return hadith.chapter
+          .toLowerCase()
+          .includes(filters.chapter!.toLowerCase());
       });
     }
 
@@ -109,6 +146,16 @@ export function useHadithData() {
     };
   }, [hadithData]);
 
+  // Get unique chapters for filtering
+  const uniqueChapters = useMemo(() => {
+    const chapters = hadithData
+      .map((hadith) => hadith.chapter)
+      .filter((chapter) => chapter && chapter !== "Unknown")
+      .filter((chapter, index, self) => self.indexOf(chapter) === index)
+      .sort();
+    return chapters;
+  }, [hadithData]);
+
   return {
     hadithData,
     filteredData,
@@ -122,5 +169,6 @@ export function useHadithData() {
     totalPages,
     stats,
     itemsPerPage,
+    uniqueChapters,
   };
 }

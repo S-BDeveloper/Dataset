@@ -15,21 +15,43 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Logout",
 
     // Homepage
-    "home.title": "Authentic Islamic Knowledge",
-    "home.subtitle":
-    "Discover the miraculous signs of Allah through Quranic verses, Sahih Bukhari's hadith collection, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding.",
-    "home.stats.total": "Authentic Islamic Data",
-    "home.stats.categories": "Categories",
-    "home.stats.saved": "Saved",
-    "home.stats.fulfilled": "Fulfilled",
+    "header.title": "Authentic Islamic Knowledge",
+    "header.description":
+      "Discover the miraculous signs of Allah through Quranic verses, Sahih Bukhari and Muslim's hadith collections, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding.",
 
     // Tabs
-    "tabs.all": "Authentic Islamic Data",
-    "tabs.search": "Advanced Search",
-    "tabs.charts": "Charts & Graphs",
-    "tabs.stats": "Statistics",
+    "tabs.data": "Data",
+    "tabs.search": "Cross-Reference Search",
+    "tabs.charts": "Charts & Analytics",
     "tabs.quran": "Quran",
     "tabs.hadith": "Hadith",
+
+    // Stats
+    "stats.islamicData": "Authentic Islamic Data",
+    "stats.quranVerses": "Quran Verses",
+    "stats.hadiths": "Hadiths",
+    "stats.favorites": "Favorites",
+
+    // Search & Filters
+    "search.placeholder": "Search data...",
+    "search.advanced": "Advanced Filters",
+    "search.clearAll": "Clear All",
+    "search.dataSources": "Data Sources",
+    "search.active": "active",
+    "search.filters": "Filters",
+    "search.sort": "Sort",
+    "search.filter": "Filter",
+    "search.clear": "Clear",
+    "search.loading": "Loading...",
+    "search.noResults": "No results found",
+    "search.export": "Export",
+    "search.pagination": "Pagination",
+    "search.previous": "Previous",
+    "search.next": "Next",
+    "search.first": "First",
+    "search.last": "Last",
+    "search.goToPage": "Go to page",
+    "search.go": "Go",
 
     // Quran
     "quran.title": "The Holy Quran",
@@ -52,8 +74,27 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "Content Length",
     "hadith.translation": "English Translation",
     "hadith.arabic": "Arabic Text",
+    "hadith.chapter": "Chapter",
 
-    // Common
+    // Storage & Favorites
+    "storage.title": "Storage Information",
+    "storage.usage": "Storage Usage",
+    "storage.export": "Export Favorites",
+    "storage.clear": "Clear All",
+    "storage.warning": "Storage Warning",
+    "storage.confirmClear":
+      "Are you sure you want to clear all favorites? This action cannot be undone.",
+    "storage.using": "Your favorites are using",
+    "storage.considerExport":
+      "Consider exporting and clearing old favorites to free up space.",
+
+    // Loading States
+    "loading.data": "Loading data from API...",
+    "loading.quranic": "Loading Quranic data from API...",
+    "loading.search": "Searching across Quran, Hadith, and Authentic data...",
+    "loading.mayTakeTime": "This may take a few seconds on first load",
+
+    // Common Actions
     "common.search": "Search",
     "common.filter": "Filter",
     "common.sort": "Sort",
@@ -79,7 +120,7 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.de": "Deutsch",
   },
   ar: {
-    // Arabic translations (simplified for now)
+    // Arabic translations
     "nav.home": "الرئيسية",
     "nav.favorites": "المفضلة",
     "nav.submit": "إرسال اكتشاف",
@@ -88,20 +129,40 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.signup": "إنشاء حساب",
     "nav.logout": "تسجيل الخروج",
 
-    "home.title": "الآيات الإلهية والإرشاد",
-    "home.subtitle":
+    "header.title": "الآيات الإلهية والإرشاد",
+    "header.description":
       "اكتشف الآيات المعجزة لله من خلال الوحي القرآني والتوجيه النبوي والحكمة الإلهية.",
-    "home.stats.total": "إجمالي الآيات",
-    "home.stats.categories": "الفئات",
-    "home.stats.saved": "المحفوظ",
-    "home.stats.fulfilled": "المتحقق",
 
-    "tabs.all": "جميع الآيات",
+    "tabs.data": "البيانات",
     "tabs.search": "البحث المتقدم",
     "tabs.charts": "الرسوم البيانية",
-    "tabs.stats": "الإحصائيات",
     "tabs.quran": "القرآن",
     "tabs.hadith": "الحديث",
+
+    "stats.islamicData": "البيانات الإسلامية الأصيلة",
+    "stats.quranVerses": "آيات القرآن",
+    "stats.hadiths": "الأحاديث",
+    "stats.favorites": "المفضلة",
+
+    "search.placeholder": "البحث في البيانات...",
+    "search.advanced": "المرشحات المتقدمة",
+    "search.clearAll": "مسح الكل",
+    "search.dataSources": "مصادر البيانات",
+    "search.active": "نشط",
+    "search.filters": "المرشحات",
+    "search.sort": "ترتيب",
+    "search.filter": "تصفية",
+    "search.clear": "مسح",
+    "search.loading": "جاري التحميل...",
+    "search.noResults": "لم يتم العثور على نتائج",
+    "search.export": "تصدير",
+    "search.pagination": "ترقيم الصفحات",
+    "search.previous": "السابق",
+    "search.next": "التالي",
+    "search.first": "الأول",
+    "search.last": "الأخير",
+    "search.goToPage": "اذهب إلى الصفحة",
+    "search.go": "اذهب",
 
     "quran.title": "القرآن الكريم",
     "quran.search.placeholder": "البحث باسم السورة أو النص العربي...",
@@ -122,6 +183,22 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "طول المحتوى",
     "hadith.translation": "الترجمة الإنجليزية",
     "hadith.arabic": "النص العربي",
+    "hadith.chapter": "الباب",
+
+    "storage.title": "معلومات التخزين",
+    "storage.usage": "استخدام التخزين",
+    "storage.export": "تصدير المفضلة",
+    "storage.clear": "مسح الكل",
+    "storage.warning": "تحذير التخزين",
+    "storage.confirmClear":
+      "هل أنت متأكد من أنك تريد مسح جميع المفضلة؟ لا يمكن التراجع عن هذا الإجراء.",
+    "storage.using": "مفضلتك تستخدم",
+    "storage.considerExport": "فكر في تصدير ومسح المفضلة القديمة لتحرير مساحة.",
+
+    "loading.data": "جاري تحميل البيانات من API...",
+    "loading.quranic": "جاري تحميل بيانات القرآن من API...",
+    "loading.search": "البحث في القرآن والحديث والبيانات الأصيلة...",
+    "loading.mayTakeTime": "قد يستغرق هذا بضع ثوانٍ في التحميل الأول",
 
     "common.search": "بحث",
     "common.filter": "تصفية",
@@ -147,7 +224,7 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.de": "Deutsch",
   },
   ur: {
-    // Urdu translations (simplified)
+    // Urdu translations
     "nav.home": "ہوم",
     "nav.favorites": "پسندیدہ",
     "nav.submit": "دریافت جمع کریں",
@@ -156,20 +233,40 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.signup": "سائن اپ",
     "nav.logout": "لاگ آؤٹ",
 
-    "home.title": "اسلامی نشانیاں اور رہنمائی",
-    "home.subtitle":
+    "header.title": "اسلامی نشانیاں اور رہنمائی",
+    "header.description":
       "قرآنی وحی، نبوی رہنمائی اور الہی حکمت کے ذریعے اللہ کی معجزاتی نشانیاں دریافت کریں۔",
-    "home.stats.total": "کل نشانیاں",
-    "home.stats.categories": "زمرے",
-    "home.stats.saved": "محفوظ شدہ",
-    "home.stats.fulfilled": "پورا ہوا",
 
-    "tabs.all": "تمام نشانیاں",
+    "tabs.data": "ڈیٹا",
     "tabs.search": "اعلی درجے کی تلاش",
-    "tabs.charts": "چارٹس اور گراف",
-    "tabs.stats": "اعداد و شمار",
+    "tabs.charts": "چارٹس اور تجزیہ",
     "tabs.quran": "قرآن",
     "tabs.hadith": "حدیث",
+
+    "stats.islamicData": "اصیل اسلامی ڈیٹا",
+    "stats.quranVerses": "قرآن کی آیات",
+    "stats.hadiths": "احادیث",
+    "stats.favorites": "پسندیدہ",
+
+    "search.placeholder": "ڈیٹا تلاش کریں...",
+    "search.advanced": "اعلی فلٹرز",
+    "search.clearAll": "سب صاف کریں",
+    "search.dataSources": "ڈیٹا کے ذرائع",
+    "search.active": "فعال",
+    "search.filters": "فلٹرز",
+    "search.sort": "ترتیب",
+    "search.filter": "فلٹر",
+    "search.clear": "صاف کریں",
+    "search.loading": "لوڈ ہو رہا ہے...",
+    "search.noResults": "کوئی نتیجہ نہیں ملا",
+    "search.export": "برآمد کریں",
+    "search.pagination": "صفحہ نمبر",
+    "search.previous": "پچھلا",
+    "search.next": "اگلا",
+    "search.first": "پہلا",
+    "search.last": "آخری",
+    "search.goToPage": "صفحہ پر جائیں",
+    "search.go": "جائیں",
 
     "quran.title": "قرآن مجید",
     "quran.search.placeholder": "سورہ کے نام یا عربی متن سے تلاش کریں...",
@@ -190,6 +287,23 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "مواد کی لمبائی",
     "hadith.translation": "انگریزی ترجمہ",
     "hadith.arabic": "عربی متن",
+    "hadith.chapter": "باب",
+
+    "storage.title": "ذخیرہ کی معلومات",
+    "storage.usage": "ذخیرہ کا استعمال",
+    "storage.export": "پسندیدہ برآمد کریں",
+    "storage.clear": "سب صاف کریں",
+    "storage.warning": "ذخیرہ کا انتباہ",
+    "storage.confirmClear":
+      "کیا آپ واقعی تمام پسندیدہ صاف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔",
+    "storage.using": "آپ کے پسندیدہ استعمال کر رہے ہیں",
+    "storage.considerExport":
+      "جگہ خالی کرنے کے لیے پرانی پسندیدہ برآمد اور صاف کرنے پر غور کریں۔",
+
+    "loading.data": "API سے ڈیٹا لوڈ ہو رہا ہے...",
+    "loading.quranic": "API سے قرآنی ڈیٹا لوڈ ہو رہا ہے...",
+    "loading.search": "قرآن، حدیث اور اصیل ڈیٹا میں تلاش...",
+    "loading.mayTakeTime": "پہلی بار لوڈ میں کچھ سیکنڈ لگ سکتے ہیں",
 
     "common.search": "تلاش",
     "common.filter": "فلٹر",
@@ -215,7 +329,7 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.de": "Deutsch",
   },
   tr: {
-    // Turkish translations (simplified)
+    // Turkish translations
     "nav.home": "Ana Sayfa",
     "nav.favorites": "Favoriler",
     "nav.submit": "Keşif Gönder",
@@ -224,20 +338,40 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.signup": "Kayıt Ol",
     "nav.logout": "Çıkış Yap",
 
-    "home.title": "İslami İşaretler ve Rehberlik",
-    "home.subtitle":
+    "header.title": "İslami İşaretler ve Rehberlik",
+    "header.description":
       "Kur'an vahyi, peygamber rehberliği ve ilahi hikmet aracılığıyla Allah'ın mucizevi işaretlerini keşfedin.",
-    "home.stats.total": "Toplam İşaret",
-    "home.stats.categories": "Kategoriler",
-    "home.stats.saved": "Kaydedilen",
-    "home.stats.fulfilled": "Gerçekleşen",
 
-    "tabs.all": "Tüm İşaretler",
+    "tabs.data": "Veri",
     "tabs.search": "Gelişmiş Arama",
-    "tabs.charts": "Grafikler ve Çizelgeler",
-    "tabs.stats": "İstatistikler",
+    "tabs.charts": "Grafikler ve Analiz",
     "tabs.quran": "Kur'an",
     "tabs.hadith": "Hadis",
+
+    "stats.islamicData": "Otantik İslami Veri",
+    "stats.quranVerses": "Kur'an Ayetleri",
+    "stats.hadiths": "Hadisler",
+    "stats.favorites": "Favoriler",
+
+    "search.placeholder": "Veri ara...",
+    "search.advanced": "Gelişmiş Filtreler",
+    "search.clearAll": "Tümünü Temizle",
+    "search.dataSources": "Veri Kaynakları",
+    "search.active": "aktif",
+    "search.filters": "Filtreler",
+    "search.sort": "Sırala",
+    "search.filter": "Filtrele",
+    "search.clear": "Temizle",
+    "search.loading": "Yükleniyor...",
+    "search.noResults": "Sonuç bulunamadı",
+    "search.export": "Dışa Aktar",
+    "search.pagination": "Sayfalama",
+    "search.previous": "Önceki",
+    "search.next": "Sonraki",
+    "search.first": "İlk",
+    "search.last": "Son",
+    "search.goToPage": "Sayfaya git",
+    "search.go": "Git",
 
     "quran.title": "Kutsal Kur'an",
     "quran.search.placeholder": "Sure adı veya Arapça metin ile ara...",
@@ -258,6 +392,23 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "İçerik Uzunluğu",
     "hadith.translation": "İngilizce Çeviri",
     "hadith.arabic": "Arapça Metin",
+    "hadith.chapter": "Bölüm",
+
+    "storage.title": "Depolama Bilgisi",
+    "storage.usage": "Depolama Kullanımı",
+    "storage.export": "Favorileri Dışa Aktar",
+    "storage.clear": "Tümünü Temizle",
+    "storage.warning": "Depolama Uyarısı",
+    "storage.confirmClear":
+      "Tüm favorileri temizlemek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+    "storage.using": "Favorileriniz kullanıyor",
+    "storage.considerExport":
+      "Alan açmak için eski favorileri dışa aktarmayı ve temizlemeyi düşünün.",
+
+    "loading.data": "API'den veri yükleniyor...",
+    "loading.quranic": "API'den Kur'an verisi yükleniyor...",
+    "loading.search": "Kur'an, Hadis ve Otantik veri arasında arama...",
+    "loading.mayTakeTime": "İlk yüklemede birkaç saniye sürebilir",
 
     "common.search": "Ara",
     "common.filter": "Filtrele",
@@ -283,7 +434,7 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.de": "Deutsch",
   },
   fr: {
-    // French translations (simplified)
+    // French translations
     "nav.home": "Accueil",
     "nav.favorites": "Favoris",
     "nav.submit": "Soumettre une Découverte",
@@ -292,20 +443,40 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.signup": "Inscription",
     "nav.logout": "Déconnexion",
 
-    "home.title": "Signes Islamiques et Guidance",
-    "home.subtitle":
+    "header.title": "Signes Islamiques et Guidance",
+    "header.description":
       "Découvrez les signes miraculeux d'Allah à travers les révélations coraniques, la guidance prophétique et la sagesse divine.",
-    "home.stats.total": "Total des Signes",
-    "home.stats.categories": "Catégories",
-    "home.stats.saved": "Sauvegardés",
-    "home.stats.fulfilled": "Accomplis",
 
-    "tabs.all": "Tous les Signes",
+    "tabs.data": "Données",
     "tabs.search": "Recherche Avancée",
-    "tabs.charts": "Graphiques et Tableaux",
-    "tabs.stats": "Statistiques",
+    "tabs.charts": "Graphiques et Analyses",
     "tabs.quran": "Coran",
     "tabs.hadith": "Hadith",
+
+    "stats.islamicData": "Données Islamiques Authentiques",
+    "stats.quranVerses": "Versets du Coran",
+    "stats.hadiths": "Hadiths",
+    "stats.favorites": "Favoris",
+
+    "search.placeholder": "Rechercher des données...",
+    "search.advanced": "Filtres Avancés",
+    "search.clearAll": "Tout Effacer",
+    "search.dataSources": "Sources de Données",
+    "search.active": "actif",
+    "search.filters": "Filtres",
+    "search.sort": "Trier",
+    "search.filter": "Filtrer",
+    "search.clear": "Effacer",
+    "search.loading": "Chargement...",
+    "search.noResults": "Aucun résultat trouvé",
+    "search.export": "Exporter",
+    "search.pagination": "Pagination",
+    "search.previous": "Précédent",
+    "search.next": "Suivant",
+    "search.first": "Premier",
+    "search.last": "Dernier",
+    "search.goToPage": "Aller à la page",
+    "search.go": "Aller",
 
     "quran.title": "Le Saint Coran",
     "quran.search.placeholder":
@@ -327,6 +498,25 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "Longueur du Contenu",
     "hadith.translation": "Traduction Anglaise",
     "hadith.arabic": "Texte Arabe",
+    "hadith.chapter": "Chapitre",
+
+    "storage.title": "Informations de Stockage",
+    "storage.usage": "Utilisation du Stockage",
+    "storage.export": "Exporter les Favoris",
+    "storage.clear": "Tout Effacer",
+    "storage.warning": "Avertissement de Stockage",
+    "storage.confirmClear":
+      "Êtes-vous sûr de vouloir effacer tous les favoris ? Cette action ne peut pas être annulée.",
+    "storage.using": "Vos favoris utilisent",
+    "storage.considerExport":
+      "Envisagez d'exporter et d'effacer les anciens favoris pour libérer de l'espace.",
+
+    "loading.data": "Chargement des données depuis l'API...",
+    "loading.quranic": "Chargement des données coraniques depuis l'API...",
+    "loading.search":
+      "Recherche dans le Coran, les Hadiths et les données authentiques...",
+    "loading.mayTakeTime":
+      "Cela peut prendre quelques secondes au premier chargement",
 
     "common.search": "Rechercher",
     "common.filter": "Filtrer",
@@ -352,7 +542,7 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.de": "Deutsch",
   },
   es: {
-    // Spanish translations (simplified)
+    // Spanish translations
     "nav.home": "Inicio",
     "nav.favorites": "Favoritos",
     "nav.submit": "Enviar Descubrimiento",
@@ -361,20 +551,40 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.signup": "Registrarse",
     "nav.logout": "Cerrar Sesión",
 
-    "home.title": "Señales Islámicas y Guía",
-    "home.subtitle":
+    "header.title": "Señales Islámicas y Guía",
+    "header.description":
       "Descubre las señales milagrosas de Allah a través de las revelaciones coránicas, la guía profética y la sabiduría divina.",
-    "home.stats.total": "Total de Señales",
-    "home.stats.categories": "Categorías",
-    "home.stats.saved": "Guardados",
-    "home.stats.fulfilled": "Cumplidos",
 
-    "tabs.all": "Todas las Señales",
+    "tabs.data": "Datos",
     "tabs.search": "Búsqueda Avanzada",
-    "tabs.charts": "Gráficos y Tablas",
-    "tabs.stats": "Estadísticas",
+    "tabs.charts": "Gráficos y Análisis",
     "tabs.quran": "Corán",
     "tabs.hadith": "Hadiz",
+
+    "stats.islamicData": "Datos Islámicos Auténticos",
+    "stats.quranVerses": "Versos del Corán",
+    "stats.hadiths": "Hadices",
+    "stats.favorites": "Favoritos",
+
+    "search.placeholder": "Buscar datos...",
+    "search.advanced": "Filtros Avanzados",
+    "search.clearAll": "Limpiar Todo",
+    "search.dataSources": "Fuentes de Datos",
+    "search.active": "activo",
+    "search.filters": "Filtros",
+    "search.sort": "Ordenar",
+    "search.filter": "Filtrar",
+    "search.clear": "Limpiar",
+    "search.loading": "Cargando...",
+    "search.noResults": "No se encontraron resultados",
+    "search.export": "Exportar",
+    "search.pagination": "Paginación",
+    "search.previous": "Anterior",
+    "search.next": "Siguiente",
+    "search.first": "Primero",
+    "search.last": "Último",
+    "search.goToPage": "Ir a la página",
+    "search.go": "Ir",
 
     "quran.title": "El Sagrado Corán",
     "quran.search.placeholder": "Buscar por nombre de sura o texto árabe...",
@@ -395,6 +605,23 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "Longitud del Contenido",
     "hadith.translation": "Traducción Inglesa",
     "hadith.arabic": "Texto Árabe",
+    "hadith.chapter": "Capítulo",
+
+    "storage.title": "Información de Almacenamiento",
+    "storage.usage": "Uso de Almacenamiento",
+    "storage.export": "Exportar Favoritos",
+    "storage.clear": "Limpiar Todo",
+    "storage.warning": "Advertencia de Almacenamiento",
+    "storage.confirmClear":
+      "¿Estás seguro de que quieres limpiar todos los favoritos? Esta acción no se puede deshacer.",
+    "storage.using": "Tus favoritos están usando",
+    "storage.considerExport":
+      "Considera exportar y limpiar favoritos antiguos para liberar espacio.",
+
+    "loading.data": "Cargando datos desde la API...",
+    "loading.quranic": "Cargando datos coránicos desde la API...",
+    "loading.search": "Buscando en el Corán, Hadices y datos auténticos...",
+    "loading.mayTakeTime": "Esto puede tomar unos segundos en la primera carga",
 
     "common.search": "Buscar",
     "common.filter": "Filtrar",
@@ -420,7 +647,7 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.de": "Deutsch",
   },
   de: {
-    // German translations (simplified)
+    // German translations
     "nav.home": "Startseite",
     "nav.favorites": "Favoriten",
     "nav.submit": "Entdeckung Einreichen",
@@ -429,20 +656,40 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.signup": "Registrieren",
     "nav.logout": "Abmelden",
 
-    "home.title": "Islamische Zeichen und Führung",
-    "home.subtitle":
+    "header.title": "Islamische Zeichen und Führung",
+    "header.description":
       "Entdecken Sie die wundersamen Zeichen Allahs durch koranische Offenbarungen, prophetische Führung und göttliche Weisheit.",
-    "home.stats.total": "Gesamte Zeichen",
-    "home.stats.categories": "Kategorien",
-    "home.stats.saved": "Gespeichert",
-    "home.stats.fulfilled": "Erfüllt",
 
-    "tabs.all": "Alle Zeichen",
+    "tabs.data": "Daten",
     "tabs.search": "Erweiterte Suche",
-    "tabs.charts": "Diagramme und Grafiken",
-    "tabs.stats": "Statistiken",
+    "tabs.charts": "Diagramme und Analysen",
     "tabs.quran": "Koran",
     "tabs.hadith": "Hadith",
+
+    "stats.islamicData": "Authentische Islamische Daten",
+    "stats.quranVerses": "Koran-Verse",
+    "stats.hadiths": "Hadithe",
+    "stats.favorites": "Favoriten",
+
+    "search.placeholder": "Daten suchen...",
+    "search.advanced": "Erweiterte Filter",
+    "search.clearAll": "Alles Löschen",
+    "search.dataSources": "Datenquellen",
+    "search.active": "aktiv",
+    "search.filters": "Filter",
+    "search.sort": "Sortieren",
+    "search.filter": "Filtern",
+    "search.clear": "Löschen",
+    "search.loading": "Lädt...",
+    "search.noResults": "Keine Ergebnisse gefunden",
+    "search.export": "Exportieren",
+    "search.pagination": "Seitennummerierung",
+    "search.previous": "Vorherige",
+    "search.next": "Nächste",
+    "search.first": "Erste",
+    "search.last": "Letzte",
+    "search.goToPage": "Zur Seite gehen",
+    "search.go": "Gehen",
 
     "quran.title": "Der Heilige Koran",
     "quran.search.placeholder": "Nach Sure-Name oder arabischem Text suchen...",
@@ -463,6 +710,23 @@ const translations: Record<Language, Record<string, string>> = {
     "hadith.sort.length": "Inhaltslänge",
     "hadith.translation": "Englische Übersetzung",
     "hadith.arabic": "Arabischer Text",
+    "hadith.chapter": "Kapitel",
+
+    "storage.title": "Speicherinformationen",
+    "storage.usage": "Speichernutzung",
+    "storage.export": "Favoriten Exportieren",
+    "storage.clear": "Alles Löschen",
+    "storage.warning": "Speicherwarnung",
+    "storage.confirmClear":
+      "Sind Sie sicher, dass Sie alle Favoriten löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "storage.using": "Ihre Favoriten verwenden",
+    "storage.considerExport":
+      "Erwägen Sie, alte Favoriten zu exportieren und zu löschen, um Platz freizugeben.",
+
+    "loading.data": "Daten werden von der API geladen...",
+    "loading.quranic": "Koran-Daten werden von der API geladen...",
+    "loading.search": "Suche im Koran, Hadith und authentischen Daten...",
+    "loading.mayTakeTime": "Dies kann beim ersten Laden einige Sekunden dauern",
 
     "common.search": "Suchen",
     "common.filter": "Filtern",

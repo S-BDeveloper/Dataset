@@ -25,6 +25,7 @@ export function HadithDashboard({
     setCurrentPage,
     totalPages,
     stats,
+    uniqueChapters,
   } = useHadithData();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +37,11 @@ export function HadithDashboard({
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilters({ ...filters, sortBy: e.target.value });
+    setCurrentPage(1);
+  };
+
+  const handleChapterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters({ ...filters, chapter: e.target.value });
     setCurrentPage(1);
   };
 
@@ -102,39 +108,74 @@ export function HadithDashboard({
 
       {/* Filters */}
       <div className="bg-white dark:bg-stone-800 rounded-xl p-6 shadow-lg border border-stone-200 dark:border-stone-700">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Search */}
           <form onSubmit={handleSearch} className="sm:col-span-2 lg:col-span-2">
-            <div className="flex">
-              <input
-                type="text"
-                id="hadith-search"
-                name="hadith-search"
-                placeholder="Search through hadith content..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-l-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
-              />
-              <button
-                type="submit"
-                className="px-3 sm:px-4 py-2 bg-stone-600 text-white rounded-r-lg hover:bg-stone-700 transition-colors text-sm sm:text-base"
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="hadith-search"
+                className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 font-medium"
               >
-                Search
-              </button>
+                Search:
+              </label>
+              <div className="flex">
+                <input
+                  type="text"
+                  id="hadith-search"
+                  name="hadith-search"
+                  placeholder="Search through hadith content..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-l-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
+                />
+                <button
+                  type="submit"
+                  className="px-3 sm:px-4 py-2 bg-stone-600 text-white rounded-r-lg hover:bg-stone-700 transition-colors text-sm sm:text-base"
+                >
+                  Search
+                </button>
+              </div>
             </div>
           </form>
 
+          {/* Chapter Filter */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="hadith-chapter"
+              className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 font-medium"
+            >
+              Chapter:
+            </label>
+            <select
+              id="hadith-chapter"
+              name="hadith-chapter"
+              value={filters.chapter || "all"}
+              onChange={handleChapterChange}
+              className="w-full px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
+            >
+              <option value="all">All Chapters</option>
+              {uniqueChapters.map((chapter) => (
+                <option key={chapter} value={chapter}>
+                  {chapter}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Sort Options */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-            <span className="text-xs sm:text-sm text-stone-600 dark:text-stone-400">
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="hadith-sort"
+              className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 font-medium"
+            >
               Sort by:
-            </span>
+            </label>
             <select
               id="hadith-sort"
               name="hadith-sort"
               value={filters.sortBy}
               onChange={handleSortChange}
-              className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
+              className="w-full px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
             >
               <option value="index">Original Order</option>
               <option value="length">Length (Longest First)</option>

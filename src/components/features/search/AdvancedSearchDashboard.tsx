@@ -33,7 +33,7 @@ export const AdvancedSearchDashboard: React.FC<
     fulfillmentStatus: [],
     prophecyCategories: [],
     yearRange: { min: 0, max: 2024 },
-    dataSources: [], // Default to no sources selected - user must choose what to search
+    dataSources: ["islamic data", "quran", "hadith"], // Default to all sources selected
     // Initialize new Quran filters with proper defaults
     quranSurahs: [],
     quranVerseRange: { min: 1, max: 114 }, // Use actual Quran verse range based on loaded data
@@ -103,13 +103,13 @@ export const AdvancedSearchDashboard: React.FC<
           if (filterState.quranSurahs.length > 0) {
             quranResults = quranResults.filter((result) => {
               const ayah = result.data as QuranAyah;
-              return filterState.quranSurahs.includes(ayah.surah_name_en);
+              return filterState.quranSurahs.includes(ayah.surah_no.toString());
             });
           }
 
           if (
-            filterState.quranVerseRange.min > 1 ||
-            filterState.quranVerseRange.max < 6236
+            filterState.quranVerseRange.min !== 1 ||
+            filterState.quranVerseRange.max !== 6236
           ) {
             quranResults = quranResults.filter((result) => {
               const ayah = result.data as QuranAyah;
@@ -135,10 +135,17 @@ export const AdvancedSearchDashboard: React.FC<
 
         // Process Hadith data with enhanced filtering
         if (filterState.dataSources.includes("hadith")) {
-          let hadithResults = hadithData.map((hadith, index) => ({
-            id: `hadith-${index}`,
+          // Sort hadith data by number first to ensure proper ordering
+          const sortedHadithData = [...hadithData].sort((a, b) => {
+            const aNumber = parseInt(a.number);
+            const bNumber = parseInt(b.number);
+            return aNumber - bNumber;
+          });
+
+          let hadithResults = sortedHadithData.map((hadith, index) => ({
+            id: `hadith-${hadith.number}-${index}`,
             type: "hadith" as const,
-            title: `Hadith ${index + 1}`,
+            title: `Hadith ${hadith.number}`,
             content: Object.values(hadith).join(" "),
             source: "Sahih Bukhari",
             data: hadith,
@@ -146,14 +153,14 @@ export const AdvancedSearchDashboard: React.FC<
 
           // Apply Hadith-specific filters
           if (
-            filterState.hadithNumberRange.min > 1 ||
-            filterState.hadithNumberRange.max < hadithData.length
+            filterState.hadithNumberRange.min !== 1 ||
+            filterState.hadithNumberRange.max !== hadithData.length
           ) {
             hadithResults = hadithResults.filter((result) => {
-              const hadithIndex = parseInt(result.id.split("-")[1]);
+              const hadithNumber = parseInt(result.data.number);
               return (
-                hadithIndex >= filterState.hadithNumberRange.min &&
-                hadithIndex <= filterState.hadithNumberRange.max
+                hadithNumber >= filterState.hadithNumberRange.min &&
+                hadithNumber <= filterState.hadithNumberRange.max
               );
             });
           }
@@ -276,6 +283,20 @@ export const AdvancedSearchDashboard: React.FC<
               aValue = a.source || "";
               bValue = b.source || "";
               break;
+            case "hadithNumber":
+              // Special sorting for hadith numbers
+              if (a.type === "hadith" && b.type === "hadith") {
+                const aHadith = a.data as HadithEntry;
+                const bHadith = b.data as HadithEntry;
+                const aNumber = parseInt(aHadith.number);
+                const bNumber = parseInt(bHadith.number);
+                aValue = aNumber;
+                bValue = bNumber;
+              } else {
+                aValue = a.title || "";
+                bValue = b.title || "";
+              }
+              break;
             case "relevance":
               // For relevance, we'll use the number of search term matches
               if (query.trim()) {
@@ -342,7 +363,7 @@ export const AdvancedSearchDashboard: React.FC<
       fulfillmentStatus: [],
       prophecyCategories: [],
       yearRange: { min: 0, max: 2024 },
-      dataSources: [], // Default to no sources selected - user must choose what to search
+      dataSources: ["islamic data", "quran", "hadith"], // Default to all sources selected
       // Initialize new Quran filters with proper defaults
       quranSurahs: [],
       quranVerseRange: { min: 1, max: 6236 }, // Use actual Quran verse range based on loaded data
@@ -454,7 +475,7 @@ export const AdvancedSearchDashboard: React.FC<
                 fulfillmentStatus: [],
                 prophecyCategories: [],
                 yearRange: { min: 0, max: 2024 },
-                dataSources: [],
+                dataSources: ["islamic data", "quran", "hadith"], // Default to all sources selected
                 quranSurahs: [],
                 quranVerseRange: { min: 1, max: 6236 },
                 quranPlaceOfRevelation: [],
