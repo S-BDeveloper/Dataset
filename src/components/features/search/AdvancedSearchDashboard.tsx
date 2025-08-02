@@ -36,7 +36,7 @@ export const AdvancedSearchDashboard: React.FC<
     dataSources: ["islamic data", "quran", "hadith"], // Default to all sources selected
     // Initialize new Quran filters with proper defaults
     quranSurahs: [],
-    quranVerseRange: { min: 1, max: 114 }, // Use actual Quran verse range based on loaded data
+    quranVerseRange: { min: 1, max: 6236 }, // Use actual Quran verse range based on loaded data
     quranPlaceOfRevelation: [],
     // Initialize new Hadith filters with proper defaults
     hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
@@ -540,14 +540,96 @@ export const AdvancedSearchDashboard: React.FC<
           </div>
         </div>
       ) : (
-        <SearchResults
-          results={filteredResults}
-          searchQuery={searchQuery}
-          totalResults={filteredResults.length}
-          onFavorite={onFavorite}
-          isFavorite={isFavorite}
-          isLoading={isSearching}
-        />
+        <>
+          <SearchResults
+            results={filteredResults}
+            searchQuery={searchQuery}
+            totalResults={filteredResults.length}
+            onFavorite={onFavorite}
+            isFavorite={isFavorite}
+            isLoading={isSearching}
+          />
+
+          {/* Enhanced Search Features */}
+          <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
+            <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
+              Cross-Reference Search Features
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+              <div className="space-y-3">
+                <h5 className="font-medium text-stone-700 dark:text-stone-300">
+                  Data Sources
+                </h5>
+                <ul className="space-y-1 text-stone-600 dark:text-stone-400">
+                  <li>
+                    • <strong>Prophecies/Prophetic Medicines:</strong> Status of
+                    fulfillment
+                  </li>
+                  <li>
+                    • <strong>Quran Verses:</strong> Complete Quran with English
+                    translations
+                  </li>
+                  <li>
+                    • <strong>Hadiths:</strong> Sahih Bukhari authentic
+                    narrations
+                  </li>
+                  <li>
+                    • <strong>Cross-Reference:</strong> Find connections between
+                    sources{" "}
+                    <span className="text-red-500 dark:text-red-400">
+                      (always consult Scholars for complex topics)
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className="space-y-3">
+                <h5 className="font-medium text-stone-700 dark:text-stone-300">
+                  Advanced Filtering
+                </h5>
+                <ul className="space-y-1 text-stone-600 dark:text-stone-400">
+                  <li>
+                    • <strong>Quran Filters:</strong> By Surah, verse number,
+                    place of revelation
+                  </li>
+                  <li>
+                    • <strong>Hadith Filters:</strong> By hadith number range
+                  </li>
+                  <li>
+                    • <strong>Prophecies/Prophetic Medicines Filters:</strong>{" "}
+                    By type, category, fulfillment status
+                  </li>
+                  <li>
+                    • <strong>Unified Search:</strong> Search across all
+                    available Islamic sources
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced Search Tips */}
+          {searchQuery.trim() && filteredResults.length > 0 && (
+            <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
+              <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-2">
+                Cross-Reference Search Tips
+              </h4>
+              <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
+                <li>
+                  • Search across all available Islamic sources simultaneously
+                </li>
+                <li>• Find Quran verses that mention specific topics</li>
+                <li>• Discover Hadiths related to your search terms</li>
+                <li>
+                  • Cross-reference Prophecies/ Prophetic Medicines with Quran
+                  and Hadith
+                </li>
+                <li>• Use quotes for exact phrase matching</li>
+                <li>• Try different keywords to find more connections</li>
+                <li>• Use the advanced filters to focus on specific sources</li>
+              </ul>
+            </div>
+          )}
+        </>
       )}
 
       {/* Enhanced Search Statistics */}
@@ -598,62 +680,6 @@ export const AdvancedSearchDashboard: React.FC<
           </div>
         </div>
       )}
-
-      {/* Enhanced Search Features */}
-      <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
-        <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
-          Cross-Reference Search Features
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-          <div className="space-y-3">
-            <h5 className="font-medium text-stone-700 dark:text-stone-300">
-              Data Sources
-            </h5>
-            <ul className="space-y-1 text-stone-600 dark:text-stone-400">
-              <li>
-                • <strong>Prophecies/Prophetic Medicines:</strong> Status of
-                fulfillment
-              </li>
-              <li>
-                • <strong>Quran Verses:</strong> Complete Quran with English
-                translations
-              </li>
-              <li>
-                • <strong>Hadiths:</strong> Sahih Bukhari authentic narrations
-              </li>
-              <li>
-                • <strong>Cross-Reference:</strong> Find connections between
-                sources{" "}
-                <span className="text-red-500 dark:text-red-400">
-                  (always consult Scholars for complex topics)
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h5 className="font-medium text-stone-700 dark:text-stone-300">
-              Advanced Filtering
-            </h5>
-            <ul className="space-y-1 text-stone-600 dark:text-stone-400">
-              <li>
-                • <strong>Quran Filters:</strong> By Surah, verse number, place
-                of revelation
-              </li>
-              <li>
-                • <strong>Hadith Filters:</strong> By hadith number range
-              </li>
-              <li>
-                • <strong>Prophecies/Prophetic Medicines Filters:</strong> By
-                type, category, fulfillment status
-              </li>
-              <li>
-                • <strong>Unified Search:</strong> Search across all available
-                Islamic sources
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
