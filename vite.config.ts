@@ -1,48 +1,94 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
-// Virtual module for lodash compatibility
-const lodashVirtualModule = () => ({
-  name: "lodash-virtual-module",
-  resolveId(id: string) {
-    if (id === "lodash/merge") {
-      return "lodash.merge";
-    }
-    return null;
-  },
-});
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), lodashVirtualModule()],
+  plugins: [react()],
   resolve: {
     alias: {
-      // Handle lodash import issues
-      "lodash/merge": "lodash.merge",
-      lodash: "lodash-es",
+      "@": path.resolve(__dirname, "./src"),
     },
-    dedupe: ["lodash", "lodash-es"],
   },
   build: {
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
+        // Manual chunk splitting for better caching and loading
         manualChunks: {
-          // Separate vendor libraries
-          vendor: ["react", "react-dom", "react-router-dom"],
-          // Separate utility libraries
-          utils: ["lodash", "lodash-es"],
+          // Vendor chunks
+          "react-vendor": ["react", "react-dom"],
+          "router-vendor": ["react-router-dom"],
+          "ui-vendor": ["@nivo/core", "@nivo/pie", "@nivo/bar", "@nivo/line"],
+
+          // Feature chunks - split by functionality
+          "search-core": [
+            "./src/components/features/search/AdvancedSearchDashboard.tsx",
+          ],
+          "search-results": [
+            "./src/components/features/search/SearchResults.tsx",
+          ],
+          "search-filters": [
+            "./src/components/features/search/AdvancedFilterPanel.tsx",
+          ],
+          "charts-core": [
+            "./src/components/features/charts/ChartsDashboard.tsx",
+          ],
+          "charts-pie": [
+            "./src/components/features/charts/CategoryPieChart.tsx",
+          ],
+          "charts-status": [
+            "./src/components/features/charts/PropheticStatusChart.tsx",
+          ],
+          "charts-map": [
+            "./src/components/features/charts/SpatialProphecyMap.tsx",
+          ],
+          "auth-login": ["./src/components/features/auth/Login.tsx"],
+          "auth-signup": ["./src/components/features/auth/Signup.tsx"],
+
+          // Data chunks - split by source
+          "data-islamic": ["./src/data/islamic_data.json"],
+          "hooks-islamic": [
+            "./src/hooks/useFacts.ts",
+            "./src/hooks/domain/cards.ts",
+          ],
+          "hooks-quran": ["./src/hooks/useQuranData.ts"],
+          "hooks-hadith": ["./src/hooks/useHadithData.ts"],
+        },
+        // Optimize chunk naming
+        chunkFileNames: () => `js/[name]-[hash].js`,
+        entryFileNames: "js/[name]-[hash].js",
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name?.split(".") || [];
+          const ext = info[info.length - 1];
+          if (/\.(css)$/.test(assetInfo.name || "")) {
+            return `css/[name]-[hash].${ext}`;
+          }
+          return `assets/[name]-[hash].${ext}`;
         },
       },
     },
-    sourcemap: true,
+    // Enable source maps for debugging
+    sourcemap: false,
+    // Minify options
     minify: "esbuild",
   },
+  // Optimize dependencies
   optimizeDeps: {
-    include: ["react", "react-dom", "react-router-dom"],
-    esbuildOptions: {
-      define: {
-        global: "globalThis",
-      },
-    },
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "@nivo/core",
+      "@nivo/pie",
+      "@nivo/bar",
+      "@nivo/line",
+    ],
+  },
+  // Server options for development
+  server: {
+    port: 3000,
+    open: true,
   },
 });

@@ -56,11 +56,17 @@ export function useQuranData() {
       // Load from JSON directly
       try {
         console.log("📖 Loading Quran data from local JSON...");
-        const dataWithTranslations = (quranDataJSON as QuranAyah[]).map(
-          (ayah: QuranAyah) => ({
-            ...ayah,
-            ayah_en: ayah.ayah_en || "", // Preserve existing translation or add empty
-          })
+        const dataWithTranslations = (
+          quranDataJSON as unknown as Record<string, unknown>[]
+        ).map(
+          (ayah) =>
+            ({
+              ...ayah,
+              id:
+                (ayah.id as string) ||
+                `quran-${ayah.surah_no}-${ayah.ayah_no_surah}`,
+              ayah_en: (ayah.ayah_en as string) || "", // Preserve existing translation or add empty
+            } as QuranAyah)
         );
 
         console.log(

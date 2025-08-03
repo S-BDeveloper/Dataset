@@ -14,7 +14,7 @@
     "test:ci": "jest --ci --coverage --watchAll=false",
     "security:audit": "npm audit",
     "security:fix": "npm audit fix",
-    "performance:analyze": "npm run build && npx vite-bundle-analyzer dist",
+    "build:analyze": "npm run build && npx vite-bundle-analyzer dist",
     "type-check": "tsc --noEmit",
     "lint:fix": "eslint . --fix"
   },
