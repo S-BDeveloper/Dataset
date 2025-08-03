@@ -1,186 +1,114 @@
 import React, { useState } from "react";
-import { DataTypesChart } from "./DataTypesChart";
 import { PropheticStatusChart } from "./PropheticStatusChart";
 import { PropheticTimelineChart } from "./PropheticTimelineChart";
 import { SpatialProphecyMap } from "./SpatialProphecyMap";
-import { ChartThemeProvider } from "../../providers/ChartThemeProvider";
+import { DataTypesChart } from "./DataTypesChart";
+import { CategoryPieChart } from "./CategoryPieChart";
 import type { IslamicData } from "../../../types/Types";
-import Masonry from "react-masonry-css";
-import "./ChartsDashboard.css";
 
 interface ChartsDashboardProps {
   data: IslamicData[];
 }
 
-// ChartsDashboard displays a collection of interactive charts
 export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
+  // Debug logging
+  console.log("ChartsDashboard - Received data:", data);
+  console.log("ChartsDashboard - Data length:", data.length);
+
+  const [viewMode, setViewMode] = useState<"single" | "overview">("overview");
   const [activeChart, setActiveChart] = useState<string>("all");
 
   const charts = [
     {
-      id: "types",
-      name: "Data Types Distribution",
-      description: "Visualization of different types of Islamic data",
-      component: (
-        <DataTypesChart data={data} isActive={activeChart === "types"} />
-      ),
+      id: "sign-types",
+      title: "Sign Types Distribution",
+      component: DataTypesChart,
     },
     {
-      id: "prophetic-status",
-      name: "Prophetic Fulfillment Status",
-      description: "Pie chart showing the fulfillment status of prophecies",
-      component: (
-        <PropheticStatusChart
-          data={data}
-          isActive={activeChart === "prophetic-status"}
-        />
-      ),
+      id: "category-pie",
+      title: "Category Distribution",
+      component: CategoryPieChart,
     },
     {
-      id: "prophecy",
-      name: "Prophetic Timeline",
-      description:
-        "Timeline showing when prophecies were revealed and fulfilled",
-      component: (
-        <PropheticTimelineChart
-          data={data}
-          isActive={activeChart === "prophecy"}
-        />
-      ),
+      id: "status",
+      title: "Status Distribution",
+      component: PropheticStatusChart,
     },
     {
-      id: "spatial",
-      name: "Geographic Prophecy Map",
-      description:
-        "Spatial distribution of prophecies across different regions",
-      component: (
-        <SpatialProphecyMap data={data} isActive={activeChart === "spatial"} />
-      ),
+      id: "timeline",
+      title: "Timeline",
+      component: PropheticTimelineChart,
+    },
+    {
+      id: "geographic",
+      title: "Geographic Distribution",
+      component: SpatialProphecyMap,
     },
   ];
 
-  const filteredCharts =
-    activeChart === "all"
-      ? charts
-      : charts.filter((chart) => chart.id === activeChart);
-
-  // Masonry breakpoints for responsive layout
-  const breakpointColumns = {
-    default: 2,
-    1400: 2,
-    1024: 2,
-    768: 1,
+  const handleChartClick = (chartId: string) => {
+    setActiveChart(chartId);
+    setViewMode("single");
   };
 
-  return (
-    <ChartThemeProvider>
-      <div className="w-full max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-            Charts & Analytics
+  const handleBackToOverview = () => {
+    setViewMode("overview");
+    setActiveChart("all");
+  };
+
+  if (viewMode === "single" && activeChart !== "all") {
+    const selectedChart = charts.find((chart) => chart.id === activeChart);
+    if (!selectedChart) return null;
+
+    const ChartComponent = selectedChart.component;
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-200">
+            {selectedChart.title}
           </h2>
-          <p className="text-stone-600 dark:text-stone-400 text-lg">
-            Interactive visualizations of Islamic data
-          </p>
+          <button
+            onClick={handleBackToOverview}
+            className="px-4 py-2 bg-stone-600 text-white rounded-lg hover:bg-stone-700 transition-colors"
+          >
+            Back to All Charts
+          </button>
         </div>
-
-        {/* Chart Navigation */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-3 justify-center items-center">
-            <button
-              onClick={() => setActiveChart("all")}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 ${
-                activeChart === "all"
-                  ? "bg-green-600 text-white shadow-lg shadow-green-600/25"
-                  : "bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600 border border-stone-200 dark:border-stone-600"
-              }`}
-            >
-              📊 All Charts
-            </button>
-            {charts.map((chart) => (
-              <button
-                key={chart.id}
-                onClick={() => setActiveChart(chart.id)}
-                className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 ${
-                  activeChart === chart.id
-                    ? "bg-green-600 text-white shadow-lg shadow-green-600/25"
-                    : "bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600 border border-stone-200 dark:border-stone-600"
-                }`}
-              >
-                {chart.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Charts Layout */}
-        {activeChart === "all" ? (
-          // Masonry layout for "All Charts" view
-          <div className="w-full">
-            <Masonry
-              breakpointCols={breakpointColumns}
-              className="flex w-full"
-              columnClassName="bg-clip-padding pr-6"
-            >
-              {filteredCharts.map((chart) => (
-                <div key={chart.id} className="mb-8">
-                  <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-xl border border-stone-200 dark:border-stone-700 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
-                    <div className="p-6">
-                      <div className="mb-4">
-                        <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-                          {chart.name}
-                        </h3>
-                        <p className="text-sm text-stone-600 dark:text-stone-400">
-                          {chart.description}
-                        </p>
-                      </div>
-                      <div className="min-h-[400px] w-full overflow-visible">
-                        {chart.component}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Masonry>
-          </div>
-        ) : (
-          // Single chart view for individual selections
-          <div className="w-full">
-            <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-xl border border-stone-200 dark:border-stone-700 overflow-hidden">
-              <div className="p-8">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-3">
-                    {filteredCharts[0]?.name}
-                  </h3>
-                  <p className="text-stone-600 dark:text-stone-400 text-lg">
-                    {filteredCharts[0]?.description}
-                  </p>
-                </div>
-                <div className="min-h-[500px] w-full overflow-visible">
-                  {filteredCharts[0]?.component}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Footer Section */}
-        {activeChart === "all" && (
-          <div className="mt-12 text-center">
-            <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-6 border border-stone-200 dark:border-stone-700">
-              <h4 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
-                📈 Chart Insights
-              </h4>
-              <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
-                Explore different aspects of Islamic data through these
-                interactive visualizations. Each chart provides insights
-                into the patterns and distributions of Islamic data.
-              </p>
-            </div>
-          </div>
-        )}
+        <ChartComponent data={data} />
       </div>
-    </ChartThemeProvider>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-200">
+          Data Visualizations
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {charts.map((chart) => (
+            <button
+              key={chart.id}
+              onClick={() => handleChartClick(chart.id)}
+              className="px-3 py-1 text-sm bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors"
+            >
+              {chart.title}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {charts.map((chart) => {
+          const ChartComponent = chart.component;
+          return (
+            <div key={chart.id} className="w-full">
+              <ChartComponent data={data} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };

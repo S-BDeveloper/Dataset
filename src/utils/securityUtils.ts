@@ -1,4 +1,4 @@
-// Enhanced security utilities for the Quranic Signs Guidance App
+// Enhanced security utilities for the Islamic Dataset App
 
 /**
  * Input validation and sanitization utilities

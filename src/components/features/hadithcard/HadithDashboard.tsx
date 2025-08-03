@@ -71,7 +71,7 @@ export function HadithDashboard({
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-stone-700 dark:text-purple-400 mb-2">
-          Sahih Bukhari Hadith Collection
+          Sahih Bukhari and Muslim Hadith Collection
         </h2>
         <p className="text-lg text-stone-600 dark:text-stone-400">
           Explore the authentic sayings and actions of Prophet Muhammad (ﷺ)

@@ -1,167 +1,104 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import type { IslamicData } from "../../../types/Types";
+import { DarkModeContext } from "../../../types/ContextTypes";
+import { getChartTheme } from "./chartTheme";
+import { useResponsive } from "../../../hooks/useResponsive";
 
 interface DataTypesChartProps {
   data: IslamicData[];
-  isActive?: boolean;
 }
 
-// SignTypesChart displays an interactive bar chart of signs by type
-export const DataTypesChart: React.FC<DataTypesChartProps> = ({
-  data,
-  isActive = false,
-}) => {
-  // Process data to count signs by type
-  const typeCounts = data.reduce((acc, miracle) => {
-    const type = miracle.type || "Unknown";
-    acc[type] = (acc[type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+export const DataTypesChart: React.FC<DataTypesChartProps> = ({ data }) => {
+  const darkModeContext = useContext(DarkModeContext);
+  const isDarkMode = darkModeContext?.isDarkMode ?? false;
+  const chartTheme = getChartTheme(isDarkMode);
+  const isMobile = useResponsive();
 
-  // Convert to chart data format compatible with Nivo BarDatum
-  const chartData = Object.entries(typeCounts).map(([type, count]) => ({
-    type: formatTypeLabel(type), // Use optimized label formatting
-    count,
-    color: getTypeColor(type), // Custom colors for each type
-  }));
+  const chartData = useMemo(() => {
+    const typeCounts = data.reduce((acc, item) => {
+      const type = item.type || "Unknown";
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
 
-  // Format type labels for better readability
-  function formatTypeLabel(type: string): string {
-    const labels = {
-      pair: "Pair Signs",
-      numerical: "Numerical Signs",
-      structural: "Structural Signs",
-      linguistic: "Linguistic Signs",
-      prophecy: "Prophecies",
-      middle: "Middle Signs",
-      scientific: "Scientific Signs",
-      unknown: "Unknown Type",
-    };
-    return (
-      labels[type as keyof typeof labels] ||
-      type.charAt(0).toUpperCase() + type.slice(1)
-    );
-  }
+    return Object.entries(typeCounts).map(([type, count]) => ({
+      type: type.charAt(0).toUpperCase() + type.slice(1),
+      count,
+    }));
+  }, [data]);
 
-  // Custom colors for different sign types
-  function getTypeColor(type: string): string {
-    const colors = {
-      pair: "#10b981", // Green
-      numerical: "#3b82f6", // Blue
-      structural: "#8b5cf6", // Purple
-      linguistic: "#f59e0b", // Amber
-      prophecy: "#ef4444", // Red
-      middle: "#06b6d4", // Cyan
-      scientific: "#84cc16", // Lime
-      unknown: "#6b7280", // Gray
-    };
-    return colors[type as keyof typeof colors] || colors.unknown;
-  }
+  const getColor = (bar: { id: string | number; data: { type: string } }) => {
+    const type = bar.data.type.toLowerCase();
+    switch (type) {
+      case "prophecy":
+        return "#ef4444";
+      case "scientific":
+        return "#10b981";
+      case "qadr":
+        return "#8b5cf6";
+      default:
+        return "#6b7280";
+    }
+  };
+
+  const chartMargins = isMobile
+    ? { top: 30, right: 30, bottom: 80, left: 40 }
+    : { top: 50, right: 130, bottom: 50, left: 60 };
 
   return (
-    <div
-      className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 chart-container"
-      aria-label="Interactive bar chart showing distribution of data types"
-    >
-      <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6 text-center">
-        Data by Type Distribution
+    <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-lg shadow-lg p-4 flex flex-col">
+      <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
+        Islamic Data by Type Distribution
       </h3>
-      <div className="w-full h-full min-h-[400px] min-w-[200px] nivo-chart">
+      <div className="flex-grow">
         <ResponsiveBar
           data={chartData}
           keys={["count"]}
           indexBy="type"
-          margin={{ top: 20, right: 30, bottom: 100, left: 60 }}
+          margin={chartMargins}
           padding={0.3}
-          colors={({ data }) => data.color}
+          colors={getColor}
           borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
           axisTop={null}
           axisRight={null}
           axisBottom={{
             tickSize: 5,
-            tickPadding: 8,
-            tickRotation: -30,
-            legend: "📊 Data Categories",
+            tickPadding: 5,
+            tickRotation: isMobile ? -45 : 0,
+            legend: "Data Type",
             legendPosition: "middle",
-            legendOffset: 90,
+            legendOffset: isMobile ? 60 : 32,
           }}
           axisLeft={{
             tickSize: 5,
-            tickPadding: 8,
+            tickPadding: 5,
             tickRotation: 0,
-            legend: "📈 Count",
+            legend: "Number of Items",
             legendPosition: "middle",
-            legendOffset: -60,
+            legendOffset: -35,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
           labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-          legends={[
-            {
-              dataFrom: "keys",
-              anchor: "bottom",
-              direction: "row",
-              justify: false,
-              translateX: 0,
-              translateY: 70,
-              itemsSpacing: 2,
-              itemWidth: 100,
-              itemHeight: 20,
-              itemDirection: "left-to-right",
-              itemOpacity: 0.85,
-              symbolSize: 20,
-              effects: [
-                {
-                  on: "hover",
-                  style: {
-                    itemOpacity: 1,
-                  },
-                },
-              ],
-            },
-          ]}
-          role="img"
-          barAriaLabel={(data) => `${data.data.type}: ${data.data.count} data`}
-          tooltip={({ data }) => (
-            <div className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-lg p-3 shadow-lg">
-              <div className="font-semibold text-stone-900 dark:text-stone-100">
-                {data.type}
-              </div>
-              <div className="text-stone-600 dark:text-stone-400">
-                {data.count} data
-              </div>
+          tooltip={({ id: _id, value, color, indexValue }) => (
+            <div
+              style={{
+                padding: "12px",
+                background: isDarkMode ? "#333333" : "#ffffff",
+                border: `1px solid ${isDarkMode ? "#555555" : "#ccc"}`,
+                color: isDarkMode ? "#f0f0f0" : "#333333",
+              }}
+            >
+              <strong style={{ color }}>
+                {indexValue}: {value}
+              </strong>
             </div>
           )}
+          theme={chartTheme}
+          animate={true}
         />
       </div>
-
-      {/* Explanation - Only show when this chart is active */}
-      {isActive && (
-        <div className="mt-4 p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
-          <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-            Understanding This Chart:
-          </h4>
-          <ul className="text-xs text-stone-600 dark:text-stone-400 space-y-1">
-            <li>
-              • <strong>Distribution:</strong> Shows how Islamic data are
-              categorized by type
-            </li>
-            <li>
-              • <strong>Color Coding:</strong> Each data type has its own
-              distinct color
-            </li>
-            <li>
-              • <strong>Hover for Details:</strong> See exact counts for each
-              type
-            </li>
-            <li>
-              • <strong>Patterns:</strong> Reveals which types of data are most
-              common
-            </li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 };

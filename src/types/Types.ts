@@ -1,4 +1,4 @@
-// Types for the Quranic Signs & Guidance app
+// Types for Islamic Dataset app
 
 // Enhanced error types for better error handling
 export interface DataLoadError {
@@ -23,7 +23,7 @@ export interface AuthError {
 
 // Enhanced Data interface with better structure
 export interface IslamicData {
-  type: "prophecy" | "scientific";
+  type: "prophecy" | "scientific" | "qadr";
   title: string;
   notes: string;
   sources?: {
@@ -40,7 +40,7 @@ export interface IslamicData {
   significance?: string;
   pattern?: string;
   examples?: string[];
-  status?: "fulfilled" | "pending" | "in-progress" | "proven" | "yet-to-happen";
+  status?: "Fulfilled" | "Pending" | "In Progress" | "Proven" | "Yet to Happen";
   source?: string;
 
   // Prophetic Fulfillment Tracking

@@ -15,6 +15,7 @@ import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
+
 import type { IslamicDataFilters } from "./types/Types";
 
 // Lazy load large components

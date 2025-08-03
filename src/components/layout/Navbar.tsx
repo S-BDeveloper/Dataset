@@ -179,7 +179,7 @@ export default function Navbar() {
                 >
                   {t("nav.submit")}
                 </NavLink>
-                {user?.email === "admin@example.com" && (
+                {hasPermission(user, "moderate:content") && (
                   <NavLink to="/admin" className="block px-3 py-2 rounded-md">
                     {t("nav.admin")}
                   </NavLink>
@@ -214,6 +214,12 @@ export default function Navbar() {
                     </button>
                   </div>
                 )}
+
+                {/* Mobile settings */}
+                <div className="px-3 pt-4 pb-2 border-t border-stone-200 dark:border-stone-700 flex items-center justify-between">
+                  <LanguageSelector />
+                  <DarkModeToggle />
+                </div>
               </div>
             </div>
           )}

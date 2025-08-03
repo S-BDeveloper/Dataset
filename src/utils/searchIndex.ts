@@ -107,7 +107,7 @@ function indexHadithData(hadithData: HadithEntry[]): void {
   });
 }
 
-// Create search index for Miracle data
+// Create search index for Islamic data
 function indexIslamicData(islamicData: IslamicData[]): void {
   islamicData.forEach((islamicData) => {
     const tokens = [

@@ -142,11 +142,11 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
           {results.map((result, index) => {
             // Create favorite handlers for each type
-            const handleFavorite = (item: any) => {
+            const handleFavorite = (item: FavoriteItem) => {
               onFavorite(item);
             };
 
-            const checkIsFavorite = (item: any) => {
+            const checkIsFavorite = (item: FavoriteItem) => {
               return isFavorite(item);
             };
 

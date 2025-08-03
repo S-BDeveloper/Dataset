@@ -183,8 +183,8 @@ export function useHadithData(hadithData: IslamicData[]) {
 
 export function useMiraclesData(miraclesData: IslamicData[]) {
   return useOptimizedData(miraclesData, {
-    chunkSize: 100, // Small chunks for miracles
-    enableVirtualScroll: false, // Usually not needed for miracles
+    chunkSize: 100, // Small chunks for Islamic data
+    enableVirtualScroll: false, // Usually not needed for Islamic data
     debounceDelay: 300,
   });
 }

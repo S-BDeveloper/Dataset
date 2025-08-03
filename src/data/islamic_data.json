@@ -1,20 +1,17 @@
 [
   {
     "type": "prophecy",
-    "title": "Widespread Literacy",
-    "description": "Knowledge and literacy will spread globally among non-Arabs",
-    "source": "Hadith: Sahih Bukhari 81:172",
+    "title": "Widespread Ignorance",
+    "description": "Ignorance will become prevalent",
+    "source": "Sunan Ibn Majah 4050",
     "status": "Fulfilled",
     "notes": "Global literacy rates have risen dramatically, with education becoming accessible worldwide.",
     "sources": {
-      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "primary": "Sunan Ibn Majah - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": [
-        "https://sunnah.com/bukhari/81/172",
-        "https://sunnah.com/bukhari/81/172"
-      ],
-      "source": "Imam Bukhari, 9th century CE"
+      "references": ["https://sunnah.com/ibnmajah:4050"],
+      "source": "Book 36, Hadith 125"
     }
   },
   {
@@ -28,7 +25,7 @@
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari/5590"],
+      "references": ["https://sunnah.com/bukhari:5590"],
       "source": "Imam Bukhari, 9th century CE"
     }
   },
@@ -43,7 +40,7 @@
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari/3448"],
+      "references": ["https://sunnah.com/bukhari:3448"],
       "source": "Imam Bukhari, 9th century CE"
     }
   },
@@ -103,7 +100,7 @@
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari/5445"],
+      "references": ["https://sunnah.com/bukhari:5445"],
       "source": "Imam Bukhari, 9th century CE"
     }
   },
@@ -118,7 +115,7 @@
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari/5413"],
+      "references": ["https://sunnah.com/bukhari:5413"],
       "source": "Imam Bukhari, 9th century CE"
     }
   },
@@ -135,25 +132,18 @@
       "methodology": "Direct Quranic text analysis and Hadith authentication using isnad (chain of narrators) analysis",
       "references": [
         "https://quran.com/16/69",
-        "https://sunnah.com/bukhari/5680"
+        "https://sunnah.com/bukhari:5680"
       ],
       "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE and Imam Bukhari, 9th century CE"
     }
   },
   {
-    "type": "prophecy",
+    "type": "qadr",
     "title": "Return of Jews to Palestine",
-    "description": "The Quran prophesied the return of Jews to the Holy Land",
+    "description": "The Quran foretold the return of Jews to the Holy Land as part of Allah's divine decree",
     "source": "Quran 17:104",
     "status": "Fulfilled",
-    "notes": "The establishment of Israel in 1948 and subsequent Jewish immigration fulfilled this prophecy.",
-    "fulfillmentStatus": "fulfilled",
-    "yearRevealed": 622,
-    "yearFulfilled": 1948,
-    "fulfillmentEvidence": "Establishment of State of Israel, Jewish immigration from around the world",
-    "prophecyCategory": "historical",
-    "fulfillmentConfidence": "high",
-
+    "notes": "The establishment of Israel in 1948 and subsequent Jewish immigration fulfilled this divine decree.",
     "sources": {
       "primary": "Quran - Surah Al-Isra 17:104",
       "verification": "Direct Quranic reference",
@@ -163,19 +153,12 @@
     }
   },
   {
-    "type": "prophecy",
+    "type": "scientific",
     "title": "Discovery of Iron from Space",
-    "description": "The Quran indicated iron was sent down from space",
+    "description": "The Quran described iron as being sent down from space",
     "source": "Quran 57:25",
-    "status": "Fulfilled",
+    "status": "Proven",
     "notes": "Modern astronomy confirms that iron is formed in supernovae and distributed through space.",
-    "fulfillmentStatus": "fulfilled",
-    "yearRevealed": 625,
-    "yearFulfilled": 1957,
-    "fulfillmentEvidence": "Astronomical discovery of iron formation in supernovae",
-    "prophecyCategory": "scientific",
-    "fulfillmentConfidence": "high",
-
     "sources": {
       "primary": "Quran - Surah Al-Hadid 57:25",
       "verification": "Direct Quranic reference",
@@ -185,41 +168,12 @@
     }
   },
   {
-    "type": "prophecy",
-    "title": "Global Communication Network",
-    "description": "The Quran described a time when information would travel instantly across the world",
-    "source": "Quran 81:1-14",
-    "status": "In Progress",
-    "notes": "The internet and global communication networks are fulfilling this prophecy.",
-    "fulfillmentStatus": "in-progress",
-    "yearRevealed": 610,
-    "yearFulfilled": null,
-    "fulfillmentEvidence": "Internet, satellite communications, global telecommunications",
-    "prophecyCategory": "technological",
-    "fulfillmentConfidence": "high",
-
-    "sources": {
-      "primary": "Quran - Surah At-Takwir 81:1-14",
-      "verification": "Direct Quranic reference",
-      "methodology": "Direct Quranic text analysis",
-      "references": ["https://quran.com/81/1-14"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
-    }
-  },
-  {
-    "type": "prophecy",
+    "type": "scientific",
     "title": "Environmental Degradation",
-    "description": "The Quran warned about environmental corruption and its consequences",
+    "description": "The Quran described environmental corruption and its consequences",
     "source": "Quran 30:41",
-    "status": "In Progress",
-    "notes": "Climate change, pollution, and environmental destruction are ongoing fulfillments.",
-    "fulfillmentStatus": "in-progress",
-    "yearRevealed": 620,
-    "yearFulfilled": null,
-    "fulfillmentEvidence": "Climate change, pollution, deforestation, species extinction",
-    "prophecyCategory": "natural",
-    "fulfillmentConfidence": "high",
-
+    "status": "Proven",
+    "notes": "Modern environmental science confirms the Quranic description of environmental corruption and its consequences.",
     "sources": {
       "primary": "Quran - Surah Ar-Rum 30:41",
       "verification": "Direct Quranic reference",

@@ -3,6 +3,19 @@ import type { HadithEntry, HadithFilters } from "../types/Types";
 // Import JSON data directly for better performance
 import hadithDataJSON from "../data/Sahih Bukhari.json";
 
+// Define proper types for the JSON data structure
+interface RawHadithData {
+  id?: string | number;
+  hadith_id?: string | number;
+  hadith_no?: string | number;
+  source?: string;
+  chapter?: string;
+  chapter_no?: string | number;
+  narrators?: string;
+  text_en?: string;
+  text_ar?: string;
+}
+
 export function useHadithData() {
   const [hadithData, setHadithData] = useState<HadithEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,26 +41,28 @@ export function useHadithData() {
 
         if (isArrayFormat) {
           // New format: Array of hadith objects
-          data = hadithDataJSON.map((hadith: any) => ({
-            id:
-              hadith.id?.toString() ||
-              hadith.hadith_id?.toString() ||
-              "unknown",
-            number:
-              hadith.hadith_no?.toString() ||
-              hadith.id?.toString() ||
-              "unknown",
-            book: hadith.source || "Sahih Bukhari",
-            chapter: hadith.chapter || "Unknown",
-            narrator: hadith.narrators || "Unknown",
-            text: hadith.text_en || hadith.text_ar || "",
-            arabic: hadith.text_ar || "",
-            translation: hadith.text_en || "",
-            grade: "Sahih", // Default grade for Sahih Bukhari
-            reference: `${hadith.source || "Sahih Bukhari"} ${
-              hadith.chapter_no || ""
-            } ${hadith.hadith_no || ""}`.trim(),
-          })) as HadithEntry[];
+          data = (hadithDataJSON as RawHadithData[]).map(
+            (hadith: RawHadithData) => ({
+              id:
+                hadith.id?.toString() ||
+                hadith.hadith_id?.toString() ||
+                "unknown",
+              number:
+                hadith.hadith_no?.toString() ||
+                hadith.id?.toString() ||
+                "unknown",
+              book: hadith.source || "Sahih Bukhari",
+              chapter: hadith.chapter || "Unknown",
+              narrator: hadith.narrators || "Unknown",
+              text: hadith.text_en || hadith.text_ar || "",
+              arabic: hadith.text_ar || "",
+              translation: hadith.text_en || "",
+              grade: "Sahih", // Default grade for Sahih Bukhari
+              reference: `${hadith.source || "Sahih Bukhari"} ${
+                hadith.chapter_no || ""
+              } ${hadith.hadith_no || ""}`.trim(),
+            })
+          ) as HadithEntry[];
         } else {
           // Old format: Object with key-value pairs
           data = Object.entries(hadithDataJSON).map(([key, value]) => ({
@@ -96,10 +111,11 @@ export function useHadithData() {
 
     // Apply chapter filter
     if (filters.chapter && filters.chapter !== "all") {
+      const chapterFilter = filters.chapter;
       filtered = filtered.filter((hadith) => {
         return hadith.chapter
           .toLowerCase()
-          .includes(filters.chapter!.toLowerCase());
+          .includes(chapterFilter.toLowerCase());
       });
     }
 

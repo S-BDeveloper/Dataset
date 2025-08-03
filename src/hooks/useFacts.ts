@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import type { IslamicData } from "../types/Types";
 import IslamicDataCards from "../data/islamic_data.json";
 
-// useMiracles custom hook centralizes data fetching logic, loading, error, and refetch
+// useIslamicData custom hook centralizes data fetching logic, loading, error, and refetch
 export function useIslamicData(loadingDelay = 1000) {
   const [islamicData, setIslamicData] = useState<IslamicData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -15,8 +15,14 @@ export function useIslamicData(loadingDelay = 1000) {
       // Load from local JSON file
       const loadedIslamicData: IslamicData[] =
         IslamicDataCards as IslamicData[];
+
+      console.log("useFacts - Loaded Islamic data:", loadedIslamicData);
+      console.log("useFacts - Data length:", loadedIslamicData.length);
+      console.log("useFacts - First item:", loadedIslamicData[0]);
+
       setIslamicData(loadedIslamicData);
-    } catch {
+    } catch (error) {
+      console.error("useFacts - Error loading data:", error);
       setError("Failed to load Islamic data");
     } finally {
       setLoading(false);

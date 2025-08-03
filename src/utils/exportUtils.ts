@@ -28,12 +28,12 @@ export function toJSON<T>(data: T): string {
   return JSON.stringify(data, null, 2);
 }
 
-// Export miracles data as CSV
+// Export Islamic data as CSV
 export function exportIslamicDataCSV(islamicData: IslamicData[]): string {
   return toCSV(islamicData);
 }
 
-// Export miracles data as JSON
+// Export Islamic data as JSON
 export function exportIslamicDataJSON(islamicData: IslamicData[]): string {
   return toJSON(islamicData);
 }

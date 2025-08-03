@@ -5,43 +5,39 @@ import { DarkModeContext } from "../../../types/ContextTypes";
 import { getChartTheme } from "./chartTheme";
 import { useResponsive } from "../../../hooks/useResponsive";
 
-interface PropheticStatusChartProps {
+interface CategoryPieChartProps {
   data: IslamicData[];
 }
 
-export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
-  data,
-}) => {
+export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
   const darkModeContext = useContext(DarkModeContext);
   const isDarkMode = darkModeContext?.isDarkMode ?? false;
   const chartTheme = getChartTheme(isDarkMode);
   const isMobile = useResponsive();
 
   const chartData = useMemo(() => {
-    const statusCounts = data.reduce((acc, item) => {
-      const status = item.status || "Unknown";
-      acc[status] = (acc[status] || 0) + 1;
+    const categoryCounts = data.reduce((acc, item) => {
+      const category = item.type || "Unknown";
+      acc[category] = (acc[category] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
 
-    return Object.entries(statusCounts).map(([status, value]) => ({
-      id: status,
-      label: status,
+    return Object.entries(categoryCounts).map(([category, value]) => ({
+      id: category.charAt(0).toUpperCase() + category.slice(1),
+      label: category.charAt(0).toUpperCase() + category.slice(1),
       value,
     }));
   }, [data]);
 
   const getColor = (pieSlice: { id: string | number }) => {
-    const status = pieSlice.id.toString();
-    switch (status) {
-      case "Fulfilled":
-        return "#10b981";
-      case "Proven":
-        return "#3b82f6";
-      case "In Progress":
-        return "#f59e0b";
-      case "Yet to Happen":
+    const type = pieSlice.id.toString().toLowerCase();
+    switch (type) {
+      case "prophecy":
         return "#ef4444";
+      case "scientific":
+        return "#10b981";
+      case "qadr":
+        return "#8b5cf6";
       default:
         return "#6b7280";
     }
@@ -54,7 +50,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
   return (
     <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-lg shadow-lg p-4 flex flex-col">
       <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
-        Islamic Data Status Distribution
+        Islamic Data Category Distribution
       </h3>
       <div className="flex-grow">
         <ResponsivePie

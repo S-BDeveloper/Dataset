@@ -17,7 +17,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Homepage
     "header.title": "Authentic Islamic Knowledge",
     "header.description":
-      "Discover the miraculous signs of Allah through Quranic verses, Sahih Bukhari and Muslim's hadith collections, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding.",
+      "Discover the miraculous signs of Allah through Quranic verses, Sahih hadith collections, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding.",
 
     // Tabs
     "tabs.data": "Data",

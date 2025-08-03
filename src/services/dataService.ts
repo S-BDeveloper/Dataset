@@ -1,5 +1,5 @@
 // Advanced data service for handling large Quran and Hadith datasets
-// import type { QuranAyah, HadithEntry, QuranicMiracle } from "../types/Types";
+// import type { QuranAyah, HadithEntry, IslamicData } from "../types/Types";
 
 interface DataChunk<T> {
   data: T[];

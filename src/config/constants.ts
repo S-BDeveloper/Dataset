@@ -3,7 +3,7 @@ export const APP_CONFIG = {
   name: "Authentic Islamic Knowledge",
   version: "1.0.0",
   description:
-    "Discover the miraculous signs of Allah through Quranic verses, Sahih Bukhari's hadith collection, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding",
+    "Discover the miraculous signs of Allah through Quranic verses, Sahih hadith collections, and scientific discoveries. Explore cross-references between different Islamic sources to deepen your understanding",
 } as const;
 
 export const PAGINATION = {

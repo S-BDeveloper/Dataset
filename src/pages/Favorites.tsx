@@ -4,7 +4,7 @@ import Breadcrumb from "../components/common/Breadcrumb";
 import { DataCard } from "../components/features/datacard/DataCard";
 import { useAuth } from "../hooks/useContext";
 
-// Favorites page displays the user's favorited Quranic miracles
+// Favorites page displays the user's favorited Islamic data
 const Favorites: React.FC = () => {
   const { favorites, removeFavorite, loading } = useFavorites();
   const { user } = useAuth();

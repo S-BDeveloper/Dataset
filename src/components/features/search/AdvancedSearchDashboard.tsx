@@ -105,6 +105,12 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
         }));
       }, [hadithData]);
 
+      // Memoized statistics calculations
+      const totalDataCount = useMemo(
+        () => data.length + quranData.length + hadithData.length,
+        [data.length, quranData.length, hadithData.length]
+      );
+
       // Enhanced search function with comprehensive criteria across all data types
       const performSearch = useCallback(
         (query: string, filterState: FilterState) => {
@@ -218,19 +224,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               });
             }
 
-            // Apply category filters (for miracles only) - Removed since QuranicMiracle doesn't have category property
-            // if (filterState.categories.length > 0) {
-            //   results = results.filter((result) => {
-            //     if (result.type === "miracle") {
-            //       const miracle = result.data as QuranicMiracle;
-            //       return (
-            //         miracle.category &&
-            //         filterState.categories.includes(miracle.category as string)
-            //       );
-            //     }
-            //     return true; // Keep non-miracle results
-            //   });
-            // }
+           
 
             // Apply fulfillment status filters (for Islamic data only)
             if (filterState.fulfillmentStatus.length > 0) {
@@ -380,7 +374,13 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             setIsSearching(false);
           }, 100);
         },
-        [processedIslamicData, processedQuranData, processedHadithData]
+        [
+          processedIslamicData,
+          processedQuranData,
+          processedHadithData,
+          hadithData.length,
+          totalDataCount,
+        ]
       );
 
       // Handle search query changes - only update state, don't trigger search
@@ -416,21 +416,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
         setFilters(defaultFilters);
       }, []);
 
-      // Remove automatic filtering - only filter when user clicks "Confirm Search"
-      // useEffect(() => {
-      //   // Only load data if dataSources are selected
-      //   if (filters.dataSources.length === 0) {
-      //     setFilteredResults([]);
-      //     return;
-      //   }
-      //   // ... rest of automatic filtering logic removed
-      // }, [data, quranData, hadithData, filters.dataSources]);
-
-      // Memoized statistics calculations
-      const totalDataCount = useMemo(
-        () => data.length + quranData.length + hadithData.length,
-        [data.length, quranData.length, hadithData.length]
-      );
+      
 
       const islamicDataCount = useMemo(
         () => filteredResults.filter((r) => r.type === "islamic data").length,
@@ -506,7 +492,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               </div>
               <div className="lg:w-96">
                 <SmartSearchBar
-                  data={data} // Still passes miracle data for auto-complete, might need adjustment later
+                  data={data} // Still passes Islamic data for auto-complete, might need adjustment later
                   onSearch={handleSearch}
                   placeholder="Search across Quran and Hadith..."
                 />
@@ -622,12 +608,11 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 <p className="text-stone-600 dark:text-stone-400 mb-4">
                   Configure your search filters above and click "Confirm Search"
                   to begin exploring Islamic knowledge across Quran, Hadith, and
-                  Prophecies/Prophetic Medicines.
+                  Islamic Data.
                 </p>
                 <div className="text-sm text-stone-500 dark:text-stone-500">
                   <p>
-                    • Select data sources (Quran, Hadith, Prophecies/Prophetic
-                    Medicines)
+                    • Select data sources (Quran, Hadith, Islamic Data)
                   </p>
                   <p>• Choose specific filters for each source</p>
                   <p>• Enter search terms (optional)</p>
@@ -666,7 +651,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                         English translations
                       </li>
                       <li>
-                        • <strong>Hadiths:</strong> Sahih Bukhari authentic
+                        • <strong>Hadiths:</strong> Authentic
                         narrations
                       </li>
                       <li>

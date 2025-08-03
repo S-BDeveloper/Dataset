@@ -87,12 +87,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--border-light);
+  background: var(--stone);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
-  border-radius: 4px;
+ 
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -101,11 +101,11 @@ body {
 
 /* Dark mode scrollbar */
 [data-theme="dark"] ::-webkit-scrollbar-track {
-  background: var(--border-light);
+  background: var(--background);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: var(--hover-bg-green);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
@@ -271,6 +271,7 @@ svg:not([role="img"]) {
 .nivo-chart {
   overflow: visible;
   max-width: none;
+  position: relative;
 }
 
 /* Additional responsive utilities */
