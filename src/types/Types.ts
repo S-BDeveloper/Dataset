@@ -1,200 +1,406 @@
-// Types for Islamic Dataset app
+// Strong TypeScript types for Islamic Dataset app
 
-// Enhanced error types for better error handling
+// ============================================================================
+// CONSTANTS - Strict type definitions
+// ============================================================================
+
+export const DataType = {
+  PROPHECY: "prophecy",
+  SCIENTIFIC: "scientific",
+  QADR: "qadr",
+} as const;
+
+export const FulfillmentStatus = {
+  FULFILLED: "fulfilled",
+  IN_PROGRESS: "in-progress",
+  PENDING: "pending",
+  PARTIALLY_FULFILLED: "partially-fulfilled",
+} as const;
+
+export const ProphecyStatus = {
+  FULFILLED: "Fulfilled",
+  PENDING: "Pending",
+  IN_PROGRESS: "In Progress",
+  PROVEN: "Proven",
+  YET_TO_HAPPEN: "Yet to Happen",
+} as const;
+
+export const ProphecyCategory = {
+  HISTORICAL: "historical",
+  SCIENTIFIC: "scientific",
+  SOCIAL: "social",
+  NATURAL: "natural",
+  COSMOLOGICAL: "cosmological",
+  TECHNOLOGICAL: "technological",
+} as const;
+
+export const DataSource = {
+  ISLAMIC_DATA: "islamic data",
+  QURAN: "quran",
+  HADITH: "hadith",
+} as const;
+
+export const SortOrder = {
+  ASC: "asc",
+  DESC: "desc",
+} as const;
+
+export const ToastType = {
+  SUCCESS: "success",
+  ERROR: "error",
+  WARNING: "warning",
+  INFO: "info",
+} as const;
+
+export const ChartType = {
+  BAR: "bar",
+  PIE: "pie",
+  LINE: "line",
+  SCATTER: "scatter",
+} as const;
+
+export const ErrorCode = {
+  NETWORK_ERROR: "NETWORK_ERROR",
+  PARSE_ERROR: "PARSE_ERROR",
+  NOT_FOUND: "NOT_FOUND",
+  UNKNOWN: "UNKNOWN",
+} as const;
+
+// Type definitions from constants
+export type DataType = (typeof DataType)[keyof typeof DataType];
+export type FulfillmentStatus =
+  (typeof FulfillmentStatus)[keyof typeof FulfillmentStatus];
+export type ProphecyStatus =
+  (typeof ProphecyStatus)[keyof typeof ProphecyStatus];
+export type ProphecyCategory =
+  (typeof ProphecyCategory)[keyof typeof ProphecyCategory];
+export type DataSource = (typeof DataSource)[keyof typeof DataSource];
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export type ToastType = (typeof ToastType)[keyof typeof ToastType];
+export type ChartType = (typeof ChartType)[keyof typeof ChartType];
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
+
+// ============================================================================
+// STRICT INTERFACES
+// ============================================================================
+
+// Enhanced error types with strict typing
 export interface DataLoadError {
-  message: string;
-  code: "NETWORK_ERROR" | "PARSE_ERROR" | "NOT_FOUND" | "UNKNOWN";
-  retryable: boolean;
+  readonly message: string;
+  readonly code: ErrorCode;
+  readonly retryable: boolean;
+  readonly timestamp: Date;
+  readonly context?: Record<string, unknown>;
 }
 
-// Authentication types
+// Authentication types with strict validation
 export interface AuthUser {
-  uid: string;
-  email: string;
-  displayName?: string;
-  photoURL?: string;
-  emailVerified: boolean;
+  readonly uid: string;
+  readonly email: string;
+  readonly displayName?: string;
+  readonly photoURL?: string;
+  readonly emailVerified: boolean;
+  readonly createdAt: Date;
+  readonly lastSignInAt: Date;
 }
 
 export interface AuthError {
-  code: string;
-  message: string;
+  readonly code: string;
+  readonly message: string;
+  readonly timestamp: Date;
 }
 
-// Enhanced Data interface with better structure
+// Sources interface with strict typing
+export interface DataSources {
+  readonly primary: string;
+  readonly verification: string;
+  readonly methodology: string;
+  readonly references: readonly string[];
+  readonly source: string;
+}
+
+// Related events with strict structure
+export interface RelatedEvent {
+  readonly event: string;
+  readonly year: number;
+  readonly description: string;
+  readonly evidence: string;
+  readonly confidence: number; // 0-100
+}
+
+// Enhanced IslamicData interface with strict typing
 export interface IslamicData {
-  type: "prophecy" | "scientific" | "qadr";
-  title: string;
-  notes: string;
-  sources?: {
-    primary: string;
-    verification: string;
-    methodology: string;
-    references: string[];
-    source: string;
-  };
-
-  // For other types
-  description?: string;
-  location?: string;
-  significance?: string;
-  pattern?: string;
-  examples?: string[];
-  status?: "Fulfilled" | "Pending" | "In Progress" | "Proven" | "Yet to Happen";
-  source?: string;
-
-  // Prophetic Fulfillment Tracking
-  fulfillmentStatus?:
-    | "fulfilled"
-    | "in-progress"
-    | "pending"
-    | "partially-fulfilled";
-  yearRevealed?: number;
-  yearFulfilled?: number;
-  fulfillmentEvidence?: string;
-  prophecyCategory?:
-    | "historical"
-    | "scientific"
-    | "social"
-    | "natural"
-    | "cosmological"
-    | "technological";
-  relatedEvents?: {
-    event: string;
-    year: number;
-    description: string;
-    evidence: string;
-  }[];
-
-  // Remove the catch-all index signature for better type safety
-  // [key: string]: unknown;
+  readonly type: DataType;
+  readonly title: string;
+  readonly notes: string;
+  readonly sources?: DataSources;
+  readonly description?: string;
+  readonly location?: string;
+  readonly significance?: string;
+  readonly pattern?: string;
+  readonly examples?: readonly string[];
+  readonly status?: ProphecyStatus;
+  readonly source?: string;
+  readonly fulfillmentStatus?: FulfillmentStatus;
+  readonly yearRevealed?: number;
+  readonly yearFulfilled?: number;
+  readonly fulfillmentEvidence?: string;
+  readonly prophecyCategory?: ProphecyCategory;
+  readonly relatedEvents?: readonly RelatedEvent[];
+  readonly id: string; // Add unique identifier
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
 }
 
+// Filter interfaces with strict typing
 export interface IslamicDataFilters {
-  type: string;
-  status?: string;
-  fulfillmentStatus?: string;
-  prophecyCategory?: string;
-  searchTerm: string;
-  sortBy: string;
+  readonly type: string;
+  readonly status?: ProphecyStatus;
+  readonly fulfillmentStatus?: FulfillmentStatus;
+  readonly prophecyCategory?: ProphecyCategory;
+  readonly searchTerm: string;
+  readonly sortBy: string;
+  readonly yearRange?: {
+    readonly min: number;
+    readonly max: number;
+  };
 }
 
 // Enhanced User interface
 export interface User {
-  uid: string;
-  email: string;
-  displayName?: string;
-  photoURL?: string;
-  favorites?: string[];
-  preferences?: {
-    darkMode?: boolean;
-    language?: string;
+  readonly uid: string;
+  readonly email: string;
+  readonly displayName?: string;
+  readonly photoURL?: string;
+  readonly favorites?: readonly string[];
+  readonly preferences: {
+    readonly darkMode: boolean;
+    readonly language: string;
+    readonly fontSize: "small" | "medium" | "large";
+    readonly highContrast: boolean;
+    readonly reducedMotion: boolean;
+  };
+  readonly createdAt: Date;
+  readonly lastActive: Date;
+}
+
+// Enhanced Quran Ayah interface
+export interface QuranAyah {
+  readonly surah_no: number;
+  readonly surah_name_en: string;
+  readonly surah_name_ar: string;
+  readonly surah_name_roman: string;
+  readonly ayah_no_surah: number;
+  readonly ayah_no_quran: number;
+  readonly ayah_ar: string;
+  readonly ayah_en: string;
+  readonly hizb_quarter: number;
+  readonly total_ayah_surah: number;
+  readonly total_ayah_quran: number;
+  readonly place_of_revelation: string;
+  readonly sajah_ayah: boolean;
+  readonly sajdah_no: string;
+  readonly no_of_word_ayah: number;
+  readonly id: string; // Add unique identifier
+}
+
+// Enhanced Hadith Entry interface
+export interface HadithEntry {
+  readonly id: string;
+  readonly number: string;
+  readonly book: string;
+  readonly chapter: string;
+  readonly narrator: string;
+  readonly text: string;
+  readonly arabic?: string;
+  readonly translation?: string;
+  readonly grade?: string;
+  readonly reference?: string;
+  readonly createdAt: Date;
+}
+
+// Filter interfaces
+export interface QuranFilters {
+  readonly surah?: number;
+  readonly searchTerm: string;
+  readonly placeOfRevelation?: string;
+  readonly sortBy: string;
+  readonly verseRange?: {
+    readonly min: number;
+    readonly max: number;
   };
 }
 
-// Enhanced Quran Ayah interface with validation
-export interface QuranAyah {
-  surah_no: number;
-  surah_name_en: string;
-  surah_name_ar: string;
-  surah_name_roman: string;
-  ayah_no_surah: number;
-  ayah_no_quran: number;
-  ayah_ar: string;
-  ayah_en: string; // English translation
-  hizb_quarter: number;
-  total_ayah_surah: number;
-  total_ayah_quran: number;
-  place_of_revelation: string;
-  sajah_ayah: boolean;
-  sajdah_no: string;
-  no_of_word_ayah: number;
-}
-
-// Enhanced Hadith Entry interface with proper structure
-export interface HadithEntry {
-  id: string;
-  number: string;
-  book: string;
-  chapter: string;
-  narrator: string;
-  text: string;
-  arabic?: string;
-  translation?: string;
-  grade?: string;
-  reference?: string;
-  // Remove the catch-all index signature for better type safety
-  // [key: string]: string;
-}
-
-export interface QuranFilters {
-  surah?: number;
-  searchTerm: string;
-  placeOfRevelation?: string;
-  sortBy: string;
-}
-
 export interface HadithFilters {
-  searchTerm: string;
-  chapter?: string;
-  sortBy: string;
+  readonly searchTerm: string;
+  readonly chapter?: string;
+  readonly sortBy: string;
+  readonly numberRange?: {
+    readonly min: number;
+    readonly max: number;
+  };
 }
 
 // Enhanced search result types
 export interface UnifiedSearchResult {
-  id: string;
-  type: "islamic data" | "quran" | "hadith";
-  title: string;
-  content: string;
-  source: string;
-  data: IslamicData | QuranAyah | HadithEntry;
+  readonly id: string;
+  readonly type: DataSource;
+  readonly title: string;
+  readonly content: string;
+  readonly source: string;
+  readonly data: IslamicData | QuranAyah | HadithEntry;
+  readonly relevance: number; // 0-100
+  readonly timestamp: Date;
 }
 
-// Filter state interface for advanced search
+// Filter state interface with strict typing
 export interface FilterState {
-  types: string[];
-  categories: string[];
-  searchFields: string[];
-  sortBy: string;
-  sortOrder: "asc" | "desc";
-  fulfillmentStatus: string[];
-  prophecyCategories: string[];
-  yearRange: { min: number; max: number };
-  dataSources: ("islamic data" | "quran" | "hadith")[];
-  quranSurahs: string[];
-  quranVerseRange: { min: number; max: number };
-  quranPlaceOfRevelation: string[];
-  hadithNumberRange: { min: number; max: number };
-  hadithCategories: string[];
+  readonly types: readonly string[];
+  readonly categories: readonly string[];
+  readonly searchFields: readonly string[];
+  readonly sortBy: string;
+  readonly sortOrder: SortOrder;
+  readonly fulfillmentStatus: readonly FulfillmentStatus[];
+  readonly prophecyCategories: readonly ProphecyCategory[];
+  readonly yearRange: {
+    readonly min: number;
+    readonly max: number;
+  };
+  readonly dataSources: readonly DataSource[];
+  readonly quranSurahs: readonly string[];
+  readonly quranVerseRange: {
+    readonly min: number;
+    readonly max: number;
+  };
+  readonly quranPlaceOfRevelation: readonly string[];
+  readonly hadithNumberRange: {
+    readonly min: number;
+    readonly max: number;
+  };
+  readonly hadithCategories: readonly string[];
 }
 
 // Pagination types
 export interface PaginationState {
-  currentPage: number;
-  totalPages: number;
-  itemsPerPage: number;
-  totalItems: number;
+  readonly currentPage: number;
+  readonly totalPages: number;
+  readonly itemsPerPage: number;
+  readonly totalItems: number;
+  readonly hasNextPage: boolean;
+  readonly hasPreviousPage: boolean;
 }
 
 // Toast notification types
 export interface ToastNotification {
-  id: string;
-  message: string;
-  type: "success" | "error" | "warning" | "info";
-  duration?: number;
+  readonly id: string;
+  readonly message: string;
+  readonly type: ToastType;
+  readonly duration?: number;
+  readonly timestamp: Date;
+  readonly persistent?: boolean;
 }
 
-// Chart data types
+// Chart data types with strict typing
 export interface ChartDataPoint {
-  label: string;
-  value: number;
-  color?: string;
+  readonly label: string;
+  readonly value: number;
+  readonly color?: string;
+  readonly metadata?: Record<string, unknown>;
 }
 
 export interface ChartConfig {
-  type: "bar" | "pie" | "line" | "scatter";
-  data: ChartDataPoint[];
-  title: string;
-  height?: number;
-  width?: number;
+  readonly type: ChartType;
+  readonly data: readonly ChartDataPoint[];
+  readonly title: string;
+  readonly height?: number;
+  readonly width?: number;
+  readonly theme?: "light" | "dark";
+}
+
+// Tooltip types for charts
+export interface ChartTooltip {
+  readonly datum: {
+    readonly id: string | number;
+    readonly value: number;
+    readonly color: string;
+    readonly label: string;
+  };
+  readonly x: number;
+  readonly y: number;
+}
+
+// ============================================================================
+// UTILITY TYPES
+// ============================================================================
+
+// Type guards for runtime type checking
+export const isIslamicData = (data: unknown): data is IslamicData => {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "type" in data &&
+    "title" in data &&
+    "notes" in data
+  );
+};
+
+export const isQuranAyah = (data: unknown): data is QuranAyah => {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "surah_no" in data &&
+    "ayah_no_surah" in data &&
+    "ayah_ar" in data
+  );
+};
+
+export const isHadithEntry = (data: unknown): data is HadithEntry => {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "id" in data &&
+    "number" in data &&
+    "text" in data
+  );
+};
+
+// Union types for better type safety
+export type SearchableData = IslamicData | QuranAyah | HadithEntry;
+export type ChartData = readonly ChartDataPoint[];
+export type FilterValue = string | number | boolean | readonly string[];
+
+// ============================================================================
+// API RESPONSE TYPES
+// ============================================================================
+
+export interface ApiResponse<T> {
+  readonly success: boolean;
+  readonly data?: T;
+  readonly error?: DataLoadError;
+  readonly timestamp: Date;
+  readonly requestId: string;
+}
+
+export interface PaginatedResponse<T> extends ApiResponse<readonly T[]> {
+  readonly pagination: PaginationState;
+}
+
+// ============================================================================
+// EVENT TYPES
+// ============================================================================
+
+export interface ChartMouseEvent {
+  readonly datum: ChartDataPoint;
+  readonly event: MouseEvent;
+  readonly position: {
+    readonly x: number;
+    readonly y: number;
+  };
+}
+
+export interface FilterChangeEvent {
+  readonly filterName: string;
+  readonly value: FilterValue;
+  readonly previousValue: FilterValue;
+  readonly timestamp: Date;
 }

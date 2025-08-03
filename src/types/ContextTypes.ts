@@ -4,9 +4,9 @@ import { createContext } from "react";
 export type Language = "en" | "ar" | "ur" | "tr" | "fr" | "es" | "de";
 
 export interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (key: string) => string; // Translation function
+  readonly language: Language;
+  readonly setLanguage: (lang: Language) => void;
+  readonly t: (key: string) => string; // Translation function
 }
 
 export const LanguageContext = createContext<LanguageContextType | undefined>(
@@ -15,9 +15,9 @@ export const LanguageContext = createContext<LanguageContextType | undefined>(
 
 // Dark Mode Context Types
 export interface DarkModeContextType {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
-  setDarkMode: (dark: boolean) => void;
+  readonly isDarkMode: boolean;
+  readonly toggleDarkMode: () => void;
+  readonly setDarkMode: (dark: boolean) => void;
 }
 
 export const DarkModeContext = createContext<DarkModeContextType | undefined>(
@@ -26,21 +26,39 @@ export const DarkModeContext = createContext<DarkModeContextType | undefined>(
 
 // Accessibility Context Types
 export interface AccessibilityContextType {
-  focusTrap: (element: HTMLElement) => void;
-  announceToScreenReader: (message: string) => void;
-  skipToMainContent: () => void;
-  isHighContrast: boolean;
-  toggleHighContrast: () => void;
-  isReducedMotion: boolean;
-  toggleReducedMotion: () => void;
-  fontSize: "small" | "medium" | "large";
-  setFontSize: (size: "small" | "medium" | "large") => void;
-  isKeyboardNavigation: boolean;
-  setIsKeyboardNavigation: (enabled: boolean) => void;
-  registerKeyboardShortcut: (key: string, callback: () => void) => void;
-  unregisterKeyboardShortcut: (key: string) => void;
+  readonly focusTrap: (element: HTMLElement) => void;
+  readonly announceToScreenReader: (message: string) => void;
+  readonly skipToMainContent: () => void;
+  readonly isHighContrast: boolean;
+  readonly toggleHighContrast: () => void;
+  readonly isReducedMotion: boolean;
+  readonly toggleReducedMotion: () => void;
+  readonly fontSize: "small" | "medium" | "large";
+  readonly setFontSize: (size: "small" | "medium" | "large") => void;
+  readonly isKeyboardNavigation: boolean;
+  readonly setIsKeyboardNavigation: (enabled: boolean) => void;
+  readonly registerKeyboardShortcut: (
+    key: string,
+    callback: () => void
+  ) => void;
+  readonly unregisterKeyboardShortcut: (key: string) => void;
 }
 
 export const AccessibilityContext = createContext<
   AccessibilityContextType | undefined
 >(undefined);
+
+// Auth Context Types
+export interface AuthContextType {
+  readonly user: import("./Types").AuthUser | null;
+  readonly loading: boolean;
+  readonly error: import("./Types").AuthError | null;
+  readonly signIn: (email: string, password: string) => Promise<void>;
+  readonly signUp: (email: string, password: string) => Promise<void>;
+  readonly signOut: () => Promise<void>;
+  readonly resetPassword: (email: string) => Promise<void>;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);

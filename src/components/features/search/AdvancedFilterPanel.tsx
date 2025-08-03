@@ -4,6 +4,8 @@ import type {
   QuranAyah,
   HadithEntry,
   FilterState,
+  FulfillmentStatus,
+  ProphecyCategory,
 } from "../../../types/Types";
 import { useLanguage } from "../../../hooks/useContext";
 
@@ -639,12 +641,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                               <input
                                 type="checkbox"
                                 checked={filters.fulfillmentStatus.includes(
-                                  status || ""
+                                  status as FulfillmentStatus
                                 )}
                                 onChange={() =>
                                   handleMultiSelectToggle(
                                     "fulfillmentStatus",
-                                    status || ""
+                                    status as FulfillmentStatus
                                   )
                                 }
                                 className="rounded border-stone-300 text-green-600 focus:ring-green-500"
@@ -673,12 +675,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                               <input
                                 type="checkbox"
                                 checked={filters.prophecyCategories.includes(
-                                  category || ""
+                                  category as ProphecyCategory
                                 )}
                                 onChange={() =>
                                   handleMultiSelectToggle(
                                     "prophecyCategories",
-                                    category || ""
+                                    category as ProphecyCategory
                                   )
                                 }
                                 className="rounded border-stone-300 text-green-600 focus:ring-green-500"

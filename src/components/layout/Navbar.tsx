@@ -8,7 +8,6 @@ import { useLanguage } from "../../hooks/useContext";
 import { Logo } from "../common/Logo";
 import Login from "../features/auth/Login";
 import Signup from "../features/auth/Signup";
-import { hasPermission } from "../../utils/authUtils";
 
 export default function Navbar() {
   const { user, logout } = useAuth();

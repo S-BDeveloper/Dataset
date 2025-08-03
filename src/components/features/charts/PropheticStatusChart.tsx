@@ -1,12 +1,30 @@
 import React, { useContext, useMemo, useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import type { IslamicData } from "../../../types/Types";
+import { ProphecyStatus } from "../../../types/Types";
 import { DarkModeContext } from "../../../types/ContextTypes";
 import { getChartTheme } from "./chartTheme";
 import { useResponsive } from "../../../hooks/useResponsive";
 
 interface PropheticStatusChartProps {
-  data: IslamicData[];
+  readonly data: readonly IslamicData[];
+}
+
+interface ChartDataPoint {
+  readonly id: string;
+  readonly label: string;
+  readonly value: number;
+}
+
+interface ChartTooltipState {
+  readonly datum: {
+    readonly id: string | number;
+    readonly value: number;
+    readonly color: string;
+    readonly label: string;
+  };
+  readonly x: number;
+  readonly y: number;
 }
 
 export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
@@ -16,13 +34,9 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
   const isDarkMode = darkModeContext?.isDarkMode ?? false;
   const chartTheme = getChartTheme(isDarkMode);
   const isMobile = useResponsive();
-  const [tooltip, setTooltip] = useState<{
-    datum: any;
-    x: number;
-    y: number;
-  } | null>(null);
+  const [tooltip, setTooltip] = useState<ChartTooltipState | null>(null);
 
-  const chartData = useMemo(() => {
+  const chartData: readonly ChartDataPoint[] = useMemo(() => {
     const statusCounts = data.reduce((acc, item) => {
       const status = item.status || "Unknown";
       acc[status] = (acc[status] || 0) + 1;
@@ -36,16 +50,16 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
     }));
   }, [data]);
 
-  const getColor = (pieSlice: { id: string | number }) => {
+  const getColor = (pieSlice: { readonly id: string | number }): string => {
     const status = pieSlice.id.toString();
     switch (status) {
-      case "Fulfilled":
+      case ProphecyStatus.FULFILLED:
         return "#10b981";
-      case "Proven":
+      case ProphecyStatus.PROVEN:
         return "#3b82f6";
-      case "In Progress":
+      case ProphecyStatus.IN_PROGRESS:
         return "#f59e0b";
-      case "Yet to Happen":
+      case ProphecyStatus.YET_TO_HAPPEN:
         return "#ef4444";
       default:
         return "#6b7280";
@@ -83,7 +97,16 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
           enableArcLabels={true}
           onMouseEnter={(datum, event) => {
             console.log("Mouse enter:", datum);
-            setTooltip({ datum, x: event.clientX, y: event.clientY });
+            setTooltip({
+              datum: {
+                id: datum.id as string | number,
+                value: datum.value,
+                color: datum.color,
+                label: datum.label as string,
+              },
+              x: event.clientX,
+              y: event.clientY,
+            });
           }}
           onMouseLeave={() => {
             console.log("Mouse leave");

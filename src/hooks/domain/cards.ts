@@ -24,9 +24,18 @@ export function useIslamicData(loadingDelay = 1000) {
         return;
       }
 
-      // Load from local JSON file
-      const loadedIslamicData: IslamicDataType[] =
-        islamicData as IslamicDataType[];
+      // Load from local JSON file and add missing properties
+      const loadedIslamicData: IslamicDataType[] = (
+        islamicData as unknown as Record<string, unknown>[]
+      ).map(
+        (item, index) =>
+          ({
+            ...item,
+            id: (item.id as string) || `islamic-${index}`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          } as IslamicDataType)
+      );
 
       // Cache the data
       IslamicDataCache = loadedIslamicData;

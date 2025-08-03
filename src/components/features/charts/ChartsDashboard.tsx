@@ -5,7 +5,17 @@ import { CategoryPieChart } from "./CategoryPieChart";
 import type { IslamicData } from "../../../types/Types";
 
 interface ChartsDashboardProps {
-  data: IslamicData[];
+  readonly data: readonly IslamicData[];
+}
+
+interface ChartConfig {
+  readonly id: string;
+  readonly title: string;
+  readonly component: React.ComponentType<{
+    readonly data: readonly IslamicData[];
+  }>;
+  readonly ref: React.RefObject<HTMLDivElement>;
+  readonly notes: string;
 }
 
 export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
@@ -22,7 +32,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
   const geographicChartRef = useRef<HTMLDivElement>(null);
   const singleViewRef = useRef<HTMLDivElement>(null);
 
-  const charts = [
+  const charts: readonly ChartConfig[] = [
     {
       id: "category-pie",
       title: "Category Distribution",
@@ -50,7 +60,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
   ];
 
   // Handle chart click with scroll functionality
-  const handleChartClick = (chartId: string) => {
+  const handleChartClick = (chartId: string): void => {
     setActiveChart(chartId);
     setViewMode("single");
 
@@ -75,7 +85,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
     }, 150); // Increased delay to ensure view mode change is complete
   };
 
-  const handleBackToOverview = () => {
+  const handleBackToOverview = (): void => {
     setViewMode("overview");
     setActiveChart("all");
   };

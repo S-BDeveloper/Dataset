@@ -12,9 +12,18 @@ export function useIslamicData(loadingDelay = 1000) {
     setLoading(true);
     setError(null);
     try {
-      // Load from local JSON file
-      const loadedIslamicData: IslamicData[] =
-        IslamicDataCards as IslamicData[];
+      // Load from local JSON file and add missing properties
+      const loadedIslamicData: IslamicData[] = (
+        IslamicDataCards as unknown as Record<string, unknown>[]
+      ).map(
+        (item, index) =>
+          ({
+            ...item,
+            id: (item.id as string) || `islamic-${index}`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          } as IslamicData)
+      );
 
       console.log("useFacts - Loaded Islamic data:", loadedIslamicData);
       console.log("useFacts - Data length:", loadedIslamicData.length);

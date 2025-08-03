@@ -1,33 +1,140 @@
-# Dependencies
+# =============================================================================
+# DEPENDENCIES
+# =============================================================================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Build outputs
+# Package managers
+.npm
+.yarn-integrity
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# =============================================================================
+# BUILD OUTPUTS
+# =============================================================================
 dist/
 build/
+out/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
 
-# Environment variables
+# Vite
+.vite/
+
+# =============================================================================
+# ENVIRONMENT VARIABLES
+# =============================================================================
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging.local
 
-# IDE files
+# =============================================================================
+# IDE & EDITOR FILES
+# =============================================================================
+# VSCode
 .vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# IntelliJ IDEA
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
 *.swp
 *.swo
+*~
 
-# OS files
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# OPERATING SYSTEM FILES
+# =============================================================================
+# macOS
 .DS_Store
-Thumbs.db
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
-# Logs
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# LOGS & DEBUGGING
+# =============================================================================
 logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # Runtime data
 pids
@@ -35,18 +142,134 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
+# =============================================================================
+# TESTING & COVERAGE
+# =============================================================================
 coverage/
-
-# nyc test coverage
+*.lcov
 .nyc_output
+.cache
+.parcel-cache
 
-# Dependency directories
-jspm_packages/
+# Jest
+.jest/
 
-# Optional npm cache directory
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# =============================================================================
+# FIREBASE & GOOGLE CLOUD
+# =============================================================================
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+.firebaserc
+firebase.json
+.firebase/
+
+# =============================================================================
+# DEPLOYMENT & HOSTING
+# =============================================================================
+.vercel/
+.netlify/
+.surge.sh/
+
+# =============================================================================
+# DEVELOPMENT TOOLS
+# =============================================================================
+# ESLint
+.eslintcache
+
+# TypeScript
+*.tsbuildinfo
+
+# Babel
+.babel-cache/
+
+# Webpack
+.webpack/
+
+# Rollup
+.rollup.cache/
+
+# =============================================================================
+# TEMPORARY FILES
+# =============================================================================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# =============================================================================
+# SECURITY & SENSITIVE DATA
+# =============================================================================
+# API Keys
+.env.local
+.env.production
+.env.staging
+
+# Certificates
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# =============================================================================
+# PROJECT SPECIFIC
+# =============================================================================
+# Data files (if they contain sensitive information)
+# Uncomment if you have sensitive data files
+# data/sensitive/
+# *.json.bak
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# =============================================================================
+# PACKAGE MANAGER SPECIFIC
+# =============================================================================
+# npm
 .npm
+.npmrc
 
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*
+
+# =============================================================================
+# MONOREPO & WORKSPACES
+# =============================================================================
+# Lerna
+lerna-debug.log*
+
+# Rush
+common/deploy/
+common/temp/
+common/autoinstallers/*/.npmrc
+
+# =============================================================================
+# MISCELLANEOUS
+# =============================================================================
 # Optional REPL history
 .node_repl_history
 
@@ -56,27 +279,16 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# parcel-bundler cache (https://parceljs.org/)
+# parcel-bundler cache
 .cache
 .parcel-cache
 
-# next.js build output
-.next
-
-# nuxt.js build output
-.nuxt
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
 # TernJS port file
 .tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# =============================================================================
+# END OF GITIGNORE
+# =============================================================================

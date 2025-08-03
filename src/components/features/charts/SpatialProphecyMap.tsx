@@ -2,7 +2,7 @@ import React from "react";
 import type { IslamicData } from "../../../types/Types";
 
 interface SpatialProphecyMapProps {
-  data: IslamicData[];
+  data: readonly IslamicData[];
   isActive?: boolean;
 }
 

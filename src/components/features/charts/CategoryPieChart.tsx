@@ -1,12 +1,31 @@
 import React, { useContext, useMemo, useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
+import type { ComputedDatum } from "@nivo/pie";
 import type { IslamicData } from "../../../types/Types";
+import { DataType } from "../../../types/Types";
 import { DarkModeContext } from "../../../types/ContextTypes";
 import { getChartTheme } from "./chartTheme";
 import { useResponsive } from "../../../hooks/useResponsive";
 
 interface CategoryPieChartProps {
-  data: IslamicData[];
+  readonly data: readonly IslamicData[];
+}
+
+interface ChartDataPoint {
+  readonly id: string;
+  readonly label: string;
+  readonly value: number;
+}
+
+interface ChartTooltipState {
+  readonly datum: {
+    readonly id: string | number;
+    readonly value: number;
+    readonly color: string;
+    readonly label: string;
+  };
+  readonly x: number;
+  readonly y: number;
 }
 
 export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
@@ -14,13 +33,9 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
   const isDarkMode = darkModeContext?.isDarkMode ?? false;
   const chartTheme = getChartTheme(isDarkMode);
   const isMobile = useResponsive();
-  const [tooltip, setTooltip] = useState<{
-    datum: any;
-    x: number;
-    y: number;
-  } | null>(null);
+  const [tooltip, setTooltip] = useState<ChartTooltipState | null>(null);
 
-  const chartData = useMemo(() => {
+  const chartData: readonly ChartDataPoint[] = useMemo(() => {
     const categoryCounts = data.reduce((acc, item) => {
       const category = item.type || "Unknown";
       acc[category] = (acc[category] || 0) + 1;
@@ -34,14 +49,14 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
     }));
   }, [data]);
 
-  const getColor = (pieSlice: { id: string | number }) => {
+  const getColor = (pieSlice: { readonly id: string | number }): string => {
     const type = pieSlice.id.toString().toLowerCase();
     switch (type) {
-      case "prophecy":
+      case DataType.PROPHECY:
         return "#ef4444";
-      case "scientific":
+      case DataType.SCIENTIFIC:
         return "#10b981";
-      case "qadr":
+      case DataType.QADR:
         return "#8b5cf6";
       default:
         return "#6b7280";
@@ -77,9 +92,18 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
           arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
           enableArcLinkLabels={true}
           enableArcLabels={true}
-          onMouseEnter={(datum, event) => {
+          onMouseEnter={(datum: ComputedDatum<ChartDataPoint>, event) => {
             console.log("Mouse enter:", datum);
-            setTooltip({ datum, x: event.clientX, y: event.clientY });
+            setTooltip({
+              datum: {
+                id: datum.id as string | number,
+                value: datum.value,
+                color: datum.color,
+                label: datum.label as string,
+              },
+              x: event.clientX,
+              y: event.clientY,
+            });
           }}
           onMouseLeave={() => {
             console.log("Mouse leave");

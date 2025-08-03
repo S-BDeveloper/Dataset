@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useRef } from "react";
 import { SmartSearchBar } from "./SmartSearchBar";
 import { AdvancedFilterPanel } from "./AdvancedFilterPanel";
 import { SearchResults } from "./SearchResults";
@@ -48,6 +48,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
       const [isSearching, setIsSearching] = useState(false);
       const [hasSearched, setHasSearched] = useState(false);
       const [actualResultsCount, setActualResultsCount] = useState(0);
+      const searchResultsRef = useRef<HTMLDivElement>(null);
 
       // Memoized processed data to prevent recalculation on every render
       const processedIslamicData = useMemo(() => {
@@ -67,6 +68,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           ].join(" "),
           source: item.sources?.source || "Islamic Data",
           data: item,
+          relevance: 100,
+          timestamp: new Date(),
         }));
       }, [data]);
 
@@ -84,6 +87,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           ].join(" "),
           source: `Quran - ${ayah.surah_name_en} ${ayah.ayah_no_surah}`,
           data: ayah,
+          relevance: 100,
+          timestamp: new Date(),
         }));
       }, [quranData]);
 
@@ -102,6 +107,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           content: Object.values(hadith).join(" "),
           source: "Sahih Bukhari",
           data: hadith,
+          relevance: 100,
+          timestamp: new Date(),
         }));
       }, [hadithData]);
 
@@ -119,8 +126,6 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
 
           // Simulate search delay for better UX
           setTimeout(() => {
-            // Scroll to top after search starts
-            window.scrollTo({ top: 0, behavior: "smooth" });
             let results: UnifiedSearchResult[] = [];
 
             // Process Islamic data
@@ -370,6 +375,16 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             setFilteredResults(results);
             setActualResultsCount(actualResultsCount); // Set actual results count
             setIsSearching(false);
+
+            // Auto-scroll to search results after search completes
+            setTimeout(() => {
+              if (searchResultsRef.current && results.length > 0) {
+                searchResultsRef.current.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }, 150); // Small delay to ensure results are rendered
           }, 100);
         },
         [
@@ -613,14 +628,16 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             </div>
           ) : (
             <>
-              <SearchResults
-                results={filteredResults}
-                searchQuery={searchQuery}
-                totalResults={filteredResults.length}
-                onFavorite={onFavorite}
-                isFavorite={isFavorite}
-                isLoading={isSearching}
-              />
+              <div ref={searchResultsRef}>
+                <SearchResults
+                  results={filteredResults}
+                  searchQuery={searchQuery}
+                  totalResults={filteredResults.length}
+                  onFavorite={onFavorite}
+                  isFavorite={isFavorite}
+                  isLoading={isSearching}
+                />
+              </div>
 
               {/* Enhanced Search Features */}
               <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
