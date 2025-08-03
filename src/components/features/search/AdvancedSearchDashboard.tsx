@@ -224,8 +224,6 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               });
             }
 
-           
-
             // Apply fulfillment status filters (for Islamic data only)
             if (filterState.fulfillmentStatus.length > 0) {
               results = results.filter((result) => {
@@ -416,8 +414,6 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
         setFilters(defaultFilters);
       }, []);
 
-      
-
       const islamicDataCount = useMemo(
         () => filteredResults.filter((r) => r.type === "islamic data").length,
         [filteredResults]
@@ -486,8 +482,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 </h2>
                 <p className="text-stone-600 dark:text-stone-400 max-w-2xl">
                   Search across all available Islamic knowledge including
-                  Prophecies, Prophetic Medicines, Quran verses, and Sahih
-                  Bukhari hadiths.
+                  Islamic data, Quran verses, and Sahih hadiths.
                 </p>
               </div>
               <div className="lg:w-96">
@@ -587,33 +582,29 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
 
           {/* Search Results - Only show if user has searched */}
           {!hasSearched ? (
-            <div className="text-center py-12 bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700">
-              <div className="max-w-md mx-auto">
-                <svg
-                  className="w-16 h-16 text-stone-400 mx-auto mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <h3 className="text-lg font-semibold text-stone-700 dark:text-stone-300 mb-2">
+            <div
+              className="py-12 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 relative overflow-hidden"
+              style={{
+                backgroundImage: `url('/src/assets/media-5000790.svg')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundBlendMode: "overlay",
+              }}
+            >
+              {/* Semi-transparent overlay to ensure text readability */}
+              <div className="absolute inset-0 bg-neutral-500/80 dark:bg-neutral-800/50"></div>
+              <div className="max-w-md mx-auto relative z-10">
+                <h3 className="text-lg font-semibold text-white dark:text-stone-300 mb-2">
                   Ready to Search
                 </h3>
-                <p className="text-stone-600 dark:text-stone-400 mb-4">
+                <p className="text-white dark:text-stone-400 mb-4">
                   Configure your search filters above and click "Confirm Search"
                   to begin exploring Islamic knowledge across Quran, Hadith, and
                   Islamic Data.
                 </p>
-                <div className="text-sm text-stone-500 dark:text-stone-500">
-                  <p>
-                    • Select data sources (Quran, Hadith, Islamic Data)
-                  </p>
+                <div className="text-sm text-neutral-300 dark:text-stone-500">
+                  <p>• Select data sources (Quran, Hadith, Islamic Data)</p>
                   <p>• Choose specific filters for each source</p>
                   <p>• Enter search terms (optional)</p>
                   <p>• Click "Confirm Search" when ready</p>
@@ -643,16 +634,14 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     </h5>
                     <ul className="space-y-1 text-stone-600 dark:text-stone-400">
                       <li>
-                        • <strong>Prophecies/Prophetic Medicines:</strong>{" "}
-                        Status of fulfillment
+                        • <strong>Prophecies:</strong> Status of fulfillment
                       </li>
                       <li>
                         • <strong>Quran Verses:</strong> Complete Quran with
                         English translations
                       </li>
                       <li>
-                        • <strong>Hadiths:</strong> Authentic
-                        narrations
+                        • <strong>Hadiths:</strong> Authentic narrations
                       </li>
                       <li>
                         • <strong>Cross-Reference:</strong> Find connections
@@ -677,9 +666,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                         range
                       </li>
                       <li>
-                        •{" "}
-                        <strong>Prophecies/Prophetic Medicines Filters:</strong>{" "}
-                        By type, category, fulfillment status
+                        • <strong>Islamic Data Filters:</strong> By type,
+                        category, fulfillment status
                       </li>
                       <li>
                         • <strong>Unified Search:</strong> Search across all
@@ -704,8 +692,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     <li>• Find Quran verses that mention specific topics</li>
                     <li>• Discover Hadiths related to your search terms</li>
                     <li>
-                      • Cross-reference Prophecies/ Prophetic Medicines with
-                      Quran and Hadith
+                      • Cross-reference Islamic data with Quran and Hadith
                     </li>
                     <li>• Use quotes for exact phrase matching</li>
                     <li>• Try different keywords to find more connections</li>

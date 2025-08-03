@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { PropheticStatusChart } from "./PropheticStatusChart";
-import { PropheticTimelineChart } from "./PropheticTimelineChart";
 import { SpatialProphecyMap } from "./SpatialProphecyMap";
-import { DataTypesChart } from "./DataTypesChart";
 import { CategoryPieChart } from "./CategoryPieChart";
 import type { IslamicData } from "../../../types/Types";
 
@@ -18,37 +16,63 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
   const [viewMode, setViewMode] = useState<"single" | "overview">("overview");
   const [activeChart, setActiveChart] = useState<string>("all");
 
+  // Create refs for each chart section for auto-scrolling
+  const categoryChartRef = useRef<HTMLDivElement>(null);
+  const statusChartRef = useRef<HTMLDivElement>(null);
+  const geographicChartRef = useRef<HTMLDivElement>(null);
+  const singleViewRef = useRef<HTMLDivElement>(null);
+
   const charts = [
-    {
-      id: "sign-types",
-      title: "Sign Types Distribution",
-      component: DataTypesChart,
-    },
     {
       id: "category-pie",
       title: "Category Distribution",
       component: CategoryPieChart,
+      ref: categoryChartRef,
+      notes:
+        "This chart shows the distribution of Islamic data across different categories.",
     },
     {
       id: "status",
       title: "Status Distribution",
       component: PropheticStatusChart,
-    },
-    {
-      id: "timeline",
-      title: "Timeline",
-      component: PropheticTimelineChart,
+      ref: statusChartRef,
+      notes:
+        "This chart displays the distribution of Prophetic and Quranic statuses across the Islamic dataset. It categorizes entries based on their prophetic significance, such as fulfilled prophecies, ongoing prophecies, and historical events. This visualization helps understand the different types of Prophetic and Quranic content and their current relevance in Islamic tradition.",
     },
     {
       id: "geographic",
       title: "Geographic Distribution",
       component: SpatialProphecyMap,
+      ref: geographicChartRef,
+      notes:
+        "This map shows the geographic distribution of Islamic data points across different regions. It visualizes where significant Islamic events, prophecies, and historical occurrences took place. This spatial representation helps understand the geographical spread of Islamic history and the regions that have been most significant in Islamic tradition and prophecy.",
     },
   ];
 
+  // Handle chart click with scroll functionality
   const handleChartClick = (chartId: string) => {
     setActiveChart(chartId);
     setViewMode("single");
+
+    // Scroll to the relevant chart section with better timing and positioning
+    setTimeout(() => {
+      // In single view mode, scroll to the single view container
+      if (singleViewRef.current) {
+        const element = singleViewRef.current;
+        const rect = element.getBoundingClientRect();
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+
+        // Calculate the target scroll position
+        const targetScrollTop = scrollTop + rect.top - 100; // 100px offset from top
+
+        // Smooth scroll to the target position
+        window.scrollTo({
+          top: targetScrollTop,
+          behavior: "smooth",
+        });
+      }
+    }, 150); // Increased delay to ensure view mode change is complete
   };
 
   const handleBackToOverview = () => {
@@ -63,7 +87,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
     const ChartComponent = selectedChart.component;
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-6" ref={singleViewRef}>
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-200">
             {selectedChart.title}
@@ -76,6 +100,16 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
           </button>
         </div>
         <ChartComponent data={data} />
+
+        {/* Chart Notes */}
+        <div className="mt-8 p-6 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
+          <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-3">
+            About This Chart
+          </h3>
+          <p className="text-stone-600 dark:text-stone-300 leading-relaxed">
+            {selectedChart.notes}
+          </p>
+        </div>
       </div>
     );
   }
@@ -90,7 +124,10 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
           {charts.map((chart) => (
             <button
               key={chart.id}
-              onClick={() => handleChartClick(chart.id)}
+              onClick={() => {
+                // Always switch to single view mode when clicking a chart tab
+                handleChartClick(chart.id);
+              }}
               className="px-3 py-1 text-sm bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors"
             >
               {chart.title}
@@ -103,7 +140,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
         {charts.map((chart) => {
           const ChartComponent = chart.component;
           return (
-            <div key={chart.id} className="w-full">
+            <div key={chart.id} className="w-full" ref={chart.ref}>
               <ChartComponent data={data} />
             </div>
           );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { AdvancedSearchDashboard } from "./features/search/AdvancedSearchDashboard";
 import { ChartsDashboard } from "./features/charts/ChartsDashboard";
 import { DataCard } from "./features/datacard/DataCard";
@@ -63,6 +63,48 @@ export default function HomePage({
 
   // Add loading state tracking
   const [isDataLoading, setIsDataLoading] = useState(true);
+
+  // Create refs for each content section for auto-scrolling
+  const searchContentRef = useRef<HTMLDivElement>(null);
+  const chartsContentRef = useRef<HTMLDivElement>(null);
+  const quranContentRef = useRef<HTMLDivElement>(null);
+  const hadithContentRef = useRef<HTMLDivElement>(null);
+
+  // Handle tab change with scroll functionality
+  const handleTabChange = (tabId: string) => {
+    // Small delay to ensure the content is rendered before scrolling
+    setTimeout(() => {
+      let targetRef: React.RefObject<HTMLDivElement> | null = null;
+
+      switch (tabId) {
+        case "all":
+          targetRef = cardsListRef;
+          break;
+        case "search":
+          targetRef = searchContentRef;
+          break;
+        case "charts":
+          targetRef = chartsContentRef;
+          break;
+        case "quran":
+          targetRef = quranContentRef;
+          break;
+        case "hadith":
+          targetRef = hadithContentRef;
+          break;
+        default:
+          targetRef = cardsListRef;
+      }
+
+      if (targetRef?.current) {
+        targetRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }
+    }, 100);
+  };
 
   // Check if data is still loading
   useEffect(() => {
@@ -163,7 +205,11 @@ export default function HomePage({
         {/* Main Content */}
         <div className="bg-white dark:bg-stone-800 rounded-lg shadow-2xl border border-stone-200 dark:border-stone-700">
           {/* Tab Navigation */}
-          <HomePageTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <HomePageTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onTabChange={handleTabChange}
+          />
 
           {/* Tab Content */}
           <div className="p-4 sm:p-6">
@@ -347,29 +393,39 @@ export default function HomePage({
             )}
 
             {activeTab === "search" && (
-              <AdvancedSearchDashboard
-                data={cards}
-                quranData={quranData}
-                hadithData={hadithData}
-                onFavorite={handleFavorite}
-                isFavorite={isFavorite}
-              />
+              <div ref={searchContentRef}>
+                <AdvancedSearchDashboard
+                  data={cards}
+                  quranData={quranData}
+                  hadithData={hadithData}
+                  onFavorite={handleFavorite}
+                  isFavorite={isFavorite}
+                />
+              </div>
             )}
 
-            {activeTab === "charts" && <ChartsDashboard data={cards} />}
+            {activeTab === "charts" && (
+              <div ref={chartsContentRef}>
+                <ChartsDashboard data={cards} />
+              </div>
+            )}
 
             {activeTab === "quran" && (
-              <QuranDashboard
-                onFavorite={handleFavorite}
-                isFavorite={isFavorite}
-              />
+              <div ref={quranContentRef}>
+                <QuranDashboard
+                  onFavorite={handleFavorite}
+                  isFavorite={isFavorite}
+                />
+              </div>
             )}
 
             {activeTab === "hadith" && (
-              <HadithDashboard
-                onFavorite={handleFavorite}
-                isFavorite={isFavorite}
-              />
+              <div ref={hadithContentRef}>
+                <HadithDashboard
+                  onFavorite={handleFavorite}
+                  isFavorite={isFavorite}
+                />
+              </div>
             )}
           </div>
         </div>

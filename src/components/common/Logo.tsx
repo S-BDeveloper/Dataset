@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import bookImage from "../../assets/5179ed07851a80de976e57843ec0f946.png";
 
 interface LogoProps {
@@ -7,10 +6,17 @@ interface LogoProps {
 }
 
 export function Logo({ className = "", showText = true }: LogoProps) {
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Perform a hard refresh by navigating to the current URL
+    window.location.href = "/";
+  };
+
   return (
-    <Link
-      to="/"
-      className={`flex items-center space-x-2 hover:opacity-80 transition-opacity ${className}`}
+    <a
+      href="/"
+      onClick={handleLogoClick}
+      className={`flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer ${className}`}
     >
       {/* Knowledge from Darkness Icon */}
       <div className="relative">
@@ -44,6 +50,6 @@ export function Logo({ className = "", showText = true }: LogoProps) {
           </span>
         </div>
       )}
-    </Link>
+    </a>
   );
 }

@@ -98,20 +98,13 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
 
+          
               <li>
                 <Link
-                  to="/submit-discovery"
+                  to="/charts"
                   className="text-stone-400 hover:text-green-400 transition-colors text-sm"
                 >
-                  Submit Islamic Data
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/stats"
-                  className="text-stone-400 hover:text-green-400 transition-colors text-sm"
-                >
-                  Statistics
+                  Charts & Analytics
                 </Link>
               </li>
             </ul>
@@ -130,7 +123,7 @@ const Footer: React.FC = () => {
             
               <li>
                 <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
-                  Historical Prophecies
+                  Prophecies
                 </span>
               </li>
               <li>

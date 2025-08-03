@@ -145,7 +145,6 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
           <div
             key={location.id}
             className="p-4 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 hover:shadow-lg transition-shadow duration-200 cursor-pointer group relative"
-            title={`${location.label}: ${location.value} data entries`}
           >
             <div className="flex items-center justify-between mb-2">
               <h4 className="font-semibold text-stone-900 dark:text-stone-100">

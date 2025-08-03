@@ -275,24 +275,27 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
       {/* Only render the panel if there are active filters or if expanded */}
       {activeFilterCount > 0 || isExpanded ? (
         <div className="mb-6">
-          <div className="bg-white dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+          <div className="bg-stone-200 dark:bg-stone-900 rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden">
             {/* Filter Header */}
-            <div className="p-4 border-b border-stone-200 dark:border-stone-700">
+            <div className="p-6 border-b border-stone-200 dark:border-stone-700 bg-gradient-to-r from-stone-50 to-amber-50/30 dark:from-stone-800 dark:to-stone-700">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-lg font-semibold text-stone-700 dark:text-stone-300">
-                    {t("search.advanced")}
-                  </h3>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-1 h-8 bg-gradient-to-b from-emerald-500 to-green-600 dark:from-emerald-400 dark:to-green-500 rounded-full"></div>
+                    <h3 className="text-xl font-bold text-stone-800 dark:text-stone-200">
+                      {t("search.advanced")}
+                    </h3>
+                  </div>
                   {activeFilterCount > 0 && (
                     <span className="px-2 py-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200 text-xs font-medium rounded-full">
                       {activeFilterCount} {t("search.active")}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <button
                     onClick={toggleExpanded}
-                    className="text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200"
+                    className="p-2 text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg transition-all duration-200"
                   >
                     {isExpanded ? (
                       <svg
@@ -324,12 +327,14 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                       </svg>
                     )}
                   </button>
-                  <button
-                    onClick={onClearFilters}
-                    className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium"
-                  >
-                    {t("search.clearAll")}
-                  </button>
+                  {activeFilterCount > 0 && (
+                    <button
+                      onClick={onClearFilters}
+                      className="px-3 py-1.5 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200 border border-red-200 dark:border-red-800"
+                    >
+                      {t("search.clearAll")}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -369,7 +374,10 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 {/* Quran-Specific Filters */}
                 {filters.dataSources.includes("quran") && (
                   <div className="space-y-4">
-                    <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300"></h4>
+                    <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-3 flex items-center gap-2">
+                      <div className="w-1 h-4 bg-blue-500 rounded-full"></div>
+                      {t("quran.filter.surah")}
+                    </h4>
 
                     {/* Surah Filter */}
                     <div>
@@ -491,7 +499,8 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 {/* Hadith-Specific Filters */}
                 {filters.dataSources.includes("hadith") && (
                   <div className="space-y-4">
-                    <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+                    <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3 flex items-center gap-2">
+                      <div className="w-1 h-4 bg-purple-500 rounded-full"></div>
                       Hadith Filters
                     </h4>
 
@@ -583,7 +592,8 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 {/* Islamic Data Filters */}
                 {filters.dataSources.includes("islamic data") && (
                   <div className="space-y-4">
-                    <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+                    <h4 className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-3 flex items-center gap-2">
+                      <div className="w-1 h-4 bg-orange-500 rounded-full"></div>
                       Islamic Data Filters
                     </h4>
 

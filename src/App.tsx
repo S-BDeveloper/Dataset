@@ -21,8 +21,6 @@ import type { IslamicDataFilters } from "./types/Types";
 // Lazy load large components
 const HomePage = lazy(() => import("./components/HomePage"));
 const Favorites = lazy(() => import("./pages/Favorites"));
-const SubmitDiscovery = lazy(() => import("./pages/SubmitDiscovery"));
-const AdminReview = lazy(() => import("./pages/AdminReview"));
 
 function App({ loadingDelay = 1000 }) {
   const initialFilters: IslamicDataFilters = {
@@ -179,15 +177,6 @@ function App({ loadingDelay = 1000 }) {
                           />
                         }
                       />
-
-                      {/* Submit Data Route */}
-                      <Route
-                        path="/submit-data"
-                        element={<SubmitDiscovery />}
-                      />
-
-                      {/* Admin Review Route */}
-                      <Route path="/admin" element={<AdminReview />} />
                     </Routes>
                   </Suspense>
                 </main>

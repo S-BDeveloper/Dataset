@@ -210,7 +210,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
               onFocus={() => setShowSuggestions(true)}
               className="block w-full pl-10 pr-10 py-3 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-400 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
               placeholder={placeholder}
-              aria-label="Search signs and guidance"
+              aria-label="Search Islamic Data"
             />
             {query && (
               <button
@@ -300,7 +300,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
       {mode === "basic" && filters && onFiltersChange && (
         <form
           className="flex flex-wrap gap-4 items-center bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6"
-          aria-label="Search and filter signs and guidance"
+          aria-label="Search and filter Islamic Data"
         >
           {/* Search Input */}
           <div className="flex-1 min-w-[200px]">

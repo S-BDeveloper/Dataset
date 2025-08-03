@@ -130,7 +130,7 @@ export function HadithDashboard({
                 />
                 <button
                   type="submit"
-                  className="px-3 sm:px-4 py-2 bg-stone-600 text-white rounded-r-lg hover:bg-stone-700 transition-colors text-sm sm:text-base"
+                  className="px-3 sm:px-4 py-2 bg-stone-600 text-white rounded-r-lg hover:bg-purple-700 transition-colors text-sm sm:text-base bg-purple-500 dark:bg-purple-700 dark:hover:bg-purple-800"
                 >
                   Search
                 </button>

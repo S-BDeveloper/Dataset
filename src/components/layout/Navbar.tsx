@@ -86,10 +86,6 @@ export default function Navbar() {
                   </span>
                 )}
               </NavLink>
-              <NavLink to="/submit-data">{t("nav.submit")}</NavLink>
-              {hasPermission(user, "moderate:content") && (
-                <NavLink to="/admin">{t("nav.admin")}</NavLink>
-              )}
             </div>
 
             {/* Right side controls */}
@@ -173,17 +169,6 @@ export default function Navbar() {
                     </span>
                   )}
                 </NavLink>
-                <NavLink
-                  to="/submit-data"
-                  className="block px-3 py-2 rounded-md"
-                >
-                  {t("nav.submit")}
-                </NavLink>
-                {hasPermission(user, "moderate:content") && (
-                  <NavLink to="/admin" className="block px-3 py-2 rounded-md">
-                    {t("nav.admin")}
-                  </NavLink>
-                )}
 
                 {/* Mobile auth buttons */}
                 {!user ? (

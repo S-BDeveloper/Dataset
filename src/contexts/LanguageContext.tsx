@@ -8,8 +8,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Navigation
     "nav.home": "Home",
     "nav.favorites": "Favorites",
-    "nav.submit": "Submit Data",
-    "nav.admin": "Admin Review",
     "nav.login": "Login",
     "nav.signup": "Sign Up",
     "nav.logout": "Logout",
@@ -123,8 +121,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Arabic translations
     "nav.home": "الرئيسية",
     "nav.favorites": "المفضلة",
-    "nav.submit": "إرسال اكتشاف",
-    "nav.admin": "مراجعة الإدارة",
     "nav.login": "تسجيل الدخول",
     "nav.signup": "إنشاء حساب",
     "nav.logout": "تسجيل الخروج",
@@ -227,8 +223,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Urdu translations
     "nav.home": "ہوم",
     "nav.favorites": "پسندیدہ",
-    "nav.submit": "دریافت جمع کریں",
-    "nav.admin": "ایڈمن جائزہ",
     "nav.login": "لاگ ان",
     "nav.signup": "سائن اپ",
     "nav.logout": "لاگ آؤٹ",
@@ -333,7 +327,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.home": "Ana Sayfa",
     "nav.favorites": "Favoriler",
     "nav.submit": "Keşif Gönder",
-    "nav.admin": "Admin İnceleme",
     "nav.login": "Giriş Yap",
     "nav.signup": "Kayıt Ol",
     "nav.logout": "Çıkış Yap",
@@ -437,8 +430,6 @@ const translations: Record<Language, Record<string, string>> = {
     // French translations
     "nav.home": "Accueil",
     "nav.favorites": "Favoris",
-    "nav.submit": "Soumettre une Découverte",
-    "nav.admin": "Révision Admin",
     "nav.login": "Connexion",
     "nav.signup": "Inscription",
     "nav.logout": "Déconnexion",
@@ -545,8 +536,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Spanish translations
     "nav.home": "Inicio",
     "nav.favorites": "Favoritos",
-    "nav.submit": "Enviar Descubrimiento",
-    "nav.admin": "Revisión Admin",
     "nav.login": "Iniciar Sesión",
     "nav.signup": "Registrarse",
     "nav.logout": "Cerrar Sesión",
@@ -650,8 +639,6 @@ const translations: Record<Language, Record<string, string>> = {
     // German translations
     "nav.home": "Startseite",
     "nav.favorites": "Favoriten",
-    "nav.submit": "Entdeckung Einreichen",
-    "nav.admin": "Admin Überprüfung",
     "nav.login": "Anmelden",
     "nav.signup": "Registrieren",
     "nav.logout": "Abmelden",
