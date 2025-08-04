@@ -81,35 +81,109 @@ body {
   background-clip: padding-box;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--stone);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
- 
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  border: none;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Subtle scroll buttons */
+::-webkit-scrollbar-button {
+  display: block;
+  height: 4px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-button:single-button {
+  background-color: transparent;
+  display: block;
+  border-style: solid;
+  height: 4px;
+  width: 8px;
+}
+
+/* Very subtle up arrow */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  border-width: 0 3px 3px 3px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.15) transparent;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+  border-color: transparent transparent rgba(0, 0, 0, 0.25) transparent;
+}
+
+/* Very subtle down arrow */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  border-width: 3px 3px 0 3px;
+  border-color: rgba(0, 0, 0, 0.15) transparent transparent transparent;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment:hover {
+  border-color: rgba(0, 0, 0, 0.25) transparent transparent transparent;
 }
 
 /* Dark mode scrollbar */
 [data-theme="dark"] ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: var(--hover-bg-green);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Dark mode subtle scroll buttons */
+[data-theme="dark"] ::-webkit-scrollbar-button {
+  background: transparent;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-button:single-button {
+  background-color: transparent;
+}
+
+[data-theme="dark"]
+  ::-webkit-scrollbar-button:single-button:vertical:decrement {
+  border-color: transparent transparent rgba(255, 255, 255, 0.15) transparent;
+}
+
+[data-theme="dark"]
+  ::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+  border-color: transparent transparent rgba(255, 255, 255, 0.25) transparent;
+}
+
+[data-theme="dark"]
+  ::-webkit-scrollbar-button:single-button:vertical:increment {
+  border-color: rgba(255, 255, 255, 0.15) transparent transparent transparent;
+}
+
+[data-theme="dark"]
+  ::-webkit-scrollbar-button:single-button:vertical:increment:hover {
+  border-color: rgba(255, 255, 255, 0.25) transparent transparent transparent;
 }
 
 /* Arabic font support */

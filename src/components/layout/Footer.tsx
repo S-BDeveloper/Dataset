@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "../common";
+import { CopyrightNotice } from "../common/CopyrightNotice";
 
 const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="bg-stone-900 dark:bg-stone-950 text-stone-300 w-full overflow-hidden">
       <div className="container mx-auto max-w-7xl px-2 sm:px-4 py-12 w-full overflow-hidden">
@@ -13,13 +12,11 @@ const Footer: React.FC = () => {
           {/* App Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-             
-            
               <Logo />
-              
             </div>
             <p className="text-stone-400 text-sm leading-relaxed">
-              Showcasing the miraculous signs of Allah through the Quran, Hadith, and scientific discoveries.
+              Showcasing the miraculous signs of Allah through the Quran,
+              Hadith, and scientific discoveries.
             </p>
             <div className="flex space-x-4">
               <a
@@ -98,7 +95,6 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
 
-          
               <li>
                 <Link
                   to="/charts"
@@ -114,21 +110,18 @@ const Footer: React.FC = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Categories</h3>
             <ul className="space-y-2">
-             
               <li>
                 <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
                   Scientific Discoveries
                 </span>
               </li>
-            
+
               <li>
                 <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
                   Prophecies
                 </span>
               </li>
-              <li>
-             
-              </li>
+              <li></li>
             </ul>
           </div>
 
@@ -194,33 +187,9 @@ const Footer: React.FC = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-stone-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-start items-start space-y-4 md:space-y-0">
             {/* Copyright */}
-            <div className="text-stone-400 text-sm">
-              © {currentYear} Reflect & Implement. All rights reserved.
-            </div>
-
-            {/* Legal Links */}
-            <div className="flex space-x-6 text-sm">
-              <a
-                href="#"
-                className="text-stone-400 hover:text-green-400 transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-stone-400 hover:text-green-400 transition-colors"
-              >
-                Terms of Service
-              </a>
-              <a
-                href="#"
-                className="text-stone-400 hover:text-green-400 transition-colors"
-              >
-                Cookie Policy
-              </a>
-            </div>
+            <CopyrightNotice />
           </div>
 
           {/* Mission Statement */}
@@ -228,7 +197,8 @@ const Footer: React.FC = () => {
             <p className="text-stone-500 text-xs leading-relaxed max-w-2xl mx-auto">
               Our mission is to showcase the miraculous signs of Allah through
               authentic Islamic data, fostering a deeper true understanding and
-              appreciation of Islamic knowledge while promoting enlightenment among believers and seekers of truth.
+              appreciation of Islamic knowledge while promoting enlightenment
+              among believers and seekers of truth.
             </p>
           </div>
         </div>

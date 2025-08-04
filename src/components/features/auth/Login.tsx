@@ -76,7 +76,7 @@ const Login: React.FC<LoginProps> = ({ onClose, onSwitchToSignup }) => {
             type="email"
             autoComplete="email"
             required
-            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
@@ -96,7 +96,7 @@ const Login: React.FC<LoginProps> = ({ onClose, onSwitchToSignup }) => {
             type="password"
             autoComplete="current-password"
             required
-            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}

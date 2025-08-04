@@ -64,6 +64,46 @@ export default function Navbar() {
     </Link>
   );
 
+  // Navigation links array to avoid duplication
+  const navigationLinks = [
+    {
+      to: "/",
+      label: t("nav.home"),
+      showBadge: false,
+      badgeCount: 0,
+    },
+    {
+      to: "/favorites",
+      label: t("nav.favorites"),
+      showBadge: true,
+      badgeCount: favorites.length,
+    },
+  ];
+
+  // Render navigation links
+  const renderNavLinks = (isMobile = false) => (
+    <>
+      {navigationLinks.map((link) => (
+        <NavLink
+          key={link.to}
+          to={link.to}
+          className={isMobile ? "block px-3 py-2 rounded-md" : ""}
+        >
+          {link.label}
+          {link.showBadge && link.badgeCount > 0 && (
+            <span
+              className={`${
+                isMobile ? "ml-2" : "ml-1"
+              } inline-flex items-center justify-center px-2 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full`}
+            >
+              {link.badgeCount}
+            </span>
+          )}
+        </NavLink>
+      ))}
+    </>
+  );
+
   return (
     <>
       <nav className="bg-cyan-50/95 dark:bg-green-900/30 shadow-lg border-b border-green-300/70 dark:border-green-700 sticky top-0 z-40 w-full overflow-hidden">
@@ -76,15 +116,7 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <NavLink to="/">{t("nav.home")}</NavLink>
-              <NavLink to="/favorites">
-                {t("nav.favorites")}
-                {favorites.length > 0 && (
-                  <span className="ml-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">
-                    {favorites.length}
-                  </span>
-                )}
-              </NavLink>
+              {renderNavLinks(false)}
             </div>
 
             {/* Right side controls */}
@@ -157,17 +189,7 @@ export default function Navbar() {
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-stone-800 shadow-lg border-t border-stone-200 dark:border-stone-700">
-                <NavLink to="/" className="block px-3 py-2 rounded-md">
-                  {t("nav.home")}
-                </NavLink>
-                <NavLink to="/favorites" className="block px-3 py-2 rounded-md">
-                  {t("nav.favorites")}
-                  {favorites.length > 0 && (
-                    <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">
-                      {favorites.length}
-                    </span>
-                  )}
-                </NavLink>
+                {renderNavLinks(true)}
 
                 {/* Mobile auth buttons */}
                 {!user ? (
@@ -213,7 +235,7 @@ export default function Navbar() {
       {/* Authentication Modals */}
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-lg shadow-xl max-w-md w-full">
+          <div className="bg-white dark:bg-stone-800 rounded-xl shadow-xl max-w-md w-full">
             <Login
               onClose={closeModals}
               onSwitchToSignup={() => {
@@ -227,7 +249,7 @@ export default function Navbar() {
 
       {showSignupModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-lg shadow-xl max-w-md w-full">
+          <div className="bg-white dark:bg-stone-800 rounded-xl shadow-xl max-w-md w-full">
             <Signup
               onClose={closeModals}
               onSwitchToLogin={() => {

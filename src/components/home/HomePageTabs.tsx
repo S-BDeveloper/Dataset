@@ -32,7 +32,7 @@ export const HomePageTabs: React.FC<HomePageTabsProps> = ({
   };
 
   return (
-    <div className="border-b border-neutral-200 dark:border-stone-700 bg-stone-200 dark:bg-stone-700 rounded-t-2xl">
+    <div className="border-b border-neutral-200 dark:border-stone-700 bg-stone-200 dark:bg-stone-700 rounded-t-md">
       <div className="flex flex-wrap gap-2 p-4 sm:p-6 justify-center sm:justify-start">
         {tabs.map((tab) => (
           <button

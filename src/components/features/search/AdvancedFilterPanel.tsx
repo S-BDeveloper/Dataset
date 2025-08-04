@@ -345,15 +345,16 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
             {isExpanded && (
               <div className="p-4 space-y-6">
                 {/* Data Sources Filter */}
-                <div>
-                  <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-3">
+                <div className="bg-stone-50 dark:bg-stone-800 rounded-lg p-4 border border-stone-200 dark:border-stone-700">
+                  <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-3 flex items-center gap-2">
+                    <div className="w-1 h-4 bg-stone-400 dark:bg-stone-500 rounded-full"></div>
                     {t("search.dataSources")}
                   </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {dataSourceOptions.map((option) => (
                       <label
                         key={option.value}
-                        className="flex items-center space-x-2 cursor-pointer"
+                        className="flex items-center space-x-2 cursor-pointer p-2 rounded-md hover:bg-white dark:hover:bg-stone-700 transition-colors"
                       >
                         <input
                           type="checkbox"
@@ -365,7 +366,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                           }
                           className="rounded border-stone-300 text-green-600 focus:ring-green-500"
                         />
-                        <span className="text-sm text-stone-600 dark:text-stone-400">
+                        <span className="text-sm text-stone-600 dark:text-stone-400 font-medium">
                           {option.label}
                         </span>
                       </label>
@@ -373,9 +374,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                   </div>
                 </div>
 
+                {/* Separator */}
+                <hr className="border-stone-300 dark:border-stone-600 my-6" />
+
                 {/* Quran-Specific Filters */}
                 {filters.dataSources.includes("quran") && (
-                  <div className="space-y-4">
+                  <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800 space-y-4">
                     <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-3 flex items-center gap-2">
                       <div className="w-1 h-4 bg-blue-500 rounded-full"></div>
                       {t("quran.filter.surah")}
@@ -397,7 +401,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                             : "Select All"}
                         </button>
                       </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-32 overflow-y-auto">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-32 overflow-y-auto bg-white dark:bg-stone-700 rounded-lg p-3 border border-stone-300 dark:border-stone-600 shadow-sm custom-scrollbar">
                         {uniqueQuranSurahs.map(({ number, name }) => (
                           <label
                             key={number}
@@ -498,9 +502,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                   </div>
                 )}
 
+                {/* Separator */}
+                <hr className="border-stone-300 dark:border-stone-600 my-6" />
+
                 {/* Hadith-Specific Filters */}
                 {filters.dataSources.includes("hadith") && (
-                  <div className="space-y-4">
+                  <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800 space-y-4">
                     <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3 flex items-center gap-2">
                       <div className="w-1 h-4 bg-purple-500 rounded-full"></div>
                       Hadith Filters
@@ -562,7 +569,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                             : "Select All"}
                         </button>
                       </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto bg-white dark:bg-stone-700 rounded-lg p-3 border border-stone-300 dark:border-stone-600 shadow-sm custom-scrollbar">
                         {uniqueHadithCategories.map((chapter) => (
                           <label
                             key={chapter}
@@ -591,9 +598,12 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                   </div>
                 )}
 
+                {/* Separator */}
+                <hr className="border-stone-300 dark:border-stone-600 my-6" />
+
                 {/* Islamic Data Filters */}
                 {filters.dataSources.includes("islamic data") && (
-                  <div className="space-y-4">
+                  <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4 border border-orange-200 dark:border-orange-800 space-y-4">
                     <h4 className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-3 flex items-center gap-2">
                       <div className="w-1 h-4 bg-orange-500 rounded-full"></div>
                       Islamic Data Filters
@@ -735,6 +745,9 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                     </div>
                   </div>
                 )}
+
+                {/* Separator */}
+                <hr className="border-stone-300 dark:border-stone-600 my-6" />
 
                 {/* Search Fields Filter */}
                 <div>

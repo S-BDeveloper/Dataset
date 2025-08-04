@@ -59,21 +59,7 @@
       "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
     }
   },
-  {
-    "type": "scientific",
-    "title": "Mountains as Earth's Stabilizing Pegs",
-    "description": "The Quran describes mountains as pegs that stabilize the earth's crust",
-    "source": "Quran 78:6-7",
-    "status": "Proven",
-    "notes": "Modern geology confirms that mountains have deep roots and play a role in stabilizing the earth's crust, similar to pegs anchoring a tent.",
-    "sources": {
-      "primary": "Quran - Surah An-Naba 78:6-7",
-      "verification": "Direct Quranic reference",
-      "methodology": "Direct Quranic text analysis",
-      "references": ["https://quran.com/78/6-7"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
-    }
-  },
+
   {
     "type": "scientific",
     "title": "Barrier Between Salt and Fresh Water",
@@ -180,6 +166,186 @@
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/30/41"],
       "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Big Bang Theory in Quran",
+    "description": "The Quran describes the universe beginning from a single point, matching modern cosmology",
+    "source": "Quran 21:30",
+    "status": "Proven",
+    "notes": "Modern cosmology confirms the universe began from a singularity, exactly as described in the Quran: 'Do the disbelievers not see that the heavens and earth were joined together, then We separated them?'",
+    "sources": {
+      "primary": "Quran - Surah Al-Anbiya 21:30",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/21/30"],
+      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Universe Expansion",
+    "description": "The Quran describes the universe as expanding, confirmed by modern astronomy",
+    "source": "Quran 51:47",
+    "status": "Proven",
+    "notes": "Modern astronomy confirms the universe is expanding, as described in the Quran: 'And the heaven We constructed with strength, and indeed, We are expanding it.'",
+    "sources": {
+      "primary": "Quran - Surah Adh-Dhariyat 51:47",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/51/47"],
+      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Fingerprint Uniqueness",
+    "description": "The Quran mentions that Allah will resurrect humans with their complete fingerprints",
+    "source": "Quran 75:4",
+    "status": "Proven",
+    "notes": "Modern forensic science confirms that fingerprints are unique to each individual, supporting the Quranic claim that Allah can resurrect people with their complete identity.",
+    "sources": {
+      "primary": "Quran - Surah Al-Qiyamah 75:4",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/75/4"],
+      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Deep Sea Darkness",
+    "description": "The Quran describes the darkness in the depths of the ocean",
+    "source": "Quran 24:40",
+    "status": "Proven",
+    "notes": "Modern oceanography confirms that light cannot penetrate deep ocean layers, creating complete darkness as described in the Quran.",
+    "sources": {
+      "primary": "Quran - Surah An-Nur 24:40",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/24/40"],
+      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Earth's Rotation",
+    "description": "The Quran describes mountains moving like clouds, indicating Earth's rotation",
+    "source": "Quran 27:88",
+    "status": "Proven",
+    "notes": "Modern geology confirms Earth's rotation, which makes mountains appear to move like clouds from a cosmic perspective.",
+    "sources": {
+      "primary": "Quran - Surah An-Naml 27:88",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/27/88"],
+      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Plate Tectonics",
+    "description": "The Quran describes mountains as pegs that stabilize the Earth's crust",
+    "source": "Quran 21:31",
+    "status": "Proven",
+    "notes": "Modern geology confirms that mountains have deep roots and play a role in stabilizing the Earth's crust through plate tectonics.",
+    "sources": {
+      "primary": "Quran - Surah Al-Anbiya 21:31",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/21/31"],
+      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+    }
+  },
+  {
+    "type": "prophecy",
+    "title": "Conquest of Constantinople",
+    "description": "The Prophet prophesied the conquest of Constantinople by Muslims",
+    "source": "Sahih Bukhari 2924",
+    "status": "Fulfilled",
+    "notes": "Constantinople was conquered by Sultan Mehmed II in 1453 CE, fulfilling the Prophet's prophecy.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:2924"],
+      "source": "Imam Bukhari, 9th century CE"
+    }
+  },
+  {
+    "type": "prophecy",
+    "title": "Spread of Islam Worldwide",
+    "description": "The Prophet prophesied that Islam would reach all corners of the earth",
+    "source": "Sahih Muslim 2889",
+    "status": "Fulfilled",
+    "notes": "Islam has spread to every continent and is practiced by over 1.8 billion people worldwide.",
+    "sources": {
+      "primary": "Sahih Muslim - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/muslim:2889"],
+      "source": "Imam Muslim, 9th century CE"
+    }
+  },
+  {
+    "type": "prophecy",
+    "title": "Dajjal (False Messiah)",
+    "description": "The Prophet prophesied the appearance and characteristics of Dajjal",
+    "source": "Sahih Muslim 2933",
+    "status": "Yet to Happen",
+    "notes": "Dajjal is described as a one-eyed false messiah who will appear before the Day of Judgment.",
+    "sources": {
+      "primary": "Sahih Muslim - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/muslim:2933"],
+      "source": "Imam Muslim, 9th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Black Seed Benefits",
+    "description": "The Prophet described black seed as a cure for every disease except death",
+    "source": "Sahih Bukhari 5687",
+    "status": "Proven",
+    "notes": "Modern research confirms black seed's anti-inflammatory, antioxidant, and immune-boosting properties.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:5687"],
+      "source": "Imam Bukhari, 9th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Cupping Therapy Benefits",
+    "description": "The Prophet recommended cupping therapy for various ailments",
+    "source": "Sahih Bukhari 5371",
+    "status": "Proven",
+    "notes": "Modern studies confirm cupping therapy's effectiveness for pain relief, blood circulation, and detoxification.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:5371"],
+      "source": "Imam Bukhari, 9th century CE"
+    }
+  },
+  {
+    "type": "scientific",
+    "title": "Fasting Benefits",
+    "description": "The Prophet described fasting as a shield and recommended regular fasting",
+    "source": "Sahih Bukhari 1895",
+    "status": "Proven",
+    "notes": "Modern research confirms fasting's benefits for metabolism, cellular repair, and disease prevention.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:1895"],
+      "source": "Imam Bukhari, 9th century CE"
     }
   }
 ]

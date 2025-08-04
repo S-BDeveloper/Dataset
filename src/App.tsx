@@ -18,6 +18,15 @@ const FavoritesPage = lazy(() =>
 const ProfilePage = lazy(() =>
   import("./pages/Profile").then((module) => ({ default: module.default }))
 );
+const CopyrightPage = lazy(() =>
+  import("./pages/Copyright").then((module) => ({ default: module.default }))
+);
+const TermsPage = lazy(() =>
+  import("./pages/Terms").then((module) => ({ default: module.default }))
+);
+const PrivacyPage = lazy(() =>
+  import("./pages/Privacy").then((module) => ({ default: module.default }))
+);
 
 // Loading component for lazy-loaded routes
 const PageLoader: React.FC = () => (
@@ -39,6 +48,9 @@ function App() {
                   <Route path="/" element={<HomePageWrapper />} />
                   <Route path="/favorites" element={<FavoritesPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/copyright" element={<CopyrightPage />} />
+                  <Route path="/terms" element={<TermsPage />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
                 </Routes>
               </Suspense>
             </main>

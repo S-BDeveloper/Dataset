@@ -610,21 +610,106 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               {/* Semi-transparent overlay to ensure text readability */}
               <div className="absolute inset-0 bg-neutral-500/80 dark:bg-neutral-800/50"></div>
               <div className="max-w-md mx-auto relative z-10">
-                <h3 className="text-lg font-semibold text-white dark:text-stone-300 mb-2">
+                <h3
+                  className="text-lg font-semibold mb-2 transform hover:scale-101 transition-transform duration-300 search-ready-title"
+                  style={{
+                    color: "#F4E4BC",
+                    textShadow: `
+                      0 0 3px rgba(244, 228, 188, 0.4),
+                      0 0 6px rgba(244, 228, 188, 0.2),
+                      0 1px 2px rgba(0, 0, 0, 0.4),
+                      0 2px 4px rgba(0, 0, 0, 0.2),
+                      1px 1px 0px rgba(255, 215, 0, 0.1)
+                    `,
+                    filter: "drop-shadow(0 0 4px rgba(244, 228, 188, 0.1))",
+                    transform: "perspective(1000px) rotateX(1deg)",
+                    transformStyle: "preserve-3d",
+                  }}
+                >
                   Ready to Search
                 </h3>
-                <p className="text-white dark:text-stone-400 mb-4">
+                <p
+                  className="mb-4 transform hover:scale-101 transition-transform duration-300 search-ready-description"
+                  style={{
+                    color: "#E8D5B7",
+                    textShadow: `
+                      0 0 2px rgba(232, 213, 183, 0.3),
+                      0 0 4px rgba(232, 213, 183, 0.2),
+                      0 1px 1px rgba(0, 0, 0, 0.3),
+                      0 1px 2px rgba(0, 0, 0, 0.2),
+                      1px 1px 0px rgba(255, 215, 0, 0.1)
+                    `,
+                    filter: "drop-shadow(0 0 3px rgba(232, 213, 183, 0.1))",
+                    transform: "perspective(1000px) rotateX(0.5deg)",
+                    transformStyle: "preserve-3d",
+                  }}
+                >
                   Configure your search filters above and click "Confirm Search"
                   to begin exploring Islamic knowledge across Quran, Hadith, and
                   Islamic Data.
                 </p>
-                <div className="text-sm text-neutral-300 dark:text-stone-500">
+                <div
+                  className="text-sm transform hover:scale-101 transition-transform duration-300 search-ready-list"
+                  style={{
+                    color: "#F4E4BC",
+                    textShadow: `
+                      0 0 2px rgba(244, 228, 188, 0.3),
+                      0 0 4px rgba(244, 228, 188, 0.2),
+                      0 1px 1px rgba(0, 0, 0, 0.3),
+                      0 1px 2px rgba(0, 0, 0, 0.2),
+                      1px 1px 0px rgba(255, 215, 0, 0.1)
+                    `,
+                    filter: "drop-shadow(0 0 3px rgba(244, 228, 188, 0.1))",
+                    transform: "perspective(1000px) rotateX(0.3deg)",
+                    transformStyle: "preserve-3d",
+                  }}
+                >
                   <p>• Select data sources (Quran, Hadith, Islamic Data)</p>
                   <p>• Choose specific filters for each source</p>
                   <p>• Enter search terms (optional)</p>
                   <p>• Click "Confirm Search" when ready</p>
                 </div>
               </div>
+
+              {/* Dark mode styles for search ready section */}
+              <style
+                dangerouslySetInnerHTML={{
+                  __html: `
+                  @media (prefers-color-scheme: dark) {
+                    .dark .search-ready-title {
+                      color: #10b981 !important;
+                      text-shadow: 
+                        0 0 3px rgba(16, 185, 129, 0.4),
+                        0 0 6px rgba(16, 185, 129, 0.2),
+                        0 1px 2px rgba(0, 0, 0, 0.4),
+                        0 2px 4px rgba(0, 0, 0, 0.2),
+                        1px 1px 0px rgba(16, 185, 129, 0.1) !important;
+                      filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.1)) !important;
+                    }
+                    .dark .search-ready-description {
+                      color: #10b981 !important;
+                      text-shadow: 
+                        0 0 2px rgba(209, 213, 219, 0.3),
+                        0 0 4px rgba(209, 213, 219, 0.2),
+                        0 1px 1px rgba(0, 0, 0, 0.3),
+                        0 1px 2px rgba(0, 0, 0, 0.2),
+                        1px 1px 0px rgba(209, 213, 219, 0.1) !important;
+                      filter: drop-shadow(0 0 3px rgba(209, 213, 219, 0.1)) !important;
+                    }
+                    .dark .search-ready-list {
+                      color: #10b981 !important;
+                      text-shadow: 
+                        0 0 2px rgba(16, 185, 129, 0.3),
+                        0 0 4px rgba(16, 185, 129, 0.2),
+                        0 1px 1px rgba(0, 0, 0, 0.3),
+                        0 1px 2px rgba(0, 0, 0, 0.2),
+                        1px 1px 0px rgba(16, 185, 129, 0.1) !important;
+                      filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.1)) !important;
+                    }
+                  }
+                `,
+                }}
+              />
             </div>
           ) : (
             <>

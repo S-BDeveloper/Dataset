@@ -68,7 +68,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
     : { top: 40, right: 80, bottom: 80, left: 80 };
 
   return (
-    <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-lg shadow-lg p-4 flex flex-col relative">
+    <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-xl shadow-lg p-4 flex flex-col relative">
       <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
         Islamic Data Category Distribution
       </h3>
@@ -146,13 +146,23 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
           <div style={{ fontSize: "13px", marginBottom: "4px" }}>
             Count: {tooltip.datum.value} entries
           </div>
-          <div style={{ fontSize: "12px", opacity: 0.8 }}>
+          <div style={{ fontSize: "12px", opacity: 0.8, marginBottom: "4px" }}>
             {(
               (tooltip.datum.value /
                 chartData.reduce((sum, item) => sum + item.value, 0)) *
               100
             ).toFixed(1)}
             % of total data
+          </div>
+          <div style={{ fontSize: "11px", opacity: 0.7, fontStyle: "italic" }}>
+            {tooltip.datum.id === "Prophecy" &&
+              "Prophecies and divine revelations by the Prophet Muhammad (PBUH)"}
+            {tooltip.datum.id === "Scientific" &&
+              "Scientific facts and discoveries mentioned in Islamic texts"}
+            {tooltip.datum.id === "Qadr" &&
+              "Divine decree and predetermined events in Islamic belief"}
+            {tooltip.datum.id === "Unknown" &&
+              "Entries with unclassified or missing category"}
           </div>
         </div>
       )}

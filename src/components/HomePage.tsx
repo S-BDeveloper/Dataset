@@ -203,7 +203,7 @@ export default function HomePage({
         />
 
         {/* Main Content */}
-        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-2xl border border-stone-200 dark:border-stone-700">
+        <div className="bg-white dark:bg-stone-800 rounded-xl shadow-2xl border border-stone-200 dark:border-stone-700">
           {/* Tab Navigation */}
           <HomePageTabs
             activeTab={activeTab}
@@ -225,14 +225,14 @@ export default function HomePage({
                       onChange={(e) =>
                         setFilters({ ...filters, searchTerm: e.target.value })
                       }
-                      className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                     <select
                       value={filters.type}
                       onChange={(e) =>
                         setFilters({ ...filters, type: e.target.value })
                       }
-                      className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
                       <option value="">All Types</option>
                       {types.map((type) => (

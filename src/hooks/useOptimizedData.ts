@@ -1,190 +1,159 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { dataService } from "../services/dataService";
-import type { IslamicData } from "../types/Types";
-// import { useAppStore } from "../store/useAppStore";
+import { useEffect, useCallback } from "react";
+import { useAppStore } from "../store/useAppStore";
+import { useFacts } from "./useFacts";
+import { useQuranData } from "./useQuranData";
+import { useHadithData } from "./useHadithData";
+import type { IslamicData, QuranAyah, HadithEntry } from "../types/Types";
 
-interface UseOptimizedDataOptions {
-  chunkSize?: number;
-  enableVirtualScroll?: boolean;
-  enableCaching?: boolean;
-  debounceDelay?: number;
-}
-
-export function useOptimizedData<T extends object>(
-  data: T[],
-  options: UseOptimizedDataOptions = {}
-) {
+// Optimized data loading hook that integrates with Zustand
+export const useOptimizedData = () => {
   const {
-    chunkSize = 1000,
-    enableVirtualScroll = false,
-    enableCaching = true,
-    debounceDelay = 300,
-  } = options;
+    // Zustand store actions
+    setCards,
+    setQuranData,
+    setHadithData,
+    setCardsLoading,
+    setQuranLoading,
+    setHadithLoading,
+    setCardsError,
+    setQuranError,
+    setHadithError,
+    clearCache,
+    setCachedData,
+    getCachedData,
+    lastFetchTime,
+    cacheExpiryTime,
+  } = useAppStore();
 
-  const [visibleItems, setVisibleItems] = useState<T[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState({ loaded: 0, total: 0 });
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredData, setFilteredData] = useState<T[]>(data);
+  // Use existing hooks
+  const {
+    islamicData,
+    loading: cardsLoading,
+    error: cardsError,
+    refetch: refetchCards,
+  } = useFacts();
+  const {
+    allData: quranData,
+    loading: quranLoading,
+    error: quranError,
+    retry: retryQuran,
+  } = useQuranData();
+  const {
+    hadithData,
+    loading: hadithLoading,
+    error: hadithError,
+  } = useHadithData();
 
-  // const store = useAppStore(); // Unused for now, but available for future use
+  // Check if cache is still valid
+  const isCacheValid = useCallback(() => {
+    const now = Date.now();
+    return now - lastFetchTime < cacheExpiryTime;
+  }, [lastFetchTime, cacheExpiryTime]);
 
-  // Memoized filtered data
-  const memoizedFilteredData = useMemo(() => {
-    if (!searchTerm.trim()) return data;
+  // Load data with caching
+  const loadData = useCallback(async () => {
+    // Check cache first
+    const cachedCards = getCachedData("islamic-cards");
+    const cachedQuran = getCachedData("quran-data");
+    const cachedHadith = getCachedData("hadith-data");
 
-    return data.filter((item: unknown) => {
-      // Search in common fields
-      const searchableFields = ["title", "content", "description", "text"];
-      return searchableFields.some((field) => {
-        const value = (item as Record<string, unknown>)[field];
-        return (
-          value &&
-          String(value).toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      });
-    });
-  }, [data, searchTerm]);
-
-  // Debounced search
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setFilteredData(memoizedFilteredData);
-    }, debounceDelay);
-
-    return () => clearTimeout(timeoutId);
-  }, [memoizedFilteredData, debounceDelay]);
-
-  // Progressive loading
-  const loadProgressively = useCallback(async () => {
-    setIsLoading(true);
-    setProgress({ loaded: 0, total: data.length });
-
-    try {
-      const loadedData = await dataService.loadProgressively(
-        data,
-        (loaded, total) => setProgress({ loaded, total })
-      );
-
-      setVisibleItems(loadedData);
-    } catch (error) {
-      console.error("Error loading data progressively:", error);
-    } finally {
-      setIsLoading(false);
+    if (isCacheValid() && cachedCards && cachedQuran && cachedHadith) {
+      console.log("Using cached data");
+      setCards(cachedCards as IslamicData[]);
+      setQuranData(cachedQuran as QuranAyah[]);
+      setHadithData(cachedHadith as HadithEntry[]);
+      return;
     }
-  }, [data]);
 
-  // Virtual scrolling
-  const updateVisibleItems = useCallback(
-    (scrollTop: number, containerHeight: number, itemHeight: number) => {
-      if (!enableVirtualScroll) return;
+    console.log("Loading fresh data");
 
-      const visible = dataService.getVisibleItems(
-        filteredData,
-        scrollTop,
-        containerHeight,
-        itemHeight
-      );
-      setVisibleItems(visible);
-    },
-    [filteredData, enableVirtualScroll]
-  );
-
-  // Caching
-  const getCachedData = useCallback(
-    (key: string) => {
-      if (!enableCaching) return null;
-      return dataService.getCache(key);
-    },
-    [enableCaching]
-  );
-
-  const setCachedData = useCallback(
-    (key: string, data: T[]) => {
-      if (!enableCaching) return;
-      dataService.setCache(key, data);
-    },
-    [enableCaching]
-  );
-
-  // Search with optimization
-  const performSearch = useCallback(
-    async (term: string, searchFields: (keyof T)[]) => {
-      setSearchTerm(term);
-
-      if (data.length > 10000) {
-        // Use Web Worker for large datasets
-        return await dataService.searchWithIndex(data, term, searchFields);
-      }
-
-      return filteredData;
-    },
-    [data, filteredData]
-  );
-
-  // Memory optimization
-  const optimizedData = useMemo(() => {
-    return dataService.optimizeMemoryUsage(filteredData);
-  }, [filteredData]);
-
-  // Auto-load on mount
-  useEffect(() => {
-    if (data.length > chunkSize) {
-      loadProgressively();
-    } else {
-      setVisibleItems(data);
+    // Load Islamic data
+    if (islamicData.length > 0) {
+      setCards(islamicData);
+      setCachedData("islamic-cards", islamicData);
     }
-  }, [data, chunkSize, loadProgressively]);
+
+    // Load Quran data
+    if (quranData.length > 0) {
+      setQuranData(quranData);
+      setCachedData("quran-data", quranData);
+    }
+
+    // Load Hadith data
+    if (hadithData.length > 0) {
+      setHadithData(hadithData);
+      setCachedData("hadith-data", hadithData);
+    }
+  }, [
+    islamicData,
+    quranData,
+    hadithData,
+    setCards,
+    setQuranData,
+    setHadithData,
+    setCachedData,
+    getCachedData,
+    isCacheValid,
+  ]);
+
+  // Sync loading states
+  useEffect(() => {
+    setCardsLoading(cardsLoading);
+  }, [cardsLoading, setCardsLoading]);
+
+  useEffect(() => {
+    setQuranLoading(quranLoading);
+  }, [quranLoading, setQuranLoading]);
+
+  useEffect(() => {
+    setHadithLoading(hadithLoading);
+  }, [hadithLoading, setHadithLoading]);
+
+  // Sync error states
+  useEffect(() => {
+    setCardsError(cardsError);
+  }, [cardsError, setCardsError]);
+
+  useEffect(() => {
+    setQuranError(quranError?.message || null);
+  }, [quranError, setQuranError]);
+
+  useEffect(() => {
+    setHadithError(hadithError);
+  }, [hadithError, setHadithError]);
+
+  // Load data when available
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  // Retry functions
+  const retryAll = useCallback(() => {
+    clearCache();
+    refetchCards();
+    retryQuran();
+  }, [clearCache, refetchCards, retryQuran]);
 
   return {
-    // Data
-    visibleItems: enableVirtualScroll ? visibleItems : filteredData,
-    optimizedData,
-    filteredData,
+    // Loading states
+    cardsLoading,
+    quranLoading,
+    hadithLoading,
+    isLoading: cardsLoading || quranLoading || hadithLoading,
 
-    // State
-    isLoading,
-    progress,
-    searchTerm,
+    // Error states
+    cardsError,
+    quranError,
+    hadithError,
+    hasError: cardsError || quranError || hadithError,
 
-    // Actions
-    setSearchTerm,
-    performSearch,
-    updateVisibleItems,
-    loadProgressively,
+    // Retry functions
+    retryAll,
+    refetchCards,
+    retryQuran,
 
-    // Caching
-    getCachedData,
-    setCachedData,
-
-    // Utilities
-    totalCount: data.length,
-    filteredCount: filteredData.length,
-    visibleCount: visibleItems.length,
+    // Cache management
+    clearCache,
+    isCacheValid,
   };
-}
-
-// Specialized hooks for different data types
-export function useQuranData(quranData: IslamicData[]) {
-  return useOptimizedData(quranData, {
-    chunkSize: 500, // Smaller chunks for Quran data
-    enableVirtualScroll: true,
-    debounceDelay: 200,
-  });
-}
-
-export function useHadithData(hadithData: IslamicData[]) {
-  return useOptimizedData(hadithData, {
-    chunkSize: 200, // Even smaller chunks for Hadith data
-    enableVirtualScroll: true,
-    debounceDelay: 400, // Longer debounce for complex Hadith text
-  });
-}
-
-export function useMiraclesData(miraclesData: IslamicData[]) {
-  return useOptimizedData(miraclesData, {
-    chunkSize: 100, // Small chunks for Islamic data
-    enableVirtualScroll: false, // Usually not needed for Islamic data
-    debounceDelay: 300,
-  });
-}
+};

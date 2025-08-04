@@ -168,7 +168,7 @@ export function QuranDashboard({
           <select
             value={filters.surah || ""}
             onChange={handleSurahChange}
-            className="px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
+            className="px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
           >
             <option value="">All Surahs</option>
             {uniqueSurahs.map((surah) => (
@@ -182,7 +182,7 @@ export function QuranDashboard({
           <select
             value={filters.placeOfRevelation || ""}
             onChange={handlePlaceChange}
-            className="px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
+            className="px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
           >
             <option value="">All Places</option>
             {uniquePlaces.map((place) => (
@@ -201,7 +201,7 @@ export function QuranDashboard({
           <select
             value={filters.sortBy}
             onChange={handleSortChange}
-            className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+            className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
           >
             <option value="surah_no">Surah Number</option>
             <option value="surah_name_en">Surah Name</option>

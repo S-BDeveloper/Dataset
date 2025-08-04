@@ -71,7 +71,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
     : { top: 40, right: 80, bottom: 80, left: 80 };
 
   return (
-    <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-lg shadow-lg p-4 flex flex-col relative">
+    <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-xl shadow-lg p-4 flex flex-col relative">
       <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
         Islamic Data Status Distribution
       </h3>
@@ -149,13 +149,23 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
           <div style={{ fontSize: "13px", marginBottom: "4px" }}>
             Count: {tooltip.datum.value} entries
           </div>
-          <div style={{ fontSize: "12px", opacity: 0.8 }}>
+          <div style={{ fontSize: "12px", opacity: 0.8, marginBottom: "4px" }}>
             {(
               (tooltip.datum.value /
                 chartData.reduce((sum, item) => sum + item.value, 0)) *
               100
             ).toFixed(1)}
             % of total data
+          </div>
+          <div style={{ fontSize: "11px", opacity: 0.7, fontStyle: "italic" }}>
+            {tooltip.datum.id === "Fulfilled" &&
+              "Prophecies that have come true"}
+            {tooltip.datum.id === "Yet to Happen" &&
+              "Prophecies awaiting fulfillment"}
+            {tooltip.datum.id === "Proven" &&
+              "Scientific facts confirmed by modern research"}
+            {tooltip.datum.id === "Divine Law" &&
+              "Islamic principles and divine decrees"}
           </div>
         </div>
       )}

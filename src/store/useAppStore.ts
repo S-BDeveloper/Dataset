@@ -218,6 +218,9 @@ export const useAppStore = create<AppState>()(
           const state = get();
           let filtered = [...state.cards];
 
+          console.log("Zustand - Total cards:", state.cards.length);
+          console.log("Zustand - Cards filters:", state.cardsFilters);
+
           // Apply search filter
           if (state.cardsFilters.searchTerm) {
             const searchLower = state.cardsFilters.searchTerm.toLowerCase();
@@ -242,6 +245,7 @@ export const useAppStore = create<AppState>()(
             filtered.sort((a, b) => a.title.localeCompare(b.title));
           }
 
+          console.log("Zustand - Filtered cards:", filtered.length);
           return filtered;
         },
 

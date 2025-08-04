@@ -47,7 +47,7 @@ const Profile: React.FC = () => {
           <input
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 dark:text-stone-100 bg-stone-50 dark:bg-stone-700"
+            className="border border-stone-300 dark:border-stone-600 rounded-xl px-3 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition text-sm text-stone-800 dark:text-stone-100 bg-stone-50 dark:bg-stone-700"
             disabled={!editing}
           />
         </label>
@@ -98,4 +98,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
