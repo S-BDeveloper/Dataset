@@ -10,6 +10,7 @@ import type {
   FilterState,
 } from "../../../types/Types";
 import type { FavoriteItem } from "../../../hooks/useFavorites";
+import mediaBackground from "../../../assets/media-5000790.svg";
 
 interface AdvancedSearchDashboardProps {
   data: IslamicData[];
@@ -600,7 +601,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             <div
               className="py-12 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 relative overflow-hidden"
               style={{
-                backgroundImage: `url('/src/assets/media-5000790.svg')`,
+                backgroundImage: `url(${mediaBackground})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
