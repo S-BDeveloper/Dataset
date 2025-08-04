@@ -160,14 +160,31 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                   <span
                     className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                       result.type === "islamic data"
-                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                        ? (result.data as IslamicData).type === "prophecy"
+                          ? "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-200"
+                          : (result.data as IslamicData).type === "scientific"
+                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+                          : (result.data as IslamicData).type ===
+                            "health-science"
+                          ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
+                          : (result.data as IslamicData).type === "qadr"
+                          ? "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-200"
+                          : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                         : result.type === "quran"
                         ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
                         : "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-200"
                     }`}
                   >
                     {result.type === "islamic data"
-                      ? "Islamic Data"
+                      ? (result.data as IslamicData).type === "prophecy"
+                        ? "Prophecy"
+                        : (result.data as IslamicData).type === "scientific"
+                        ? "Science"
+                        : (result.data as IslamicData).type === "health-science"
+                        ? "Health Science"
+                        : (result.data as IslamicData).type === "qadr"
+                        ? "Qadr"
+                        : "Islamic Data"
                       : result.type === "quran"
                       ? "Quran Verse"
                       : "Hadith"}

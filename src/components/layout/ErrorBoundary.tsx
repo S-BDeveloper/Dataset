@@ -46,7 +46,6 @@ export class ErrorBoundary extends Component<Props, State> {
 
     // Log to external service in production
     if (process.env.NODE_ENV === "production") {
-      // TODO: Implement error logging service
       console.error("Production error:", error);
     }
   }

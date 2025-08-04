@@ -70,6 +70,32 @@ export default function HomePage({
   const quranContentRef = useRef<HTMLDivElement>(null);
   const hadithContentRef = useRef<HTMLDivElement>(null);
 
+  // Handle footer category filter clicks
+  useEffect(() => {
+    const handleCategoryFilter = (event: CustomEvent) => {
+      const { category } = event.detail;
+      setFilters((prev) => ({
+        ...prev,
+        type: category,
+      }));
+      setActiveTab("all"); // Switch to the main data view
+      setCurrentPage(1); // Reset to first page
+      setToast(`Filtered by ${category} category`);
+    };
+
+    window.addEventListener(
+      "filterByCategory",
+      handleCategoryFilter as EventListener
+    );
+
+    return () => {
+      window.removeEventListener(
+        "filterByCategory",
+        handleCategoryFilter as EventListener
+      );
+    };
+  }, [setFilters, setActiveTab, setCurrentPage, setToast]);
+
   // Handle tab change with scroll functionality
   const handleTabChange = (tabId: string) => {
     // Small delay to ensure the content is rendered before scrolling

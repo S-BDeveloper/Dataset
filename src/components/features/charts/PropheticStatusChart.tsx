@@ -164,8 +164,6 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
               "Prophecies awaiting fulfillment"}
             {tooltip.datum.id === "Proven" &&
               "Scientific facts confirmed by modern research"}
-            {tooltip.datum.id === "Divine Law" &&
-              "Islamic principles and divine decrees"}
           </div>
         </div>
       )}

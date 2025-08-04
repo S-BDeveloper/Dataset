@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useFacts } from "../hooks/useFacts";
+import { useIslamicData } from "../hooks/useIslamicData";
 import { useOptimizedDataWithWorkers } from "../hooks/useOptimizedDataWithWorkers";
 import { useAppStore } from "../store/useAppStore";
 import HomePage from "./HomePage";
@@ -19,8 +19,8 @@ export default function HomePageWrapper() {
     setToast,
   } = useAppStore();
 
-  // Use the facts hook to get Islamic data
-  const { islamicData, loading, error, refetch } = useFacts();
+  // Use the Islamic data hook to get Islamic data
+  const { islamicData, loading, error, refetch } = useIslamicData();
 
   // Use optimized data processing with Web Workers
   const optimizedData = useOptimizedDataWithWorkers(islamicData, {

@@ -253,14 +253,7 @@ const Privacy: React.FC = () => {
                 </p>
                 <div className="mt-3 space-y-2">
                   <p className="text-stone-600 dark:text-stone-400">
-                    <strong>Email:</strong> privacy@islamicdata.com
-                  </p>
-                  <p className="text-stone-600 dark:text-stone-400">
-                    <strong>General Contact:</strong> contact@islamicdata.com
-                  </p>
-                  <p className="text-stone-600 dark:text-stone-400">
-                    <strong>Data Protection Officer:</strong>{" "}
-                    dpo@islamicdata.com
+                    <strong>Email:</strong> begumsabina81193@gmail.com
                   </p>
                 </div>
               </section>

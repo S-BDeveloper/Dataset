@@ -15,8 +15,7 @@ const Footer: React.FC = () => {
               <Logo />
             </div>
             <p className="text-stone-400 text-sm leading-relaxed">
-              Showcasing the miraculous signs of Allah through the Quran,
-              Hadith, and scientific discoveries.
+              Showcasing the miraculous signs of Allah through the Quran and Authentic Hadiths.
             </p>
             <div className="flex space-x-4">
               <a
@@ -111,17 +110,50 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-white">Categories</h3>
             <ul className="space-y-2">
               <li>
-                <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
-                  Scientific Discoveries
-                </span>
-              </li>
-
-              <li>
-                <span className="text-stone-400 hover:text-green-400 transition-colors text-sm cursor-pointer">
+                <Link
+                  to="/"
+                  className="text-stone-400 hover:text-green-400 transition-colors text-sm"
+                  onClick={() => {
+                    // This will filter to show only prophecy data
+                    const event = new CustomEvent("filterByCategory", {
+                      detail: { category: "prophecy" },
+                    });
+                    window.dispatchEvent(event);
+                  }}
+                >
                   Prophecies
-                </span>
+                </Link>
               </li>
-              <li></li>
+              <li>
+                <Link
+                  to="/"
+                  className="text-stone-400 hover:text-green-400 transition-colors text-sm"
+                  onClick={() => {
+                    // This will filter to show only scientific data
+                    const event = new CustomEvent("filterByCategory", {
+                      detail: { category: "scientific" },
+                    });
+                    window.dispatchEvent(event);
+                  }}
+                >
+                  Scientific Discoveries
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  className="text-stone-400 hover:text-green-400 transition-colors text-sm"
+                  onClick={() => {
+                    // This will filter to show only health-science data
+                    const event = new CustomEvent("filterByCategory", {
+                      detail: { category: "health-science" },
+                    });
+                    window.dispatchEvent(event);
+                  }}
+                >
+                  Health Science
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -146,7 +178,7 @@ const Footer: React.FC = () => {
                   />
                 </svg>
                 <span className="text-stone-400 text-sm">
-                  contact@islamicdata.com
+                  begumsabina81193@gmail.com
                 </span>
               </div>
               <div className="flex items-center space-x-3">
@@ -196,7 +228,7 @@ const Footer: React.FC = () => {
           <div className="mt-6">
             <p className="text-stone-500 text-xs leading-relaxed max-w-2xl mx-auto">
               Our mission is to showcase the miraculous signs of Allah through
-              authentic Islamic data, fostering a deeper true understanding and
+              authentic Islamic data, fostering a deeper understanding and
               appreciation of Islamic knowledge while promoting enlightenment
               among believers and seekers of truth.
             </p>

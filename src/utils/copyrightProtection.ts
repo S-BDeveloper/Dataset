@@ -19,10 +19,8 @@ export class CopyrightProtection {
     if (this.isInitialized) return;
 
     this.addCopyrightNotice();
-    this.preventDevTools();
-    this.addConsoleWarning();
+    this.addProfessionalCopyright();
     this.protectSourceCode();
-    this.addWatermark();
 
     this.isInitialized = true;
   }
@@ -39,52 +37,35 @@ export class CopyrightProtection {
 ║  international treaties. Unauthorized reproduction,          ║
 ║  distribution, or modification is strictly prohibited.       ║
 ║                                                              ║
-║  For licensing inquiries: contact@islamicdata.com           ║
+  ║  For licensing inquiries: begumsabina81193@gmail.com        ║
 ╚══════════════════════════════════════════════════════════════╝
     `;
 
     console.log(copyrightText);
   }
 
-  // Prevent developer tools access
-  private preventDevTools(): void {
-    // Detect F12 key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "F12") {
-        e.preventDefault();
-        this.showCopyrightWarning();
-      }
-    });
+  // Add professional copyright notice (without blocking tools)
+  private addProfessionalCopyright(): void {
+    // Only add console notice, don't block tools
+    this.addConsoleWarning();
 
-    // Detect right-click context menu
-    document.addEventListener("contextmenu", (e) => {
-      e.preventDefault();
-      this.showCopyrightWarning();
-    });
-
-    // Detect Ctrl+Shift+I (DevTools)
-    document.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key === "I") {
-        e.preventDefault();
-        this.showCopyrightWarning();
-      }
-    });
+    // Add subtle watermark for branding
+    this.addWatermark();
   }
 
-  // Add warning to console
+  // Add professional copyright notice to console
   private addConsoleWarning(): void {
-    const warning = `
-⚠️  COPYRIGHT WARNING ⚠️
+    const notice = `
+📚 Islamic Dataset Interface - Copyright Notice
 
 This application is protected by copyright laws.
-Unauthorized access to source code or reverse engineering
-is strictly prohibited and may result in legal action.
+For licensing inquiries or legitimate development purposes,
+please contact: begumsabina81193@gmail.com
 
-For legitimate development purposes, please contact:
-contact@islamicdata.com
+Thank you for respecting intellectual property rights.
     `;
 
-    console.warn(warning);
+    console.log(notice);
   }
 
   // Protect source code visibility
@@ -123,45 +104,6 @@ contact@islamicdata.com
     document.body.appendChild(watermark);
   }
 
-  // Show copyright warning
-  private showCopyrightWarning(): void {
-    const warning = document.createElement("div");
-    warning.innerHTML = `
-      <div style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #1f2937;
-        color: white;
-        padding: 20px;
-        border-radius: 8px;
-        border: 2px solid #ef4444;
-        z-index: 10000;
-        max-width: 400px;
-        text-align: center;
-        font-family: Arial, sans-serif;
-      ">
-        <h3 style="color: #ef4444; margin-bottom: 10px;">⚠️ Copyright Warning</h3>
-        <p style="margin-bottom: 15px; line-height: 1.5;">
-          This application is protected by copyright laws. 
-          Unauthorized access or modification is prohibited.
-        </p>
-        <button onclick="this.parentElement.remove()" style="
-          background: #059669;
-          color: white;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 4px;
-          cursor: pointer;
-        ">
-          I Understand
-        </button>
-      </div>
-    `;
-    document.body.appendChild(warning);
-  }
-
   // Verify application integrity
   public verifyIntegrity(): boolean {
     // In a real implementation, you would check file hashes
@@ -175,7 +117,7 @@ contact@islamicdata.com
       year: new Date().getFullYear(),
       owner: "Islamic Dataset Interface",
       rights: "All rights reserved",
-      contact: "contact@islamicdata.com",
+      contact: "begumsabina81193@gmail.com",
       version: "1.0.0",
       protectionLevel: "High",
     };

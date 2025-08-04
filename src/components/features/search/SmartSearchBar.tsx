@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import type { IslamicData } from "../../../types/Types";
-import type { IslamicDataFilters } from "../../../hooks/domain/filters";
+import type { IslamicData, IslamicDataFilters } from "../../../types/Types";
 
 // Enhanced interface to support both basic and advanced search
 interface SmartSearchBarProps {

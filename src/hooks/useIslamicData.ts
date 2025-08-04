@@ -25,13 +25,13 @@ export function useIslamicData(loadingDelay = 1000) {
           } as IslamicData)
       );
 
-      console.log("useFacts - Loaded Islamic data:", loadedIslamicData);
-      console.log("useFacts - Data length:", loadedIslamicData.length);
-      console.log("useFacts - First item:", loadedIslamicData[0]);
+      console.log("useIslamicData - Loaded Islamic data:", loadedIslamicData);
+      console.log("useIslamicData - Data length:", loadedIslamicData.length);
+      console.log("useIslamicData - First item:", loadedIslamicData[0]);
 
       setIslamicData(loadedIslamicData);
     } catch (error) {
-      console.error("useFacts - Error loading data:", error);
+      console.error("useIslamicData - Error loading data:", error);
       setError("Failed to load Islamic data");
     } finally {
       setLoading(false);
@@ -52,9 +52,4 @@ export function useIslamicData(loadingDelay = 1000) {
   };
 
   return { islamicData, loading, error, refetch };
-}
-
-// Legacy hook for backward compatibility
-export function useFacts(loadingDelay = 1000) {
-  return useIslamicData(loadingDelay);
 }

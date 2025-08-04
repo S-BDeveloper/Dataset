@@ -22,6 +22,7 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
     (item) =>
       item.type === "prophecy" ||
       item.type === "scientific" ||
+      item.type === "health-science" ||
       item.type === "qadr"
   );
 
@@ -116,6 +117,8 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
         (item) =>
           item.title.toLowerCase().includes("honey") ||
           item.title.toLowerCase().includes("dates") ||
+          item.title.toLowerCase().includes("barley") ||
+          item.title.toLowerCase().includes("olive") ||
           item.title.toLowerCase().includes("natural") ||
           item.title.toLowerCase().includes("food")
       ).length,
@@ -124,6 +127,8 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
           (item) =>
             item.title.toLowerCase().includes("honey") ||
             item.title.toLowerCase().includes("dates") ||
+            item.title.toLowerCase().includes("barley") ||
+            item.title.toLowerCase().includes("olive") ||
             item.title.toLowerCase().includes("natural") ||
             item.title.toLowerCase().includes("food")
         )
@@ -183,14 +188,14 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
             )}
 
             {/* Hover tooltip */}
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 whitespace-nowrap">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 max-w-xs break-words">
               <div className="font-semibold">{location.label}</div>
               <div>Data entries: {location.value}</div>
               {location.prophecies.length > 0 && (
                 <div className="mt-1">
                   <div className="font-semibold">Examples:</div>
                   {location.prophecies.slice(0, 2).map((prophecy, idx) => (
-                    <div key={idx} className="text-xs">
+                    <div key={idx} className="text-xs break-words">
                       • {prophecy}
                     </div>
                   ))}
@@ -214,24 +219,36 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
       {isActive && (
         <div className="mt-4 p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
           <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-            Understanding This Map:
+            About This Chart:
           </h4>
           <ul className="text-xs text-stone-600 dark:text-stone-400 space-y-1">
             <li>
-              • <strong>Geographic Distribution:</strong> Shows where Islamic
-              data are geographically focused
+              • <strong>Middle East:</strong> Data about Palestine, Jerusalem,
+              Israel, Mecca, and Medina
             </li>
             <li>
-              • <strong>Regional Patterns:</strong> Reveals concentration of
-              data by region
+              • <strong>Global:</strong> Data about worldwide events,
+              environmental changes, and climate
             </li>
             <li>
-              • <strong>Hover for Details:</strong> See examples of data from
-              each region
+              • <strong>Cosmological:</strong> Data about space, universe,
+              cosmos, and iron from space
             </li>
             <li>
-              • <strong>Global Scope:</strong> Includes both local and global
-              data
+              • <strong>Social:</strong> Data about music, entertainment,
+              ignorance, and social changes
+            </li>
+            <li>
+              • <strong>Natural:</strong> Data about honey, dates, natural
+              foods, and nutrition
+            </li>
+            <li>
+              • <strong>Numbers show:</strong> How many data entries belong to
+              each category
+            </li>
+            <li>
+              • <strong>Hover over cards:</strong> To see specific examples from
+              each category
             </li>
           </ul>
         </div>

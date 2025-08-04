@@ -7,6 +7,7 @@
 export const DataType = {
   PROPHECY: "prophecy",
   SCIENTIFIC: "scientific",
+  HEALTH_SCIENCE: "health-science",
   QADR: "qadr",
 } as const;
 

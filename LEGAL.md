@@ -96,7 +96,7 @@ This application complies with:
 
 To report copyright violations or unauthorized use:
 
-- Email: legal@islamicdata.com
+- Email: begumsabina81193@gmail.com
 - Include detailed information about the violation
 - Provide evidence of unauthorized use
 
@@ -106,7 +106,7 @@ To report copyright violations or unauthorized use:
 
 For commercial use inquiries:
 
-- Contact: licensing@islamicdata.com
+- Contact: begumsabina81193@gmail.com
 - Include intended use case and scope
 - Provide business details and requirements
 
@@ -147,17 +147,17 @@ The application may be updated with enhanced protection measures without prior n
 
 #### Legal Inquiries:
 
-- Email: legal@islamicdata.com
+- Email: begumsabina81193@gmail.com
 - Subject: "Legal Inquiry - Islamic Dataset Interface"
 
 #### Copyright Questions:
 
-- Email: copyright@islamicdata.com
+- Email: begumsabina81193@gmail.com
 - Subject: "Copyright Question - Islamic Dataset Interface"
 
 #### Licensing Requests:
 
-- Email: licensing@islamicdata.com
+- Email: begumsabina81193@gmail.com
 - Subject: "Licensing Request - Islamic Dataset Interface"
 
 ### 12. Jurisdiction

@@ -16,11 +16,11 @@
   },
   {
     "type": "prophecy",
-    "title": "Prevalence of Music and Entertainment",
-    "description": "Music and entertainment will become widespread and easily accessible",
+    "title": "Prevalence of Immorality",
+    "description": "Immorality will become prevalent",
     "source": "Hadith: Sahih Bukhari 5590",
     "status": "Fulfilled",
-    "notes": "Music and entertainment are now globally accessible through various media platforms.",
+    "notes": "This prophecy has been fulfilled as immoral behavior has become widespread globally. The Prophet (ﷺ) warned about the normalization of sinful acts, and today we see this manifested through various social changes, media influence, and shifting moral standards.",
     "sources": {
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
@@ -56,7 +56,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/23/13-14"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
 
@@ -72,13 +72,13 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/25/53"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
-    "type": "scientific",
-    "title": "Dates as Prophet's Preferred Food",
-    "description": "Dates were the Prophet's favorite food and are scientifically proven to be highly nutritious",
+    "type": "health-science",
+    "title": "Benefits of Dates",
+    "description": "Dates were recommended by Prophet Muhammad (ﷺ) and are scientifically proven to be highly nutritious",
     "source": "Sahih Bukhari 5445",
     "status": "Proven",
     "notes": "Dates are high in fiber, provide natural energy, and are rich in minerals, supporting digestive and overall health.",
@@ -91,9 +91,9 @@
     }
   },
   {
-    "type": "scientific",
+    "type": "health-science",
     "title": "Barley's Nutritional Benefits",
-    "description": "Barley was used in the Prophet's time and is now scientifically proven to support health",
+    "description": "Barley was used in the Prophet's (ﷺ) time and is now scientifically proven to support health",
     "source": "Sahih Bukhari 5413",
     "status": "Proven",
     "notes": "Barley is now known to support digestion, heart health, and blood sugar control due to its high fiber and nutrient content.",
@@ -106,7 +106,52 @@
     }
   },
   {
-    "type": "scientific",
+    "type": "prophecy",
+    "title": "Conquest of Mecca",
+    "description": "The Prophet (ﷺ) prophesied the peaceful conquest of Mecca",
+    "source": "Hadith: Sahih Bukhari 4294",
+    "status": "Fulfilled",
+    "notes": "The conquest of Mecca occurred in 630 CE, during which the Prophet (ﷺ) entered the city peacefully and rid the Kaaba of idols.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:4294"],
+      "source": "Imam Bukhari, 9th century CE"
+    }
+  },
+  {
+    "type": "prophecy",
+    "title": "Establishment of Medina",
+    "description": "The Prophet (ﷺ) established the first Islamic state in Medina",
+    "source": "Hadith: Sahih Bukhari 1871",
+    "status": "Fulfilled",
+    "notes": "The Prophet (ﷺ) established the first Islamic community and state in Medina, creating the foundation for Islamic governance.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:1871"],
+      "source": "Imam Bukhari, 9th century CE"
+    }
+  },
+  {
+    "type": "health-science",
+    "title": "Olive Oil Benefits",
+    "description": "The Prophet (ﷺ) recommended olive oil for various health benefits",
+    "source": "Hadith: Sahih Bukhari 5445",
+    "status": "Proven",
+    "notes": "Modern research confirms olive oil's benefits for heart health, anti-inflammatory properties, and rich antioxidant content.",
+    "sources": {
+      "primary": "Sunan Ibn Majah 3319",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/ibnmajah:3319"],
+      "source": "Book 29, Hadith 69"
+    }
+  },
+  {
+    "type": "health-science",
     "title": "Honey's Healing Properties",
     "description": "The Quran describes honey as a healing substance, confirmed by modern medical research",
     "source": "Quran 16:69; Sahih Bukhari 5680",
@@ -120,24 +165,10 @@
         "https://quran.com/16/69",
         "https://sunnah.com/bukhari:5680"
       ],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE and Imam Bukhari, 9th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE and Imam Bukhari, 9th century CE"
     }
   },
-  {
-    "type": "qadr",
-    "title": "Return of Jews to Palestine",
-    "description": "The Quran foretold the return of Jews to the Holy Land as part of Allah's divine decree",
-    "source": "Quran 17:104",
-    "status": "Fulfilled",
-    "notes": "The establishment of Israel in 1948 and subsequent Jewish immigration fulfilled this divine decree.",
-    "sources": {
-      "primary": "Quran - Surah Al-Isra 17:104",
-      "verification": "Direct Quranic reference",
-      "methodology": "Direct Quranic text analysis",
-      "references": ["https://quran.com/17/104"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
-    }
-  },
+
   {
     "type": "scientific",
     "title": "Discovery of Iron from Space",
@@ -150,7 +181,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/57/25"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -165,7 +196,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/30/41"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -180,7 +211,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/21/30"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -195,7 +226,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/51/47"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -210,7 +241,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/75/4"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -225,7 +256,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/24/40"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -240,7 +271,7 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/27/88"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
@@ -255,16 +286,16 @@
       "verification": "Direct Quranic reference",
       "methodology": "Direct Quranic text analysis",
       "references": ["https://quran.com/21/31"],
-      "source": "Quran - Revealed to Prophet Muhammad (PBUH), 7th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
   {
     "type": "prophecy",
     "title": "Conquest of Constantinople",
-    "description": "The Prophet prophesied the conquest of Constantinople by Muslims",
+    "description": "The Prophet (ﷺ) prophesied the conquest of Constantinople by Muslims",
     "source": "Sahih Bukhari 2924",
     "status": "Fulfilled",
-    "notes": "Constantinople was conquered by Sultan Mehmed II in 1453 CE, fulfilling the Prophet's prophecy.",
+    "notes": "Constantinople was conquered by Sultan Mehmed II in 1453 CE, fulfilling the Prophet's (ﷺ) prophecy.",
     "sources": {
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
@@ -276,7 +307,7 @@
   {
     "type": "prophecy",
     "title": "Spread of Islam Worldwide",
-    "description": "The Prophet prophesied that Islam would reach all corners of the earth",
+    "description": "The Prophet (ﷺ) prophesied that Islam would reach all corners of the earth",
     "source": "Sahih Muslim 2889",
     "status": "Fulfilled",
     "notes": "Islam has spread to every continent and is practiced by over 1.8 billion people worldwide.",
@@ -291,7 +322,7 @@
   {
     "type": "prophecy",
     "title": "Dajjal (False Messiah)",
-    "description": "The Prophet prophesied the appearance and characteristics of Dajjal",
+    "description": "The Prophet (ﷺ) prophesied the appearance and characteristics of Dajjal",
     "source": "Sahih Muslim 2933",
     "status": "Yet to Happen",
     "notes": "Dajjal is described as a one-eyed false messiah who will appear before the Day of Judgment.",
@@ -304,9 +335,9 @@
     }
   },
   {
-    "type": "scientific",
+    "type": "health-science",
     "title": "Black Seed Benefits",
-    "description": "The Prophet described black seed as a cure for every disease except death",
+    "description": "The Prophet (ﷺ) described black seed as a cure for every disease except death",
     "source": "Sahih Bukhari 5687",
     "status": "Proven",
     "notes": "Modern research confirms black seed's anti-inflammatory, antioxidant, and immune-boosting properties.",
@@ -319,24 +350,24 @@
     }
   },
   {
-    "type": "scientific",
+    "type": "health-science",
     "title": "Cupping Therapy Benefits",
-    "description": "The Prophet recommended cupping therapy for various ailments",
+    "description": "The Prophet (ﷺ) recommended cupping therapy for various ailments",
     "source": "Sahih Bukhari 5371",
     "status": "Proven",
     "notes": "Modern studies confirm cupping therapy's effectiveness for pain relief, blood circulation, and detoxification.",
     "sources": {
-      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "primary": "ami` at-Tirmidhi 1278",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari:5371"],
-      "source": "Imam Bukhari, 9th century CE"
+      "references": ["https://sunnah.com/tirmidhi:1278"],
+      "source": "Book 14, Hadith 80"
     }
   },
   {
-    "type": "scientific",
+    "type": "health-science",
     "title": "Fasting Benefits",
-    "description": "The Prophet described fasting as a shield and recommended regular fasting",
+    "description": "The Prophet (ﷺ) described fasting as a shield and recommended regular fasting",
     "source": "Sahih Bukhari 1895",
     "status": "Proven",
     "notes": "Modern research confirms fasting's benefits for metabolism, cellular repair, and disease prevention.",
@@ -344,7 +375,7 @@
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari:1895"],
+      "references": ["https://sunnah.com/bukhari:1904"],
       "source": "Imam Bukhari, 9th century CE"
     }
   }

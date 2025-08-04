@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useAppStore } from "../store/useAppStore";
-import { useFacts } from "./useFacts";
+import { useIslamicData } from "./useIslamicData";
 import { useQuranData } from "./useQuranData";
 import { useHadithData } from "./useHadithData";
 import type { IslamicData, QuranAyah, HadithEntry } from "../types/Types";
@@ -31,7 +31,7 @@ export const useOptimizedData = () => {
     loading: cardsLoading,
     error: cardsError,
     refetch: refetchCards,
-  } = useFacts();
+  } = useIslamicData();
   const {
     allData: quranData,
     loading: quranLoading,

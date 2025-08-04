@@ -3,5 +3,4 @@ export * from "./useContext";
 export * from "./useFavorites";
 export * from "./useQuranData";
 export * from "./useHadithData";
-export * from "./domain/cards";
-export * from "./domain/filters";
+export * from "./useIslamicData";

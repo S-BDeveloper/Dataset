@@ -55,9 +55,9 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
       case DataType.PROPHECY:
         return "#ef4444";
       case DataType.SCIENTIFIC:
+        return "#3b82f6";
+      case DataType.HEALTH_SCIENCE:
         return "#10b981";
-      case DataType.QADR:
-        return "#8b5cf6";
       default:
         return "#6b7280";
     }
@@ -89,7 +89,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
           arcLinkLabelsThickness={2}
           arcLinkLabelsColor={{ from: "color" }}
           arcLabelsSkipAngle={15}
-          arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
+          arcLabelsTextColor={isDarkMode ? "#f0f0f0" : "#333333"}
           enableArcLinkLabels={true}
           enableArcLabels={true}
           onMouseEnter={(datum: ComputedDatum<ChartDataPoint>, event) => {
@@ -156,11 +156,11 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
           </div>
           <div style={{ fontSize: "11px", opacity: 0.7, fontStyle: "italic" }}>
             {tooltip.datum.id === "Prophecy" &&
-              "Prophecies and divine revelations by the Prophet Muhammad (PBUH)"}
+              "Prophecies relayed by Prophet Muhammad (ﷺ)"}
             {tooltip.datum.id === "Scientific" &&
               "Scientific facts and discoveries mentioned in Islamic texts"}
-            {tooltip.datum.id === "Qadr" &&
-              "Divine decree and predetermined events in Islamic belief"}
+            {tooltip.datum.id === "Health-science" &&
+              "Health benefits, nutrition, and medical practices from Islamic tradition"}
             {tooltip.datum.id === "Unknown" &&
               "Entries with unclassified or missing category"}
           </div>

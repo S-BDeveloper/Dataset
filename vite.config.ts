@@ -49,10 +49,7 @@ export default defineConfig({
 
           // Data chunks - split by source
           "data-islamic": ["./src/data/islamic_data.json"],
-          "hooks-islamic": [
-            "./src/hooks/useFacts.ts",
-            "./src/hooks/domain/cards.ts",
-          ],
+          "hooks-islamic": ["./src/hooks/useIslamicData.ts"],
           "hooks-quran": ["./src/hooks/useQuranData.ts"],
           "hooks-hadith": ["./src/hooks/useHadithData.ts"],
         },

@@ -608,12 +608,12 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               }}
             >
               {/* Semi-transparent overlay to ensure text readability */}
-              <div className="absolute inset-0 bg-neutral-500/80 dark:bg-neutral-800/50"></div>
+              <div className="absolute inset-0 bg-neutral-500/70 dark:bg-neutral-800/20"></div>
               <div className="max-w-md mx-auto relative z-10">
                 <h3
                   className="text-lg font-semibold mb-2 transform hover:scale-101 transition-transform duration-300 search-ready-title"
                   style={{
-                    color: "#F4E4BC",
+                    color: "#EDEADE",
                     textShadow: `
                       0 0 3px rgba(244, 228, 188, 0.4),
                       0 0 6px rgba(244, 228, 188, 0.2),
@@ -631,7 +631,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 <p
                   className="mb-4 transform hover:scale-101 transition-transform duration-300 search-ready-description"
                   style={{
-                    color: "#E8D5B7",
+                    color: "#EDEADE",
                     textShadow: `
                       0 0 2px rgba(232, 213, 183, 0.3),
                       0 0 4px rgba(232, 213, 183, 0.2),
@@ -651,7 +651,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 <div
                   className="text-sm transform hover:scale-101 transition-transform duration-300 search-ready-list"
                   style={{
-                    color: "#F4E4BC",
+                    color: "#EDEADE",
                     textShadow: `
                       0 0 2px rgba(244, 228, 188, 0.3),
                       0 0 4px rgba(244, 228, 188, 0.2),
