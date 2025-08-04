@@ -1,5 +1,21 @@
-import { getAuth } from "firebase/auth";
-import { app } from "./config"; // You may need to export 'app' from config.ts
+import { app } from "./config";
+import type { FirebaseApp } from "firebase/app";
 
+// Only initialize auth if Firebase is available
+let auth: unknown = null;
 
-export const auth = getAuth(app);
+if (app) {
+  try {
+    import("firebase/auth")
+      .then(({ getAuth }) => {
+        auth = getAuth(app as unknown as FirebaseApp);
+      })
+      .catch((error) => {
+        console.warn("Firebase Auth initialization failed:", error);
+      });
+  } catch (error) {
+    console.warn("Firebase Auth initialization failed:", error);
+  }
+}
+
+export { auth };

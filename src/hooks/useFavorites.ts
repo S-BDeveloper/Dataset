@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import type { IslamicData, QuranAyah, HadithEntry } from "../types/Types";
 import { db } from "../firebase/config";
+import type { Firestore } from "firebase/firestore";
 import {
   doc,
   getDoc,
@@ -132,7 +133,7 @@ export function useFavorites() {
     if (!user) return;
 
     try {
-      const favoritesRef = collection(db, "favorites");
+      const favoritesRef = collection(db as unknown as Firestore, "favorites");
       const userFavoritesRef = doc(favoritesRef, user.uid);
 
       // Get the main favorites document
@@ -238,7 +239,7 @@ export function useFavorites() {
     }
 
     try {
-      const favoritesRef = collection(db, "favorites");
+      const favoritesRef = collection(db as unknown as Firestore, "favorites");
       const userFavoritesRef = doc(favoritesRef, user.uid);
 
       // Get current favorites to determine storage strategy
@@ -328,7 +329,7 @@ export function useFavorites() {
     }
 
     try {
-      const favoritesRef = collection(db, "favorites");
+      const favoritesRef = collection(db as unknown as Firestore, "favorites");
       const userFavoritesRef = doc(favoritesRef, user.uid);
 
       // Get current favorites to find which page contains the item

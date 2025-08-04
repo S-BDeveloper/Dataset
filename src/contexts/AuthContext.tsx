@@ -5,7 +5,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import type { User } from "firebase/auth";
+import type { User, Auth } from "firebase/auth";
 import { auth } from "../firebase/auth";
 import { errorHandler } from "../utils/errorHandler";
 import { isValidEmail, checkRateLimit } from "../utils/authUtils";
@@ -89,7 +89,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    // Skip Firebase auth if not available (for production deployment)
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
+    const unsubscribe = onAuthStateChanged(auth as unknown as Auth, (user) => {
       if (user) {
         // Enhance user with role information
         const enhancedUser: EnhancedUser = {
@@ -157,6 +163,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       setError(null);
 
+      // Skip if Firebase is not available
+      if (!auth) {
+        throw new Error("Authentication is not available in this environment");
+      }
+
       // Check rate limiting
       if (!checkRateLimit(email, 5, 15 * 60 * 1000)) {
         throw new Error("Too many login attempts. Please try again later.");
@@ -167,7 +178,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         throw new Error("Invalid email address");
       }
 
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(
+        auth as unknown as Auth,
+        email,
+        password
+      );
     } catch (err) {
       const authError = errorHandler.handleAuthError(err, { email });
       setError(authError.message);
@@ -180,6 +195,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       setError(null);
 
+      // Skip if Firebase is not available
+      if (!auth) {
+        throw new Error("Authentication is not available in this environment");
+      }
+
       // Validate email
       if (!validateEmail(email)) {
         throw new Error("Invalid email address");
@@ -191,7 +211,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         throw new Error(passwordValidation.errors.join(", "));
       }
 
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(
+        auth as unknown as Auth,
+        email,
+        password
+      );
     } catch (err) {
       const authError = errorHandler.handleAuthError(err, { email });
       setError(authError.message);
@@ -202,7 +226,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = async () => {
     try {
       setError(null);
-      await signOut(auth);
+
+      // Skip if Firebase is not available
+      if (!auth) {
+        setUser(null);
+        return;
+      }
+
+      await signOut(auth as unknown as Auth);
     } catch (err) {
       const authError = errorHandler.handleAuthError(err);
       setError(authError.message);
