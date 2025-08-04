@@ -148,23 +148,12 @@ export default function HomePage({
 
   // Handle favorite toggle using the proper favorites system
   const handleFavorite = async (item: FavoriteItem) => {
-    const isCurrentlyFavorite = favorites.some(
-      (fav) =>
-        fav === item ||
-        ("title" in fav &&
-          "title" in item &&
-          fav.title === item.title &&
-          "type" in fav &&
-          "type" in item &&
-          fav.type === item.type) ||
-        ("surah_no" in fav &&
-          "surah_no" in item &&
-          fav.surah_no === item.surah_no &&
-          "ayah_no_surah" in fav &&
-          "ayah_no_surah" in item &&
-          fav.ayah_no_surah === item.ayah_no_surah) ||
-        ("number" in fav && "number" in item && fav.number === item.number)
-    );
+    const isCurrentlyFavorite = favorites.some((fav) => {
+      // Use the same comparison logic as the useFavorites hook
+      const id1 = getItemId(fav);
+      const id2 = getItemId(item);
+      return id1 === id2;
+    });
 
     if (isCurrentlyFavorite) {
       await removeFavorite(item);
@@ -177,25 +166,29 @@ export default function HomePage({
 
   // Check if an item is favorited using the favorites from the hook
   const isFavorite = (item: FavoriteItem) => {
-    const isFav = favorites.some(
-      (fav) =>
-        fav === item ||
-        ("title" in fav &&
-          "title" in item &&
-          fav.title === item.title &&
-          "type" in fav &&
-          "type" in item &&
-          fav.type === item.type) ||
-        ("surah_no" in fav &&
-          "surah_no" in item &&
-          fav.surah_no === item.surah_no &&
-          "ayah_no_surah" in fav &&
-          "ayah_no_surah" in item &&
-          fav.ayah_no_surah === item.ayah_no_surah) ||
-        ("number" in fav && "number" in item && fav.number === item.number)
-    );
+    const isFav = favorites.some((fav) => {
+      // Use the same comparison logic as the useFavorites hook
+      const id1 = getItemId(fav);
+      const id2 = getItemId(item);
+      return id1 === id2;
+    });
 
     return isFav;
+  };
+
+  // Helper function to get item ID (same as in useFavorites hook)
+  const getItemId = (item: FavoriteItem): string => {
+    if ("title" in item && "type" in item) {
+      // IslamicData - use only title for consistency since type can vary
+      return `islamic-${item.title}`;
+    } else if ("surah_no" in item && "ayah_no_surah" in item) {
+      // QuranAyah
+      return `quran-${item.surah_no}-${item.ayah_no_surah}`;
+    } else if ("number" in item) {
+      // HadithEntry
+      return `hadith-${item.number}`;
+    }
+    return `unknown-${JSON.stringify(item)}`;
   };
 
   // Masonry breakpoints

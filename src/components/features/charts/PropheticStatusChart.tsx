@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
+import type { ComputedDatum } from "@nivo/pie";
 import type { IslamicData } from "../../../types/Types";
-import { ProphecyStatus } from "../../../types/Types";
 import { DarkModeContext } from "../../../types/ContextTypes";
 import { getChartTheme } from "./chartTheme";
 import { useResponsive } from "../../../hooks/useResponsive";
@@ -51,16 +51,15 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
   }, [data]);
 
   const getColor = (pieSlice: { readonly id: string | number }): string => {
-    const status = pieSlice.id.toString();
+    const status = pieSlice.id.toString().toLowerCase();
+
     switch (status) {
-      case ProphecyStatus.FULFILLED:
+      case "fulfilled":
         return "#10b981";
-      case ProphecyStatus.PROVEN:
-        return "#3b82f6";
-      case ProphecyStatus.IN_PROGRESS:
+      case "yet to happen":
         return "#f59e0b";
-      case ProphecyStatus.YET_TO_HAPPEN:
-        return "#ef4444";
+      case "proven":
+        return "#3b82f6";
       default:
         return "#6b7280";
     }
@@ -75,6 +74,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
       <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
         Islamic Data Status Distribution
       </h3>
+
       <div className="flex-grow">
         <ResponsivePie
           data={chartData}
@@ -92,11 +92,10 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
           arcLinkLabelsThickness={2}
           arcLinkLabelsColor={{ from: "color" }}
           arcLabelsSkipAngle={15}
-          arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
+          arcLabelsTextColor={isDarkMode ? "#f0f0f0" : "#333333"}
           enableArcLinkLabels={true}
           enableArcLabels={true}
-          onMouseEnter={(datum, event) => {
-            console.log("Mouse enter:", datum);
+          onMouseEnter={(datum: ComputedDatum<ChartDataPoint>, event) => {
             setTooltip({
               datum: {
                 id: datum.id as string | number,
@@ -109,7 +108,6 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
             });
           }}
           onMouseLeave={() => {
-            console.log("Mouse leave");
             setTooltip(null);
           }}
           animate={true}
@@ -159,11 +157,13 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
           </div>
           <div style={{ fontSize: "11px", opacity: 0.7, fontStyle: "italic" }}>
             {tooltip.datum.id === "Fulfilled" &&
-              "Prophecies that have come true"}
+              "Prophecies that have been fulfilled and verified"}
             {tooltip.datum.id === "Yet to Happen" &&
-              "Prophecies awaiting fulfillment"}
+              "Prophecies that are still waiting to be fulfilled"}
             {tooltip.datum.id === "Proven" &&
-              "Scientific facts confirmed by modern research"}
+              "Scientific facts that have been proven by research"}
+            {tooltip.datum.id === "Unknown" &&
+              "Entries with unclassified or missing status"}
           </div>
         </div>
       )}

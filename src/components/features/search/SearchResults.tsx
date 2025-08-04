@@ -4,6 +4,7 @@ import type { IslamicData, QuranAyah, HadithEntry } from "../../../types/Types";
 // Import the canonical UnifiedSearchResult type
 import type { UnifiedSearchResult } from "../../../types/Types";
 import type { FavoriteItem } from "../../../hooks/useFavorites";
+import { ExportButton } from "../export/ExportButton";
 
 interface SearchResultsProps {
   results: UnifiedSearchResult[];
@@ -79,22 +80,34 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             )}
           </div>
 
-          {/* Search Analytics */}
-          {analytics && analytics.topTypes.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm text-stone-500 dark:text-stone-400">
-                Top sources:
-              </span>
-              {analytics.topTypes.map(([type, count]) => (
-                <span
-                  key={type}
-                  className="px-2 py-1 bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300 text-xs rounded-full"
-                >
-                  {type} ({count})
+          {/* Search Analytics and Export */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {/* Search Analytics */}
+            {analytics && analytics.topTypes.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                <span className="text-sm text-stone-500 dark:text-stone-400">
+                  Top sources:
                 </span>
-              ))}
-            </div>
-          )}
+                {analytics.topTypes.map(([type, count]) => (
+                  <span
+                    key={type}
+                    className="px-2 py-1 bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300 text-xs rounded-full"
+                  >
+                    {type} ({count})
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Export Button */}
+            {results.length > 0 && (
+              <ExportButton
+                results={results}
+                searchQuery={searchQuery}
+                className="sm:ml-auto"
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -364,29 +377,6 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
               </div>
             );
           })}
-        </div>
-      )}
-
-      {/* Enhanced Search Tips */}
-      {searchQuery.trim() && results.length > 0 && (
-        <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
-          <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-2">
-            Cross-Reference Search Tips
-          </h4>
-          <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
-            <li>
-              • Search across all available Islamic sources simultaneously
-            </li>
-            <li>• Find Quran verses that mention specific topics</li>
-            <li>• Discover Hadiths related to your search terms</li>
-            <li>
-              • Cross-reference Prophecies/ Prophetic Medicines with Quran and
-              Hadith
-            </li>
-            <li>• Use quotes for exact phrase matching</li>
-            <li>• Try different keywords to find more connections</li>
-            <li>• Use the advanced filters to focus on specific sources</li>
-          </ul>
         </div>
       )}
     </div>

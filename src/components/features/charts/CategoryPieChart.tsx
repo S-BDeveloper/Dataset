@@ -51,6 +51,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
 
   const getColor = (pieSlice: { readonly id: string | number }): string => {
     const type = pieSlice.id.toString().toLowerCase();
+
     switch (type) {
       case DataType.PROPHECY:
         return "#ef4444";
@@ -72,6 +73,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
       <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
         Islamic Data Category Distribution
       </h3>
+
       <div className="flex-grow">
         <ResponsivePie
           data={chartData}
@@ -93,7 +95,6 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
           enableArcLinkLabels={true}
           enableArcLabels={true}
           onMouseEnter={(datum: ComputedDatum<ChartDataPoint>, event) => {
-            console.log("Mouse enter:", datum);
             setTooltip({
               datum: {
                 id: datum.id as string | number,
@@ -106,7 +107,6 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
             });
           }}
           onMouseLeave={() => {
-            console.log("Mouse leave");
             setTooltip(null);
           }}
           animate={true}

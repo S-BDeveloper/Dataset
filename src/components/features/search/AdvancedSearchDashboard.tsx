@@ -119,6 +119,100 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
         [data.length, quranData.length, hadithData.length]
       );
 
+      // Calculate the total filtered data count based on current filters
+      const filteredDataCount = useMemo(() => {
+        let count = 0;
+
+        // Count Islamic data based on filters
+        if (filters.dataSources.includes("islamic data")) {
+          let islamicCount = data.length;
+
+          // Apply Islamic data filters
+          if (filters.types.length > 0) {
+            islamicCount = data.filter((item) =>
+              filters.types.includes(item.type)
+            ).length;
+          }
+          if (filters.fulfillmentStatus.length > 0) {
+            islamicCount = data.filter(
+              (item) =>
+                item.fulfillmentStatus &&
+                filters.fulfillmentStatus.includes(item.fulfillmentStatus)
+            ).length;
+          }
+          if (filters.prophecyCategories.length > 0) {
+            islamicCount = data.filter(
+              (item) =>
+                item.prophecyCategory &&
+                filters.prophecyCategories.includes(item.prophecyCategory)
+            ).length;
+          }
+          if (filters.yearRange.min > 0 || filters.yearRange.max < 2024) {
+            islamicCount = data.filter((item) => {
+              const yearRevealed = item.yearRevealed || 0;
+              const yearFulfilled = item.yearFulfilled || 0;
+              return (
+                (yearRevealed >= filters.yearRange.min &&
+                  yearRevealed <= filters.yearRange.max) ||
+                (yearFulfilled >= filters.yearRange.min &&
+                  yearFulfilled <= filters.yearRange.max)
+              );
+            }).length;
+          }
+          count += islamicCount;
+        }
+
+        // Count Quran data based on filters
+        if (filters.dataSources.includes("quran")) {
+          let quranCount = quranData.length;
+
+          if (filters.quranSurahs.length > 0) {
+            quranCount = quranData.filter((ayah) =>
+              filters.quranSurahs.includes(ayah.surah_no.toString())
+            ).length;
+          }
+          if (
+            filters.quranVerseRange.min !== 1 ||
+            filters.quranVerseRange.max !== 6236
+          ) {
+            quranCount = quranData.filter((ayah) => {
+              const verseNumber = parseInt(ayah.ayah_no_surah.toString());
+              return (
+                verseNumber >= filters.quranVerseRange.min &&
+                verseNumber <= filters.quranVerseRange.max
+              );
+            }).length;
+          }
+          if (filters.quranPlaceOfRevelation.length > 0) {
+            quranCount = quranData.filter((ayah) =>
+              filters.quranPlaceOfRevelation.includes(ayah.place_of_revelation)
+            ).length;
+          }
+          count += quranCount;
+        }
+
+        // Count Hadith data based on filters
+        if (filters.dataSources.includes("hadith")) {
+          let hadithCount = hadithData.length;
+
+          if (
+            filters.hadithNumberRange.min !== 1 ||
+            filters.hadithNumberRange.max !== hadithData.length
+          ) {
+            hadithCount = hadithData.filter((hadith) => {
+              const hadithNumber = parseInt(hadith.number);
+              return (
+                hadithNumber >= filters.hadithNumberRange.min &&
+                hadithNumber <= filters.hadithNumberRange.max
+              );
+            }).length;
+          }
+          count += hadithCount;
+        }
+
+        return count;
+      }, [data, quranData, hadithData, filters]);
+
       // Enhanced search function with comprehensive criteria across all data types
       const performSearch = useCallback(
         (query: string, filterState: FilterState) => {
@@ -367,6 +461,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               actualResultsCount,
               limitedResultsCount: results.length,
               totalDataCount,
+              filteredDataCount,
               actualPercentage:
                 ((actualResultsCount / totalDataCount) * 100).toFixed(1) + "%",
               limitedPercentage:
@@ -394,6 +489,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           processedHadithData,
           hadithData.length,
           totalDataCount,
+          filteredDataCount,
         ]
       );
 
@@ -445,11 +541,14 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
         [filteredResults]
       );
 
-      // Memoized percentage calculation - only calculate when we have data
+      // Memoized percentage calculation - based on filtered data count
       const percentageOfTotal = useMemo(() => {
         // Only calculate if we have actual data loaded
-        if (totalDataCount === 0) {
-          console.log("No data loaded yet, totalDataCount:", totalDataCount);
+        if (filteredDataCount === 0) {
+          console.log(
+            "No filtered data available, filteredDataCount:",
+            filteredDataCount
+          );
           return "0.0";
         }
 
@@ -470,21 +569,24 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           filteredResultsLength: filteredResults.length,
           actualResultsCount: actualResultsCount,
           resultsCountForPercentage,
-          totalDataCount,
+          filteredDataCount,
           calculatedPercentage: percentage,
           dataLength: data.length,
           quranDataLength: quranData.length,
           hadithDataLength: hadithData.length,
+          filters: filters,
         });
 
         return percentage.toFixed(1);
       }, [
         filteredResults.length,
-        totalDataCount,
+        filteredDataCount,
         data.length,
         quranData.length,
         hadithData.length,
         actualResultsCount,
+        filters,
+        totalDataCount,
       ]);
 
       return (
@@ -780,34 +882,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                   </div>
                 </div>
               </div>
-
-              {/* Enhanced Search Tips */}
-              {searchQuery.trim() && filteredResults.length > 0 && (
-                <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
-                  <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                    Cross-Reference Search Tips
-                  </h4>
-                  <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1">
-                    <li>
-                      • Search across all available Islamic sources
-                      simultaneously
-                    </li>
-                    <li>• Find Quran verses that mention specific topics</li>
-                    <li>• Discover Hadiths related to your search terms</li>
-                    <li>
-                      • Cross-reference Islamic data with Quran and Hadith
-                    </li>
-                    <li>• Use quotes for exact phrase matching</li>
-                    <li>• Try different keywords to find more connections</li>
-                    <li>
-                      • Use the advanced filters to focus on specific sources
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </>
+     </>
           )}
-
           {/* Enhanced Search Statistics */}
           {hasSearched && filteredResults.length > 0 && totalDataCount > 0 && (
             <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
