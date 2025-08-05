@@ -113,7 +113,7 @@ function indexIslamicData(islamicData: IslamicData[]): void {
     const tokens = [
       ...tokenizeText(islamicData.title),
       ...tokenizeText(islamicData.notes),
-      ...tokenizeText(islamicData.description || ""),
+      ...tokenizeText(islamicData.title || ""),
       ...tokenizeText(islamicData.type),
       ...tokenizeText(islamicData.fulfillmentStatus || ""),
       ...tokenizeText(islamicData.prophecyCategory || ""),

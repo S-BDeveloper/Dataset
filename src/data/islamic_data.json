@@ -2,7 +2,6 @@
   {
     "type": "prophecy",
     "title": "Widespread Ignorance",
-    "description": "Ignorance will become prevalent",
     "source": "Sunan Ibn Majah 4050",
     "status": "Fulfilled",
     "notes": "This prophecy has been fulfilled as ignorance has become widespread globally. Despite advances in education, many people remain ignorant of Islamic teachings, moral values, and spiritual knowledge. The Prophet (ﷺ) warned about the prevalence of ignorance in later times, and today we see this manifested through widespread lack of religious knowledge, moral confusion, and spiritual neglect.",
@@ -17,7 +16,6 @@
   {
     "type": "prophecy",
     "title": "Prevalence of Immorality",
-    "description": "Immorality will become prevalent",
     "source": "Hadith: Sahih Bukhari 5590",
     "status": "Fulfilled",
     "notes": "This prophecy has been fulfilled as immoral behavior has become widespread globally. The Prophet (ﷺ) warned about the normalization of sinful acts, and today we see this manifested through various social changes, media influence, and shifting moral standards.",
@@ -32,7 +30,6 @@
   {
     "type": "prophecy",
     "title": "Return of Jesus (Isa)",
-    "description": "Jesus will return before the end of times as a just ruler",
     "source": "Hadith: Sahih Bukhari 3448",
     "status": "Yet to Happen",
     "notes": "This is a major prophecy yet to be fulfilled, mentioned in authentic hadith.",
@@ -47,7 +44,6 @@
   {
     "type": "scientific",
     "title": "Human Embryo Development Stages",
-    "description": "The Quran describes the stages of human embryonic development with remarkable accuracy",
     "source": "Quran 23:13-14",
     "status": "Proven",
     "notes": "Modern embryology confirms the stages described in the Quran: fertilization (nutfah), implantation (alaqah), somite stage (mudghah), and the development of bones and flesh.",
@@ -59,11 +55,9 @@
       "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
-
   {
     "type": "scientific",
     "title": "Barrier Between Salt and Fresh Water",
-    "description": "The Quran describes a natural barrier between salt and fresh water in the seas",
     "source": "Quran 25:53",
     "status": "Proven",
     "notes": "Oceanography confirms the existence of a barrier between salt and fresh water in estuaries, preventing immediate mixing.",
@@ -78,7 +72,6 @@
   {
     "type": "health-science",
     "title": "Benefits of Dates",
-    "description": "Dates were recommended by Prophet Muhammad (ﷺ) and are scientifically proven to be highly nutritious",
     "source": "Sahih Bukhari 5445",
     "status": "Proven",
     "notes": "Dates are high in fiber, provide natural energy, and are rich in minerals, supporting digestive and overall health.",
@@ -86,29 +79,30 @@
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari:5445"],
+      "references": [
+        "https://sunnah.com/abudawud:2356",
+        "https://sunnah.com/bukhari:5445"
+      ],
       "source": "Imam Bukhari, 9th century CE"
     }
   },
   {
     "type": "health-science",
     "title": "Barley's Nutritional Benefits",
-    "description": "Barley was used in the Prophet's (ﷺ) time and is now scientifically proven to support health",
-    "source": "Sahih Bukhari 5413",
+    "source": "Islamic texts",
     "status": "Proven",
     "notes": "Barley is now known to support digestion, heart health, and blood sugar control due to its high fiber and nutrient content.",
     "sources": {
-      "primary": "Sahih Bukhari - Authentic Hadith Collection",
-      "verification": "Hadith authenticity verified by Islamic scholars",
-      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari:5413"],
-      "source": "Imam Bukhari, 9th century CE"
+      "primary": "Islamic texts - General references",
+      "verification": "Mentioned in various Islamic texts",
+      "methodology": "Traditional Islamic knowledge",
+      "references": [],
+      "source": "Islamic tradition"
     }
   },
   {
     "type": "prophecy",
     "title": "Conquest of Mecca",
-    "description": "The Prophet (ﷺ) prophesied the peaceful conquest of Mecca",
     "source": "Hadith: Sahih Bukhari 4294",
     "status": "Fulfilled",
     "notes": "The conquest of Mecca occurred in 630 CE, during which the Prophet (ﷺ) entered the city peacefully and rid the Kaaba of idols.",
@@ -123,7 +117,6 @@
   {
     "type": "prophecy",
     "title": "Establishment of Medina",
-    "description": "The Prophet (ﷺ) established the first Islamic state in Medina",
     "source": "Hadith: Sahih Bukhari 1871",
     "status": "Fulfilled",
     "notes": "The Prophet (ﷺ) established the first Islamic community and state in Medina, creating the foundation for Islamic governance.",
@@ -138,41 +131,37 @@
   {
     "type": "health-science",
     "title": "Olive Oil Benefits",
-    "description": "The Prophet (ﷺ) recommended olive oil for various health benefits",
-    "source": "Hadith: Sahih Bukhari 5445",
+    "source": "Quran 23:20; Hadith: Sunan Ibn Majah 3319",
     "status": "Proven",
     "notes": "Modern research confirms olive oil's benefits for heart health, anti-inflammatory properties, and rich antioxidant content.",
     "sources": {
-      "primary": "Sunan Ibn Majah 3319",
-      "verification": "Hadith authenticity verified by Islamic scholars",
-      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/ibnmajah:3319"],
-      "source": "Book 29, Hadith 69"
-    }
-  },
-  {
-    "type": "health-science",
-    "title": "Honey's Healing Properties",
-    "description": "The Quran describes honey as a healing substance, confirmed by modern medical research",
-    "source": "Quran 16:69; Sahih Bukhari 5680",
-    "status": "Proven",
-    "notes": "Modern studies confirm honey's antibacterial, wound healing, and energy-boosting properties.",
-    "sources": {
-      "primary": "Quran - Surah An-Nahl 16:69 and Sahih Bukhari 5680",
+      "primary": "Quran - Surah Al-Mu'minun 23:20 and Sunan Ibn Majah 3319",
       "verification": "Direct Quranic reference and Hadith authenticity verified by Islamic scholars",
       "methodology": "Direct Quranic text analysis and Hadith authentication using isnad (chain of narrators) analysis",
       "references": [
-        "https://quran.com/16/69",
-        "https://sunnah.com/bukhari:5680"
+        "https://quran.com/23/20",
+        "https://sunnah.com/ibnmajah:3319"
       ],
-      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE and Imam Bukhari, 9th century CE"
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE and Imam Ibn Majah, 9th century CE"
     }
   },
-
+  {
+    "type": "traditional-treatments",
+    "title": "Honey's Healing Properties",
+    "source": "Quran 16:69",
+    "status": "Proven",
+    "notes": "Modern studies confirm honey's antibacterial, wound healing, and energy-boosting properties.",
+    "sources": {
+      "primary": "Quran - Surah An-Nahl 16:69",
+      "verification": "Direct Quranic reference",
+      "methodology": "Direct Quranic text analysis",
+      "references": ["https://quran.com/16/69"],
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
+    }
+  },
   {
     "type": "scientific",
     "title": "Discovery of Iron from Space",
-    "description": "The Quran described iron as being sent down from space",
     "source": "Quran 57:25",
     "status": "Proven",
     "notes": "Modern astronomy confirms that iron is formed in supernovae and distributed through space.",
@@ -187,7 +176,6 @@
   {
     "type": "scientific",
     "title": "Environmental Degradation",
-    "description": "The Quran described environmental corruption and its consequences",
     "source": "Quran 30:41",
     "status": "Proven",
     "notes": "Modern environmental science confirms the Quranic description of environmental corruption and its consequences.",
@@ -202,7 +190,6 @@
   {
     "type": "scientific",
     "title": "Big Bang Theory in Quran",
-    "description": "The Quran describes the universe beginning from a single point, matching modern cosmology",
     "source": "Quran 21:30",
     "status": "Proven",
     "notes": "Modern cosmology confirms the universe began from a singularity, exactly as described in the Quran: 'Do the disbelievers not see that the heavens and earth were joined together, then We separated them?'",
@@ -217,7 +204,6 @@
   {
     "type": "scientific",
     "title": "Universe Expansion",
-    "description": "The Quran describes the universe as expanding, confirmed by modern astronomy",
     "source": "Quran 51:47",
     "status": "Proven",
     "notes": "Modern astronomy confirms the universe is expanding, as described in the Quran: 'And the heaven We constructed with strength, and indeed, We are expanding it.'",
@@ -232,7 +218,6 @@
   {
     "type": "scientific",
     "title": "Fingerprint Uniqueness",
-    "description": "The Quran mentions that Allah will resurrect humans with their complete fingerprints",
     "source": "Quran 75:4",
     "status": "Proven",
     "notes": "Modern forensic science confirms that fingerprints are unique to each individual, supporting the Quranic claim that Allah can resurrect people with their complete identity.",
@@ -247,7 +232,6 @@
   {
     "type": "scientific",
     "title": "Deep Sea Darkness",
-    "description": "The Quran describes the darkness in the depths of the ocean",
     "source": "Quran 24:40",
     "status": "Proven",
     "notes": "Modern oceanography confirms that light cannot penetrate deep ocean layers, creating complete darkness as described in the Quran.",
@@ -262,7 +246,6 @@
   {
     "type": "scientific",
     "title": "Earth's Rotation",
-    "description": "The Quran describes mountains moving like clouds, indicating Earth's rotation",
     "source": "Quran 27:88",
     "status": "Proven",
     "notes": "Modern geology confirms Earth's rotation, which makes mountains appear to move like clouds from a cosmic perspective.",
@@ -277,7 +260,6 @@
   {
     "type": "scientific",
     "title": "Plate Tectonics",
-    "description": "The Quran describes mountains as pegs that stabilize the Earth's crust",
     "source": "Quran 21:31",
     "status": "Proven",
     "notes": "Modern geology confirms that mountains have deep roots and play a role in stabilizing the Earth's crust through plate tectonics.",
@@ -292,7 +274,6 @@
   {
     "type": "prophecy",
     "title": "Conquest of Constantinople",
-    "description": "The Prophet (ﷺ) prophesied the conquest of Constantinople by Muslims",
     "source": "Sahih Bukhari 2924",
     "status": "Fulfilled",
     "notes": "Constantinople was conquered by Sultan Mehmed II in 1453 CE, fulfilling the Prophet's (ﷺ) prophecy.",
@@ -307,7 +288,6 @@
   {
     "type": "prophecy",
     "title": "Spread of Islam Worldwide",
-    "description": "The Prophet (ﷺ) prophesied that Islam would reach all corners of the earth",
     "source": "Sahih Muslim 2889",
     "status": "Fulfilled",
     "notes": "Islam has spread to every continent and is practiced by over 1.8 billion people worldwide.",
@@ -322,7 +302,6 @@
   {
     "type": "prophecy",
     "title": "Dajjal (False Messiah)",
-    "description": "The Prophet (ﷺ) prophesied the appearance and characteristics of Dajjal",
     "source": "Sahih Muslim 2933",
     "status": "Yet to Happen",
     "notes": "Dajjal is described as a one-eyed false messiah who will appear before the Day of Judgment.",
@@ -335,24 +314,22 @@
     }
   },
   {
-    "type": "health-science",
+    "type": "traditional-treatments",
     "title": "Black Seed Benefits",
-    "description": "The Prophet (ﷺ) described black seed as a cure for every disease except death",
-    "source": "Sahih Bukhari 5687",
-    "status": "Proven",
+    "source": "Islamic texts",
+    "status": "Ongoing Research",
     "notes": "Modern research confirms black seed's anti-inflammatory, antioxidant, and immune-boosting properties.",
     "sources": {
-      "primary": "Sahih Bukhari - Authentic Hadith Collection",
-      "verification": "Hadith authenticity verified by Islamic scholars",
-      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari:5687"],
-      "source": "Imam Bukhari, 9th century CE"
+      "primary": "Islamic texts - General references",
+      "verification": "Mentioned in various Islamic texts",
+      "methodology": "Traditional Islamic knowledge",
+      "references": [],
+      "source": "Islamic tradition"
     }
   },
   {
-    "type": "health-science",
+    "type": "traditional-treatments",
     "title": "Cupping Therapy Benefits",
-    "description": "The Prophet (ﷺ) recommended cupping therapy for various ailments",
     "source": "Sahih Bukhari 5371",
     "status": "Proven",
     "notes": "Modern studies confirm cupping therapy's effectiveness for pain relief, blood circulation, and detoxification.",
@@ -367,7 +344,6 @@
   {
     "type": "health-science",
     "title": "Fasting Benefits",
-    "description": "The Prophet (ﷺ) described fasting as a shield and recommended regular fasting",
     "source": "Sahih Bukhari 1895",
     "status": "Proven",
     "notes": "Modern research confirms fasting's benefits for metabolism, cellular repair, and disease prevention.",

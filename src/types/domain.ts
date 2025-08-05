@@ -1,7 +1,6 @@
 // Domain-specific types
 export interface IslamicData {
   title: string;
-  description?: string;
   type: string;
   notes?: string;
   sources?: string[];

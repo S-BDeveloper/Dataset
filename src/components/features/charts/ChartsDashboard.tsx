@@ -39,7 +39,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
       component: CategoryPieChart,
       ref: categoryChartRef,
       notes:
-        "This chart shows how the Islamic data is organized into different types: Prophecy (future predictions), Science (scientific facts), and Health (nutrition and medical practices). The percentages show what portion of the data falls into each category. Hover over the chart to see exact counts and percentages.",
+        "This chart shows how the Islamic data is organized into different types: Prophecy (future predictions), Science (scientific facts), Health (nutrition and medical practices), and Traditional Medicine (traditional healing practices). The percentages show what portion of the data falls into each category. Hover over the chart to see exact counts and percentages.",
     },
     {
       id: "status",
@@ -47,7 +47,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
       component: PropheticStatusChart,
       ref: statusChartRef,
       notes:
-        "This chart shows what type of information each entry contains: Fulfilled (prophecies that have come true), Yet to Happen (prophecies still waiting), and Proven (scientific facts confirmed by research). This helps you see how much of the data represents completed vs. ongoing prophecies.",
+        "This chart shows what type of information each entry contains: Fulfilled (prophecies that have come true), Yet to Happen (prophecies still waiting), Proven (scientific facts confirmed by research), Documented (authentic hadith and traditional practices), and Ongoing Research (claims being actively studied). This helps you see how much of the data represents completed vs. ongoing prophecies and traditional knowledge.",
     },
     {
       id: "geographic",

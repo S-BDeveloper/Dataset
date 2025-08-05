@@ -8,6 +8,7 @@ export const DataType = {
   PROPHECY: "prophecy",
   SCIENTIFIC: "scientific",
   HEALTH_SCIENCE: "health-science",
+  TRADITIONAL_TREATMENTS: "traditional-treatments",
   QADR: "qadr",
 } as const;
 
@@ -24,6 +25,8 @@ export const ProphecyStatus = {
   IN_PROGRESS: "In Progress",
   PROVEN: "Proven",
   YET_TO_HAPPEN: "Yet to Happen",
+  DOCUMENTED: "Documented",
+  ONGOING_RESEARCH: "Ongoing Research",
 } as const;
 
 export const ProphecyCategory = {
@@ -135,7 +138,6 @@ export interface IslamicData {
   readonly title: string;
   readonly notes: string;
   readonly sources?: DataSources;
-  readonly description?: string;
   readonly location?: string;
   readonly significance?: string;
   readonly pattern?: string;

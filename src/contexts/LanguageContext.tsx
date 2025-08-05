@@ -14,8 +14,6 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Homepage
     "header.title": "Authentic Islamic Knowledge",
-    "header.description":
-      "Explore authentic Islamic texts and cross-references between Quran, Hadith, and verified scholarly sources for educational purposes. This platform presents sample data and historical references - for complex religious matters, always consult qualified Islamic scholars and your trusted local Imam.",
 
     // Tabs
     "tabs.data": "Sample Data",
@@ -98,6 +96,16 @@ const translations: Record<Language, Record<string, string>> = {
     "common.search": "Search",
     "common.filter": "Filter",
     "common.sort": "Sort",
+
+    // Sources
+    "sources.primarySource": "Primary Source",
+    "sources.verification": "Verification",
+    "sources.methodology": "Methodology",
+    "sources.references": "References",
+    "sources.sourceInfo": "Source Information",
+    "sources.ijma": "Scholarly Consensus (Ijma)",
+    "sources.scientificVerification": "Scientific Verification",
+    "sources.peerReviewed": "Peer-Reviewed Sources",
     "common.clear": "Clear",
     "common.loading": "Loading...",
     "common.noResults": "No results found",
@@ -456,8 +464,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "تسجيل الخروج",
 
     "header.title": "الآيات الإلهية والإرشاد",
-    "header.description":
-      "اكتشف الآيات المعجزة لله من خلال الوحي القرآني والتوجيه النبوي والحكمة الإلهية.",
 
     "tabs.data": "بيانات تجريبية",
     "tabs.search": "البحث المتقدم",
@@ -884,8 +890,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "لاگ آؤٹ",
 
     "header.title": "اسلامی نشانیاں اور رہنمائی",
-    "header.description":
-      "قرآنی وحی، نبوی رہنمائی اور الہی حکمت کے ذریعے اللہ کی معجزاتی نشانیاں دریافت کریں۔",
 
     "tabs.data": "نمونہ ڈیٹا",
     "tabs.search": "اعلی درجے کی تلاش",
@@ -1315,8 +1319,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Çıkış Yap",
 
     "header.title": "İslami İşaretler ve Rehberlik",
-    "header.description":
-      "Kur'an vahyi, peygamber rehberliği ve ilahi hikmet aracılığıyla Allah'ın mucizevi işaretlerini keşfedin.",
 
     "tabs.data": "Örnek Veri",
     "tabs.search": "Gelişmiş Arama",
@@ -1746,8 +1748,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Déconnexion",
 
     "header.title": "Signes Islamiques et Guidance",
-    "header.description":
-      "Découvrez les signes miraculeux d'Allah à travers les révélations coraniques, la guidance prophétique et la sagesse divine.",
 
     "tabs.data": "Données d'Exemple",
     "tabs.search": "Recherche Avancée",
@@ -2192,8 +2192,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Cerrar Sesión",
 
     "header.title": "Señales Islámicas y Guía",
-    "header.description":
-      "Descubre las señales milagrosas de Allah a través de las revelaciones coránicas, la guía profética y la sabiduría divina.",
 
     "tabs.data": "Datos de Ejemplo",
     "tabs.search": "Búsqueda Avanzada",
@@ -2634,8 +2632,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Abmelden",
 
     "header.title": "Islamische Zeichen und Führung",
-    "header.description":
-      "Entdecken Sie die wundersamen Zeichen Allahs durch koranische Offenbarungen, prophetische Führung und göttliche Weisheit.",
 
     "tabs.data": "Beispieldaten",
     "tabs.search": "Erweiterte Suche",

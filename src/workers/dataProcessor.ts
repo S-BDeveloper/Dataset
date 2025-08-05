@@ -23,7 +23,7 @@ function buildSearchIndex(data: Record<string, unknown>[]): SearchIndex {
   data.forEach((item, idx) => {
     const searchableText = [
       (item.title as string) || "",
-      (item.description as string) || "",
+      (item.title as string) || "",
       (item.notes as string) || "",
       (item.type as string) || "",
       (item.status as string) || "",

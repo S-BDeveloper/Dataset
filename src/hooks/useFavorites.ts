@@ -56,7 +56,7 @@ const compressData = (data: FavoriteItem[]): string => {
           title: item.title,
           itemType: item.type,
           // Only keep essential fields
-          description: item.description?.substring(0, 200), // Limit description length
+          description: item.title?.substring(0, 200), // Use title instead of description
           fulfillmentStatus: item.fulfillmentStatus,
           yearRevealed: item.yearRevealed,
           yearFulfilled: item.yearFulfilled,

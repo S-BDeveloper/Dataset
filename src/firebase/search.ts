@@ -249,11 +249,10 @@ export class SearchService {
 
   // Extract searchable content from item
   private extractContent(item: IslamicData | QuranAyah | HadithEntry): string {
-    if ("title" in item && "description" in item) {
+    if ("title" in item && "notes" in item) {
       // IslamicData
       return [
         item.title,
-        item.description,
         item.notes,
         item.sources?.primary,
         item.sources?.verification,

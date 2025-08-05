@@ -5,6 +5,7 @@ import type { IslamicData, QuranAyah, HadithEntry } from "../../../types/Types";
 import type { UnifiedSearchResult } from "../../../types/Types";
 import type { FavoriteItem } from "../../../hooks/useFavorites";
 import { ExportButton } from "../export/ExportButton";
+import { generateScholarlySummary } from "../../../utils/dataSanitizer";
 
 interface SearchResultsProps {
   results: UnifiedSearchResult[];
@@ -243,18 +244,12 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                         </svg>
                       </button>
                     </div>
-                    {(result.data as IslamicData).description && (
-                      <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mb-3 line-clamp-3">
-                        {(result.data as IslamicData).description}
+                    {/* Notes */}
+                    <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                      <p className="text-sm text-blue-800 dark:text-blue-200 line-clamp-2">
+                        {generateScholarlySummary(result.data as IslamicData)}
                       </p>
-                    )}
-                    {(result.data as IslamicData).notes && (
-                      <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                        <p className="text-sm text-blue-800 dark:text-blue-200 line-clamp-2">
-                          {(result.data as IslamicData).notes}
-                        </p>
-                      </div>
-                    )}
+                    </div>
                   </div>
                 )}
                 {result.type === "quran" && (

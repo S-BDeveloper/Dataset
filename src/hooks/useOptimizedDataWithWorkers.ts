@@ -163,7 +163,7 @@ export function useOptimizedDataWithWorkers(
           const results = progressiveData.data.filter((item) => {
             const searchText = [
               item.title,
-              item.description,
+              item.title,
               item.notes,
               item.type,
               item.status,
