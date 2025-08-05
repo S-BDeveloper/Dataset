@@ -1,40 +1,207 @@
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Public facts: anyone can read, no one can write from frontend
-    match /facts/{document=**} {
-      allow read: if true;
-      allow write: if false;
+    // ============================================================================
+    // PUBLIC READ ACCESS - Islamic Data, Quran, and Hadith
+    // ============================================================================
+    
+    // Islamic data - public read, admin write
+    match /islamic_data/{document} {
+      allow read: if true; // Public read access
+      allow write: if request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com");
     }
-
-    // User profiles: only the user can read/write their own profile
+    
+    // Quran data - public read, admin write
+    match /quran/{document} {
+      allow read: if true; // Public read access
+      allow write: if request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com");
+    }
+    
+    // Hadith data - public read, admin write
+    match /hadith/{document} {
+      allow read: if true; // Public read access
+      allow write: if request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com");
+    }
+    
+    // ============================================================================
+    // USER-SPECIFIC DATA - Requires authentication
+    // ============================================================================
+    
+    // User profiles - users can read/write their own profile
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-
-    // User favorites: only the user can read/write their own favorites
-    match /favorites/{userId} {
+    
+    // User preferences - users can read/write their own preferences
+    match /user_preferences/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-
-    // User submissions: only the user can create/read/update/delete their own, admins can manage all
-    match /submissions/{submissionId} {
-      // Allow any logged-in user to create a submission
-      allow create: if request.auth != null;
-      // Allow user to read/update/delete their own submission
-      allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
-      // Allow admin to read/update/delete any submission
-      allow read, update, delete: if request.auth != null && request.auth.token.admin == true;
+    
+    // Favorites - users can read/write their own favorites
+    match /favorites/{document} {
+      allow read, write: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid;
     }
-
-    // Admin-only collections (e.g., moderation, settings)
-    match /admin/{document=**} {
-      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    
+    // Search history - users can read/write their own search history
+    match /search_history/{document} {
+      allow read, write: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid;
     }
-
-    // Default: Deny all other access
-    match /{document=**} {
-      allow read, write: if false;
+    
+    // ============================================================================
+    // ANALYTICS - Admin read, authenticated users can create
+    // ============================================================================
+    
+    // Analytics - authenticated users can create, admin can read
+    match /analytics/{document} {
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid;
+      allow read: if request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com" ||
+         request.auth.token.email == "moderator@quranic-signs.com");
+    }
+    
+    // ============================================================================
+    // ADMIN-ONLY COLLECTIONS
+    // ============================================================================
+    
+    // Migration logs - admin only
+    match /migration_logs/{document} {
+      allow read, write: if request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com");
+    }
+    
+    // System settings - admin only
+    match /system_settings/{document} {
+      allow read, write: if request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com");
+    }
+    
+    // ============================================================================
+    // HELPER FUNCTIONS
+    // ============================================================================
+    
+    // Check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+        (request.auth.token.email == "admin@quranic-signs.com" || 
+         request.auth.token.email == "superadmin@quranic-signs.com");
+    }
+    
+    // Check if user is moderator
+    function isModerator() {
+      return request.auth != null && 
+        (request.auth.token.email == "moderator@quranic-signs.com" || 
+         request.auth.token.email == "editor@quranic-signs.com");
+    }
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user owns the document
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    // ============================================================================
+    // DATA VALIDATION RULES
+    // ============================================================================
+    
+    // Validate Islamic data structure
+    function validateIslamicData() {
+      return request.resource.data.keys().hasAll(['title', 'type', 'createdAt', 'updatedAt']) &&
+             request.resource.data.title is string &&
+             request.resource.data.title.size() > 0 &&
+             request.resource.data.title.size() <= 500 &&
+             request.resource.data.type is string &&
+             request.resource.data.createdAt is timestamp &&
+             request.resource.data.updatedAt is timestamp;
+    }
+    
+    // Validate Quran data structure
+    function validateQuranData() {
+      return request.resource.data.keys().hasAll(['surah_no', 'surah_name_en', 'ayah_no_surah']) &&
+             request.resource.data.surah_no is number &&
+             request.resource.data.surah_no >= 1 &&
+             request.resource.data.surah_no <= 114 &&
+             request.resource.data.surah_name_en is string &&
+             request.resource.data.ayah_no_surah is number;
+    }
+    
+    // Validate Hadith data structure
+    function validateHadithData() {
+      return request.resource.data.keys().hasAll(['number', 'text', 'createdAt']) &&
+             request.resource.data.number is string &&
+             request.resource.data.text is string &&
+             request.resource.data.text.size() > 0 &&
+             request.resource.data.createdAt is timestamp;
+    }
+    
+    // Validate user data structure
+    function validateUserData() {
+      return request.resource.data.keys().hasAll(['uid', 'email', 'createdAt', 'updatedAt']) &&
+             request.resource.data.uid is string &&
+             request.resource.data.email is string &&
+             request.resource.data.createdAt is timestamp &&
+             request.resource.data.updatedAt is timestamp;
+    }
+    
+    // ============================================================================
+    // RATE LIMITING (Basic implementation)
+    // ============================================================================
+    
+    // Limit write operations per user
+    function checkRateLimit() {
+      return request.time > resource.data.lastWrite + duration.value(1, 's');
+    }
+    
+    // ============================================================================
+    // ENHANCED RULES WITH VALIDATION
+    // ============================================================================
+    
+    // Enhanced Islamic data rules with validation
+    match /islamic_data/{document} {
+      allow read: if true;
+      allow create: if isAdmin() && validateIslamicData();
+      allow update: if isAdmin() && validateIslamicData();
+      allow delete: if isAdmin();
+    }
+    
+    // Enhanced Quran data rules with validation
+    match /quran/{document} {
+      allow read: if true;
+      allow create: if isAdmin() && validateQuranData();
+      allow update: if isAdmin() && validateQuranData();
+      allow delete: if isAdmin();
+    }
+    
+    // Enhanced Hadith data rules with validation
+    match /hadith/{document} {
+      allow read: if true;
+      allow create: if isAdmin() && validateHadithData();
+      allow update: if isAdmin() && validateHadithData();
+      allow delete: if isAdmin();
+    }
+    
+    // Enhanced user data rules with validation
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) && validateUserData();
     }
   }
 } 

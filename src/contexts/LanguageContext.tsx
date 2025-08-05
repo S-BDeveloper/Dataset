@@ -18,7 +18,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Discover the miraculous signs of Allah through prophecies, scientific discoveries, and health benefits mentioned in Islamic texts. Explore cross-references between Quran, Hadith, and verified sources to deepen your understanding.",
 
     // Tabs
-    "tabs.data": "Data",
+    "tabs.data": "Sample Data",
     "tabs.search": "Cross-Reference Search",
     "tabs.charts": "Charts & Analytics",
     "tabs.quran": "Quran",
@@ -129,7 +129,7 @@ const translations: Record<Language, Record<string, string>> = {
     "header.description":
       "اكتشف الآيات المعجزة لله من خلال الوحي القرآني والتوجيه النبوي والحكمة الإلهية.",
 
-    "tabs.data": "البيانات",
+    "tabs.data": "بيانات تجريبية",
     "tabs.search": "البحث المتقدم",
     "tabs.charts": "الرسوم البيانية",
     "tabs.quran": "القرآن",
@@ -231,7 +231,7 @@ const translations: Record<Language, Record<string, string>> = {
     "header.description":
       "قرآنی وحی، نبوی رہنمائی اور الہی حکمت کے ذریعے اللہ کی معجزاتی نشانیاں دریافت کریں۔",
 
-    "tabs.data": "ڈیٹا",
+    "tabs.data": "نمونہ ڈیٹا",
     "tabs.search": "اعلی درجے کی تلاش",
     "tabs.charts": "چارٹس اور تجزیہ",
     "tabs.quran": "قرآن",
@@ -335,7 +335,7 @@ const translations: Record<Language, Record<string, string>> = {
     "header.description":
       "Kur'an vahyi, peygamber rehberliği ve ilahi hikmet aracılığıyla Allah'ın mucizevi işaretlerini keşfedin.",
 
-    "tabs.data": "Veri",
+    "tabs.data": "Örnek Veri",
     "tabs.search": "Gelişmiş Arama",
     "tabs.charts": "Grafikler ve Analiz",
     "tabs.quran": "Kur'an",
@@ -438,7 +438,7 @@ const translations: Record<Language, Record<string, string>> = {
     "header.description":
       "Découvrez les signes miraculeux d'Allah à travers les révélations coraniques, la guidance prophétique et la sagesse divine.",
 
-    "tabs.data": "Données",
+    "tabs.data": "Données d'Exemple",
     "tabs.search": "Recherche Avancée",
     "tabs.charts": "Graphiques et Analyses",
     "tabs.quran": "Coran",
@@ -544,7 +544,7 @@ const translations: Record<Language, Record<string, string>> = {
     "header.description":
       "Descubre las señales milagrosas de Allah a través de las revelaciones coránicas, la guía profética y la sabiduría divina.",
 
-    "tabs.data": "Datos",
+    "tabs.data": "Datos de Ejemplo",
     "tabs.search": "Búsqueda Avanzada",
     "tabs.charts": "Gráficos y Análisis",
     "tabs.quran": "Corán",
@@ -647,7 +647,7 @@ const translations: Record<Language, Record<string, string>> = {
     "header.description":
       "Entdecken Sie die wundersamen Zeichen Allahs durch koranische Offenbarungen, prophetische Führung und göttliche Weisheit.",
 
-    "tabs.data": "Daten",
+    "tabs.data": "Beispieldaten",
     "tabs.search": "Erweiterte Suche",
     "tabs.charts": "Diagramme und Analysen",
     "tabs.quran": "Koran",

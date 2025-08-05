@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
+import { FirebaseProvider } from "./contexts/FirebaseContext";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
@@ -18,6 +19,9 @@ const FavoritesPage = lazy(() =>
 );
 const ProfilePage = lazy(() =>
   import("./pages/Profile").then((module) => ({ default: module.default }))
+);
+const LoginPage = lazy(() =>
+  import("./pages/Login").then((module) => ({ default: module.default }))
 );
 const CopyrightPage = lazy(() =>
   import("./pages/Copyright").then((module) => ({ default: module.default }))
@@ -38,29 +42,32 @@ const PageLoader: React.FC = () => (
 
 function App() {
   return (
-    <DarkModeProvider>
-      <LanguageProvider>
-        <AccessibilityProvider>
-          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col">
-            <Navbar />
-            <main className="flex-1 container mx-auto max-w-7xl px-4 py-8">
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<HomePageWrapper />} />
-                  <Route path="/favorites" element={<FavoritesPage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/copyright" element={<CopyrightPage />} />
-                  <Route path="/terms" element={<TermsPage />} />
-                  <Route path="/privacy" element={<PrivacyPage />} />
-                </Routes>
-              </Suspense>
-            </main>
-            <Footer />
-            <PWAInstallPrompt />
-          </div>
-        </AccessibilityProvider>
-      </LanguageProvider>
-    </DarkModeProvider>
+    <FirebaseProvider>
+      <DarkModeProvider>
+        <LanguageProvider>
+          <AccessibilityProvider>
+            <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col">
+              <Navbar />
+              <main className="flex-1 container mx-auto max-w-7xl px-4 py-8">
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<HomePageWrapper />} />
+                    <Route path="/favorites" element={<FavoritesPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/copyright" element={<CopyrightPage />} />
+                    <Route path="/terms" element={<TermsPage />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
+                  </Routes>
+                </Suspense>
+              </main>
+              <Footer />
+              <PWAInstallPrompt />
+            </div>
+          </AccessibilityProvider>
+        </LanguageProvider>
+      </DarkModeProvider>
+    </FirebaseProvider>
   );
 }
 

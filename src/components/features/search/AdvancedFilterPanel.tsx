@@ -279,7 +279,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
         <div className="mb-6">
           <div className="bg-stone-200 dark:bg-stone-900 rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden">
             {/* Filter Header */}
-            <div className="p-6 border-b border-stone-200 dark:border-stone-700 bg-gradient-to-r from-stone-50 to-amber-50/30 dark:from-stone-800 dark:to-stone-700">
+            <div className="p-6 border-b border-stone-200 dark:border-stone-700 bg-stone-300 dark:bg-stone-800">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-3">

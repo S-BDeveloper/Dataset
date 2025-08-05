@@ -6,7 +6,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import type { User, Auth } from "firebase/auth";
-import { auth } from "../firebase/auth";
+import { auth } from "../firebase/config";
 import { errorHandler } from "../utils/errorHandler";
 import { isValidEmail, checkRateLimit } from "../utils/authUtils";
 
