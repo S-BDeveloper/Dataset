@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useIslamicData } from "../hooks/useIslamicData";
 import { useOptimizedDataWithWorkers } from "../hooks/useOptimizedDataWithWorkers";
 import { useAppStore } from "../store/useAppStore";
+import { useLanguage } from "../hooks/useContext";
 import HomePage from "./HomePage";
 
 export default function HomePageWrapper() {
@@ -18,6 +19,7 @@ export default function HomePageWrapper() {
     setActiveTab,
     setToast,
   } = useAppStore();
+  const { t } = useLanguage();
 
   // Use the Islamic data hook to get Islamic data
   const { islamicData, loading, error, refetch } = useIslamicData();
@@ -57,14 +59,14 @@ export default function HomePageWrapper() {
   // Export handlers
   const handleExportCSV = () => {
     // CSV export functionality
-    console.log("Export CSV");
-    setToast("CSV exported successfully!");
+    console.log(t("loading.exportCSV"));
+    setToast(t("loading.csvExported"));
   };
 
   const handleExportJSON = () => {
     // JSON export functionality
-    console.log("Export JSON");
-    setToast("JSON exported successfully!");
+    console.log(t("loading.exportJSON"));
+    setToast(t("loading.jsonExported"));
   };
 
   // Get unique types for filters
@@ -133,12 +135,12 @@ export default function HomePageWrapper() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-red-600 dark:text-red-400">
-          Error: {error}
+          {t("loading.error")} {error}
           <button
             onClick={refetch}
             className="ml-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
           >
-            Retry
+            {t("loading.retry")}
           </button>
         </div>
       </div>

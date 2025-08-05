@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
+import { useLanguage } from "../../../hooks/useContext";
 import { authService } from "../../../firebase/auth";
 import { firestoreService } from "../../../firebase/firestore";
 
@@ -15,6 +16,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   className = "",
 }) => {
   const { login } = useAuth();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,7 +30,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     setError(null);
 
     if (!formData.email || !formData.password) {
-      setError("Please fill in all fields");
+      setError(t("auth.pleaseFillFields"));
       return;
     }
 
@@ -48,7 +50,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
       onSuccess?.();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      setError(err instanceof Error ? err.message : t("auth.loginFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -64,10 +66,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Welcome Back
+            {t("auth.welcomeBack")}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Sign in to your account to continue
+            {t("auth.signInToContinue")}
           </p>
         </div>
 
@@ -83,7 +85,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Email Address
+              {t("auth.emailAddress")}
             </label>
             <input
               id="email"
@@ -91,7 +93,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              placeholder="Enter your email"
+              placeholder={t("auth.enterEmail")}
               required
             />
           </div>
@@ -101,7 +103,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Password
+              {t("auth.password")}
             </label>
             <div className="relative">
               <input
@@ -110,7 +112,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white pr-10"
-                placeholder="Enter your password"
+                placeholder={t("auth.enterPassword")}
                 required
               />
               <button
@@ -168,7 +170,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 htmlFor="remember-me"
                 className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
               >
-                Remember me
+                {t("auth.rememberMe")}
               </label>
             </div>
             <button
@@ -179,7 +181,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               }}
               className="text-sm text-green-600 hover:text-green-500"
             >
-              Forgot password?
+              {t("auth.forgotPassword")}
             </button>
           </div>
 
@@ -191,10 +193,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             {isLoading ? (
               <div className="flex items-center">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Signing in...
+                {t("auth.signingIn")}
               </div>
             ) : (
-              "Sign In"
+              t("auth.signIn")
             )}
           </button>
         </form>
@@ -202,13 +204,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {onSwitchToSignup && (
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Don't have an account?{" "}
+              {t("auth.dontHaveAccount")}{" "}
               <button
                 type="button"
                 onClick={onSwitchToSignup}
                 className="font-medium text-green-600 hover:text-green-500"
               >
-                Sign up
+                {t("auth.signUp")}
               </button>
             </p>
           </div>

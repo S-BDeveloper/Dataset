@@ -17,6 +17,7 @@ import { HomePageStats } from "./home/HomePageStats";
 import { HomePageTabs } from "./home/HomePageTabs";
 import { HomePageHeader } from "./home/HomePageHeader";
 import { DataLoadingState } from "./common/LoadingState";
+import { useLanguage } from "../hooks/useContext";
 
 interface HomePageProps {
   cards: IslamicData[];
@@ -63,6 +64,9 @@ export default function HomePage({
 
   // Add loading state tracking
   const [isDataLoading, setIsDataLoading] = useState(true);
+
+  // Language context
+  const { t } = useLanguage();
 
   // Create refs for each content section for auto-scrolling
   const searchContentRef = useRef<HTMLDivElement>(null);
@@ -157,10 +161,10 @@ export default function HomePage({
 
     if (isCurrentlyFavorite) {
       await removeFavorite(item);
-      setToast("Removed from favorites");
+      setToast(t("toast.removedFromFavorites"));
     } else {
       await addFavorite(item);
-      setToast("Added to favorites");
+      setToast(t("toast.addedToFavorites"));
     }
   };
 
@@ -239,7 +243,7 @@ export default function HomePage({
                   <div className="flex flex-col sm:flex-row gap-2">
                     <input
                       type="text"
-                      placeholder="Search data..."
+                      placeholder={t("search.placeholder")}
                       value={filters.searchTerm}
                       onChange={(e) =>
                         setFilters({ ...filters, searchTerm: e.target.value })
@@ -253,7 +257,7 @@ export default function HomePage({
                       }
                       className="px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-xl bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
-                      <option value="">All Types</option>
+                      <option value="">{t("ui.allTypes")}</option>
                       {types.map((type) => (
                         <option key={type} value={type}>
                           {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -266,13 +270,13 @@ export default function HomePage({
                       onClick={handleExportCSV}
                       className="px-4 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                     >
-                      Export CSV
+                      {t("ui.exportCSV")}
                     </button>
                     <button
                       onClick={handleExportJSON}
                       className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
-                      Export JSON
+                      {t("ui.exportJSON")}
                     </button>
                   </div>
                 </div>
@@ -306,9 +310,9 @@ export default function HomePage({
                               scrollToTop();
                             }}
                             disabled={currentPage === 1}
-                            ariaLabel="First page"
+                            ariaLabel={t("ui.ariaLabel.firstPage")}
                           >
-                            First
+                            {t("search.first")}
                           </PaginationButton>
                         </li>
                         <li>
@@ -318,9 +322,9 @@ export default function HomePage({
                               scrollToTop();
                             }}
                             disabled={currentPage === 1}
-                            ariaLabel="Previous page"
+                            ariaLabel={t("ui.ariaLabel.previousPage")}
                           >
-                            Previous
+                            {t("search.previous")}
                           </PaginationButton>
                         </li>
 
@@ -365,9 +369,11 @@ export default function HomePage({
                                     scrollToTop();
                                   }}
                                   isActive={page === currentPage}
-                                  ariaLabel={`Go to page ${page}${
+                                  ariaLabel={`${t(
+                                    "ui.ariaLabel.goToPage"
+                                  )} ${page}${
                                     page === currentPage
-                                      ? " (current page)"
+                                      ? ` (${t("ui.currentPage")})`
                                       : ""
                                   }`}
                                 >
@@ -387,9 +393,9 @@ export default function HomePage({
                               scrollToTop();
                             }}
                             disabled={currentPage === totalPages}
-                            ariaLabel="Next page"
+                            ariaLabel={t("ui.ariaLabel.nextPage")}
                           >
-                            Next
+                            {t("search.next")}
                           </PaginationButton>
                         </li>
                         <li>
@@ -399,9 +405,9 @@ export default function HomePage({
                               scrollToTop();
                             }}
                             disabled={currentPage === totalPages}
-                            ariaLabel="Last page"
+                            ariaLabel={t("ui.ariaLabel.lastPage")}
                           >
-                            Last
+                            {t("search.last")}
                           </PaginationButton>
                         </li>
                       </ul>

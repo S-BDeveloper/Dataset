@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
+import { useLanguage } from "../../../hooks/useContext";
 import { authService } from "../../../firebase/auth";
 import { firestoreService } from "../../../firebase/firestore";
 
@@ -15,6 +16,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
   className = "",
 }) => {
   const { signup } = useAuth();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,19 +33,19 @@ export const SignupForm: React.FC<SignupFormProps> = ({
     const errors: string[] = [];
 
     if (password.length < 8) {
-      errors.push("Password must be at least 8 characters long");
+      errors.push(t("password.atLeast8Chars"));
     }
     if (!/[A-Z]/.test(password)) {
-      errors.push("Password must contain at least one uppercase letter");
+      errors.push(t("password.oneUppercase"));
     }
     if (!/[a-z]/.test(password)) {
-      errors.push("Password must contain at least one lowercase letter");
+      errors.push(t("password.oneLowercase"));
     }
     if (!/\d/.test(password)) {
-      errors.push("Password must contain at least one number");
+      errors.push(t("password.oneNumber"));
     }
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      errors.push("Password must contain at least one special character");
+      errors.push(t("password.oneSpecial"));
     }
 
     return errors;
@@ -59,17 +61,17 @@ export const SignupForm: React.FC<SignupFormProps> = ({
 
     // Validation
     if (!formData.email || !formData.password || !formData.confirmPassword) {
-      setError("Please fill in all fields");
+      setError(t("auth.pleaseFillFields"));
       return;
     }
 
     if (!isPasswordValid) {
-      setError("Please fix password requirements");
+      setError(t("auth.pleaseFixPassword"));
       return;
     }
 
     if (!doPasswordsMatch) {
-      setError("Passwords do not match");
+      setError(t("auth.passwordsDoNotMatch"));
       return;
     }
 
@@ -96,7 +98,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
 
       onSuccess?.();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Signup failed");
+      setError(err instanceof Error ? err.message : t("auth.signupFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -112,10 +114,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Create Account
+            {t("auth.createAccount")}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Join us to save favorites and track your activity
+            {t("auth.joinUs")}
           </p>
         </div>
 
@@ -131,7 +133,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               htmlFor="displayName"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Display Name (Optional)
+              {t("auth.displayName")}
             </label>
             <input
               id="displayName"
@@ -139,7 +141,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               value={formData.displayName}
               onChange={(e) => handleInputChange("displayName", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              placeholder="Enter your display name"
+              placeholder={t("auth.enterDisplayName")}
             />
           </div>
 
@@ -148,7 +150,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Email Address
+              {t("auth.emailAddress")}
             </label>
             <input
               id="email"
@@ -156,7 +158,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              placeholder="Enter your email"
+              placeholder={t("auth.enterEmail")}
               required
             />
           </div>
@@ -166,7 +168,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Password
+              {t("auth.password")}
             </label>
             <div className="relative">
               <input
@@ -179,7 +181,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
                     ? "border-red-300"
                     : "border-gray-300"
                 }`}
-                placeholder="Enter your password"
+                placeholder={t("auth.enterPassword")}
                 required
               />
               <button
@@ -229,31 +231,31 @@ export const SignupForm: React.FC<SignupFormProps> = ({
             {formData.password && (
               <div className="mt-2 text-sm">
                 <p className="text-gray-600 dark:text-gray-400 mb-1">
-                  Password requirements:
+                  {t("password.requirements")}
                 </p>
                 <ul className="space-y-1">
                   {[
                     {
                       condition: formData.password.length >= 8,
-                      text: "At least 8 characters",
+                      text: t("password.atLeast8Chars"),
                     },
                     {
                       condition: /[A-Z]/.test(formData.password),
-                      text: "One uppercase letter",
+                      text: t("password.oneUppercase"),
                     },
                     {
                       condition: /[a-z]/.test(formData.password),
-                      text: "One lowercase letter",
+                      text: t("password.oneLowercase"),
                     },
                     {
                       condition: /\d/.test(formData.password),
-                      text: "One number",
+                      text: t("password.oneNumber"),
                     },
                     {
                       condition: /[!@#$%^&*(),.?":{}|<>]/.test(
                         formData.password
                       ),
-                      text: "One special character",
+                      text: t("password.oneSpecial"),
                     },
                   ].map((req, index) => (
                     <li
@@ -300,7 +302,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               htmlFor="confirmPassword"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Confirm Password
+              {t("auth.confirmPassword")}
             </label>
             <div className="relative">
               <input
@@ -315,7 +317,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
                     ? "border-red-300"
                     : "border-gray-300"
                 }`}
-                placeholder="Confirm your password"
+                placeholder={t("auth.confirmYourPassword")}
                 required
               />
               <button
@@ -363,7 +365,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
 
             {formData.confirmPassword && !doPasswordsMatch && (
               <p className="mt-1 text-sm text-red-600">
-                Passwords do not match
+                {t("auth.passwordsDoNotMatch")}
               </p>
             )}
           </div>
@@ -379,16 +381,16 @@ export const SignupForm: React.FC<SignupFormProps> = ({
               htmlFor="terms"
               className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
             >
-              I agree to the{" "}
+              {t("auth.agreeToTerms")}{" "}
               <a href="/terms" className="text-green-600 hover:text-green-500">
-                Terms of Service
+                {t("auth.termsOfService")}
               </a>{" "}
-              and{" "}
+              {t("auth.and")}{" "}
               <a
                 href="/privacy"
                 className="text-green-600 hover:text-green-500"
               >
-                Privacy Policy
+                {t("auth.privacyPolicy")}
               </a>
             </label>
           </div>
@@ -401,10 +403,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({
             {isLoading ? (
               <div className="flex items-center">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Creating account...
+                {t("auth.creatingAccount")}
               </div>
             ) : (
-              "Create Account"
+              t("auth.createAccount")
             )}
           </button>
         </form>
@@ -412,13 +414,13 @@ export const SignupForm: React.FC<SignupFormProps> = ({
         {onSwitchToLogin && (
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Already have an account?{" "}
+              {t("auth.alreadyHaveAccount")}{" "}
               <button
                 type="button"
                 onClick={onSwitchToLogin}
                 className="font-medium text-green-600 hover:text-green-500"
               >
-                Sign in
+                {t("auth.signIn")}
               </button>
             </p>
           </div>

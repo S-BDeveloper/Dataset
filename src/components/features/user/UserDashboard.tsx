@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../hooks/useAuth";
+import { useLanguage } from "../../../hooks/useContext";
 import { firestoreService } from "../../../firebase/firestore";
 import { UserProfile } from "./UserProfile";
 
@@ -18,6 +19,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({
   className = "",
 }) => {
   const { user, loading } = useAuth();
+  const { t } = useLanguage();
   const [stats, setStats] = useState<UserStats | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<
@@ -73,7 +75,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({
   if (!user) {
     return (
       <div className={`text-center p-8 ${className}`}>
-        <p className="text-gray-600">Please sign in to view your dashboard.</p>
+        <p className="text-gray-600">{t("auth.pleaseSignInToViewDashboard")}</p>
       </div>
     );
   }
@@ -83,10 +85,10 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Welcome back, {user.displayName || user.email}!
+          {t("auth.welcomeBack")}, {user.displayName || user.email}!
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
-          Manage your account, preferences, and activity.
+          {t("auth.manageAccountPreferences")}
         </p>
       </div>
 
@@ -94,10 +96,10 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({
       <div className="border-b border-gray-200 dark:border-gray-700 mb-6">
         <nav className="flex space-x-8">
           {[
-            { id: "overview", label: "Overview" },
-            { id: "profile", label: "Profile" },
-            { id: "favorites", label: "Favorites" },
-            { id: "history", label: "History" },
+            { id: "overview", label: t("auth.overview") },
+            { id: "profile", label: t("auth.profile") },
+            { id: "favorites", label: t("auth.favorites") },
+            { id: "history", label: t("auth.history") },
           ].map((tab) => (
             <button
               key={tab.id}

@@ -9,6 +9,7 @@ import type { User, Auth } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { errorHandler } from "../utils/errorHandler";
 import { isValidEmail, checkRateLimit } from "../utils/authUtils";
+import { useLanguage } from "../hooks/useContext";
 
 // Enhanced user interface with roles
 interface EnhancedUser extends User {
@@ -37,6 +38,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { t } = useLanguage();
   const [user, setUser] = useState<EnhancedUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -114,30 +116,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [getUserRoleByEmail, getUserPermissions]);
 
   // Password validation
-  const validatePassword = useCallback((password: string) => {
-    const errors: string[] = [];
+  const validatePassword = useCallback(
+    (password: string) => {
+      const errors: string[] = [];
 
-    if (password.length < 8) {
-      errors.push("Password must be at least 8 characters long");
-    }
-    if (!/[A-Z]/.test(password)) {
-      errors.push("Password must contain at least one uppercase letter");
-    }
-    if (!/[a-z]/.test(password)) {
-      errors.push("Password must contain at least one lowercase letter");
-    }
-    if (!/\d/.test(password)) {
-      errors.push("Password must contain at least one number");
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      errors.push("Password must contain at least one special character");
-    }
+      if (password.length < 8) {
+        errors.push(t("validation.password.tooShort"));
+      }
+      if (!/[A-Z]/.test(password)) {
+        errors.push(t("validation.password.noUppercase"));
+      }
+      if (!/[a-z]/.test(password)) {
+        errors.push(t("validation.password.noLowercase"));
+      }
+      if (!/\d/.test(password)) {
+        errors.push(t("validation.password.noNumber"));
+      }
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        errors.push(t("validation.password.noSpecial"));
+      }
 
-    return {
-      isValid: errors.length === 0,
-      errors,
-    };
-  }, []);
+      return {
+        isValid: errors.length === 0,
+        errors,
+      };
+    },
+    [t]
+  );
 
   // Email validation
   const validateEmail = useCallback((email: string) => {
@@ -165,17 +170,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       // Skip if Firebase is not available
       if (!auth) {
-        throw new Error("Authentication is not available in this environment");
+        throw new Error(t("error.auth.notAvailable"));
       }
 
       // Check rate limiting
       if (!checkRateLimit(email, 5, 15 * 60 * 1000)) {
-        throw new Error("Too many login attempts. Please try again later.");
+        throw new Error(t("error.auth.tooManyAttempts"));
       }
 
       // Validate email
       if (!validateEmail(email)) {
-        throw new Error("Invalid email address");
+        throw new Error(t("validation.email.invalid"));
       }
 
       await signInWithEmailAndPassword(
@@ -197,12 +202,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       // Skip if Firebase is not available
       if (!auth) {
-        throw new Error("Authentication is not available in this environment");
+        throw new Error(t("error.auth.notAvailable"));
       }
 
       // Validate email
       if (!validateEmail(email)) {
-        throw new Error("Invalid email address");
+        throw new Error(t("validation.email.invalid"));
       }
 
       // Validate password

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useLanguage } from "../hooks/useContext";
 import { authService } from "../firebase/auth";
 import { firestoreService } from "../firebase/firestore";
 import { searchService } from "../firebase/search";
@@ -21,6 +22,7 @@ import {
 export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { t } = useLanguage();
   const [isFirebaseAvailable, setIsFirebaseAvailable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -214,37 +216,39 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
   const signIn = useCallback(
     async (email: string, password: string) => {
       if (!isFirebaseAvailable) {
-        throw new Error("Firebase not available");
+        throw new Error(t("error.firebase.notAvailable"));
       }
 
       try {
         setError(null);
         await authService.signIn(email, password);
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Sign in failed";
+        const message =
+          err instanceof Error ? err.message : t("error.firebase.signInFailed");
         setError(message);
         throw err;
       }
     },
-    [isFirebaseAvailable]
+    [isFirebaseAvailable, t]
   );
 
   const signUp = useCallback(
     async (email: string, password: string, displayName?: string) => {
       if (!isFirebaseAvailable) {
-        throw new Error("Firebase not available");
+        throw new Error(t("error.firebase.notAvailable"));
       }
 
       try {
         setError(null);
         await authService.signUp(email, password, displayName);
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Sign up failed";
+        const message =
+          err instanceof Error ? err.message : t("error.firebase.signUpFailed");
         setError(message);
         throw err;
       }
     },
-    [isFirebaseAvailable]
+    [isFirebaseAvailable, t]
   );
 
   const signOut = useCallback(async () => {
@@ -254,16 +258,17 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
       setError(null);
       await authService.signOut();
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Sign out failed";
+      const message =
+        err instanceof Error ? err.message : t("error.firebase.signOutFailed");
       setError(message);
       throw err;
     }
-  }, [isFirebaseAvailable]);
+  }, [isFirebaseAvailable, t]);
 
   const resetPassword = useCallback(
     async (email: string) => {
       if (!isFirebaseAvailable) {
-        throw new Error("Firebase not available");
+        throw new Error(t("error.firebase.notAvailable"));
       }
 
       try {
@@ -271,18 +276,18 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
         await authService.resetPassword(email);
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "Password reset failed";
+          err instanceof Error ? err.message : t("error.firebase.resetFailed");
         setError(message);
         throw err;
       }
     },
-    [isFirebaseAvailable]
+    [isFirebaseAvailable, t]
   );
 
   const updateUserProfile = useCallback(
     async (updates: { displayName?: string; photoURL?: string }) => {
       if (!isFirebaseAvailable) {
-        throw new Error("Firebase not available");
+        throw new Error(t("error.firebase.notAvailable"));
       }
 
       try {
@@ -290,12 +295,14 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
         await authService.updateUserProfile(updates);
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "Profile update failed";
+          err instanceof Error
+            ? err.message
+            : t("error.firebase.profileUpdateFailed");
         setError(message);
         throw err;
       }
     },
-    [isFirebaseAvailable]
+    [isFirebaseAvailable, t]
   );
 
   const updateUserPreferences = useCallback(
@@ -333,7 +340,8 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
         );
         setSearchResults(result.results);
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Search failed";
+        const message =
+          err instanceof Error ? err.message : t("error.firebase.searchFailed");
         setError(message);
       }
     },
@@ -365,7 +373,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
   const addToFavorites = useCallback(
     async (itemId: string, itemType: string) => {
       if (!isFirebaseAvailable || !currentUser) {
-        throw new Error("Firebase not available or user not signed in");
+        throw new Error(t("error.firebase.notAvailableOrUserNotSignedIn"));
       }
 
       try {
@@ -378,7 +386,9 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
         setFavorites((prev) => [...prev, { itemId, itemType }]);
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "Failed to add to favorites";
+          err instanceof Error
+            ? err.message
+            : t("error.firebase.favoritesAddFailed");
         setError(message);
         throw err;
       }
@@ -389,7 +399,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
   const removeFromFavorites = useCallback(
     async (itemId: string) => {
       if (!isFirebaseAvailable || !currentUser) {
-        throw new Error("Firebase not available or user not signed in");
+        throw new Error(t("error.firebase.notAvailableOrUserNotSignedIn"));
       }
 
       try {
@@ -400,7 +410,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
         const message =
           err instanceof Error
             ? err.message
-            : "Failed to remove from favorites";
+            : t("error.firebase.favoritesRemoveFailed");
         setError(message);
         throw err;
       }
@@ -429,7 +439,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
       }) => void
     ) => {
       if (!isFirebaseAvailable) {
-        throw new Error("Firebase not available");
+        throw new Error(t("error.firebase.notAvailable"));
       }
 
       try {
@@ -450,7 +460,10 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({
 
         return result;
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Migration failed";
+        const message =
+          err instanceof Error
+            ? err.message
+            : t("error.firebase.migrationFailed");
         setError(message);
         throw err;
       }

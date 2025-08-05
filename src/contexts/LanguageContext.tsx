@@ -15,7 +15,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Homepage
     "header.title": "Authentic Islamic Knowledge",
     "header.description":
-      "Discover the miraculous signs of Allah through prophecies, scientific discoveries, and health benefits mentioned in Islamic texts. Explore cross-references between Quran, Hadith, and verified sources to deepen your understanding.",
+      "Explore authentic Islamic texts and cross-references between Quran, Hadith, and verified scholarly sources for educational purposes. This platform presents sample data and historical references - for complex religious matters, always consult qualified Islamic scholars and your trusted local Imam.",
 
     // Tabs
     "tabs.data": "Sample Data",
@@ -89,7 +89,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Loading States
     "loading.data": "Loading data from API...",
     "loading.quranic": "Loading Quranic data from API...",
-    "loading.search": "Searching across Quran, Hadith, and Authentic data...",
+    "loading.search": "Searching across Quran, Hadith, and verified sources...",
     "loading.mayTakeTime": "This may take a few seconds on first load",
 
     // Common Actions
@@ -108,6 +108,96 @@ const translations: Record<Language, Record<string, string>> = {
     "common.goToPage": "Go to page",
     "common.go": "Go",
 
+    // Toast Messages
+    "toast.addedToFavorites": "Added to favorites",
+    "toast.removedFromFavorites": "Removed from favorites",
+    "toast.exportSuccess": "Export successful!",
+    "toast.exportFailed": "Export failed. Please try again.",
+    "toast.loginSuccess": "Login successful!",
+    "toast.loginFailed": "Login failed. Please check your credentials.",
+    "toast.signupSuccess": "Account created successfully!",
+    "toast.signupFailed": "Sign up failed. Please try again.",
+    "toast.logoutSuccess": "Logged out successfully",
+    "toast.profileUpdated": "Profile updated successfully",
+    "toast.preferencesUpdated": "Preferences updated successfully",
+
+    // Error Messages
+    "error.auth.notAvailable":
+      "Authentication is not available in this environment",
+    "error.auth.invalidEmail": "Invalid email address",
+    "error.auth.tooManyAttempts":
+      "Too many login attempts. Please try again later.",
+    "error.auth.userNotFound": "No account found with this email address",
+    "error.auth.wrongPassword": "Incorrect password",
+    "error.auth.emailInUse": "An account with this email already exists",
+    "error.auth.weakPassword": "Password should be at least 6 characters long",
+    "error.auth.networkError": "Network error. Please check your connection",
+    "error.auth.userDisabled": "This account has been disabled",
+    "error.auth.operationNotAllowed": "This operation is not allowed",
+    "error.auth.invalidCredential": "Invalid credentials",
+    "error.auth.default": "Authentication failed. Please try again",
+
+    // Firebase Errors
+    "error.firebase.notAvailable": "Firebase not available",
+    "error.firebase.notAvailableOrUserNotSignedIn":
+      "Firebase not available or user not signed in",
+    "error.firebase.initFailed": "Failed to initialize Firebase",
+    "error.firebase.signInFailed": "Sign in failed",
+    "error.firebase.signUpFailed": "Sign up failed",
+    "error.firebase.signOutFailed": "Sign out failed",
+    "error.firebase.resetFailed": "Password reset failed",
+    "error.firebase.profileUpdateFailed": "Profile update failed",
+    "error.firebase.preferencesUpdateFailed": "Preferences update failed",
+    "error.firebase.searchFailed": "Search failed",
+    "error.firebase.favoritesAddFailed": "Failed to add to favorites",
+    "error.firebase.favoritesRemoveFailed": "Failed to remove from favorites",
+    "error.firebase.migrationFailed": "Migration failed",
+
+    // Form Validation
+    "validation.password.tooShort":
+      "Password must be at least 8 characters long",
+    "validation.password.noUppercase":
+      "Password must contain at least one uppercase letter",
+    "validation.password.noLowercase":
+      "Password must contain at least one lowercase letter",
+    "validation.password.noNumber": "Password must contain at least one number",
+    "validation.password.noSpecial":
+      "Password must contain at least one special character",
+    "validation.email.invalid": "Invalid email address",
+    "validation.required": "This field is required",
+
+    // User Interface
+    "ui.exportCSV": "Export CSV",
+    "ui.exportJSON": "Export JSON",
+    "ui.allTypes": "All Types",
+    "ui.currentPage": "current page",
+    "ui.ariaLabel.firstPage": "First page",
+    "ui.ariaLabel.previousPage": "Previous page",
+    "ui.ariaLabel.nextPage": "Next page",
+    "ui.ariaLabel.lastPage": "Last page",
+    "ui.ariaLabel.goToPage": "Go to page",
+    "ui.ariaLabel.sectionTabs": "Section Tabs",
+
+    // Data Sources
+    "dataSource.islamicData": "Islamic Data",
+    "dataSource.quran": "Quran",
+    "dataSource.hadith": "Hadith",
+    "dataSource.sahihBukhari": "Sahih Bukhari",
+    "dataSource.unknown": "Unknown",
+
+    // User Roles
+    "role.user": "User",
+    "role.moderator": "Moderator",
+    "role.admin": "Admin",
+
+    // Permissions
+    "permission.read": "Read",
+    "permission.write": "Write",
+    "permission.delete": "Delete",
+    "permission.moderate": "Moderate",
+    "permission.manageUsers": "Manage Users",
+    "permission.viewAnalytics": "View Analytics",
+
     // Language names
     "lang.en": "English",
     "lang.ar": "العربية",
@@ -116,6 +206,61 @@ const translations: Record<Language, Record<string, string>> = {
     "lang.fr": "Français",
     "lang.es": "Español",
     "lang.de": "Deutsch",
+
+    // Authentication Forms
+    "auth.welcomeBack": "Welcome Back",
+    "auth.signInToContinue": "Sign in to your account to continue",
+    "auth.createAccount": "Create Account",
+    "auth.joinUs": "Join us to save favorites and track your activity",
+    "auth.emailAddress": "Email Address",
+    "auth.password": "Password",
+    "auth.confirmPassword": "Confirm Password",
+    "auth.displayName": "Display Name (Optional)",
+    "auth.enterEmail": "Enter your email",
+    "auth.enterPassword": "Enter your password",
+    "auth.confirmYourPassword": "Confirm your password",
+    "auth.enterDisplayName": "Enter your display name",
+    "auth.rememberMe": "Remember me",
+    "auth.forgotPassword": "Forgot password?",
+    "auth.signIn": "Sign In",
+    "auth.signingIn": "Signing in...",
+    "auth.creatingAccount": "Creating account...",
+    "auth.dontHaveAccount": "Don't have an account?",
+    "auth.alreadyHaveAccount": "Already have an account?",
+    "auth.signUp": "Sign up",
+    "auth.pleaseFillFields": "Please fill in all fields",
+    "auth.pleaseFixPassword": "Please fix password requirements",
+    "auth.passwordsDoNotMatch": "Passwords do not match",
+    "auth.loginFailed": "Login failed",
+    "auth.signupFailed": "Signup failed",
+    "auth.agreeToTerms": "I agree to the",
+    "auth.termsOfService": "Terms of Service",
+    "auth.and": "and",
+    "auth.privacyPolicy": "Privacy Policy",
+    "auth.pleaseSignInToViewDashboard":
+      "Please sign in to view your dashboard.",
+    "auth.manageAccountPreferences":
+      "Manage your account, preferences, and activity.",
+    "auth.overview": "Overview",
+    "auth.profile": "Profile",
+    "auth.favorites": "Favorites",
+    "auth.history": "History",
+
+    // Password Requirements
+    "password.requirements": "Password requirements:",
+    "password.atLeast8Chars": "At least 8 characters",
+    "password.oneUppercase": "One uppercase letter",
+    "password.oneLowercase": "One lowercase letter",
+    "password.oneNumber": "One number",
+    "password.oneSpecial": "One special character",
+
+    // Loading and Error States
+    "loading.retry": "Retry",
+    "loading.error": "Error:",
+    "loading.exportCSV": "Export CSV",
+    "loading.exportJSON": "Export JSON",
+    "loading.csvExported": "CSV exported successfully!",
+    "loading.jsonExported": "JSON exported successfully!",
   },
   ar: {
     // Arabic translations
