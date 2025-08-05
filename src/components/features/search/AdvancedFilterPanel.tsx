@@ -111,36 +111,36 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
   // Memoized static options to prevent recreation on every render
   const searchFieldOptions = useMemo(
     () => [
-      { value: "title", label: "Title" },
-      { value: "description", label: "Description" },
-      { value: "source", label: "Source" },
-      { value: "category", label: "Category" },
-      { value: "type", label: "Type" },
-      { value: "fulfillmentStatus", label: "Fulfillment Status" },
-      { value: "prophecyCategory", label: "Prophecy Category" },
+      { value: "title", label: t("filter.title") },
+      { value: "description", label: t("filter.description") },
+      { value: "source", label: t("filter.source") },
+      { value: "category", label: t("filter.category") },
+      { value: "type", label: t("filter.type") },
+      { value: "fulfillmentStatus", label: t("filter.fulfillmentStatus") },
+      { value: "prophecyCategory", label: t("filter.prophecyCategory") },
     ],
-    []
+    [t]
   );
 
   const dataSourceOptions = useMemo(
     () => [
-      { value: "islamic data", label: "Islamic Data" },
-      { value: "quran", label: "Quran Verses" },
-      { value: "hadith", label: "Hadiths" },
+      { value: "islamic data", label: t("filter.islamicData") },
+      { value: "quran", label: t("filter.quran") },
+      { value: "hadith", label: t("filter.hadith") },
     ],
-    []
+    [t]
   );
 
   const sortOptions = useMemo(
     () => [
-      { value: "title", label: "Title" },
-      { value: "type", label: "Type" },
-      { value: "category", label: "Category" },
-      { value: "fulfillmentStatus", label: "Fulfillment Status" },
-      { value: "prophecyCategory", label: "Prophecy Category" },
-      { value: "year", label: "Year" },
+      { value: "title", label: t("filter.title") },
+      { value: "type", label: t("filter.type") },
+      { value: "category", label: t("filter.category") },
+      { value: "fulfillmentStatus", label: t("filter.fulfillmentStatus") },
+      { value: "prophecyCategory", label: t("filter.prophecyCategory") },
+      { value: "year", label: t("filter.year") },
     ],
-    []
+    [t]
   );
 
   // Memoized unique hadith categories to prevent recalculation
@@ -210,7 +210,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
 
   // Memoized preset handlers
   const handleSavePreset = useCallback(() => {
-    const presetName = prompt("Enter preset name:");
+    const presetName = prompt(t("filter.presetPrompt"));
     if (presetName) {
       const newPreset = {
         name: presetName,
@@ -220,7 +220,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
       localStorage.setItem("searchPresets", JSON.stringify(updatedPresets));
       window.location.reload(); // Refresh to update the UI
     }
-  }, [filters, savedPresets]);
+  }, [filters, savedPresets, t]);
 
   const handleLoadPreset = useCallback(
     (preset: { name: string; filters: FilterState }) => {
@@ -397,8 +397,8 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                         >
                           {filters.quranSurahs.length ===
                           uniqueQuranSurahs.length
-                            ? "Deselect All"
-                            : "Select All"}
+                            ? t("filter.deselectAll")
+                            : t("filter.selectAll")}
                         </button>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-32 overflow-y-auto bg-white dark:bg-stone-700 rounded-lg p-3 border border-stone-300 dark:border-stone-600 shadow-sm custom-scrollbar">
@@ -510,13 +510,13 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                   <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800 space-y-4">
                     <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3 flex items-center gap-2">
                       <div className="w-1 h-4 bg-purple-500 rounded-full"></div>
-                      Hadith Filters
+                      {t("hadith.filter.title")}
                     </h4>
 
                     {/* Hadith Number Range Filter */}
                     <div>
                       <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                        Hadith Number Range
+                        {t("hadith.filter.numberRange")}
                       </label>
                       <div className="flex items-center space-x-2">
                         <input
@@ -565,8 +565,8 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                         >
                           {filters.hadithCategories.length ===
                           uniqueHadithCategories.length
-                            ? "Deselect All"
-                            : "Select All"}
+                            ? t("filter.deselectAll")
+                            : t("filter.selectAll")}
                         </button>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto bg-white dark:bg-stone-700 rounded-lg p-3 border border-stone-300 dark:border-stone-600 shadow-sm custom-scrollbar">
@@ -606,13 +606,13 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                   <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4 border border-orange-200 dark:border-orange-800 space-y-4">
                     <h4 className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-3 flex items-center gap-2">
                       <div className="w-1 h-4 bg-orange-500 rounded-full"></div>
-                      Islamic Data Filters
+                      {t("search.islamicDataFilters")}
                     </h4>
 
                     {/* Type Filter */}
                     <div>
                       <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                        Type
+                        {t("filter.type")}
                       </label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {uniqueTypes.map((type) => (
@@ -640,7 +640,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                     {uniqueFulfillmentStatus.length > 0 && (
                       <div>
                         <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                          Fulfillment Status
+                          {t("filter.fulfillmentStatus")}
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {uniqueFulfillmentStatus.map((status) => (
@@ -674,7 +674,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                     {uniqueProphecyCategories.length > 0 && (
                       <div>
                         <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                          Prophecy Category
+                          {t("filter.prophecyCategory")}
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {uniqueProphecyCategories.map((category) => (
@@ -707,7 +707,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                     {/* Year Range Filter */}
                     <div>
                       <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                        Year Range
+                        {t("filter.yearRange")}
                       </label>
                       <div className="flex items-center space-x-2">
                         <input
@@ -752,7 +752,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 {/* Search Fields Filter */}
                 <div>
                   <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                    Search Fields
+                    {t("filter.searchFields")}
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {searchFieldOptions.map((option) => (
@@ -782,7 +782,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 {/* Sort Options */}
                 <div>
                   <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
-                    {t("search.sort")} By
+                    {t("search.sort")} {t("filter.by")}
                   </label>
                   <select
                     value={filters.sortBy}
@@ -803,13 +803,13 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                 <div className="border-t border-stone-200 dark:border-stone-700 pt-4">
                   <div className="flex items-center justify-between mb-3">
                     <h5 className="text-sm font-medium text-stone-700 dark:text-stone-300">
-                      Saved Presets
+                      {t("search.savedPresets")}
                     </h5>
                     <button
                       onClick={handleSavePreset}
                       className="text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 transition-colors"
                     >
-                      Save Current
+                      {t("search.saveCurrent")}
                     </button>
                   </div>
                   <div className="space-y-2">
@@ -833,7 +833,7 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                             onClick={() => handleDeletePreset(preset.name)}
                             className="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
                           >
-                            Delete
+                            {t("search.delete")}
                           </button>
                         </div>
                       )

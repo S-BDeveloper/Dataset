@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLanguage } from "../../hooks/useContext";
 
 interface TermsAgreementProps {
   agreed: boolean;
@@ -14,65 +15,66 @@ interface TermsModalProps {
 }
 
 const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose, type }) => {
+  const { t } = useLanguage();
+
   if (!isOpen) return null;
 
-  const title = type === "terms" ? "Terms of Use" : "Privacy Policy";
+  const title =
+    type === "terms" ? t("terms.termsTitle") : t("terms.privacyTitle");
   const content =
     type === "terms" ? (
       <div className="space-y-4 max-h-96 overflow-y-auto">
         <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200">
-          Terms of Use
+          {t("terms.termsTitle")}
         </h3>
         <p className="text-sm text-stone-600 dark:text-stone-400">
-          By using the Islamic Dataset Interface, you accept and agree to be
-          bound by the terms and provision of this agreement.
+          {t("terms.termsDescription")}
         </p>
         <div className="space-y-2 text-sm text-stone-600 dark:text-stone-400">
           <p>
-            <strong>Key Points:</strong>
+            <strong>{t("terms.keyPoints")}</strong>
           </p>
           <ul className="list-disc list-inside space-y-1 ml-4">
-            <li>Personal, non-commercial use only</li>
-            <li>No modification or redistribution without permission</li>
-            <li>No reverse engineering of software</li>
-            <li>Accuracy of materials not guaranteed</li>
-            <li>Service provided "as is" without warranties</li>
+            <li>{t("terms.personalUse")}</li>
+            <li>{t("terms.noModification")}</li>
+            <li>{t("terms.noReverseEngineering")}</li>
+            <li>{t("terms.noGuarantee")}</li>
+            <li>{t("terms.asIs")}</li>
           </ul>
         </div>
         <p className="text-xs text-stone-500 dark:text-stone-500">
-          For the complete terms, please visit our full Terms of Use page.
+          {t("terms.completeTerms")}
         </p>
       </div>
     ) : (
       <div className="space-y-4 max-h-96 overflow-y-auto">
         <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200">
-          Privacy Policy
+          {t("terms.privacyTitle")}
         </h3>
         <p className="text-sm text-stone-600 dark:text-stone-400">
-          We collect and use your information to provide and improve our
-          services.
+          {t("terms.privacyDescription")}
         </p>
         <div className="space-y-2 text-sm text-stone-600 dark:text-stone-400">
           <p>
-            <strong>What We Collect:</strong>
+            <strong>{t("terms.whatWeCollect")}</strong>
           </p>
           <ul className="list-disc list-inside space-y-1 ml-4">
-            <li>Email address and name (if provided)</li>
-            <li>Usage preferences and settings</li>
-            <li>Technical information (browser, OS, IP)</li>
-            <li>Search queries and interaction data</li>
+            <li>{t("terms.emailName")}</li>
+            <li>{t("terms.preferences")}</li>
+            <li>{t("terms.technicalInfo")}</li>
+            <li>{t("terms.searchQueries")}</li>
           </ul>
           <p>
-            <strong>Your Rights:</strong>
+            <strong>{t("terms.yourRights")}</strong>
           </p>
           <ul className="list-disc list-inside space-y-1 ml-4">
-            <li>Access, correct, or delete your data</li>
-            <li>Object to data processing</li>
-            <li>Withdraw consent at any time</li>
+            <li>{t("terms.accessData")}</li>
+            <li>{t("terms.objectProcessing")}</li>
+            <li>{t("terms.withdrawConsent")}</li>
           </ul>
         </div>
         <p className="text-xs text-stone-500 dark:text-stone-500">
-          For the complete policy, please visit our full Privacy Policy page.
+          {t("terms.completePolicy")}
         </p>
       </div>
     );
@@ -109,7 +111,7 @@ const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose, type }) => {
             onClick={onClose}
             className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
-            Close
+            {t("terms.close")}
           </button>
         </div>
       </div>
@@ -123,6 +125,7 @@ export const TermsAgreement: React.FC<TermsAgreementProps> = ({
   showModal = true,
   className = "",
 }) => {
+  const { t } = useLanguage();
   const [termsModal, setTermsModal] = useState<{
     isOpen: boolean;
     type: "terms" | "privacy";
@@ -159,7 +162,7 @@ export const TermsAgreement: React.FC<TermsAgreementProps> = ({
           htmlFor="agreeToTerms"
           className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed"
         >
-          I agree to the{" "}
+          {t("terms.agreeTo")}{" "}
           {showModal ? (
             <>
               <button
@@ -167,15 +170,15 @@ export const TermsAgreement: React.FC<TermsAgreementProps> = ({
                 onClick={() => openTermsModal("terms")}
                 className="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 underline"
               >
-                Terms of Use
+                {t("terms.termsOfUse")}
               </button>{" "}
-              and{" "}
+              {t("terms.and")}{" "}
               <button
                 type="button"
                 onClick={() => openTermsModal("privacy")}
                 className="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 underline"
               >
-                Privacy Policy
+                {t("terms.privacyPolicy")}
               </button>
             </>
           ) : (
@@ -186,21 +189,20 @@ export const TermsAgreement: React.FC<TermsAgreementProps> = ({
                 rel="noopener noreferrer"
                 className="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 underline"
               >
-                Terms of Use
+                {t("terms.termsOfUse")}
               </a>{" "}
-              and{" "}
+              {t("terms.and")}{" "}
               <a
                 href="/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 underline"
               >
-                Privacy Policy
+                {t("terms.privacyPolicy")}
               </a>
             </>
           )}
-          . By proceeding, you acknowledge that you have read and agree to our
-          terms and conditions.
+          . {t("terms.acknowledge")}
         </label>
       </div>
 

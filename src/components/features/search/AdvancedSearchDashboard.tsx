@@ -11,6 +11,7 @@ import type {
 } from "../../../types/Types";
 import type { FavoriteItem } from "../../../hooks/useFavorites";
 import mediaBackground from "../../../assets/media-5000790.svg";
+import { useLanguage } from "../../../hooks/useContext";
 
 interface AdvancedSearchDashboardProps {
   data: IslamicData[];
@@ -24,6 +25,7 @@ interface AdvancedSearchDashboardProps {
 export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
   React.memo(
     ({ data, quranData = [], hadithData = [], onFavorite, isFavorite }) => {
+      const { t } = useLanguage();
       const [searchQuery, setSearchQuery] = useState("");
       const [filters, setFilters] = useState<FilterState>({
         types: [],
@@ -596,18 +598,17 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-green-700 dark:text-green-400">
-                  Advanced Search
+                  {t("search.advancedSearch")}
                 </h2>
                 <p className="text-stone-600 dark:text-stone-400 max-w-2xl">
-                  Search across all available Islamic knowledge including
-                  Islamic data, Quran verses, and Sahih hadiths.
+                  {t("search.description")}
                 </p>
               </div>
               <div className="lg:w-96">
                 <SmartSearchBar
                   data={data} // Still passes Islamic data for auto-complete, might need adjustment later
                   onSearch={handleSearch}
-                  placeholder="Search across Quran and Hadith..."
+                  placeholder={t("search.placeholder")}
                 />
               </div>
             </div>
@@ -633,7 +634,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               {isSearching ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  Searching...
+                  {t("search.searching")}
                 </>
               ) : (
                 <>
@@ -650,7 +651,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                   </svg>
-                  Confirm Search
+                  {t("search.confirmSearch")}
                 </>
               )}
             </button>
@@ -693,7 +694,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                   />
                 </svg>
-                New Search
+                {t("search.newSearch")}
               </button>
             )}
           </div>
@@ -729,7 +730,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     transformStyle: "preserve-3d",
                   }}
                 >
-                  Ready to Search
+                  {t("search.readyToSearch")}
                 </h3>
                 <p
                   className="mb-4 transform hover:scale-101 transition-transform duration-300 search-ready-description"
@@ -747,9 +748,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     transformStyle: "preserve-3d",
                   }}
                 >
-                  Configure your search filters above and click "Confirm Search"
-                  to begin exploring Islamic knowledge across Quran, Hadith, and
-                  Islamic Data.
+                  {t("search.readyDescription")}
                 </p>
                 <div
                   className="text-sm transform hover:scale-101 transition-transform duration-300 search-ready-list"
@@ -767,10 +766,11 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     transformStyle: "preserve-3d",
                   }}
                 >
-                  <p>• Select data sources (Quran, Hadith, Islamic Data)</p>
-                  <p>• Choose specific filters for each source</p>
-                  <p>• Enter search terms (optional)</p>
-                  <p>• Click "Confirm Search" when ready</p>
+                  {t("search.readyInstructions")
+                    .split("\n")
+                    .map((line, index) => (
+                      <p key={index}>{line}</p>
+                    ))}
                 </div>
               </div>
 
@@ -830,65 +830,67 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
               {/* Enhanced Search Features */}
               <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
                 <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
-                  Cross-Reference Search Features
+                  {t("search.features")}
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                   <div className="space-y-3">
                     <h5 className="font-medium text-stone-700 dark:text-stone-300">
-                      Data Sources
+                      {t("search.dataSources")}
                     </h5>
                     <ul className="space-y-1 text-stone-600 dark:text-stone-400">
                       <li>
-                        • <strong>Prophecies:</strong> Status of fulfillment
+                        • <strong>{t("search.prophecies")}</strong>{" "}
+                        {t("search.propheciesDesc")}
                       </li>
                       <li>
-                        • <strong>Quran Verses:</strong> Complete Quran with
-                        English translations
+                        • <strong>{t("search.quranVerses")}</strong>{" "}
+                        {t("search.quranVersesDesc")}
                       </li>
                       <li>
-                        • <strong>Hadiths:</strong> Authentic narrations
+                        • <strong>{t("search.hadiths")}</strong>{" "}
+                        {t("search.hadithsDesc")}
                       </li>
                       <li>
-                        • <strong>Cross-Reference:</strong> Find connections
-                        between sources{" "}
+                        • <strong>{t("search.crossReference")}</strong>{" "}
+                        {t("search.crossReferenceDesc")}{" "}
                         <span className="text-red-500 dark:text-red-400">
-                          (always consult Scholars for complex topics)
+                          {t("search.consultScholars")}
                         </span>
                       </li>
                     </ul>
                   </div>
                   <div className="space-y-3">
                     <h5 className="font-medium text-stone-700 dark:text-stone-300">
-                      Advanced Filtering
+                      {t("search.advancedFiltering")}
                     </h5>
                     <ul className="space-y-1 text-stone-600 dark:text-stone-400">
                       <li>
-                        • <strong>Quran Filters:</strong> By Surah, verse
-                        number, place of revelation
+                        • <strong>{t("search.quranFilters")}</strong>{" "}
+                        {t("search.quranFiltersDesc")}
                       </li>
                       <li>
-                        • <strong>Hadith Filters:</strong> By hadith number
-                        range
+                        • <strong>{t("search.hadithFilters")}</strong>{" "}
+                        {t("search.hadithFiltersDesc")}
                       </li>
                       <li>
-                        • <strong>Islamic Data Filters:</strong> By type,
-                        category, fulfillment status
+                        • <strong>{t("search.islamicDataFilters")}</strong>{" "}
+                        {t("search.islamicDataFiltersDesc")}
                       </li>
                       <li>
-                        • <strong>Unified Search:</strong> Search across all
-                        available Islamic sources
+                        • <strong>{t("search.unifiedSearch")}</strong>{" "}
+                        {t("search.unifiedSearchDesc")}
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-     </>
+            </>
           )}
           {/* Enhanced Search Statistics */}
           {hasSearched && filteredResults.length > 0 && totalDataCount > 0 && (
             <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-4 border border-stone-200 dark:border-stone-600">
               <h4 className="font-semibold text-stone-700 dark:text-stone-300 mb-3">
-                Cross-Reference Search Statistics
+                {t("search.statistics")}
               </h4>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
                 <div>
@@ -896,7 +898,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     {filteredResults.length}
                   </div>
                   <div className="text-stone-600 dark:text-stone-400">
-                    Total Results
+                    {t("search.totalResults")}
                   </div>
                 </div>
                 <div>
@@ -904,7 +906,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     {islamicDataCount}
                   </div>
                   <div className="text-stone-600 dark:text-stone-400">
-                    Islamic Data
+                    {t("search.islamicData")}
                   </div>
                 </div>
                 <div>
@@ -912,7 +914,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     {quranCount}
                   </div>
                   <div className="text-stone-600 dark:text-stone-400">
-                    Quran Verses
+                    {t("search.quranVerses")}
                   </div>
                 </div>
                 <div>
@@ -920,7 +922,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     {hadithCount}
                   </div>
                   <div className="text-stone-600 dark:text-stone-400">
-                    Hadiths
+                    {t("search.hadiths")}
                   </div>
                 </div>
                 <div>
@@ -928,14 +930,13 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     {percentageOfTotal}%
                   </div>
                   <div className="text-stone-600 dark:text-stone-400">
-                    Of Total Data
+                    {t("search.ofTotalData")}
                   </div>
                 </div>
               </div>
               {filteredResults.length === 1000 && (
                 <div className="mt-3 text-xs text-stone-500 dark:text-stone-400 text-center">
-                  * Showing actual percentage. Results limited to 1,000 for
-                  performance.
+                  {t("search.limitedResults")}
                 </div>
               )}
             </div>

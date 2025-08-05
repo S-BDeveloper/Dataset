@@ -5,6 +5,7 @@ import {
   type ExportData,
   type ExportOptions,
 } from "../../../utils/exportUtils";
+import { useLanguage } from "../../../hooks/useContext";
 
 interface ExportButtonProps {
   results: UnifiedSearchResult[];
@@ -19,6 +20,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
   filters,
   className = "",
 }) => {
+  const { t } = useLanguage();
   const [isExporting, setIsExporting] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [exportFormat, setExportFormat] = useState<"csv" | "json" | "pdf">(
@@ -27,7 +29,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
 
   const handleExport = async (format: "csv" | "json" | "pdf") => {
     if (results.length === 0) {
-      alert("No results to export");
+      alert(t("export.noResults"));
       return;
     }
 
@@ -44,13 +46,13 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
       const options: ExportOptions = {
         format,
         includeMetadata: true,
-        title: "Islamic Dataset Export",
+        title: t("export.title"),
       };
 
       await exportData(exportDataObj, options);
     } catch (error) {
-      console.error("Export failed:", error);
-      alert("Export failed. Please try again.");
+      console.error(t("export.failed"), error);
+      alert(t("export.failed"));
     } finally {
       setIsExporting(false);
       setShowExportMenu(false);
@@ -79,10 +81,10 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
     navigator.clipboard
       .writeText(shareableLink)
       .then(() => {
-        alert("Shareable link copied to clipboard!");
+        alert(t("export.copyLinkSuccess"));
       })
       .catch(() => {
-        alert("Failed to copy link. Please copy manually: " + shareableLink);
+        alert(`${t("export.copyLinkFailed")} ${shareableLink}`);
       });
   };
 
@@ -97,7 +99,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
         {isExporting ? (
           <>
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-            Exporting...
+            {t("export.exporting")}
           </>
         ) : (
           <>
@@ -114,7 +116,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            Export Results ({results.length})
+            {t("export.results")} ({results.length})
           </>
         )}
       </button>
@@ -124,19 +126,31 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
         <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 rounded-xl shadow-lg z-50">
           <div className="p-4">
             <h3 className="text-lg font-semibold text-stone-700 dark:text-stone-300 mb-3">
-              Export Options
+              {t("export.options")}
             </h3>
 
             {/* Format Selection */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-stone-600 dark:text-stone-400 mb-2">
-                Export Format
+                {t("export.format")}
               </label>
               <div className="space-y-2">
                 {[
-                  { value: "csv", label: "CSV", desc: "Spreadsheet format" },
-                  { value: "json", label: "JSON", desc: "Structured data" },
-                  { value: "pdf", label: "PDF", desc: "Printable document" },
+                  {
+                    value: "csv",
+                    label: t("export.csv"),
+                    desc: t("export.csvDesc"),
+                  },
+                  {
+                    value: "json",
+                    label: t("export.json"),
+                    desc: t("export.jsonDesc"),
+                  },
+                  {
+                    value: "pdf",
+                    label: t("export.pdf"),
+                    desc: t("export.pdfDesc"),
+                  },
                 ].map((format) => (
                   <label
                     key={format.value}
@@ -175,25 +189,25 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                 className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-stone-400 text-white font-medium rounded-lg transition-colors duration-200"
               >
                 {isExporting
-                  ? "Exporting..."
-                  : `Export as ${exportFormat.toUpperCase()}`}
+                  ? t("export.exporting")
+                  : `${t("export.exportAs")} ${exportFormat.toUpperCase()}`}
               </button>
 
               <button
                 onClick={copyShareableLink}
                 className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
               >
-                Copy Shareable Link
+                {t("export.copyShareableLink")}
               </button>
             </div>
 
             {/* Export Info */}
             <div className="mt-3 p-3 bg-stone-50 dark:bg-stone-700 rounded-lg">
               <div className="text-xs text-stone-600 dark:text-stone-400">
-                <div>• CSV: Opens in Excel/Google Sheets</div>
-                <div>• JSON: For developers and APIs</div>
-                <div>• PDF: Printable and shareable</div>
-                <div>• Shareable link: Send to others</div>
+                <div>• {t("export.info.csv")}</div>
+                <div>• {t("export.info.json")}</div>
+                <div>• {t("export.info.pdf")}</div>
+                <div>• {t("export.info.link")}</div>
               </div>
             </div>
           </div>

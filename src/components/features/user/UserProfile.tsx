@@ -3,6 +3,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { firestoreService } from "../../../firebase/firestore";
 import { authService } from "../../../firebase/auth";
 import type { User } from "../../../types/Types";
+import { useLanguage } from "../../../hooks/useContext";
 
 interface UserProfileProps {
   className?: string;
@@ -10,6 +11,7 @@ interface UserProfileProps {
 
 export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
   const { user, loading } = useAuth();
+  const { t } = useLanguage();
   const [profile, setProfile] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +48,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
           });
         }
       } catch (err) {
-        setError("Failed to load profile");
+        setError(t("profile.failedToLoad"));
         console.error("Profile load error:", err);
       } finally {
         setIsLoading(false);
@@ -54,7 +56,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
     };
 
     loadProfile();
-  }, [user?.uid]);
+  }, [user?.uid, t]);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,7 +79,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
         displayName: formData.displayName,
       });
 
-      setSuccess("Profile updated successfully!");
+      setSuccess(t("profile.updated"));
       setIsEditing(false);
 
       // Reload profile
@@ -86,7 +88,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
         setProfile(updatedProfile);
       }
     } catch (err) {
-      setError("Failed to update profile");
+      setError(t("profile.failedToUpdate"));
       console.error("Profile update error:", err);
     } finally {
       setIsLoading(false);
@@ -118,7 +120,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
   if (!user) {
     return (
       <div className={`text-center p-8 ${className}`}>
-        <p className="text-gray-600">Please sign in to view your profile.</p>
+        <p className="text-gray-600">{t("profile.signInToView")}</p>
       </div>
     );
   }
@@ -128,13 +130,13 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            User Profile
+            {t("profile.title")}
           </h2>
           <button
             onClick={() => setIsEditing(!isEditing)}
             className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
-            {isEditing ? "Cancel" : "Edit Profile"}
+            {isEditing ? t("profile.cancel") : t("profile.edit")}
           </button>
         </div>
 
@@ -154,12 +156,12 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
           {/* Basic Information */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Basic Information
+              {t("profile.basicInfo")}
             </h3>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Display Name
+                {t("profile.displayName")}
               </label>
               <input
                 type="text"
@@ -177,7 +179,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Email
+                {t("profile.email")}
               </label>
               <input
                 type="email"
@@ -191,7 +193,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
           {/* Preferences */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Preferences
+              {t("profile.preferences")}
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -210,7 +212,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
                   htmlFor="darkMode"
                   className="ml-2 text-sm text-gray-700 dark:text-gray-300"
                 >
-                  Dark Mode
+                  {t("profile.darkMode")}
                 </label>
               </div>
 
@@ -229,7 +231,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
                   htmlFor="highContrast"
                   className="ml-2 text-sm text-gray-700 dark:text-gray-300"
                 >
-                  High Contrast
+                  {t("profile.highContrast")}
                 </label>
               </div>
 
@@ -248,14 +250,14 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
                   htmlFor="reducedMotion"
                   className="ml-2 text-sm text-gray-700 dark:text-gray-300"
                 >
-                  Reduced Motion
+                  {t("profile.reducedMotion")}
                 </label>
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Language
+                {t("profile.language")}
               </label>
               <select
                 value={formData.preferences.language}
@@ -265,15 +267,15 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
                 disabled={!isEditing}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100"
               >
-                <option value="en">English</option>
-                <option value="ar">العربية</option>
-                <option value="ur">اردو</option>
+                <option value="en">{t("profile.english")}</option>
+                <option value="ar">{t("profile.arabic")}</option>
+                <option value="ur">{t("profile.urdu")}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Font Size
+                {t("profile.fontSize")}
               </label>
               <select
                 value={formData.preferences.fontSize}
@@ -283,9 +285,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
                 disabled={!isEditing}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100"
               >
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
+                <option value="small">{t("profile.fontSmall")}</option>
+                <option value="medium">{t("profile.fontMedium")}</option>
+                <option value="large">{t("profile.fontLarge")}</option>
               </select>
             </div>
           </div>
@@ -293,29 +295,29 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
           {/* Account Information */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Account Information
+              {t("profile.accountInfo")}
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Member Since:
+                  {t("profile.memberSince")}
                 </span>
                 <p className="text-gray-900 dark:text-white">
                   {profile?.createdAt
                     ? new Date(profile.createdAt).toLocaleDateString()
-                    : "N/A"}
+                    : t("profile.na")}
                 </p>
               </div>
 
               <div>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Last Active:
+                  {t("profile.lastActive")}
                 </span>
                 <p className="text-gray-900 dark:text-white">
                   {profile?.lastActive
                     ? new Date(profile.lastActive).toLocaleDateString()
-                    : "N/A"}
+                    : t("profile.na")}
                 </p>
               </div>
             </div>
@@ -329,14 +331,14 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
                 onClick={() => setIsEditing(false)}
                 className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
               >
-                Cancel
+                {t("profile.cancel")}
               </button>
               <button
                 type="submit"
                 disabled={isLoading}
                 className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
               >
-                {isLoading ? "Saving..." : "Save Changes"}
+                {isLoading ? t("profile.saving") : t("profile.saveChanges")}
               </button>
             </div>
           )}

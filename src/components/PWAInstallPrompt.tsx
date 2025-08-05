@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLanguage } from "../hooks/useContext";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -10,6 +11,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export const PWAInstallPrompt: React.FC = () => {
+  const { t } = useLanguage();
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
@@ -89,16 +91,13 @@ export const PWAInstallPrompt: React.FC = () => {
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       const isAndroid = /Android/.test(navigator.userAgent);
 
-      let message = "To install this app:\n";
+      let message = t("pwa.installMessage");
       if (isIOS) {
-        message +=
-          "1. Tap the Share button\n2. Tap 'Add to Home Screen'\n3. Tap 'Add'";
+        message += t("pwa.iosInstructions");
       } else if (isAndroid) {
-        message +=
-          "1. Tap the menu button (⋮)\n2. Tap 'Add to Home screen'\n3. Tap 'Add'";
+        message += t("pwa.androidInstructions");
       } else {
-        message +=
-          "1. Click the install icon in your browser's address bar\n2. Follow the browser's instructions";
+        message += t("pwa.desktopInstructions");
       }
 
       alert(message);
@@ -148,12 +147,12 @@ export const PWAInstallPrompt: React.FC = () => {
           {/* Content */}
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-300">
-              Install Islamic Dataset Interface
+              {t("pwa.installTitle")}
             </h3>
             <p className="text-xs text-stone-600 dark:text-stone-400 mt-1">
               {deferredPrompt
-                ? "Get quick access to Islamic knowledge with offline support and faster loading."
-                : "Install this app on your device for better experience and offline access."}
+                ? t("pwa.autoDescription")
+                : t("pwa.manualDescription")}
             </p>
           </div>
 
@@ -184,13 +183,15 @@ export const PWAInstallPrompt: React.FC = () => {
             onClick={handleInstallClick}
             className="flex-1 px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
           >
-            {deferredPrompt ? "Install App" : "Install Instructions"}
+            {deferredPrompt
+              ? t("pwa.installApp")
+              : t("pwa.installInstructions")}
           </button>
           <button
             onClick={handleDismiss}
             className="px-3 py-2 text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 text-sm font-medium transition-colors duration-200"
           >
-            Not Now
+            {t("pwa.notNow")}
           </button>
         </div>
 
@@ -208,7 +209,7 @@ export const PWAInstallPrompt: React.FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            Offline access to Islamic data
+            {t("pwa.offlineAccess")}
           </div>
           <div className="flex items-center gap-1 mb-1">
             <svg
@@ -222,7 +223,7 @@ export const PWAInstallPrompt: React.FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            Faster loading and performance
+            {t("pwa.fasterLoading")}
           </div>
           <div className="flex items-center gap-1">
             <svg
@@ -236,7 +237,7 @@ export const PWAInstallPrompt: React.FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            Home screen access
+            {t("pwa.homeScreenAccess")}
           </div>
         </div>
       </div>

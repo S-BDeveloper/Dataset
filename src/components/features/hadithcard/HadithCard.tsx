@@ -1,4 +1,5 @@
 import type { HadithEntry } from "../../../types/Types";
+import { useLanguage } from "../../../hooks/useContext";
 
 interface HadithCardProps {
   hadith: HadithEntry;
@@ -13,6 +14,8 @@ export function HadithCard({
   onFavorite,
   isFavorite,
 }: HadithCardProps) {
+  const { t } = useLanguage();
+
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -58,7 +61,8 @@ export function HadithCard({
           </div>
           <div className="min-w-0 flex-1">
             <h3 className="text-base sm:text-lg font-bold text-stone-700 dark:text-purple-400 truncate">
-              Hadith #{hadith.number || index + 1}
+              {t("hadith.hadithNumber")}
+              {hadith.number || index + 1}
             </h3>
             {hasContent(hadith.book) && (
               <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400">
@@ -69,7 +73,7 @@ export function HadithCard({
         </div>
         <div className="flex items-center gap-2">
           <span className="inline-block bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-            {contentFields.length} fields
+            {contentFields.length} {t("hadith.fields")}
           </span>
           {/* Favorite Button */}
           {onFavorite && isFavorite && (
@@ -82,8 +86,8 @@ export function HadithCard({
               }`}
               aria-label={
                 isFavorite(hadith)
-                  ? "Remove from favorites"
-                  : "Add to favorites"
+                  ? t("hadith.removeFromFavorites")
+                  : t("hadith.addToFavorites")
               }
             >
               <svg
@@ -109,7 +113,7 @@ export function HadithCard({
         <div className="mb-4 flex-1">
           <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 sm:p-4 border border-stone-200 dark:border-stone-600">
             <h4 className="text-xs font-semibold text-stone-700 dark:text-stone-300 mb-2 uppercase tracking-wide">
-              Arabic Text
+              {t("hadith.arabicText")}
             </h4>
             <p
               className="text-right text-sm sm:text-lg leading-relaxed text-stone-800 dark:text-stone-200 font-arabic"
@@ -126,7 +130,7 @@ export function HadithCard({
         <div className="mb-4 flex-1">
           <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 sm:p-4 border border-stone-200 dark:border-stone-600">
             <h4 className="text-xs font-semibold text-stone-700 dark:text-stone-300 mb-2 uppercase tracking-wide">
-              Hadith Text
+              {t("hadith.hadithText")}
             </h4>
             <p
               className="text-sm sm:text-base leading-relaxed text-stone-800 dark:text-stone-200"
@@ -143,7 +147,7 @@ export function HadithCard({
         <div className="mb-4">
           <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3 sm:p-4 border border-yellow-200 dark:border-yellow-700">
             <h4 className="text-xs sm:text-sm font-semibold text-yellow-700 dark:text-yellow-400 mb-2 text-left">
-              English Translation
+              {t("hadith.englishTranslation")}
             </h4>
             <p className="text-xs sm:text-sm text-yellow-600 dark:text-yellow-300 text-left">
               {hadith.translation}
@@ -156,7 +160,7 @@ export function HadithCard({
       {contentFields.length > 1 && (
         <div className="mb-4">
           <h4 className="text-xs sm:text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2 text-left">
-            Additional Information:
+            {t("hadith.additionalInformation")}:
           </h4>
           <div className="space-y-2">
             {contentFields.slice(1).map(([fieldKey, fieldValue], idx) => {
@@ -195,18 +199,18 @@ export function HadithCard({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm mt-auto">
         <div className="flex items-center justify-between sm:justify-start space-x-2">
           <span className="text-stone-500 dark:text-stone-400 font-medium">
-            Content Length:
+            {t("hadith.contentLength")}:
           </span>
           <span className="text-stone-700 dark:text-stone-300">
-            {mainText.length} characters
+            {mainText.length} {t("hadith.characters")}
           </span>
         </div>
         <div className="flex items-center justify-between sm:justify-start space-x-2">
           <span className="text-stone-500 dark:text-stone-400 font-medium">
-            Word Count:
+            {t("hadith.wordCount")}:
           </span>
           <span className="text-stone-700 dark:text-stone-300">
-            {mainText.split(/\s+/).length} words
+            {mainText.split(/\s+/).length} {t("hadith.words")}
           </span>
         </div>
       </div>
@@ -216,7 +220,7 @@ export function HadithCard({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           {hasContent(hadith.reference) && (
             <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400">
-              Reference: {hadith.reference}
+              {t("hadith.reference")}: {hadith.reference}
             </p>
           )}
           {hasContent(hadith.grade) && (
