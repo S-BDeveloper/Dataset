@@ -20,13 +20,12 @@ export const FulfillmentStatus = {
 } as const;
 
 export const ProphecyStatus = {
-  FULFILLED: "Fulfilled",
-  PENDING: "Pending",
-  IN_PROGRESS: "In Progress",
-  PROVEN: "Proven",
-  YET_TO_HAPPEN: "Yet to Happen",
+  HISTORICAL_RECORD: "Historical Record",
+  FUTURE_EVENT: "Future Event",
   DOCUMENTED: "Documented",
   ONGOING_RESEARCH: "Ongoing Research",
+  IN_PROGRESS: "In Progress",
+  PENDING: "Pending",
 } as const;
 
 export const ProphecyCategory = {
