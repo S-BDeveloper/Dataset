@@ -178,8 +178,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                           ? "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-200"
                           : (result.data as IslamicData).type === "scientific"
                           ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
-                          : (result.data as IslamicData).type ===
-                            "health-science"
+                          : (result.data as IslamicData).type === "health"
                           ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200"
                           : (result.data as IslamicData).type === "qadr"
                           ? "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-200"
@@ -194,7 +193,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                         ? "Prophecy"
                         : (result.data as IslamicData).type === "scientific"
                         ? "Science"
-                        : (result.data as IslamicData).type === "health-science"
+                        : (result.data as IslamicData).type === "health"
                         ? "Health Science"
                         : (result.data as IslamicData).type === "qadr"
                         ? "Qadr"
@@ -360,10 +359,31 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                         </svg>
                       </button>
                     </div>
-                    {(result.data as HadithEntry).text && (
-                      <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
-                        <p className="text-sm leading-relaxed text-purple-800 dark:text-purple-300 line-clamp-6">
-                          {(result.data as HadithEntry).text}
+                    {(result.data as HadithEntry).text &&
+                      (result.data as HadithEntry).text !== "not found yet" && (
+                        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
+                          <p className="text-sm leading-relaxed text-purple-800 dark:text-purple-300 line-clamp-6">
+                            {(result.data as HadithEntry).text}
+                          </p>
+                        </div>
+                      )}
+                    {(result.data as HadithEntry).arabic && (
+                      <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 border border-stone-200 dark:border-stone-600">
+                        <p
+                          className="text-right text-sm leading-relaxed text-stone-800 dark:text-stone-200 font-arabic line-clamp-4"
+                          dir="rtl"
+                        >
+                          {(result.data as HadithEntry).arabic}
+                        </p>
+                      </div>
+                    )}
+                    {(!(result.data as HadithEntry).text ||
+                      (result.data as HadithEntry).text ===
+                        "not found yet") && (
+                      <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3 border border-yellow-200 dark:border-yellow-700">
+                        <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                          ⚠️ English translation not yet available for this
+                          hadith. Arabic text is available above.
                         </p>
                       </div>
                     )}

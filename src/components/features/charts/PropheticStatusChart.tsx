@@ -54,14 +54,22 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
     const status = pieSlice.id.toString().toLowerCase();
 
     switch (status) {
-      case "fulfilled":
-        return "#10b981";
-      case "yet to happen":
-        return "#f59e0b";
-      case "proven":
-        return "#3b82f6";
+      case "fulfilled prophecy":
+        return "#10b981"; // emerald green
+      case "future event":
+        return "#8b5cf6"; // violet purple
+      case "documented":
+        return "#3b82f6"; // blue
+      case "supported by evidence":
+        return "#3b82f6"; // blue (same as documented)
+      case "ongoing research":
+        return "#f97316"; // orange
+      case "in progress":
+        return "#eab308"; // yellow
+      case "pending":
+        return "#6b7280"; // gray
       default:
-        return "#6b7280";
+        return "#6b7280"; // gray
     }
   };
 
@@ -156,14 +164,54 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
             % of total data
           </div>
           <div style={{ fontSize: "11px", opacity: 0.7, fontStyle: "italic" }}>
-            {tooltip.datum.id === "Fulfilled" &&
-              "Prophecies that have been fulfilled and verified"}
-            {tooltip.datum.id === "Yet to Happen" &&
-              "Prophecies that are still waiting to be fulfilled"}
-            {tooltip.datum.id === "Proven" &&
-              "Scientific facts that have been proven by research"}
+            {tooltip.datum.id === "Fulfilled Prophecy" &&
+              "Prophecies that have been fulfilled and documented in historical records"}
+            {tooltip.datum.id === "Future Event" &&
+              "Prophecies and events that are yet to occur"}
+            {tooltip.datum.id === "Documented" &&
+              "Facts and findings that have been documented through research"}
+            {tooltip.datum.id === "supported by evidence" &&
+              "Information supported by verified evidence and research"}
+            {tooltip.datum.id === "Ongoing Research" &&
+              "Topics currently being studied and researched"}
+            {tooltip.datum.id === "In Progress" &&
+              "Events or processes currently unfolding"}
+            {tooltip.datum.id === "Pending" &&
+              "Items awaiting verification or completion"}
+            {(tooltip.datum.id === "traditional-treatments" ||
+              tooltip.datum.id === "Traditional Treatments") &&
+              "Traditional Islamic healing methods and remedies"}
+            {(tooltip.datum.id === "health" ||
+              tooltip.datum.id === "Health Science") &&
+              "Health-related topics with scientific backing"}
+            {(tooltip.datum.id === "scientific" ||
+              tooltip.datum.id === "Scientific") &&
+              "Scientific discoveries and natural phenomena"}
+            {(tooltip.datum.id === "prophecy" ||
+              tooltip.datum.id === "Prophecy") &&
+              "Prophetic statements and predictions"}
             {tooltip.datum.id === "Unknown" &&
               "Entries with unclassified or missing status"}
+            {/* Debug: Show actual ID if no match found */}
+            {![
+              "Fulfilled Prophecy",
+              "Future Event",
+              "Documented",
+              "supported by evidence",
+              "Ongoing Research",
+              "In Progress",
+              "Pending",
+              "traditional-treatments",
+              "Traditional Treatments",
+              "health",
+              "Health Science",
+              "scientific",
+              "Scientific",
+              "prophecy",
+              "Prophecy",
+              "Unknown",
+            ].includes(tooltip.datum.id as string) &&
+              `Debug: Actual ID is "${tooltip.datum.id}"`}
           </div>
         </div>
       )}

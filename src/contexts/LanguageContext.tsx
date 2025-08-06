@@ -13,17 +13,17 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Logout",
 
     // Homepage
-    "header.title": "Authentic Islamic Knowledge",
+    "header.title": "Quran & Hadiths",
 
     // Tabs
-    "tabs.data": "Sample Data",
+    "tabs.data": "Selected Islamic Data",
     "tabs.search": "Cross-Reference Search",
     "tabs.charts": "Charts & Analytics",
     "tabs.quran": "Quran",
     "tabs.hadith": "Hadith",
 
     // Stats
-    "stats.islamicData": "Authentic Sample Data",
+    "stats.islamicData": "Selected Islamic Data",
     "stats.quranVerses": "Quran Verses",
     "stats.hadiths": "Hadiths",
     "stats.favorites": "Favorites",
@@ -368,7 +368,8 @@ const translations: Record<Language, Record<string, string>> = {
     "search.hadithsDesc": "Authentic narrations",
     "search.crossReference": "Cross-Reference:",
     "search.crossReferenceDesc": "Find connections between sources",
-    "search.consultScholars": "(always consult Scholars for complex topics)",
+    "search.consultScholars":
+      "(always consult qualified Islamic scholars for theological guidance)",
     "search.advancedFiltering": "Advanced Filtering",
     "search.quranFilters": "Quran Filters:",
     "search.quranFiltersDesc": "By Surah, verse number, place of revelation",

@@ -5,7 +5,6 @@ import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { FirebaseProvider } from "./contexts/FirebaseContext";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 
 // Lazy load major components for code splitting
 const HomePageWrapper = lazy(() =>
@@ -60,7 +59,6 @@ function App() {
               </Suspense>
             </main>
             <Footer />
-            <PWAInstallPrompt />
           </div>
         </AccessibilityProvider>
       </DarkModeProvider>

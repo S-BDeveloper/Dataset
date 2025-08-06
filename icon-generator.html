@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PWA Icon Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .icon-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+      .icon-item {
+        text-align: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      canvas {
+        border: 1px solid #ccc;
+        margin: 5px;
+      }
+      button {
+        background: #059669;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #047857;
+      }
+      .download-all {
+        background: #dc2626;
+      }
+      .download-all:hover {
+        background: #b91c1c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PWA Icon Generator</h1>
+      <p>
+        This tool will generate all required PWA icons from the SVG template.
+      </p>
+
+      <button onclick="generateIcons()">Generate Icons</button>
+      <button class="download-all" onclick="downloadAll()">
+        Download All Icons
+      </button>
+
+      <div class="icon-preview" id="iconPreview"></div>
+    </div>
+
+    <script>
+      const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+      const svgContent = `<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#059669"/>
+  
+  <!-- Book icon representing Islamic knowledge -->
+  <rect x="128" y="160" width="256" height="192" rx="8" fill="white"/>
+  <rect x="144" y="176" width="224" height="160" rx="4" fill="#f0fdf4"/>
+  
+  <!-- Lines representing text -->
+  <rect x="160" y="200" width="192" height="4" rx="2" fill="#059669"/>
+  <rect x="160" y="220" width="160" height="4" rx="2" fill="#059669"/>
+  <rect x="160" y="240" width="176" height="4" rx="2" fill="#059669"/>
+  <rect x="160" y="260" width="144" height="4" rx="2" fill="#059669"/>
+  <rect x="160" y="280" width="168" height="4" rx="2" fill="#059669"/>
+  <rect x="160" y="300" width="152" height="4" rx="2" fill="#059669"/>
+  
+  <!-- Crescent moon symbol -->
+  <path d="M320 120c0 35.346-28.654 64-64 64s-64-28.654-64-64 28.654-64 64-64 64 28.654 64 64z" fill="white"/>
+  <path d="M288 120c0 17.673-14.327 32-32 32s-32-14.327-32-32 14.327-32 32-32 32 14.327 32 32z" fill="#059669"/>
+  
+  <!-- Star representing guidance -->
+  <path d="M400 200l-8 24h-24l20 16-8 24 20-16 20 16-8-24 20-16h-24l-8-24z" fill="white"/>
+</svg>`;
+
+      function generateIcons() {
+        const preview = document.getElementById("iconPreview");
+        preview.innerHTML = "";
+
+        sizes.forEach((size) => {
+          const canvas = document.createElement("canvas");
+          canvas.width = size;
+          canvas.height = size;
+          canvas.id = `icon-${size}`;
+
+          const ctx = canvas.getContext("2d");
+          const img = new Image();
+
+          img.onload = function () {
+            ctx.drawImage(img, 0, 0, size, size);
+          };
+
+          const svgBlob = new Blob([svgContent], { type: "image/svg+xml" });
+          const url = URL.createObjectURL(svgBlob);
+          img.src = url;
+
+          const item = document.createElement("div");
+          item.className = "icon-item";
+          item.innerHTML = `
+                    <canvas id="icon-${size}" width="${size}" height="${size}"></canvas>
+                    <div>${size}x${size}</div>
+                    <button onclick="downloadIcon(${size})">Download</button>
+                `;
+
+          preview.appendChild(item);
+        });
+      }
+
+      function downloadIcon(size) {
+        const canvas = document.getElementById(`icon-${size}`);
+        const link = document.createElement("a");
+        link.download = `icon-${size}x${size}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      }
+
+      function downloadAll() {
+        sizes.forEach((size) => {
+          setTimeout(() => downloadIcon(size), size * 10);
+        });
+      }
+
+      // Auto-generate on load
+      window.onload = generateIcons;
+    </script>
+  </body>
+</html>

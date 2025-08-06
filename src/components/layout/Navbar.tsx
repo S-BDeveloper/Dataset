@@ -6,6 +6,7 @@ import DarkModeToggle from "../common/DarkModeToggle";
 import { LanguageSelector } from "../common/LanguageSelector";
 import { useLanguage } from "../../hooks/useContext";
 import { Logo } from "../common/Logo";
+import { PWAInstallButton } from "../PWAInstallButton";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -108,6 +109,7 @@ export default function Navbar() {
 
           {/* Right side controls */}
           <div className="hidden md:flex items-center space-x-4">
+            <PWAInstallButton variant="icon" />
             <LanguageSelector />
             <DarkModeToggle />
             {user ? (
@@ -213,6 +215,7 @@ export default function Navbar() {
 
               {/* Mobile settings */}
               <div className="px-3 pt-4 pb-2 border-t border-stone-200 dark:border-stone-700 flex items-center justify-between">
+                <PWAInstallButton variant="icon" />
                 <LanguageSelector />
                 <DarkModeToggle />
               </div>

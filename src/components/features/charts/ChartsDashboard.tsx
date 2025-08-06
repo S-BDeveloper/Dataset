@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { PropheticStatusChart } from "./PropheticStatusChart";
 import { SpatialProphecyMap } from "./SpatialProphecyMap";
 import { CategoryPieChart } from "./CategoryPieChart";
+import { useSanitizedData } from "../../../hooks/useSanitizedData";
 import type { IslamicData } from "../../../types/Types";
 
 interface ChartsDashboardProps {
@@ -19,9 +20,13 @@ interface ChartConfig {
 }
 
 export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
+  // Use sanitized data for charts
+  const sanitizedData = useSanitizedData([...data]);
+
   // Debug logging
   console.log("ChartsDashboard - Received data:", data);
   console.log("ChartsDashboard - Data length:", data.length);
+  console.log("ChartsDashboard - Sanitized data:", sanitizedData);
 
   const [viewMode, setViewMode] = useState<"single" | "overview">("overview");
   const [activeChart, setActiveChart] = useState<string>("all");
@@ -109,7 +114,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
             Back to All Charts
           </button>
         </div>
-        <ChartComponent data={data} />
+        <ChartComponent data={sanitizedData as IslamicData[]} />
 
         {/* Chart Notes */}
         <div className="mt-8 p-6 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
@@ -151,7 +156,7 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = ({ data }) => {
           const ChartComponent = chart.component;
           return (
             <div key={chart.id} className="w-full" ref={chart.ref}>
-              <ChartComponent data={data} />
+              <ChartComponent data={sanitizedData as IslamicData[]} />
             </div>
           );
         })}

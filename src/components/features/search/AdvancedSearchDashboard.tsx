@@ -60,7 +60,6 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           type: "islamic data" as const,
           title: item.title,
           content: [
-            item.description || "",
             item.notes || "",
             item.sources?.primary || "",
             item.sources?.verification || "",
@@ -305,8 +304,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                   result.source.toLowerCase(),
                 ].join(" ");
 
-                // Check if all search terms are found
-                return searchTerms.every((term) =>
+                // Check if ANY search terms are found (more flexible)
+                return searchTerms.some((term) =>
                   searchableText.includes(term)
                 );
               });
@@ -713,7 +712,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             >
               {/* Semi-transparent overlay to ensure text readability */}
               <div className="absolute inset-0 bg-neutral-500/70 dark:bg-neutral-800/20"></div>
-              <div className="max-w-md mx-auto relative z-10">
+              <div className="max-w-md relative z-10">
                 <h3
                   className="text-lg font-semibold mb-2 transform hover:scale-101 transition-transform duration-300 search-ready-title"
                   style={{

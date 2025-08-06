@@ -33,7 +33,28 @@ export const HomePageTabs: React.FC<HomePageTabsProps> = ({
 
   return (
     <div className="border-b border-neutral-200 dark:border-stone-700 bg-stone-200 dark:bg-stone-700 rounded-t-md">
-      <div className="flex flex-wrap gap-2 p-4 sm:p-6 justify-center sm:justify-start">
+      {/* Mobile & Tablet: Scrollable horizontal tabs */}
+      <div className="lg:hidden overflow-x-auto scrollbar-hide">
+        <div className="flex gap-2 p-3 min-w-max">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 whitespace-nowrap ${
+                activeTab === tab.id
+                  ? "bg-green-600 text-white shadow-lg shadow-green-600/25 border-2 border-green-500"
+                  : "text-stone-600 dark:text-stone-900 hover:text-stone-800 dark:hover:text-stone-500 bg-stone-50 dark:bg-neutral-50/90 border-2 border-transparent hover:border-stone-300 dark:hover:border-stone-600"
+              }`}
+            >
+              <span className="mr-1">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: Wrapped tabs */}
+      <div className="hidden lg:flex flex-wrap gap-2 p-4 lg:p-6 justify-center lg:justify-start">
         {tabs.map((tab) => (
           <button
             key={tab.id}

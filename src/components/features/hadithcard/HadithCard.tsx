@@ -30,7 +30,6 @@ export function HadithCard({
       trimmed.length > 0 &&
       trimmed !== "Unknown" &&
       trimmed !== "Sahih Bukhari" &&
-      trimmed !== "Sahih" &&
       !trimmed.includes("placeholder") &&
       !trimmed.includes("not available")
     );
@@ -45,9 +44,6 @@ export function HadithCard({
       return false;
     return hasContent(value);
   });
-
-  // Get the main text content (usually the hadith text itself)
-  const mainText = hadith.text || hadith.arabic || contentFields[0]?.[1] || "";
 
   return (
     <div className="w-full h-full bg-white dark:bg-stone-800 rounded-xl p-4 sm:p-6 shadow-lg border border-stone-200 dark:border-stone-700 hover:shadow-xl transition-shadow flex flex-col">
@@ -195,41 +191,16 @@ export function HadithCard({
         </div>
       )}
 
-      {/* Statistics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm mt-auto">
-        <div className="flex items-center justify-between sm:justify-start space-x-2">
-          <span className="text-stone-500 dark:text-stone-400 font-medium">
-            {t("hadith.contentLength")}:
-          </span>
-          <span className="text-stone-700 dark:text-stone-300">
-            {mainText.length} {t("hadith.characters")}
-          </span>
-        </div>
-        <div className="flex items-center justify-between sm:justify-start space-x-2">
-          <span className="text-stone-500 dark:text-stone-400 font-medium">
-            {t("hadith.wordCount")}:
-          </span>
-          <span className="text-stone-700 dark:text-stone-300">
-            {mainText.split(/\s+/).length} {t("hadith.words")}
-          </span>
-        </div>
-      </div>
-
-      {/* Source and Grade */}
-      <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-600">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          {hasContent(hadith.reference) && (
-            <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400">
-              {t("hadith.reference")}: {hadith.reference}
-            </p>
-          )}
-          {hasContent(hadith.grade) && (
+      {/* Grade Badge */}
+      {hasContent(hadith.grade) && (
+        <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-600">
+          <div className="flex items-center justify-end">
             <span className="inline-block bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium">
               {hadith.grade}
             </span>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

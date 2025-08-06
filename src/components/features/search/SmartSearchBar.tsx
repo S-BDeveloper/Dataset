@@ -74,23 +74,6 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
       }
     });
 
-    // Search in descriptions
-    data.forEach((card) => {
-      if (card.description?.toLowerCase().includes(query)) {
-        const words = card.description.split(" ");
-        words.forEach((word) => {
-          if (word.toLowerCase().includes(query) && word.length > 2) {
-            const score = word.toLowerCase().startsWith(query) ? 30 : 20;
-            suggestions.set(word, {
-              score,
-              type: card.type || "unknown",
-              source: "description",
-            });
-          }
-        });
-      }
-    });
-
     // Search in types
     data.forEach((card) => {
       if (card.type?.toLowerCase().includes(query)) {

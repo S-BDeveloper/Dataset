@@ -6,6 +6,7 @@ import PaginationButton from "./common/PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
 import { useQuranData } from "../hooks/useQuranData";
 import { useHadithData } from "../hooks/useHadithData";
+import { useSanitizedData } from "../hooks/useSanitizedData";
 import type { IslamicData, IslamicDataFilters } from "../types/Types";
 import type { FavoriteItem } from "../hooks/useFavorites";
 import type { Dispatch, SetStateAction } from "react";
@@ -61,6 +62,9 @@ export default function HomePage({
   // Use Quran and Hadith data hooks for unified search
   const { allData: quranData } = useQuranData(); // Use allData for full Quran dataset
   const { hadithData } = useHadithData();
+
+  // Use sanitized data for display
+  const sanitizedPaginatedCards = useSanitizedData(paginatedCards);
 
   // Add loading state tracking
   const [isDataLoading, setIsDataLoading] = useState(true);
@@ -236,8 +240,44 @@ export default function HomePage({
 
           {/* Tab Content */}
           <div className="p-4 sm:p-6">
+            {!activeTab && (
+              <div className="text-left py-12 animate-fade-in">
+                <div className="text-6xl mb-4">📖</div>
+                <h2 className="text-2xl font-bold text-stone-700 dark:text-stone-300 mb-4">
+                  Welcome to Islamic Dataset Interface
+                </h2>
+                <p className="text-stone-600 dark:text-stone-400 mb-8 max-w-2xl">
+                  Select a tab above to explore Islamic data, search through
+                  Quran and Hadith, view charts and analytics, or browse through
+                  our comprehensive collection.
+                </p>
+                <div className="flex flex-col gap-4 text-sm text-stone-500 dark:text-stone-400">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-600">📖</span>
+                    <span>Selected Islamic Data</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-blue-600">🔍</span>
+                    <span>Advanced Search</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-purple-600">📊</span>
+                    <span>Charts & Analytics</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-orange-600">📜</span>
+                    <span>Quran Verses</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-yellow-600">📚</span>
+                    <span>Hadith Collection</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeTab === "all" && (
-              <div ref={cardsListRef}>
+              <div ref={cardsListRef} className="animate-fade-in">
                 {/* Filters and Export */}
                 <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                   <div className="flex flex-col sm:flex-row gap-2">
@@ -287,12 +327,12 @@ export default function HomePage({
                   className="flex w-full"
                   columnClassName="bg-clip-padding pr-2 sm:pr-4"
                 >
-                  {paginatedCards.map((card) => (
+                  {sanitizedPaginatedCards.map((card) => (
                     <div key={`${card.type}-${card.title}`} className="mb-4">
                       <DataCard
-                        card={card}
+                        card={card as IslamicData}
                         onFavorite={handleFavorite}
-                        isFavorite={isFavorite(card)}
+                        isFavorite={isFavorite(card as IslamicData)}
                       />
                     </div>
                   ))}
@@ -418,7 +458,7 @@ export default function HomePage({
             )}
 
             {activeTab === "search" && (
-              <div ref={searchContentRef}>
+              <div ref={searchContentRef} className="animate-fade-in">
                 <AdvancedSearchDashboard
                   data={cards}
                   quranData={quranData}
@@ -430,13 +470,13 @@ export default function HomePage({
             )}
 
             {activeTab === "charts" && (
-              <div ref={chartsContentRef}>
+              <div ref={chartsContentRef} className="animate-fade-in">
                 <ChartsDashboard data={cards} />
               </div>
             )}
 
             {activeTab === "quran" && (
-              <div ref={quranContentRef}>
+              <div ref={quranContentRef} className="animate-fade-in">
                 <QuranDashboard
                   onFavorite={handleFavorite}
                   isFavorite={isFavorite}
@@ -445,7 +485,7 @@ export default function HomePage({
             )}
 
             {activeTab === "hadith" && (
-              <div ref={hadithContentRef}>
+              <div ref={hadithContentRef} className="animate-fade-in">
                 <HadithDashboard
                   onFavorite={handleFavorite}
                   isFavorite={isFavorite}

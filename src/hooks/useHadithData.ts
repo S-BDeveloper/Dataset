@@ -57,7 +57,7 @@ export function useHadithData() {
               text: hadith.text_en || hadith.text_ar || "",
               arabic: hadith.text_ar || "",
               translation: hadith.text_en || "",
-              grade: "Sahih", // Default grade for Sahih Bukhari
+              grade: undefined, // No grade assigned - requires proper authority
               reference: `${hadith.source || "Sahih Bukhari"} ${
                 hadith.chapter_no || ""
               } ${hadith.hadith_no || ""}`.trim(),
@@ -74,7 +74,7 @@ export function useHadithData() {
             text: typeof value === "string" ? value : JSON.stringify(value),
             arabic: typeof value === "string" ? value : "",
             translation: "",
-            grade: "Sahih",
+            grade: undefined, // No grade assigned - requires proper authority
             reference: key,
           })) as HadithEntry[];
         }

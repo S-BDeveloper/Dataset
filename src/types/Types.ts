@@ -7,7 +7,7 @@
 export const DataType = {
   PROPHECY: "prophecy",
   SCIENTIFIC: "scientific",
-  HEALTH_SCIENCE: "health-science",
+  HEALTH: "health",
   TRADITIONAL_TREATMENTS: "traditional-treatments",
   QADR: "qadr",
 } as const;
@@ -20,9 +20,10 @@ export const FulfillmentStatus = {
 } as const;
 
 export const ProphecyStatus = {
-  HISTORICAL_RECORD: "Historical Record",
+  FULFILLED_PROPHECY: "Fulfilled Prophecy",
   FUTURE_EVENT: "Future Event",
   DOCUMENTED: "Documented",
+  SUPPORTED_BY_EVIDENCE: "supported by evidence",
   ONGOING_RESEARCH: "Ongoing Research",
   IN_PROGRESS: "In Progress",
   PENDING: "Pending",

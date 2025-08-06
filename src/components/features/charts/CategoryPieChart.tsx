@@ -57,7 +57,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
         return "#ef4444";
       case DataType.SCIENTIFIC:
         return "#3b82f6";
-      case DataType.HEALTH_SCIENCE:
+      case DataType.HEALTH:
         return "#10b981";
       default:
         return "#6b7280";
@@ -159,8 +159,10 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
               "Prophecies relayed by Prophet Muhammad (ﷺ)"}
             {tooltip.datum.id === "Scientific" &&
               "Scientific facts and discoveries mentioned in Islamic texts"}
-            {tooltip.datum.id === "Health-science" &&
+            {tooltip.datum.id === "Health" &&
               "Health benefits, nutrition, and medical practices from Islamic tradition"}
+            {tooltip.datum.id === "Traditional-treatments" &&
+              "Traditional Islamic healing methods and remedies"}
             {tooltip.datum.id === "Unknown" &&
               "Entries with unclassified or missing category"}
           </div>

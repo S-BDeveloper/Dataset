@@ -22,7 +22,7 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
     (item) =>
       item.type === "prophecy" ||
       item.type === "scientific" ||
-      item.type === "health-science" ||
+      item.type === "health" ||
       item.type === "qadr"
   );
 
