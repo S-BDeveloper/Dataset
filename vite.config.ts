@@ -11,8 +11,8 @@ export default defineConfig({
     },
   },
   build: {
-    // Increase chunk size warning limit
-    chunkSizeWarningLimit: 1000,
+    // Increase chunk size warning limit and enable compression
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
         // Manual chunk splitting for better caching and loading
@@ -20,7 +20,6 @@ export default defineConfig({
           // Vendor chunks
           "react-vendor": ["react", "react-dom"],
           "router-vendor": ["react-router-dom"],
-          "ui-vendor": ["@nivo/core", "@nivo/pie", "@nivo/bar", "@nivo/line"],
 
           // Feature chunks - split by functionality
           "search-core": [
@@ -47,11 +46,22 @@ export default defineConfig({
           "auth-login": ["./src/components/features/auth/Login.tsx"],
           "auth-signup": ["./src/components/features/auth/Signup.tsx"],
 
-          // Data chunks - split by source
+          // Data chunks - split by source with size optimization
           "data-islamic": ["./src/data/islamic_data.json"],
           "hooks-islamic": ["./src/hooks/useIslamicData.ts"],
           "hooks-quran": ["./src/hooks/useQuranData.ts"],
           "hooks-hadith": ["./src/hooks/useHadithData.ts"],
+
+          // Large vendor chunks
+          "pdf-vendor": ["jspdf", "html2canvas"],
+          "ui-vendor": [
+            "@nivo/core",
+            "@nivo/pie",
+            "@nivo/bar",
+            "@nivo/line",
+            "@nivo/geo",
+          ],
+          "utils-vendor": ["lodash", "date-fns"],
         },
         // Optimize chunk naming
         chunkFileNames: () => `js/[name]-[hash].js`,

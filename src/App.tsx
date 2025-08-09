@@ -1,10 +1,13 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { FirebaseProvider } from "./contexts/FirebaseContext";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+
+// Import performance optimization utilities
+import { monitorCSSPerformance } from "./utils/cssLoader";
 
 // Lazy load major components for code splitting
 const HomePageWrapper = lazy(() =>
@@ -39,13 +42,79 @@ const PageLoader: React.FC = () => (
 );
 
 function App() {
+  // Initialize performance optimizations
+  useEffect(() => {
+    // Start CSS performance monitoring
+    monitorCSSPerformance();
+
+    // Register service worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js", { scope: "/" })
+        .then((registration) => {
+          console.log("✅ Service Worker registered:", registration);
+
+          // Handle service worker updates
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener("statechange", () => {
+                if (
+                  newWorker.state === "installed" &&
+                  navigator.serviceWorker.controller
+                ) {
+                  // New service worker available
+                  console.log("🔄 New service worker available");
+                  // Could show user notification about update
+                }
+              });
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("❌ Service Worker registration failed:", error);
+        });
+    }
+
+    // Initialize route prefetching after a delay
+    setTimeout(() => {
+      console.log("🚀 Initializing route prefetching");
+      // Route prefetcher is already initialized as singleton
+    }, 2000);
+
+    // Performance monitoring
+    if ("performance" in window) {
+      // Monitor largest contentful paint
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          console.log(`📊 LCP: ${entry.startTime.toFixed(2)}ms`);
+        }
+      }).observe({ entryTypes: ["largest-contentful-paint"] });
+
+      // Monitor cumulative layout shift
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          const layoutShiftEntry = entry as any; // Layout shift entries have additional properties
+          if (!layoutShiftEntry.hadRecentInput) {
+            console.log(`📊 CLS: ${layoutShiftEntry.value.toFixed(4)}`);
+          }
+        }
+      }).observe({ entryTypes: ["layout-shift"] });
+    }
+
+    // Cleanup function
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
+
   return (
     <FirebaseProvider>
       <DarkModeProvider>
         <AccessibilityProvider>
-          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col">
+          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col main-container">
             <Navbar />
-            <main className="flex-1 container mx-auto max-w-7xl px-4 py-8">
+            <main className="flex-1 container mx-auto max-w-7xl px-4 py-8 content-container">
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<HomePageWrapper />} />

@@ -1,6 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
-import { AdvancedSearchDashboard } from "./features/search/AdvancedSearchDashboard";
-import { ChartsDashboard } from "./features/charts/ChartsDashboard";
+import React, { useEffect, useState, useRef, Suspense } from "react";
+import {
+  LazyAdvancedSearchDashboard,
+  LazyChartsDashboard,
+  LazyQuranDashboard,
+  LazyHadithDashboard,
+} from "./lazy";
+import {
+  SearchLoadingFallback,
+  ChartLoadingFallback,
+  LazyLoadingFallback,
+} from "./common/LazyLoadingFallback";
 import { DataCard } from "./features/datacard/DataCard";
 import PaginationButton from "./common/PaginationButton";
 import { useFavorites } from "../hooks/useFavorites";
@@ -11,12 +20,12 @@ import type { IslamicData, IslamicDataFilters } from "../types/Types";
 import type { FavoriteItem } from "../hooks/useFavorites";
 import type { Dispatch, SetStateAction } from "react";
 import Masonry from "react-masonry-css";
-import { QuranDashboard } from "./features/qurancard/QuranDashboard";
-import { HadithDashboard } from "./features/hadithcard/HadithDashboard";
+
 import { scrollToTop } from "../utils/scrollUtils";
 import { HomePageStats } from "./home/HomePageStats";
 import { HomePageTabs } from "./home/HomePageTabs";
 import { HomePageHeader } from "./home/HomePageHeader";
+import { DailySelection } from "./home/DailySelection";
 import { DataLoadingState } from "./common/LoadingState";
 import { useLanguage } from "../hooks/useContext";
 
@@ -241,39 +250,7 @@ export default function HomePage({
           {/* Tab Content */}
           <div className="p-4 sm:p-6">
             {!activeTab && (
-              <div className="text-left py-12 animate-fade-in">
-                <div className="text-6xl mb-4">📖</div>
-                <h2 className="text-2xl font-bold text-stone-700 dark:text-stone-300 mb-4">
-                  Welcome to Islamic Dataset Interface
-                </h2>
-                <p className="text-stone-600 dark:text-stone-400 mb-8 max-w-2xl">
-                  Select a tab above to explore Islamic data, search through
-                  Quran and Hadith, view charts and analytics, or browse through
-                  our comprehensive collection.
-                </p>
-                <div className="flex flex-col gap-4 text-sm text-stone-500 dark:text-stone-400">
-                  <div className="flex items-center gap-2">
-                    <span className="text-green-600">📖</span>
-                    <span>Selected Islamic Data</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-blue-600">🔍</span>
-                    <span>Advanced Search</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-purple-600">📊</span>
-                    <span>Charts & Analytics</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-orange-600">📜</span>
-                    <span>Quran Verses</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-yellow-600">📚</span>
-                    <span>Hadith Collection</span>
-                  </div>
-                </div>
-              </div>
+              <DailySelection quranData={quranData} hadithData={hadithData} />
             )}
 
             {activeTab === "all" && (
@@ -459,37 +436,49 @@ export default function HomePage({
 
             {activeTab === "search" && (
               <div ref={searchContentRef} className="animate-fade-in">
-                <AdvancedSearchDashboard
-                  data={cards}
-                  quranData={quranData}
-                  hadithData={hadithData}
-                  onFavorite={handleFavorite}
-                  isFavorite={isFavorite}
-                />
+                <Suspense fallback={<SearchLoadingFallback />}>
+                  <LazyAdvancedSearchDashboard
+                    data={cards}
+                    quranData={quranData}
+                    hadithData={hadithData}
+                    onFavorite={handleFavorite}
+                    isFavorite={isFavorite}
+                  />
+                </Suspense>
               </div>
             )}
 
             {activeTab === "charts" && (
               <div ref={chartsContentRef} className="animate-fade-in">
-                <ChartsDashboard data={cards} />
+                <Suspense fallback={<ChartLoadingFallback />}>
+                  <LazyChartsDashboard data={cards} />
+                </Suspense>
               </div>
             )}
 
             {activeTab === "quran" && (
               <div ref={quranContentRef} className="animate-fade-in">
-                <QuranDashboard
-                  onFavorite={handleFavorite}
-                  isFavorite={isFavorite}
-                />
+                <Suspense
+                  fallback={<LazyLoadingFallback message="Loading Quran..." />}
+                >
+                  <LazyQuranDashboard
+                    onFavorite={handleFavorite}
+                    isFavorite={isFavorite}
+                  />
+                </Suspense>
               </div>
             )}
 
             {activeTab === "hadith" && (
               <div ref={hadithContentRef} className="animate-fade-in">
-                <HadithDashboard
-                  onFavorite={handleFavorite}
-                  isFavorite={isFavorite}
-                />
+                <Suspense
+                  fallback={<LazyLoadingFallback message="Loading Hadith..." />}
+                >
+                  <LazyHadithDashboard
+                    onFavorite={handleFavorite}
+                    isFavorite={isFavorite}
+                  />
+                </Suspense>
               </div>
             )}
           </div>
