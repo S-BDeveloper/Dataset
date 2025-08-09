@@ -130,24 +130,24 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         {/* User Section */}
-        <div className="p-4 border-t border-base-300">
+        <div className="p-4 border-t border-stone-200 dark:border-stone-700">
           {user ? (
             <div className="space-y-3">
               <NavLink
                 to="/profile"
-                className="block px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+                className="block px-4 py-3 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-medium text-primary">
+                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-medium text-green-700 dark:text-green-400">
                       {user.displayName?.[0] || user.email?.[0] || "U"}
                     </span>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-base-content">
+                    <div className="text-sm font-medium text-stone-900 dark:text-stone-100">
                       {user.displayName || user.email}
                     </div>
-                    <div className="text-xs text-base-content/60">
+                    <div className="text-xs text-stone-600 dark:text-stone-400">
                       {user.email}
                     </div>
                   </div>
@@ -155,7 +155,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               </NavLink>
               <button
                 onClick={handleLogout}
-                className="w-full px-4 py-3 text-sm font-medium text-base-content hover:text-primary hover:bg-base-200 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
+                className="w-full px-4 py-3 text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-green-700 dark:hover:text-green-400 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg"
                 aria-label="Sign out"
               >
                 {t("nav.logout")}
@@ -165,14 +165,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <div className="space-y-3">
               <button
                 onClick={handleLoginClick}
-                className="w-full px-4 py-3 text-sm font-medium text-base-content hover:text-primary hover:bg-base-200 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
+                className="w-full px-4 py-3 text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-green-700 dark:hover:text-green-400 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg"
                 aria-label="Sign in to your account"
               >
                 {t("nav.login")}
               </button>
               <button
                 onClick={handleLoginClick}
-                className="btn btn-primary w-full"
+                className="w-full px-4 py-3 text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors text-center focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg"
                 aria-label="Create new account"
               >
                 {t("nav.signup")}
@@ -182,7 +182,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         {/* Settings Section */}
-        <div className="p-4 border-t border-base-300 mt-auto">
+        <div className="p-4 border-t border-stone-200 dark:border-stone-700 mt-auto">
           <div className="flex items-center justify-between">
             <LanguageSelector />
           </div>
