@@ -10,7 +10,7 @@ export const PWAFeatureHighlight: React.FC = () => {
       icon: "/svg-icons/wifi-off.svg",
       title: "Works Offline",
       description:
-        "Access complete Quran and Hadith collections without internet",
+        "Access complete content collections without internet connection",
     },
     {
       icon: "/svg-icons/lightning-fill.svg",
@@ -20,12 +20,14 @@ export const PWAFeatureHighlight: React.FC = () => {
     {
       icon: "/svg-icons/binoculars-fill.svg",
       title: "Advanced Search",
-      description: "Find any verse or Hadith across 40,000+ authentic texts",
+      description:
+        "Find any content across comprehensive knowledge collections",
     },
     {
       icon: "/svg-icons/box-seam-fill.svg",
       title: "Complete Collection",
-      description: "Full Quran, Sahih Bukhari, and scientific discoveries",
+      description:
+        "Full content library with advanced visualization capabilities",
     },
     {
       icon: "/svg-icons/palette-fill.svg",
@@ -40,10 +42,7 @@ export const PWAFeatureHighlight: React.FC = () => {
   ];
 
   return (
-    <section
-      className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-6 mb-8"
-      aria-labelledby="pwa-features-heading"
-    >
+    <div aria-labelledby="pwa-features-heading">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-start gap-3 mb-4">
@@ -65,14 +64,15 @@ export const PWAFeatureHighlight: React.FC = () => {
               </span>
             </div>
             <h2 className="text-xl md:text-2xl font-bold text-stone-800 dark:text-stone-200">
-              Install Quran & Hadiths App
+              Install Reflect & Implement App
             </h2>
           </div>
         </div>
 
         <p className="text-stone-600 dark:text-stone-400 text-left leading-relaxed">
-          Get instant access to authentic Islamic knowledge on any device. Works
-          offline, loads instantly, and updates automatically.
+          Get instant access to authentic knowledge on any device. Works
+          offline, loads instantly, and updates automatically with advanced
+          search and visualization features.
         </p>
       </div>
 
@@ -81,7 +81,7 @@ export const PWAFeatureHighlight: React.FC = () => {
         {features.map((feature, index) => (
           <div
             key={index}
-            className="bg-stone-50 dark:bg-stone-700/50 rounded-lg p-4 border border-stone-200 dark:border-stone-600/50 hover:shadow-md transition-all duration-200"
+            className="bg-stone-50 dark:bg-stone-800 rounded-lg p-4 border border-stone-200 dark:border-stone-700"
           >
             <div className="flex items-start gap-3 mb-2">
               <img
@@ -144,7 +144,7 @@ export const PWAFeatureHighlight: React.FC = () => {
       {/* Benefits Banner */}
       <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800/30">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="flex items-center gap-2 bg-white dark:bg-stone-800/50 rounded-lg p-2 border border-green-100 dark:border-green-700/30">
+          <div className="flex items-center gap-2 bg-white dark:bg-stone-800 rounded-lg p-3 border border-green-100 dark:border-green-700/50">
             <img
               src="/svg-icons/box-seam-fill.svg"
               alt="Download size"
@@ -158,7 +158,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               Lightweight 2MB Download
             </span>
           </div>
-          <div className="flex items-center gap-2 bg-white dark:bg-stone-800/50 rounded-lg p-2 border border-green-100 dark:border-green-700/30">
+          <div className="flex items-center gap-2 bg-white dark:bg-stone-800 rounded-lg p-3 border border-green-100 dark:border-green-700/50">
             <img
               src="/svg-icons/lightning-fill.svg"
               alt="Loading speed"
@@ -172,7 +172,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               Loads in Under 2 Seconds
             </span>
           </div>
-          <div className="flex items-center gap-2 bg-white dark:bg-stone-800/50 rounded-lg p-2 border border-green-100 dark:border-green-700/30">
+          <div className="flex items-center gap-2 bg-white dark:bg-stone-800 rounded-lg p-3 border border-green-100 dark:border-green-700/50">
             <img
               src="/svg-icons/shield-lock-fill.svg"
               alt="Security"
@@ -186,7 +186,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               100% Secure & Private
             </span>
           </div>
-          <div className="flex items-center gap-2 bg-white dark:bg-stone-800/50 rounded-lg p-2 border border-green-100 dark:border-green-700/30">
+          <div className="flex items-center gap-2 bg-white dark:bg-stone-800 rounded-lg p-3 border border-green-100 dark:border-green-700/50">
             <img
               src="/svg-icons/gift-fill.svg"
               alt="Free to use"
@@ -250,7 +250,7 @@ export const PWAFeatureHighlight: React.FC = () => {
             </span>
           </summary>
 
-          <div className="mt-3 p-4 bg-stone-50 dark:bg-stone-800/30 rounded-lg border border-stone-200 dark:border-stone-700/50">
+          <div className="mt-3 p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <h4 className="font-semibold text-stone-900 dark:text-stone-100 mb-3 flex items-center gap-2">
@@ -288,7 +288,7 @@ export const PWAFeatureHighlight: React.FC = () => {
                 </h4>
                 <ol className="text-sm text-stone-700 dark:text-stone-300 space-y-2 list-decimal list-inside">
                   <li>Look for install icon in address bar</li>
-                  <li>Click "Install Islamic Dataset"</li>
+                  <li>Click "Install Reflect & Implement"</li>
                   <li>Confirm installation</li>
                   <li>App appears in your programs</li>
                 </ol>
@@ -318,6 +318,6 @@ export const PWAFeatureHighlight: React.FC = () => {
           </div>
         </details>
       </section>
-    </section>
+    </div>
   );
 };

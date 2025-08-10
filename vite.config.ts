@@ -1,117 +1,92 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+import { resolve } from "path";
 
-// https://vitejs.dev/config/
+// Security plugin for development
+const securityHeaders = () => {
+  return {
+    name: "security-headers",
+    configureServer(server: any) {
+      server.middlewares.use((_req: any, res: any, next: any) => {
+        // Security headers for development
+        res.setHeader("X-Content-Type-Options", "nosniff");
+        res.setHeader("X-Frame-Options", "SAMEORIGIN");
+        res.setHeader("X-XSS-Protection", "1; mode=block");
+        res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+        res.setHeader(
+          "Permissions-Policy",
+          "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), ambient-light-sensor=(), autoplay=(), encrypted-media=(), fullscreen=(self), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), web-share=(), xr-spatial-tracking=()"
+        );
+        res.setHeader(
+          "Strict-Transport-Security",
+          "max-age=31536000; includeSubDomains; preload"
+        );
+        res.setHeader("X-Download-Options", "noopen");
+        res.setHeader("X-Permitted-Cross-Domain-Policies", "none");
+        res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+        res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+        res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+
+        // Content Security Policy
+        const csp = [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com blob:",
+          "worker-src 'self' blob:",
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+          "font-src 'self' https://fonts.gstatic.com",
+          "img-src 'self' data: https: blob:",
+          "connect-src 'self' https://api.github.com https://www.google-analytics.com https://fonts.googleapis.com https://fonts.gstatic.com",
+          "frame-src 'self'",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "form-action 'self'",
+          "frame-ancestors 'self'",
+          "upgrade-insecure-requests",
+        ].join("; ");
+
+        res.setHeader("Content-Security-Policy", csp);
+
+        next();
+      });
+    },
+  };
+};
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), securityHeaders()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": resolve(__dirname, "src"),
     },
   },
+  server: {
+    port: 5173,
+    host: true,
+    // https: false, // Set to true for HTTPS in development
+  },
   build: {
-    // Increase chunk size warning limit and enable compression
-    chunkSizeWarningLimit: 2000,
+    outDir: "dist",
+    sourcemap: false, // Disable source maps for security
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching and loading
         manualChunks: {
-          // Vendor chunks
-          "react-vendor": ["react", "react-dom"],
-          "router-vendor": ["react-router-dom"],
-
-          // Feature chunks - split by functionality
-          "search-core": [
-            "./src/components/features/search/AdvancedSearchDashboard.tsx",
-          ],
-          "search-results": [
-            "./src/components/features/search/SearchResults.tsx",
-          ],
-          "search-filters": [
-            "./src/components/features/search/AdvancedFilterPanel.tsx",
-          ],
-          "charts-core": [
-            "./src/components/features/charts/ChartsDashboard.tsx",
-          ],
-          "charts-pie": [
-            "./src/components/features/charts/CategoryPieChart.tsx",
-          ],
-          "charts-status": [
-            "./src/components/features/charts/PropheticStatusChart.tsx",
-          ],
-          "charts-map": [
-            "./src/components/features/charts/SpatialProphecyMap.tsx",
-          ],
-          "auth-login": ["./src/components/features/auth/Login.tsx"],
-          "auth-signup": ["./src/components/features/auth/Signup.tsx"],
-
-          // Data chunks - split by source with size optimization
-          "data-islamic": ["./src/data/islamic_data.json"],
-          "hooks-islamic": ["./src/hooks/useIslamicData.ts"],
-          "hooks-quran": ["./src/hooks/useQuranData.ts"],
-          "hooks-hadith": ["./src/hooks/useHadithData.ts"],
-
-          // Large vendor chunks
-          "pdf-vendor": ["jspdf", "html2canvas"],
-          "ui-vendor": [
-            "@nivo/core",
-            "@nivo/pie",
+          vendor: ["react", "react-dom"],
+          router: ["react-router-dom"],
+          charts: [
             "@nivo/bar",
-            "@nivo/line",
+            "@nivo/core",
             "@nivo/geo",
+            "@nivo/line",
+            "@nivo/pie",
           ],
-          "utils-vendor": ["lodash", "date-fns"],
-        },
-        // Optimize chunk naming
-        chunkFileNames: () => `js/[name]-[hash].js`,
-        entryFileNames: "js/[name]-[hash].js",
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split(".") || [];
-          const ext = info[info.length - 1];
-          if (/\.(css)$/.test(assetInfo.name || "")) {
-            return `css/[name]-[hash].${ext}`;
-          }
-          return `assets/[name]-[hash].${ext}`;
         },
       },
     },
-    // Enable source maps for debugging
-    sourcemap: false,
-    // Minify options
-    minify: "esbuild",
+    // Security optimizations
+    minify: "terser",
   },
-  // Optimize dependencies
-  optimizeDeps: {
-    include: [
-      "react",
-      "react-dom",
-      "react-router-dom",
-      "@nivo/core",
-      "@nivo/pie",
-      "@nivo/bar",
-      "@nivo/line",
-    ],
-  },
-  // Server options for development
-  server: {
-    port: 3000,
-    open: true,
-    headers: {
-      // Prevent caching of service worker and manifest
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      Pragma: "no-cache",
-      Expires: "0",
-    },
-  },
-  // Preview server options (for npm run preview)
-  preview: {
-    port: 4173,
-    headers: {
-      // Prevent caching of service worker and manifest in preview
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      Pragma: "no-cache",
-      Expires: "0",
-    },
+  // Security optimizations
+  define: {
+    __DEV__: JSON.stringify(process.env.NODE_ENV === "development"),
   },
 });

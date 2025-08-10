@@ -25,7 +25,7 @@ import { scrollToTop } from "../utils/scrollUtils";
 import { HomePageStats } from "./home/HomePageStats";
 import { HomePageTabs } from "./home/HomePageTabs";
 import { HomePageHeader } from "./home/HomePageHeader";
-import { DailySelection } from "./home/DailySelection";
+// import { DailySelection } from "./home/DailySelection";
 import { DataLoadingState } from "./common/LoadingState";
 import { useLanguage } from "../hooks/useContext";
 
@@ -249,11 +249,8 @@ export default function HomePage({
 
           {/* Tab Content */}
           <div className="p-4 sm:p-6">
-            {!activeTab && (
-              <DailySelection quranData={quranData} hadithData={hadithData} />
-            )}
-
-            {activeTab === "all" && (
+            {/* Show main data view by default when no tab is selected */}
+            {(!activeTab || activeTab === "all") && (
               <div ref={cardsListRef} className="animate-fade-in">
                 {/* Filters and Export */}
                 <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">

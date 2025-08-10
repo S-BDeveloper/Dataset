@@ -203,34 +203,7 @@
       "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
     }
   },
-  {
-    "type": "prophecy",
-    "title": "Conquest of Constantinople",
-
-    "status": "Historical Record",
-    "notes": "QUOTE: \"The Prophet (ﷺ) said: 'You will conquer Constantinople. Its commander will be the best commander, and its army will be the best army.'\" (Sahih Bukhari 2924)",
-    "sources": {
-      "primary": "Sahih Bukhari - Authentic Hadith Collection",
-      "verification": "Hadith authenticity verified by Islamic scholars",
-      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/bukhari:2924"],
-      "source": "Imam Bukhari, 9th century CE"
-    }
-  },
-  {
-    "type": "prophecy",
-    "title": "Spread of Islam Worldwide",
-
-    "status": "Historical Record",
-    "notes": "QUOTE: \"The Prophet (ﷺ) said: 'This religion will reach every place that night and day reach.'\" (Sahih Muslim 2889)",
-    "sources": {
-      "primary": "Sahih Muslim - Authentic Hadith Collection",
-      "verification": "Hadith authenticity verified by Islamic scholars",
-      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
-      "references": ["https://sunnah.com/muslim:2889"],
-      "source": "Imam Muslim, 9th century CE"
-    }
-  },
+  
   {
     "type": "prophecy",
     "title": "Dajjal (False Messiah)",
@@ -264,7 +237,7 @@
     "title": "Sun Rising from the West",
 
     "status": "Future Event",
-    "notes": "QUOTE: \"The Prophet (ﷺ) said: 'The Hour will not be established until the sun rises from the west. When it rises from the west, all people will believe.'\" (Sahih Bukhari 6506)",
+    "notes": "QUOTE: \"Allah's Messenger (ﷺ) said, 'The Hour will not be established till the sun rises from the west,.'\" (Sahih Bukhari 6506)",
     "sources": {
       "primary": "Sahih Bukhari - Authentic Hadith Collection",
       "verification": "Hadith authenticity verified by Islamic scholars",
@@ -357,6 +330,19 @@
       "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
       "references": ["https://sunnah.com/muslim:2941"],
       "source": "Imam Muslim, 9th century CE"
+    }
+  },
+  {
+    "type": "traditional-treatments",
+    "title": "Black Seed (Nigella Sativa) Health Benefits",
+    "status": "Documented",
+    "notes": "QUOTE: 'Nigella sativa has been extensively studied for its therapeutic properties. Research shows it contains thymoquinone, which has demonstrated anti-inflammatory, antioxidant, and immune-modulating effects. Clinical studies have shown benefits for respiratory conditions, diabetes, and cardiovascular health.' - Dr. Majid Ali, MD, Former President of Capital University of Integrative Medicine.",
+    "sources": {
+      "primary": "Sahih Bukhari - Authentic Hadith Collection",
+      "verification": "Hadith authenticity verified by Islamic scholars",
+      "methodology": "Hadith authentication using isnad (chain of narrators) analysis",
+      "references": ["https://sunnah.com/bukhari:5687"],
+      "source": "Imam Bukhari, 9th century CE"
     }
   }
 ]

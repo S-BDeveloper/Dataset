@@ -9,12 +9,12 @@ export default function InstallApp() {
         <header className="mb-8">
           <div className="mb-6">
             <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
-              Install Quran & Hadiths App
+              Install Reflect & Implement App
             </h1>
             <p className="text-stone-700 dark:text-stone-300 leading-relaxed">
-              Get the complete Islamic knowledge experience on your device.
-              Access 40,000+ authentic texts offline with our Progressive Web
-              App.
+              Get the complete knowledge experience on your device. Access
+              authentic content offline with our Progressive Web App featuring
+              advanced search and visualization capabilities.
             </p>
           </div>
         </header>
@@ -22,11 +22,16 @@ export default function InstallApp() {
         {/* Main Content */}
         <div className="space-y-8">
           {/* PWA Features */}
-          <PWAFeatureHighlight />
+          <section
+            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-800 p-6"
+            aria-labelledby="pwa-features-heading"
+          >
+            <PWAFeatureHighlight />
+          </section>
 
           {/* Sharing Section */}
           <section
-            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-6"
+            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-800 p-6"
             aria-labelledby="sharing-heading"
           >
             <SocialShareButtons />
@@ -34,7 +39,7 @@ export default function InstallApp() {
 
           {/* Why Install Section */}
           <section
-            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-6"
+            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-800 p-6"
             aria-labelledby="why-install-heading"
           >
             <div className="mb-6">
@@ -45,35 +50,34 @@ export default function InstallApp() {
                 Why Install the App?
               </h2>
               <p className="text-base text-stone-700 dark:text-stone-300 mt-2">
-                Experience Islamic knowledge like never before with our
-                dedicated app.
+                Experience knowledge like never before with our dedicated app.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                     Always Up to Date
                   </h3>
                   <p className="text-base text-stone-700 dark:text-stone-300">
-                    Automatic updates ensure you always have the latest Islamic
-                    content and features.
+                    Automatic updates ensure you always have the latest content
+                    and features.
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                     Privacy Focused
                   </h3>
                   <p className="text-base text-stone-700 dark:text-stone-300">
-                    No tracking, no ads, no data collection. Just pure Islamic
-                    knowledge.
+                    No tracking, no ads, no data collection. Just pure knowledge
+                    and wisdom.
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                     Lightning Fast
                   </h3>
                   <p className="text-base text-stone-700 dark:text-stone-300">
@@ -84,18 +88,18 @@ export default function InstallApp() {
               </div>
 
               <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                     Complete Library
                   </h3>
                   <p className="text-base text-stone-700 dark:text-stone-300">
-                    Full Quran, authentic Hadith collections, and scientific
-                    discoveries in one place.
+                    Full content collections with advanced search and
+                    visualization capabilities.
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                     Beautiful Design
                   </h3>
                   <p className="text-base text-stone-700 dark:text-stone-300">
@@ -104,8 +108,8 @@ export default function InstallApp() {
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
+                <div className="p-4 bg-stone-50 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+                  <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
                     Works Everywhere
                   </h3>
                   <p className="text-base text-stone-700 dark:text-stone-300">
@@ -118,7 +122,7 @@ export default function InstallApp() {
 
           {/* FAQ Section */}
           <section
-            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-6"
+            className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-800 p-6"
             aria-labelledby="faq-heading"
           >
             <div className="mb-6">
@@ -131,8 +135,8 @@ export default function InstallApp() {
             </div>
 
             <div className="space-y-4">
-              <details className="group border border-stone-200 dark:border-stone-700/50 rounded-lg p-4 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
-                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-600 dark:hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
+              <details className="group border border-stone-200 dark:border-stone-700 rounded-lg p-4 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-700 dark:hover:text-green-300 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
                   What is a Progressive Web App (PWA)?
                 </summary>
                 <p className="mt-3 text-base text-stone-700 dark:text-stone-300 leading-relaxed">
@@ -143,8 +147,8 @@ export default function InstallApp() {
                 </p>
               </details>
 
-              <details className="group border border-stone-200 dark:border-stone-700/50 rounded-lg p-4 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
-                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-600 dark:hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
+              <details className="group border border-stone-200 dark:border-stone-700 rounded-lg p-4 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-700 dark:hover:text-green-300 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
                   How much storage space does it require?
                 </summary>
                 <p className="mt-3 text-base text-stone-700 dark:text-stone-300 leading-relaxed">
@@ -154,19 +158,19 @@ export default function InstallApp() {
                 </p>
               </details>
 
-              <details className="group border border-stone-200 dark:border-stone-700/50 rounded-lg p-4 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
-                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-600 dark:hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
+              <details className="group border border-stone-200 dark:border-stone-700 rounded-lg p-4 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-700 dark:hover:text-green-300 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
                   Will it work without internet connection?
                 </summary>
                 <p className="mt-3 text-base text-stone-700 dark:text-stone-300 leading-relaxed">
                   Yes! Once installed, you can access previously viewed content
-                  offline. The app intelligently caches Quran verses, Hadith,
-                  and other content for offline reading.
+                  offline. The app intelligently caches content for offline
+                  reading.
                 </p>
               </details>
 
-              <details className="group border border-stone-200 dark:border-stone-700/50 rounded-lg p-4 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
-                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-600 dark:hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
+              <details className="group border border-stone-200 dark:border-stone-700 rounded-lg p-4 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-700 dark:hover:text-green-300 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
                   Is my data safe and private?
                 </summary>
                 <p className="mt-3 text-base text-stone-700 dark:text-stone-300 leading-relaxed">
@@ -176,8 +180,8 @@ export default function InstallApp() {
                 </p>
               </details>
 
-              <details className="group border border-stone-200 dark:border-stone-700/50 rounded-lg p-4 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
-                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-600 dark:hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
+              <details className="group border border-stone-200 dark:border-stone-700 rounded-lg p-4 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">
+                <summary className="cursor-pointer text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-green-700 dark:hover:text-green-300 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-stone-900 rounded">
                   How do I uninstall the app if needed?
                 </summary>
                 <p className="mt-3 text-base text-stone-700 dark:text-stone-300 leading-relaxed">

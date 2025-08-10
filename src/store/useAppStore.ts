@@ -136,7 +136,7 @@ export const useAppStore = create<AppState>()(
         virtualScrollEnabled: false,
         virtualScrollItemHeight: 50, // Default height for virtual scrolling
 
-        activeTab: "",
+        activeTab: "all",
         toast: null,
 
         // Caching and performance

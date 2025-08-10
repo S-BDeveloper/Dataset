@@ -10,8 +10,8 @@ interface SocialShareButtonsProps {
 
 export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
   url = window.location.href,
-  title = "🕌 Quran & Hadiths - Complete Quran & Hadith Collection",
-  description = "📚 Access 40,000+ authentic Islamic texts offline! Complete Quran, Hadith collections, and scientific discoveries in this amazing Progressive Web App. Install for instant Islamic guidance.",
+  title = "🌟 Reflect & Implement - Knowledge Platform",
+  description = "📚 Access comprehensive knowledge with advanced search and visualization capabilities! Complete content collections with offline access in this amazing Progressive Web App. Install for instant wisdom and guidance.",
   className = "",
   showTitle = true,
 }) => {
@@ -43,7 +43,7 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
       ),
       color: "bg-blue-500 hover:bg-blue-600",
       action: () => {
-        const twitterText = `${title} ${description} #IslamicKnowledge #Quran #Hadith #PWA`;
+        const twitterText = `${title} ${description} #Knowledge #Wisdom #PWA #ReflectImplement`;
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
           twitterText
         )}&url=${encodeURIComponent(url)}`;
@@ -176,10 +176,10 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
               id="social-share-heading"
               className="text-lg font-semibold text-stone-900 dark:text-stone-100"
             >
-              Share Quran & Hadiths App
+              Share Reflect & Implement App
             </h3>
             <p className="text-sm text-stone-700 dark:text-stone-300 mt-1">
-              Help others discover authentic Islamic knowledge
+              Help others discover authentic knowledge and wisdom
             </p>
           </div>
         </div>
@@ -219,7 +219,7 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
             onClick={button.action}
             className={`w-full sm:w-auto flex items-center justify-start gap-3 p-3 ${button.color} text-white rounded-lg text-sm font-medium hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-stone-900 transition-all duration-200`}
             title={`Share via ${button.name}`}
-            aria-label={`Share Quran & Hadiths App on ${button.name}`}
+            aria-label={`Share Reflect & Implement App on ${button.name}`}
           >
             {button.icon}
             <span>Share on {button.name}</span>
@@ -309,7 +309,7 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
                 "brightness(0) saturate(100%) invert(46%) sepia(6%) saturate(458%) hue-rotate(314deg) brightness(94%) contrast(86%)",
             }}
           />{" "}
-          Sharing helps others discover authentic Islamic knowledge
+          Sharing helps others discover authentic knowledge and wisdom
         </p>
       </div>
     </div>
