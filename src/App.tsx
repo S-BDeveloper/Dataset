@@ -1,9 +1,10 @@
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { FirebaseProvider } from "./contexts/FirebaseContext";
 import Navbar from "./components/layout/Navbar";
+import Sidebar from "./components/layout/Sidebar";
 import Footer from "./components/layout/Footer";
 
 // Import performance optimization utilities
@@ -33,6 +34,9 @@ const TermsPage = lazy(() =>
 const PrivacyPage = lazy(() =>
   import("./pages/Privacy").then((module) => ({ default: module.default }))
 );
+const InstallAppPage = lazy(() =>
+  import("./pages/InstallApp").then((module) => ({ default: module.default }))
+);
 
 // Loading component for lazy-loaded routes
 const PageLoader: React.FC = () => (
@@ -42,6 +46,19 @@ const PageLoader: React.FC = () => (
 );
 
 function App() {
+  // State for sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Function to toggle sidebar
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  // Function to close sidebar
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   // Initialize performance optimizations
   useEffect(() => {
     // Start CSS performance monitoring
@@ -113,14 +130,25 @@ function App() {
       <DarkModeProvider>
         <AccessibilityProvider>
           <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col main-container">
-            <Navbar />
-            <main className="flex-1 container mx-auto max-w-7xl px-4 py-8 content-container">
+            {/* Pass sidebar toggle function to Navbar */}
+            <Navbar onMenuToggle={toggleSidebar} />
+
+            {/* Sidebar component */}
+            <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+
+            {/* Main content with sidebar-aware layout */}
+            <main
+              className={`flex-1 container mx-auto max-w-7xl px-4 py-8 content-container transition-all duration-300 ${
+                isSidebarOpen ? "md:mr-80" : ""
+              }`}
+            >
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<HomePageWrapper />} />
                   <Route path="/favorites" element={<FavoritesPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/login" element={<LoginPage />} />
+                  <Route path="/install" element={<InstallAppPage />} />
                   <Route path="/copyright" element={<CopyrightPage />} />
                   <Route path="/terms" element={<TermsPage />} />
                   <Route path="/privacy" element={<PrivacyPage />} />

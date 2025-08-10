@@ -8,7 +8,11 @@ import { useLanguage } from "../../hooks/useContext";
 import { Logo } from "../common/Logo";
 import { PWAInstallButton } from "../PWAInstallButton";
 
-export default function Navbar() {
+interface NavbarProps {
+  onMenuToggle?: () => void;
+}
+
+export default function Navbar({ onMenuToggle }: NavbarProps) {
   const { user, logout } = useAuth();
   const { favorites } = useFavorites();
   const location = useLocation();
@@ -67,6 +71,12 @@ export default function Navbar() {
       showBadge: true,
       badgeCount: favorites.length,
     },
+    {
+      to: "/install",
+      label: "Get App",
+      showBadge: false,
+      badgeCount: 0,
+    },
   ];
 
   // Render navigation links
@@ -102,54 +112,37 @@ export default function Navbar() {
             <Logo />
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            {renderNavLinks(false)}
-          </div>
-
-          {/* Right side controls */}
-          <div className="hidden md:flex items-center space-x-4">
-            <PWAInstallButton variant="icon" />
-            <LanguageSelector />
-            <DarkModeToggle />
-            {user ? (
-              <div className="flex items-center space-x-3">
-                <NavLink to="/profile" className="text-sm">
-                  {user.displayName || user.email}
-                </NavLink>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-                >
-                  {t("nav.logout")}
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={handleLoginClick}
-                  className="px-4 py-2 text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-                >
-                  {t("nav.login")}
-                </button>
-                <button
-                  onClick={handleLoginClick}
-                  className="px-4 py-2 text-sm font-medium bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                >
-                  {t("nav.signup")}
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Menu button - hamburger for mobile, sidebar toggle for desktop */}
+          <div className="flex items-center">
+            {/* Desktop sidebar toggle */}
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 focus:outline-none focus:text-stone-900 dark:focus:text-stone-100"
+              onClick={onMenuToggle}
+              className="hidden md:block text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 focus:outline-none focus:text-stone-900 dark:focus:text-stone-100"
+              aria-label="Toggle sidebar menu"
             >
               <svg
-                className="h-6 w-6"
+                className="h-10 w-10"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 focus:outline-none focus:text-stone-900 dark:focus:text-stone-100"
+              aria-label="Toggle mobile menu"
+            >
+              <svg
+                className="h-10 w-10"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

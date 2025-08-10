@@ -97,5 +97,21 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    headers: {
+      // Prevent caching of service worker and manifest
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      Pragma: "no-cache",
+      Expires: "0",
+    },
+  },
+  // Preview server options (for npm run preview)
+  preview: {
+    port: 4173,
+    headers: {
+      // Prevent caching of service worker and manifest in preview
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      Pragma: "no-cache",
+      Expires: "0",
+    },
   },
 });

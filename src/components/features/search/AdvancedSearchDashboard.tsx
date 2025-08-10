@@ -41,6 +41,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
         quranSurahs: [],
         quranVerseRange: { min: 1, max: 6236 }, // Use actual Quran verse range based on loaded data
         quranPlaceOfRevelation: [],
+        quranSajdahOnly: false, // Filter for Sajdah verses only
         // Initialize new Hadith filters with proper defaults
         hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
         hadithCategories: [],
@@ -263,6 +264,14 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                   return filterState.quranPlaceOfRevelation.includes(
                     ayah.place_of_revelation
                   );
+                });
+              }
+
+              // Apply Sajdah filter
+              if (filterState.quranSajdahOnly) {
+                quranResults = quranResults.filter((result) => {
+                  const ayah = result.data as QuranAyah;
+                  return ayah.sajah_ayah === true;
                 });
               }
 
@@ -520,6 +529,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           quranSurahs: [],
           quranVerseRange: { min: 1, max: 6236 }, // Use actual Quran verse range based on loaded data
           quranPlaceOfRevelation: [],
+          quranSajdahOnly: false, // Filter for Sajdah verses only
           // Initialize new Hadith filters with proper defaults
           hadithNumberRange: { min: 1, max: 13143 }, // Use actual Hadith range
           hadithCategories: [],
@@ -674,6 +684,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     quranSurahs: [],
                     quranVerseRange: { min: 1, max: 6236 },
                     quranPlaceOfRevelation: [],
+                    quranSajdahOnly: false,
                     hadithNumberRange: { min: 1, max: 13143 },
                     hadithCategories: [],
                   });

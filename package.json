@@ -1,10 +1,10 @@
 {
-  "name": "islamic-dataset-interface",
+  "name": "quran-and-hadiths",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "author": {
-    "name": "Islamic Dataset Interface",
+    "name": "Quran & Hadiths",
     "email": "begumsabina81193@gmail.com",
     "url": "https://islamicdata.com"
   },

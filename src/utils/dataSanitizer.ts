@@ -128,7 +128,7 @@ export const generateScholarlySummary = (data: IslamicData): string => {
   }
 
   if (title.includes("fingerprint")) {
-    return `Quote: The Quran states "Does man think that We will not assemble his bones? Yes, [We are] Able [even] to proportion his fingertips" (أَيَحْسَبُ الْإِنسَانُ أَلَّن نَّجْمَعَ عِظَامَهُ بَلَىٰ قَادِرِينَ عَلَىٰ أَن نُّسَوِّيَ بَنَانَهُ) (75:3-4). Dr. Francis Galton's research (1892) and subsequent studies by Dr. Henry Faulds confirm fingerprints are unique to each individual and remain unchanged throughout life.`;
+    return `Quote: The Quran states "Yes ˹indeed˺! We are ˹most˺ capable of restoring ˹even˺ their very fingertips." (أَيَحْسَبُ الْإِنسَانُ أَلَّن نَّجْمَعَ عِظَامَهُ بَلَىٰ قَادِرِينَ عَلَىٰ أَن نُّسَوِّيَ بَنَانَهُ) (75:3-4). Dr. Francis Galton's research (1892) and subsequent studies by Dr. Henry Faulds confirm fingerprints are unique to each individual and remain unchanged throughout life.`;
   }
 
   if (title.includes("big bang") || title.includes("heaven earth joined")) {
@@ -141,10 +141,6 @@ export const generateScholarlySummary = (data: IslamicData): string => {
 
   if (title.includes("establishment") || title.includes("medina")) {
     return `Quote: "Allah's Messenger (ﷺ) said, "I was ordered to migrate to a town which will swallow (conquer) other towns and is called Yathrib and that is Medina."`;
-  }
-
-  if (title.includes("fingerprint") || title.includes("uniqueness")) {
-    return `Quote: The Quran mentions Allah will resurrect humans with complete fingerprints (بَنَانَهُ) (75:4). Modern forensic science confirms fingerprints are unique to each individual and remain unchanged throughout life. This supports the Quranic claim of individual identity preservation.`;
   }
 
   if (title.includes("deep sea") || title.includes("darkness")) {

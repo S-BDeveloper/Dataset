@@ -123,7 +123,7 @@ export const DailySelection: React.FC<DailySelectionProps> = memo(
             Daily Islamic Reflections
           </h2>
           <p className="text-stone-600 dark:text-stone-400 text-sm">
-            {formatDate()} • Curated verses and hadiths
+            {formatDate()}
           </p>
         </div>
 

@@ -246,7 +246,7 @@ export const SearchResults: React.FC<SearchResultsProps> = memo(
                       </div>
                       {/* Notes */}
                       <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                        <p className="text-sm text-blue-800 dark:text-blue-200 line-clamp-2">
+                        <p className="text-sm text-blue-800 dark:text-blue-200 max-h-20 overflow-y-auto custom-scrollbar">
                           {generateScholarlySummary(result.data as IslamicData)}
                         </p>
                       </div>
@@ -299,7 +299,7 @@ export const SearchResults: React.FC<SearchResultsProps> = memo(
                       {(result.data as QuranAyah).ayah_ar && (
                         <div className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 border border-stone-200 dark:border-stone-600 mb-3">
                           <p
-                            className="text-right text-lg leading-relaxed text-stone-800 dark:text-stone-200 font-arabic line-clamp-3"
+                            className="text-right text-lg leading-relaxed text-stone-800 dark:text-stone-200 font-arabic max-h-32 overflow-y-auto custom-scrollbar"
                             dir="rtl"
                           >
                             {(result.data as QuranAyah).ayah_ar}
@@ -308,7 +308,7 @@ export const SearchResults: React.FC<SearchResultsProps> = memo(
                       )}
                       {(result.data as QuranAyah).ayah_en && (
                         <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-700">
-                          <p className="text-sm leading-relaxed text-blue-800 dark:text-blue-300 line-clamp-4">
+                          <p className="text-sm leading-relaxed text-blue-800 dark:text-blue-300 max-h-32 overflow-y-auto custom-scrollbar">
                             {(result.data as QuranAyah).ayah_en}
                           </p>
                         </div>
@@ -364,7 +364,7 @@ export const SearchResults: React.FC<SearchResultsProps> = memo(
                         (result.data as HadithEntry).text !==
                           "not found yet" && (
                           <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
-                            <p className="text-sm leading-relaxed text-purple-800 dark:text-purple-300 line-clamp-6">
+                            <p className="text-sm leading-relaxed text-purple-800 dark:text-purple-300 max-h-48 overflow-y-auto custom-scrollbar">
                               {(result.data as HadithEntry).text}
                             </p>
                           </div>

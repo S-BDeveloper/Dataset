@@ -276,6 +276,7 @@ export interface FilterState {
     readonly max: number;
   };
   readonly quranPlaceOfRevelation: readonly string[];
+  readonly quranSajdahOnly: boolean;
   readonly hadithNumberRange: {
     readonly min: number;
     readonly max: number;

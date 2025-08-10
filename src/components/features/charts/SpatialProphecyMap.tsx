@@ -141,8 +141,8 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
 
   return (
     <div className="w-full bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6">
-      <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6 text-center">
-        Geographic Data Distribution
+      <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-6">
+        Featured Geographic Data Distribution
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -217,8 +217,8 @@ export const SpatialProphecyMap: React.FC<SpatialProphecyMapProps> = ({
       )}
 
       {isActive && (
-        <div className="mt-4 p-3 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
-          <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+        <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800/30">
+          <h4 className="text-sm font-semibold text-green-700 dark:text-green-400 mb-2">
             About This Chart:
           </h4>
           <ul className="text-xs text-stone-600 dark:text-stone-400 space-y-1">

@@ -1,7 +1,7 @@
 // Enhanced Service Worker for Islamic Dataset Interface PWA
 // Advanced caching strategies, background sync, and performance optimization
 
-const VERSION = "v2.0.0";
+const VERSION = "v2.2.0";
 const CACHE_NAME = `islamic-dataset-${VERSION}`;
 const STATIC_CACHE = `islamic-dataset-static-${VERSION}`;
 const DYNAMIC_CACHE = `islamic-dataset-dynamic-${VERSION}`;
@@ -403,6 +403,32 @@ function findCacheRule(request) {
     }
   );
 }
+
+// Handle SKIP_WAITING message from main thread
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
+// Normal activation without aggressive claiming
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      // Only delete caches that don't match current version
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames
+          .filter((name) => !name.includes(VERSION))
+          .map((name) => {
+            console.log("Deleting old cache:", name);
+            return caches.delete(name);
+          })
+      );
+      console.log("SW activated");
+    })()
+  );
+});
 
 console.log(
   `Enhanced Service Worker ${VERSION} loaded with advanced caching strategies`

@@ -119,8 +119,8 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = memo(
           <ChartComponent data={sanitizedData as IslamicData[]} />
 
           {/* Chart Notes */}
-          <div className="mt-8 p-6 bg-stone-50 dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600">
-            <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-3">
+          <div className="mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800/30">
+            <h3 className="text-lg font-semibold text-green-700 dark:text-green-400 mb-3">
               About This Chart
             </h3>
             <p className="text-stone-600 dark:text-stone-300 leading-relaxed">

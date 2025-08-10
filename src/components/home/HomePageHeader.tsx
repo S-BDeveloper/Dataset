@@ -41,6 +41,29 @@ export const HomePageHeader: React.FC = () => {
             {t("header.title")}
           </h1>
         </div>
+
+        {/* Subtitle */}
+        <div className="mt-4">
+          <p
+            className="text-lg md:text-xl font-medium transform hover:scale-101 transition-transform duration-300 header-subtitle"
+            style={{
+              color: "#F4E4BC", // Warm cream for light mode
+              textShadow: `
+                0 0 3px rgba(244, 228, 188, 0.4),
+                0 0 6px rgba(244, 228, 188, 0.2),
+                0 1px 2px rgba(0, 0, 0, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                1px 1px 0px rgba(255, 215, 0, 0.1)
+              `,
+              filter: "drop-shadow(0 0 4px rgba(244, 228, 188, 0.1))",
+              transform: "perspective(1000px) rotateX(1deg)",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            Access comprehensive Islamic Knowledge through Quranic verses, and
+            Hadith collections.
+          </p>
+        </div>
       </div>
 
       {/* Dark mode styles */}
@@ -58,7 +81,17 @@ export const HomePageHeader: React.FC = () => {
                 1px 1px 0px rgba(255, 215, 0, 0.15) !important;
               filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.1)) !important;
             }
-
+            
+            .dark .header-subtitle {
+              color: #D4AF37 !important;
+              text-shadow: 
+                0 0 3px rgba(212, 175, 55, 0.4),
+                0 0 6px rgba(212, 175, 55, 0.2),
+                0 1px 2px rgba(0, 0, 0, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                1px 1px 0px rgba(255, 215, 0, 0.15) !important;
+              filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.1)) !important;
+            }
           }
         `,
         }}

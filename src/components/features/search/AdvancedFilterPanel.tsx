@@ -499,6 +499,62 @@ export const AdvancedFilterPanel: React.FC<AdvancedFilterPanelProps> = ({
                         ))}
                       </div>
                     </div>
+
+                    {/* Sajdah Verses Filter */}
+                    <div>
+                      <label className="text-sm font-medium text-stone-700 dark:text-stone-300 mb-2 block">
+                        Sajdah Verses Only
+                      </label>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={filters.quranSajdahOnly}
+                          onChange={(e) =>
+                            handleFilterChange(
+                              "quranSajdahOnly",
+                              e.target.checked
+                            )
+                          }
+                          className="rounded border-stone-300 text-green-600 focus:ring-green-500"
+                        />
+                        <span className="text-sm text-stone-600 dark:text-stone-400">
+                          Show only verses that require prostration (Sajdah)
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Quick Sajdah Preset Button */}
+                    <div>
+                      <button
+                        onClick={() => {
+                          const sajdahPreset: FilterState = {
+                            ...filters,
+                            dataSources: ["quran"],
+                            quranSajdahOnly: true,
+                            quranSurahs: [],
+                            quranVerseRange: { min: 1, max: 6236 },
+                            quranPlaceOfRevelation: [],
+                          };
+                          onFiltersChange(sajdahPreset);
+                        }}
+                        className="w-full sm:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        Show All Sajdah Verses
+                      </button>
+                    </div>
                   </div>
                 )}
 

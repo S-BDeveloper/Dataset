@@ -16,14 +16,14 @@ const translations: Record<Language, Record<string, string>> = {
     "header.title": "Quran & Hadiths",
 
     // Tabs
-    "tabs.data": "Selected Islamic Data",
+    "tabs.data": "Featured Islamic Data",
     "tabs.search": "Cross-Reference Search",
     "tabs.charts": "Charts & Analytics",
     "tabs.quran": "Quran",
     "tabs.hadith": "Hadith",
 
     // Stats
-    "stats.islamicData": "Selected Islamic Data",
+    "stats.islamicData": "Featured Islamic Data",
     "stats.quranVerses": "Quran Verses",
     "stats.hadiths": "Hadiths",
     "stats.favorites": "Favorites",
@@ -189,7 +189,7 @@ const translations: Record<Language, Record<string, string>> = {
     "ui.ariaLabel.sectionTabs": "Section Tabs",
 
     // Data Sources
-    "dataSource.islamicData": "Islamic Data",
+    "dataSource.islamicData": "Featured Islamic Data",
     "dataSource.quran": "Quran",
     "dataSource.hadith": "Hadith",
     "dataSource.sahihBukhari": "Sahih Bukhari",
@@ -304,7 +304,7 @@ const translations: Record<Language, Record<string, string>> = {
     "filter.fulfillmentStatus": "Fulfillment Status",
     "filter.prophecyCategory": "Prophecy Category",
     "filter.year": "Year",
-    "filter.islamicData": "Islamic Data",
+    "filter.islamicData": "Featured Islamic Data",
     "filter.quran": "Quran Verses",
     "filter.hadith": "Hadiths",
     "filter.presetPrompt": "Enter preset name:",
@@ -349,16 +349,16 @@ const translations: Record<Language, Record<string, string>> = {
     // --- AdvancedSearchDashboard ---
     "search.advancedSearch": "Advanced Search",
     "search.description":
-      "Search across all available Islamic knowledge including Islamic data, Quran verses, and Sahih hadiths.",
+      "Search across all available Islamic knowledge including featured Islamic data, Quranic verses, and hadith collections.",
 
     "search.searching": "Searching...",
     "search.confirmSearch": "Confirm Search",
     "search.newSearch": "New Search",
     "search.readyToSearch": "Ready to Search",
     "search.readyDescription":
-      'Configure your search filters above and click "Confirm Search" to begin exploring Islamic knowledge across Quran, Hadith, and Islamic Data.',
+      'Configure your search filters above and click "Confirm Search" to begin exploring Islamic knowledge across Quran, Hadith, and featured Islamic Data.',
     "search.readyInstructions":
-      '• Select data sources (Quran, Hadith, Islamic Data)\n• Choose specific filters for each source\n• Enter search terms (optional)\n• Click "Confirm Search" when ready',
+      '• Select data sources (Quran, Hadiths, featured Islamic Data)\n• Choose specific filters for each source\n• Enter search terms (optional)\n• Click "Confirm Search" when ready',
     "search.features": "Cross-Reference Search Features",
     "search.prophecies": "Prophecies:",
     "search.propheciesDesc": "Status of fulfillment",
@@ -369,7 +369,7 @@ const translations: Record<Language, Record<string, string>> = {
     "search.crossReference": "Cross-Reference:",
     "search.crossReferenceDesc": "Find connections between sources",
     "search.consultScholars":
-      "(always consult qualified Islamic scholars for theological guidance)",
+      "(always consult qualified Islamic scholars for complex topics)",
     "search.advancedFiltering": "Advanced Filtering",
     "search.quranFilters": "Quran Filters:",
     "search.quranFiltersDesc": "By Surah, verse number, place of revelation",

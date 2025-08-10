@@ -1,7 +1,8 @@
 {
   "short_name": "Islamic Dataset",
-  "name": "Islamic Dataset Interface",
-  "description": "A comprehensive platform for Islamic knowledge, Quran, Hadith, and scientific discoveries",
+  "name": "🕌 Islamic Dataset - Quran & Hadith Collection",
+  "version": "2.2.0",
+  "description": "📚 Access 40,000+ authentic Islamic texts offline. Complete Quran, Hadith collections, and scientific discoveries in a Progressive Web App. Install for instant Islamic guidance.",
   "icons": [
     {
       "src": "/icons/icon-72x72.png",
@@ -58,7 +59,56 @@
   "orientation": "portrait",
   "theme_color": "#059669",
   "background_color": "#fafaf9",
-  "categories": ["education", "reference", "religion"],
+  "categories": ["education", "reference", "religion", "books", "lifestyle"],
   "lang": "en",
-  "dir": "ltr"
+  "dir": "ltr",
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Home screen showing Islamic knowledge dashboard"
+    },
+    {
+      "src": "/screenshots/mobile-quran.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Quran reader with search functionality"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quran Reader",
+      "short_name": "Quran",
+      "description": "Read and search the complete Quran",
+      "url": "/?tab=quran",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Hadith Collection",
+      "short_name": "Hadith",
+      "description": "Browse authentic Hadith collections",
+      "url": "/?tab=hadith",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Search",
+      "short_name": "Search",
+      "description": "Advanced search across all Islamic texts",
+      "url": "/?tab=search",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+islamic",
+      "url": "/search?q=%s"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }

@@ -1,11 +1,10 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useContext";
 import { useFavorites } from "../../hooks/useFavorites";
 import { LanguageSelector } from "../common/LanguageSelector";
 import { useLanguage } from "../../hooks/useContext";
-import { Logo } from "../common/Logo";
-// Using inline Bootstrap SVG instead of lucide-react for consistency
+import DarkModeToggle from "../common/DarkModeToggle";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -16,6 +15,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { user, logout } = useAuth();
   const { favorites } = useFavorites();
   const location = useLocation();
+  const navigate = useNavigate();
   const { t } = useLanguage();
 
   const handleLogout = async () => {
@@ -29,6 +29,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const handleLoginClick = () => {
     // Navigate to login and close sidebar
+    navigate("/login");
     onClose();
   };
 
@@ -69,6 +70,12 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       showBadge: true,
       badgeCount: favorites.length,
     },
+    {
+      to: "/install",
+      label: "Get App",
+      showBadge: false,
+      badgeCount: 0,
+    },
   ];
 
   return (
@@ -84,16 +91,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar - only render on md+ screens */}
       <div
-        className={`hidden md:block fixed top-0 left-0 h-full w-80 bg-white dark:bg-stone-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`hidden md:block fixed top-0 right-0 h-full w-80 bg-white dark:bg-stone-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-stone-200 dark:border-stone-700">
-          <Logo />
+        <div className="flex items-center justify-end p-4 border-b border-stone-200 dark:border-stone-700">
           <button
             onClick={onClose}
             className="p-2 text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded"
@@ -185,6 +191,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="p-4 border-t border-stone-200 dark:border-stone-700 mt-auto">
           <div className="flex items-center justify-between">
             <LanguageSelector />
+            <DarkModeToggle />
           </div>
         </div>
       </div>

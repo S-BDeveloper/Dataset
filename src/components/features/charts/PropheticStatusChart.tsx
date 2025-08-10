@@ -79,8 +79,8 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
 
   return (
     <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-xl shadow-lg p-4 flex flex-col relative">
-      <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4">
-        Islamic Data Status Distribution
+      <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-4">
+        Featured Islamic Data Status Distribution
       </h3>
 
       <div className="flex-grow">
