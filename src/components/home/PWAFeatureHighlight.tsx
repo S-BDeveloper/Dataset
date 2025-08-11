@@ -53,7 +53,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               className="w-6 h-6 text-green-600 dark:text-green-400"
               style={{
                 filter:
-                  "brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+                  "brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)",
               }}
             />
           </div>
@@ -90,7 +90,7 @@ export const PWAFeatureHighlight: React.FC = () => {
                 className="w-5 h-5 flex-shrink-0 text-green-600 dark:text-green-400 mt-0.5"
                 style={{
                   filter:
-                    "brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+                    "brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)",
                 }}
               />
               <div>
@@ -151,7 +151,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0"
               style={{
                 filter:
-                  "brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+                  "brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)",
               }}
             />
             <span className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -165,7 +165,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0"
               style={{
                 filter:
-                  "brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+                  "brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)",
               }}
             />
             <span className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -179,7 +179,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0"
               style={{
                 filter:
-                  "brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+                  "brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)",
               }}
             />
             <span className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -193,7 +193,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0"
               style={{
                 filter:
-                  "brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+                  "brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)",
               }}
             />
             <span className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -260,7 +260,7 @@ export const PWAFeatureHighlight: React.FC = () => {
                     className="w-4 h-4 flex-shrink-0"
                     style={{
                       filter:
-                        "brightness(0) saturate(100%) invert(10%) sepia(9%) saturate(1244%) hue-rotate(314deg) brightness(97%) contrast(86%)",
+                        "brightness(0) saturate(100%) invert(20%) sepia(20%) saturate(2000%) hue-rotate(314deg) brightness(90%) contrast(95%)",
                     }}
                   />
                   Mobile (iOS/Android)
@@ -279,7 +279,10 @@ export const PWAFeatureHighlight: React.FC = () => {
                     src="/svg-icons/browser-chrome.svg"
                     alt="Chrome browser"
                     className="w-4 h-4 flex-shrink-0"
-                    style={{ filter: "none" }}
+                    style={{
+                      filter:
+                        "brightness(0) saturate(100%) invert(20%) sepia(20%) saturate(2000%) hue-rotate(314deg) brightness(90%) contrast(95%)",
+                    }}
                   />
                   Desktop (Chrome/Edge)
                 </h4>
@@ -299,7 +302,7 @@ export const PWAFeatureHighlight: React.FC = () => {
                     className="w-4 h-4 flex-shrink-0"
                     style={{
                       filter:
-                        "brightness(0) saturate(100%) invert(10%) sepia(9%) saturate(1244%) hue-rotate(314deg) brightness(97%) contrast(86%)",
+                        "brightness(0) saturate(100%) invert(20%) sepia(20%) saturate(2000%) hue-rotate(314deg) brightness(90%) contrast(95%)",
                     }}
                   />
                   Alternative Method

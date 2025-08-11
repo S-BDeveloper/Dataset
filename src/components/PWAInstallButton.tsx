@@ -23,7 +23,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
       <button
         onClick={installPWA}
         className={`p-2 text-stone-600 dark:text-stone-400 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200 ${className}`}
-        title="Install Quran & Hadiths App"
+        title="Install Reflect & Implement App"
       >
         <svg
           className="w-5 h-5"
@@ -48,7 +48,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
         onClick={installPWA}
         disabled={isLoading}
         className={`p-2 text-stone-600 dark:text-stone-400 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200 ${className}`}
-        title="Install Quran & Hadiths App"
+        title="Install Reflect & Implement App"
       >
         {isLoading ? (
           <svg
