@@ -721,14 +721,14 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 backgroundBlendMode: "overlay",
               }}
             >
-              {/* Semi-transparent overlay to ensure text readability */}
-              <div className="absolute inset-0 bg-neutral-500/70 dark:bg-neutral-800/20"></div>
+              {/* Semi-transparent overlay to ensure text readability - Same opacity for both modes */}
+              <div className="absolute inset-0 bg-neutral-500/50 dark:bg-neutral-800/50"></div>
               <div className="max-w-md mx-auto text-left relative z-10">
                 <h3
                   className="text-lg font-semibold mb-2 search-ready-title flex items-center gap-2"
                   style={{
                     color: "#EDEADE",
-                    textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)",
+                    textShadow: "0 3px 6px rgba(0, 0, 0, 0.9)",
                   }}
                 >
                   {t("search.readyToSearch")}
@@ -740,7 +740,7 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                     className="bi bi-question-lg flex-shrink-0"
                     viewBox="0 0 16 16"
                     style={{
-                      filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))",
+                      filter: "drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9))",
                     }}
                   >
                     <path
@@ -752,8 +752,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 <p
                   className="mb-4 search-ready-description"
                   style={{
-                    color: "#EDEADE",
-                    textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)",
+                    color: "#fffdd0",
+                    textShadow: "0 3px 6px rgba(0, 0, 0, 0.9)",
                   }}
                 >
                   {t("search.readyDescription")}
@@ -761,8 +761,8 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                 <div
                   className="text-sm search-ready-list"
                   style={{
-                    color: "#EDEADE",
-                    textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)",
+                    color: "#fffdd0",
+                    textShadow: "0 3px 6px rgba(0, 0, 0, 0.9)",
                   }}
                 >
                   {t("search.readyInstructions")
@@ -779,20 +779,20 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
                   __html: `
                    @media (prefers-color-scheme: dark) {
                      .dark .search-ready-title {
-                       color: #D4AF37 !important;
-                       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+                       color: #f5f5dc !important;
+                       text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9) !important;
                      }
                                            .dark .search-ready-title svg {
-                        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) !important;
-                        color: #D4AF37 !important;
+                        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9)) !important;
+                        color: #f5f5dc !important;
                       }
                      .dark .search-ready-description {
-                       color: #D4AF37 !important;
-                       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+                       color: #f5f5dc !important;
+                       text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9) !important;
                      }
                      .dark .search-ready-list {
-                       color: #D4AF37 !important;
-                       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+                       color: #f5f5dc !important;
+                       text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9) !important;
                      }
                    }
                  `,

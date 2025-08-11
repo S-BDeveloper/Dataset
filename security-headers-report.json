@@ -1,0 +1,147 @@
+{
+  "timestamp": "2025-08-11T04:39:13.787Z",
+  "summary": {
+    "totalTests": 1,
+    "averageScore": 0,
+    "bestGrade": {
+      "url": "http://localhost:5173",
+      "headers": {
+        "Content-Security-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Frame-Options": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Content-Type-Options": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Referrer-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Permissions-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Strict-Transport-Security": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-XSS-Protection": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Download-Options": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Permitted-Cross-Domain-Policies": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Cross-Origin-Embedder-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Cross-Origin-Opener-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Cross-Origin-Resource-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        }
+      },
+      "score": 0,
+      "total": 12,
+      "percentage": 0,
+      "grade": "F"
+    }
+  },
+  "results": [
+    {
+      "url": "http://localhost:5173",
+      "headers": {
+        "Content-Security-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Frame-Options": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Content-Type-Options": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Referrer-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Permissions-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Strict-Transport-Security": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-XSS-Protection": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Download-Options": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "X-Permitted-Cross-Domain-Policies": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Cross-Origin-Embedder-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Cross-Origin-Opener-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        },
+        "Cross-Origin-Resource-Policy": {
+          "present": false,
+          "value": "MISSING",
+          "score": 0
+        }
+      },
+      "score": 0,
+      "total": 12,
+      "percentage": 0,
+      "grade": "F"
+    }
+  ]
+}

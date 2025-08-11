@@ -91,7 +91,7 @@ export const HomePageTabs: React.FC<HomePageTabsProps> = ({
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 whitespace-nowrap ${
                 activeTab === tab.id
                   ? "bg-green-600 text-white shadow-lg shadow-green-600/25 border-2 border-green-500"
-                  : "text-stone-600 dark:text-stone-900 hover:text-stone-800 dark:hover:text-stone-500 bg-stone-50 dark:bg-neutral-50/90 border-2 border-transparent hover:border-stone-300 dark:hover:border-stone-600"
+                  : "text-stone-700 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-100 bg-stone-50 dark:bg-stone-800 border-2 border-transparent hover:border-stone-300 dark:hover:border-stone-600"
               }`}
             >
               <span className="inline-flex items-center gap-1">
@@ -112,7 +112,7 @@ export const HomePageTabs: React.FC<HomePageTabsProps> = ({
             className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 ${
               activeTab === tab.id
                 ? "bg-green-600 text-white shadow-lg shadow-green-600/25 border-2 border-green-500"
-                : "text-stone-600 dark:text-stone-900 hover:text-stone-800 dark:hover:text-stone-500 bg-stone-50 dark:bg-neutral-50/90 border-2 border-transparent hover:border-stone-300 dark:hover:border-stone-600"
+                : "text-stone-700 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-100 bg-stone-50 dark:bg-stone-800 border-2 border-transparent hover:border-stone-300 dark:hover:border-stone-600"
             }`}
           >
             <span className="inline-flex items-center gap-2">
