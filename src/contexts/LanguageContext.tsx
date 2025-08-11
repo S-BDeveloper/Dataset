@@ -13,7 +13,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Logout",
 
     // Homepage
-    "header.title": "Quran & Hadiths",
+    "header.title": "Quran & Sahih Hadiths",
 
     // Tabs
     "tabs.data": "Featured Islamic Data",
