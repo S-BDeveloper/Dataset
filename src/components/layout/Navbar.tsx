@@ -104,7 +104,7 @@ export default function Navbar({ onMenuToggle }: NavbarProps) {
   );
 
   return (
-    <nav className="bg-cyan-50/95 dark:bg-green-900/30 shadow-lg border-b border-green-300/70 dark:border-green-700 sticky top-0 z-40 w-full overflow-hidden">
+    <nav className="bg-cyan-50/95 dark:bg-green-900/20 shadow-lg border-b border-green-300/70 dark:border-emerald-900 sticky top-0 z-40 w-full overflow-hidden">
       <div className="container mx-auto max-w-7xl px-2 sm:px-4 w-full overflow-hidden">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}

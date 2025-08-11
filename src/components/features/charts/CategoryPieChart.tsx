@@ -60,6 +60,8 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = memo(
           return "#3b82f6";
         case DataType.HEALTH:
           return "#10b981";
+        case "traditional-treatments":
+          return "#f59e0b"; // amber/orange for traditional treatments
         default:
           return "#6b7280";
       }
@@ -72,7 +74,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = memo(
     return (
       <div className="w-full h-96 md:h-[28rem] bg-white dark:bg-stone-800 rounded-xl shadow-lg p-4 flex flex-col relative">
         <h3 className="text-lg font-bold text-green-700 dark:text-green-400 mb-4">
-         Featured Islamic Data Category Distribution
+          Featured Islamic Data Category Distribution
         </h3>
 
         <div className="flex-grow">
@@ -166,7 +168,8 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = memo(
                 "Scientific facts and discoveries mentioned in Islamic texts"}
               {tooltip.datum.id === "Health" &&
                 "Health benefits, nutrition, and medical practices from Islamic tradition"}
-              {tooltip.datum.id === "Traditional-treatments" &&
+              {(tooltip.datum.id === "Traditional-treatments" ||
+                tooltip.datum.id === "Traditional-treatments") &&
                 "Traditional Islamic healing methods and remedies"}
               {tooltip.datum.id === "Unknown" &&
                 "Entries with unclassified or missing category"}

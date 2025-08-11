@@ -62,6 +62,8 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
         return "#3b82f6"; // blue
       case "supported by evidence":
         return "#3b82f6"; // blue (same as documented)
+      case "historical record":
+        return "#059669"; // emerald-600 for historical records
       case "ongoing research":
         return "#f97316"; // orange
       case "in progress":
@@ -170,6 +172,8 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
               "Prophecies and events that are yet to occur"}
             {tooltip.datum.id === "Documented" &&
               "Facts and findings that have been documented through research"}
+            {tooltip.datum.id === "Historical Record" &&
+              "Historical events and records from Islamic tradition"}
             {tooltip.datum.id === "supported by evidence" &&
               "Information supported by verified evidence and research"}
             {tooltip.datum.id === "Ongoing Research" &&
@@ -210,6 +214,7 @@ export const PropheticStatusChart: React.FC<PropheticStatusChartProps> = ({
               "prophecy",
               "Prophecy",
               "Unknown",
+              "Historical Record",
             ].includes(tooltip.datum.id as string) &&
               `Debug: Actual ID is "${tooltip.datum.id}"`}
           </div>

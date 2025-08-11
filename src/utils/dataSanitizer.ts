@@ -204,7 +204,10 @@ export const generateScholarlySummary = (data: IslamicData): string => {
     return `Quote: The Quran states "Then watch for the Day when the sky will bring a visible smoke" (فَارْتَقِبْ يَوْمَ تَأْتِي السَّمَاءُ بِدُخَانٍ مُّبِينٍ) (44:10).`;
   }
 
+  // Note: This fallback should only be used when no actual data exists
+  // If you have real data in islamic_data.json, it should take precedence
   if (title.includes("fire yemen") || title.includes("fire aden")) {
+    // Check if this is actually missing data or if we have real data
     return `Quote: The Prophet (ﷺ) said: "A fire will come out from the land of Yemen and will gather the people." - Sahih Muslim 2902.`;
   }
 

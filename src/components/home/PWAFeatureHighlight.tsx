@@ -64,7 +64,7 @@ export const PWAFeatureHighlight: React.FC = () => {
               </span>
             </div>
             <h2 className="text-xl md:text-2xl font-bold text-stone-800 dark:text-stone-200">
-              Install Reflect & Implement App
+              Install the Reflect & Implement App
             </h2>
           </div>
         </div>
@@ -276,13 +276,10 @@ export const PWAFeatureHighlight: React.FC = () => {
               <div>
                 <h4 className="font-semibold text-stone-900 dark:text-stone-100 mb-3 flex items-center gap-2">
                   <img
-                    src="/svg-icons/globe2.svg"
-                    alt="Desktop computer"
+                    src="/svg-icons/browser-chrome.svg"
+                    alt="Chrome browser"
                     className="w-4 h-4 flex-shrink-0"
-                    style={{
-                      filter:
-                        "brightness(0) saturate(100%) invert(10%) sepia(9%) saturate(1244%) hue-rotate(314deg) brightness(97%) contrast(86%)",
-                    }}
+                    style={{ filter: "none" }}
                   />
                   Desktop (Chrome/Edge)
                 </h4>

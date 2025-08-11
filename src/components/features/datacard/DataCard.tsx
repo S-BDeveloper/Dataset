@@ -79,7 +79,7 @@ export const DataCard: React.FC<DataCardProps> = memo(
               Notes
             </h4>
             <p className="text-sm text-blue-700 dark:text-blue-300 leading-relaxed">
-              {generateScholarlySummary(card)}
+              {card.notes || generateScholarlySummary(card)}
             </p>
           </div>
 

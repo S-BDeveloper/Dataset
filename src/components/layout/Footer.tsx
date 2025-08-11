@@ -15,8 +15,7 @@ const Footer: React.FC = () => {
               <Logo />
             </div>
             <p className="text-stone-400 text-sm leading-relaxed">
-              Selected Islamic Data from The Quran and Verified Scholarly
-              Sources.
+              Featured Islamic Data from Quranic Verses and Authentic Hadiths.
             </p>
             <div className="flex space-x-4">
               <a

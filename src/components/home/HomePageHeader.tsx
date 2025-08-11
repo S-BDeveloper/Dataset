@@ -17,25 +17,16 @@ export const HomePageHeader: React.FC = () => {
       }}
     >
       {/* Semi-transparent overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+      <div className="absolute inset-0 bg-black/60 dark:bg-black/60"></div>
 
       {/* Content */}
       <div className="relative z-10 p-6 sm:p-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
           <h1
-            className="text-3xl md:text-4xl font-bold transform hover:scale-101 transition-transform duration-300 header-title"
+            className="text-3xl md:text-4xl font-bold header-title"
             style={{
-              color: "#F4E4BC", // Warm cream for light mode
-              textShadow: `
-                0 0 3px rgba(244, 228, 188, 0.4),
-                0 0 6px rgba(244, 228, 188, 0.2),
-                0 1px 2px rgba(0, 0, 0, 0.4),
-                0 2px 4px rgba(0, 0, 0, 0.2),
-                1px 1px 0px rgba(255, 215, 0, 0.1)
-              `,
-              filter: "drop-shadow(0 0 4px rgba(244, 228, 188, 0.1))",
-              transform: "perspective(1000px) rotateX(1deg)",
-              transformStyle: "preserve-3d",
+              color: "#F5F5DC", // Lighter cream for better contrast in light mode
+              textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)",
             }}
           >
             {t("header.title")}
@@ -45,19 +36,10 @@ export const HomePageHeader: React.FC = () => {
         {/* Subtitle */}
         <div className="mt-4">
           <p
-            className="text-lg md:text-xl font-medium transform hover:scale-101 transition-transform duration-300 header-subtitle"
+            className="text-lg md:text-xl font-medium header-subtitle"
             style={{
-              color: "#F4E4BC", // Warm cream for light mode
-              textShadow: `
-                0 0 3px rgba(244, 228, 188, 0.4),
-                0 0 6px rgba(244, 228, 188, 0.2),
-                0 1px 2px rgba(0, 0, 0, 0.4),
-                0 2px 4px rgba(0, 0, 0, 0.2),
-                1px 1px 0px rgba(255, 215, 0, 0.1)
-              `,
-              filter: "drop-shadow(0 0 4px rgba(244, 228, 188, 0.1))",
-              transform: "perspective(1000px) rotateX(1deg)",
-              transformStyle: "preserve-3d",
+              color: "#F5F5DC", // Lighter cream for better contrast in light mode
+              textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)",
             }}
           >
             Access comprehensive Islamic Knowledge through Quranic verses, and
@@ -70,30 +52,18 @@ export const HomePageHeader: React.FC = () => {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-          @media (prefers-color-scheme: dark) {
-            .dark .header-title {
-              color: #D4AF37 !important;
-              text-shadow: 
-                0 0 3px rgba(212, 175, 55, 0.4),
-                0 0 6px rgba(212, 175, 55, 0.2),
-                0 1px 2px rgba(0, 0, 0, 0.4),
-                0 2px 4px rgba(0, 0, 0, 0.2),
-                1px 1px 0px rgba(255, 215, 0, 0.15) !important;
-              filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.1)) !important;
-            }
-            
-            .dark .header-subtitle {
-              color: #D4AF37 !important;
-              text-shadow: 
-                0 0 3px rgba(212, 175, 55, 0.4),
-                0 0 6px rgba(212, 175, 55, 0.2),
-                0 1px 2px rgba(0, 0, 0, 0.4),
-                0 2px 4px rgba(0, 0, 0, 0.2),
-                1px 1px 0px rgba(255, 215, 0, 0.15) !important;
-              filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.1)) !important;
-            }
-          }
-        `,
+           @media (prefers-color-scheme: dark) {
+             .dark .header-title {
+               color: #D4AF37 !important;
+               text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+             }
+             
+             .dark .header-subtitle {
+               color: #D4AF37 !important;
+               text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+             }
+           }
+         `,
         }}
       />
     </header>

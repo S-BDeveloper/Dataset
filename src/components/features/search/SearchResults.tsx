@@ -247,7 +247,10 @@ export const SearchResults: React.FC<SearchResultsProps> = memo(
                       {/* Notes */}
                       <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                         <p className="text-sm text-blue-800 dark:text-blue-200 max-h-20 overflow-y-auto custom-scrollbar">
-                          {generateScholarlySummary(result.data as IslamicData)}
+                          {(result.data as IslamicData).notes ||
+                            generateScholarlySummary(
+                              result.data as IslamicData
+                            )}
                         </p>
                       </div>
                     </div>

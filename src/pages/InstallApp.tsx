@@ -5,20 +5,6 @@ export default function InstallApp() {
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 transition-colors duration-300">
       <div className="container mx-auto max-w-4xl px-4 py-8">
-        {/* Page Header */}
-        <header className="mb-8">
-          <div className="mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
-              Install Reflect & Implement App
-            </h1>
-            <p className="text-stone-700 dark:text-stone-300 leading-relaxed">
-              Get the complete knowledge experience on your device. Access
-              authentic content offline with our Progressive Web App featuring
-              advanced search and visualization capabilities.
-            </p>
-          </div>
-        </header>
-
         {/* Main Content */}
         <div className="space-y-8">
           {/* PWA Features */}
