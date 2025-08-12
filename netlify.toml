@@ -7,21 +7,23 @@
   NPM_CONFIG_PRODUCTION = "false"
   VITE_DISABLE_WORKERS = "true"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), autoplay=(), encrypted-media=(), fullscreen=(self), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), web-share=(), xr-spatial-tracking=()"
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    X-XSS-Protection = "1; mode=block"
-    X-Download-Options = "noopen"
-    X-Permitted-Cross-Domain-Policies = "none"
-    Cross-Origin-Embedder-Policy = "require-corp"
-    Cross-Origin-Opener-Policy = "same-origin"
-    Cross-Origin-Resource-Policy = "same-origin"
-    X-DNS-Prefetch-Control = "off"
+# Security headers are now handled by public/_headers file for better A+ rating
+# This section is commented out to avoid conflicts
+# [[headers]]
+#   for = "/*"
+#   [headers.values]
+#     X-Frame-Options = "SAMEORIGIN"
+#     X-Content-Type-Options = "nosniff"
+#     Referrer-Policy = "strict-origin-when-cross-origin"
+#     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), autoplay=(), encrypted-media=(), fullscreen=(self), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), web-share=(), xr-spatial-tracking=()"
+#     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+#     X-XSS-Protection = "1; mode=block"
+#     X-Download-Options = "noopen"
+#     X-Permitted-Cross-Domain-Policies = "none"
+#     Cross-Origin-Embedder-Policy = "require-corp"
+#     Cross-Origin-Opener-Policy = "same-origin"
+#     Cross-Origin-Resource-Policy = "same-origin"
+#     X-DNS-Prefetch-Control = "off"
 
 [[headers]]
   for = "*.js"
