@@ -1,5 +1,5 @@
-const https = require("https");
-const http = require("http");
+import https from "https";
+import http from "http";
 
 // Test your deployed URL (replace with your actual Netlify URL)
 const testUrl = process.argv[2] || "https://your-app-name.netlify.app";
