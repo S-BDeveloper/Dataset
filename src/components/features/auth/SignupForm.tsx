@@ -113,10 +113,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({
     <div className={`${className}`}>
       <div className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-800 p-6">
         <div className="text-left mb-6">
-          <h2 className="text-xl font-bold text-green-700 dark:text-green-400">
+          <h2 className="text-xl text-center font-bold text-green-700 dark:text-green-400">
             {t("auth.createAccount")}
           </h2>
-          <p className="text-stone-600 dark:text-stone-400 mt-2">
+          <p className="text-stone-600 dark:text-stone-400 mt-2 text-center">
             {t("auth.joinUs")}
           </p>
         </div>
@@ -418,7 +418,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({
 
         {onSwitchToLogin && (
           <div className="mt-6 text-left">
-            <p className="text-sm text-stone-600 dark:text-stone-400">
+            <p className="text-sm text-stone-600 dark:text-stone-400 text-center">
               {t("auth.alreadyHaveAccount")}{" "}
               <button
                 type="button"

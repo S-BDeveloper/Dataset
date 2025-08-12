@@ -74,7 +74,8 @@ export function HadithDashboard({
           Sahih Bukhari and Muslim Hadith Collection
         </h2>
         <p className="text-lg text-stone-600 dark:text-stone-400">
-        Explore the sayings and actions of Prophet Muhammad (ﷺ) from hadith collections
+          Explore the sayings and actions of Prophet Muhammad (ﷺ) from hadith
+          collections
         </p>
       </div>
 

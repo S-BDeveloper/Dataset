@@ -1,107 +1,206 @@
+#!/usr/bin/env node
+
 /**
- * Copyright (c) 2024 Reflect & Implement
+ * Security Headers Testing Script
+ * Tests all required security headers for A+ security rating
  *
- * Security Headers Test Script
- * Tests security headers implementation for A+ rating
+ * Usage: npm run test:headers
  */
 
-import https from "https";
 import http from "http";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import https from "https";
+import { URL } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const TEST_URL = process.env.TEST_URL || "http://localhost:5173";
 
-console.log("🛡️  Reflect & Implement - Security Headers Test");
-console.log("===============================================\n");
-
-// Security headers to test
-const REQUIRED_HEADERS = {
-  "Content-Security-Policy": "CSP",
-  "X-Frame-Options": "X-Frame-Options",
-  "X-Content-Type-Options": "X-Content-Type-Options",
-  "Referrer-Policy": "Referrer-Policy",
-  "Permissions-Policy": "Permissions-Policy",
-  "Strict-Transport-Security": "HSTS",
-  "X-XSS-Protection": "X-XSS-Protection",
-  "X-Download-Options": "X-Download-Options",
-  "X-Permitted-Cross-Domain-Policies": "X-Permitted-Cross-Domain-Policies",
-  "Cross-Origin-Embedder-Policy": "COEP",
-  "Cross-Origin-Opener-Policy": "COOP",
-  "Cross-Origin-Resource-Policy": "CORP",
+// Define expected security headers
+const EXPECTED_HEADERS = {
+  "Content-Security-Policy": {
+    required: true,
+    description:
+      "Protects against XSS attacks by whitelisting approved content sources",
+    expectedValue: /default-src 'self'/,
+    score: 25,
+  },
+  "X-Frame-Options": {
+    required: true,
+    description: "Prevents clickjacking attacks",
+    expectedValue: /SAMEORIGIN/,
+    score: 20,
+  },
+  "X-Content-Type-Options": {
+    required: true,
+    description: "Prevents MIME type sniffing",
+    expectedValue: /nosniff/,
+    score: 15,
+  },
+  "Referrer-Policy": {
+    required: true,
+    description: "Controls referrer information sent with requests",
+    expectedValue: /strict-origin-when-cross-origin/,
+    score: 15,
+  },
+  "Permissions-Policy": {
+    required: true,
+    description: "Controls browser features and APIs",
+    expectedValue: /camera=\(\)/,
+    score: 15,
+  },
+  "Strict-Transport-Security": {
+    required: false,
+    description: "Enforces HTTPS connections",
+    expectedValue: /max-age=/,
+    score: 10,
+  },
+  "X-XSS-Protection": {
+    required: false,
+    description: "Additional XSS protection for older browsers",
+    expectedValue: /1; mode=block/,
+    score: 5,
+  },
+  "X-Download-Options": {
+    required: false,
+    description: "Prevents IE from executing downloads",
+    expectedValue: /noopen/,
+    score: 5,
+  },
+  "X-Permitted-Cross-Domain-Policies": {
+    required: false,
+    description: "Controls cross-domain policy files",
+    expectedValue: /none/,
+    score: 5,
+  },
+  "Cross-Origin-Embedder-Policy": {
+    required: false,
+    description: "Controls cross-origin embedding",
+    expectedValue: /require-corp/,
+    score: 5,
+  },
+  "Cross-Origin-Opener-Policy": {
+    required: false,
+    description: "Controls cross-origin window opening",
+    expectedValue: /same-origin/,
+    score: 5,
+  },
+  "Cross-Origin-Resource-Policy": {
+    required: false,
+    description: "Controls cross-origin resource access",
+    expectedValue: /same-origin/,
+    score: 5,
+  },
+  "X-DNS-Prefetch-Control": {
+    required: false,
+    description: "Controls DNS prefetching",
+    expectedValue: /off/,
+    score: 5,
+  },
 };
-
-// Test URLs (replace with your actual URLs)
-const TEST_URLS = [
-  "http://localhost:5173", // Development
-  "https://reflectandimplement.com", // Production (when available)
-];
 
 function testHeaders(url) {
   return new Promise((resolve, reject) => {
-    const client = url.startsWith("https") ? https : http;
+    const urlObj = new URL(url);
+    const client = urlObj.protocol === "https:" ? https : http;
 
-    client
-      .get(url, { timeout: 10000 }, (res) => {
-        const headers = res.headers;
-        const results = {
-          url,
-          headers: {},
-          score: 0,
-          total: Object.keys(REQUIRED_HEADERS).length,
+    const req = client.get(url, (res) => {
+      const results = {
+        url: url,
+        headers: {},
+        score: 0,
+        total: 0,
+        percentage: 0,
+        grade: "F",
+        timestamp: new Date().toISOString(),
+      };
+
+      console.log(`\n🔍 Testing security headers for: ${url}`);
+      console.log(`📊 Response Status: ${res.statusCode}`);
+      console.log("\n📋 Security Headers Analysis:\n");
+
+      let totalScore = 0;
+      let maxScore = 0;
+
+      for (const [headerName, config] of Object.entries(EXPECTED_HEADERS)) {
+        const headerValue = res.headers[headerName.toLowerCase()];
+        const isPresent = !!headerValue;
+        const isValid = isPresent && config.expectedValue.test(headerValue);
+
+        results.headers[headerName] = {
+          present: isPresent,
+          value: headerValue || "MISSING",
+          score: isPresent && isValid ? config.score : 0,
         };
 
-        console.log(`\n🔍 Testing: ${url}`);
-        console.log("─".repeat(50));
+        if (config.required) {
+          maxScore += config.score;
+          totalScore += results.headers[headerName].score;
+        }
 
-        Object.entries(REQUIRED_HEADERS).forEach(([header, name]) => {
-          const value = headers[header];
-          const hasHeader = !!value;
+        // Display results
+        const status = isPresent ? (isValid ? "✅" : "⚠️") : "❌";
+        const score = results.headers[headerName].score;
+        const required = config.required ? "(Required)" : "(Optional)";
 
-          results.headers[header] = {
-            present: hasHeader,
-            value: value || "MISSING",
-            score: hasHeader ? 1 : 0,
-          };
+        console.log(`${status} ${headerName} ${required}`);
+        console.log(`   Description: ${config.description}`);
+        console.log(`   Value: ${headerValue || "MISSING"}`);
+        console.log(`   Score: ${score}/${config.score}`);
+        console.log("");
 
-          const status = hasHeader ? "✅" : "❌";
-          console.log(`${status} ${name}: ${value || "MISSING"}`);
+        if (!isPresent && config.required) {
+          console.log(`   ❌ CRITICAL: Required header missing!`);
+        } else if (isPresent && !isValid) {
+          console.log(
+            `   ⚠️  WARNING: Header present but value may be incorrect`
+          );
+        }
+      }
 
-          if (hasHeader) results.score++;
-        });
+      results.score = totalScore;
+      results.total = maxScore;
+      results.percentage =
+        maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
+      results.grade = getGrade(results.percentage);
 
-        results.percentage = Math.round((results.score / results.total) * 100);
-        results.grade = getGrade(results.percentage);
+      console.log(
+        `\n📈 Overall Security Score: ${results.score}/${results.total} (${results.percentage}%)`
+      );
+      console.log(`🏆 Grade: ${results.grade}`);
 
+      if (results.percentage >= 90) {
         console.log(
-          `\n📊 Score: ${results.score}/${results.total} (${results.percentage}%)`
+          "🎉 Excellent! Your security headers are properly configured."
         );
-        console.log(`🏆 Grade: ${results.grade}`);
+      } else if (results.percentage >= 70) {
+        console.log("👍 Good security, but there's room for improvement.");
+      } else if (results.percentage >= 50) {
+        console.log(
+          "⚠️  Moderate security level. Consider implementing missing headers."
+        );
+      } else {
+        console.log("🚨 Poor security level. Critical headers are missing!");
+      }
 
-        resolve(results);
-      })
-      .on("error", (error) => {
-        console.log(`❌ Error testing ${url}: ${error.message}`);
-        reject(error);
-      });
+      resolve(results);
+    });
+
+    req.on("error", (err) => {
+      console.error(`❌ Error testing headers: ${err.message}`);
+      reject(err);
+    });
+
+    req.setTimeout(10000, () => {
+      req.destroy();
+      reject(new Error("Request timeout"));
+    });
   });
 }
 
 function getGrade(percentage) {
-  if (percentage >= 95) return "A+";
-  if (percentage >= 90) return "A";
-  if (percentage >= 85) return "A-";
-  if (percentage >= 80) return "B+";
-  if (percentage >= 75) return "B";
-  if (percentage >= 70) return "B-";
-  if (percentage >= 65) return "C+";
+  if (percentage >= 90) return "A+";
+  if (percentage >= 80) return "A";
+  if (percentage >= 70) return "B";
   if (percentage >= 60) return "C";
-  if (percentage >= 55) return "C-";
-  if (percentage >= 50) return "D+";
-  if (percentage >= 45) return "D";
-  if (percentage >= 40) return "D-";
+  if (percentage >= 50) return "D";
   return "F";
 }
 
@@ -109,96 +208,40 @@ function generateReport(results) {
   const report = {
     timestamp: new Date().toISOString(),
     summary: {
-      totalTests: results.length,
-      averageScore: Math.round(
-        results.reduce((sum, r) => sum + r.percentage, 0) / results.length
-      ),
-      bestGrade: results.reduce(
-        (best, r) => (r.percentage > best.percentage ? r : best),
-        results[0]
-      ),
+      totalTests: 1,
+      averageScore: results.percentage,
+      bestGrade: results,
     },
-    results,
+    results: [results],
   };
 
-  const reportPath = path.join(__dirname, "../security-headers-report.json");
-  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-
-  console.log(`\n📄 Report saved to: ${reportPath}`);
   return report;
 }
 
-function checkFiles() {
-  console.log("\n📁 Checking security files...");
-
-  const files = [
-    "public/_headers",
-    "vite.config.ts",
-    "src/utils/security.ts",
-    "SECURITY.md",
-  ];
-
-  files.forEach((file) => {
-    const exists = fs.existsSync(path.join(__dirname, "..", file));
-    const status = exists ? "✅" : "❌";
-    console.log(`${status} ${file}`);
-  });
-}
-
-async function runTests() {
+async function main() {
   try {
-    // Check security files
-    checkFiles();
+    console.log("🔒 Security Headers Testing Tool");
+    console.log("================================\n");
 
-    // Test headers for each URL
-    const results = [];
-    for (const url of TEST_URLS) {
-      try {
-        const result = await testHeaders(url);
-        results.push(result);
-      } catch (error) {
-        console.log(`⚠️  Skipping ${url} - not accessible`);
-      }
-    }
-
-    if (results.length === 0) {
-      console.log("\n⚠️  No URLs were accessible for testing");
-      console.log("💡 Start your development server with: npm run dev");
-      return;
-    }
-
-    // Generate report
+    const results = await testHeaders(TEST_URL);
     const report = generateReport(results);
 
-    // Summary
-    console.log("\n🎯 Security Headers Summary");
-    console.log("─".repeat(50));
-    console.log(`📊 Average Score: ${report.summary.averageScore}%`);
-    console.log(
-      `🏆 Best Grade: ${report.summary.bestGrade.grade} (${report.summary.bestGrade.percentage}%)`
-    );
+    // Save report to file
+    const fs = await import("fs");
+    const reportPath = "./security-headers-report.json";
+    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
-    if (report.summary.averageScore >= 95) {
-      console.log("🎉 A+ Security Rating Achieved!");
-    } else {
-      console.log("📈 Areas for improvement identified");
-    }
+    console.log(`\n📄 Detailed report saved to: ${reportPath}`);
 
-    console.log("\n📋 Recommendations:");
-    if (report.summary.averageScore < 95) {
-      console.log("• Ensure all security headers are properly configured");
-      console.log("• Check your hosting provider supports custom headers");
-      console.log("• Verify HTTPS is enabled in production");
-      console.log("• Review SECURITY.md for implementation details");
-    } else {
-      console.log("• Excellent security implementation!");
-      console.log("• Continue monitoring for new vulnerabilities");
-      console.log("• Keep dependencies updated");
-    }
+    // Exit with appropriate code
+    process.exit(results.percentage >= 70 ? 0 : 1);
   } catch (error) {
-    console.error("❌ Test failed:", error.message);
+    console.error(`\n❌ Testing failed: ${error.message}`);
+    console.log("\n💡 Make sure your development server is running:");
+    console.log("   npm run dev");
+    process.exit(1);
   }
 }
 
-// Run tests
-runTests();
+// Run the test
+main();

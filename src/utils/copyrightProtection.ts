@@ -88,7 +88,8 @@ Thank you for respecting intellectual property rights.
   // Add invisible watermark
   private addWatermark(): void {
     const watermark = document.createElement("div");
-    watermark.innerHTML = "© 2024 Islamic Dataset Interface";
+    // Use textContent instead of innerHTML for Trusted Types compatibility
+    watermark.textContent = "© 2024 Islamic Dataset Interface";
     watermark.style.cssText = `
       position: fixed;
       top: 50%;

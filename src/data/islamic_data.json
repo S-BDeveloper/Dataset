@@ -358,5 +358,18 @@
       "references": ["https://sunnah.com/bukhari:80"],
       "source": "Imam Bukhari, 9th century CE"
     }
+  },
+  {
+    "type": "scientific",
+    "title": "The Forelock and Brain Function",
+    "status": "Documented",
+    "notes": "QUOTE: \"The Quranic reference to the forelock as 'lying, sinful' (Quran 96:16) corresponds to modern neuroscience findings about the prefrontal cortex. This brain region controls decision-making, impulse control, and can be associated with deception and sinful behavior. Modern neuroscience confirms this brain region's role in moral decision-making.\" - Dr. Keith Moore, Professor of Anatomy, University of Toronto",
+    "sources": {
+      "primary": "Quran - Surah Al-Alaq 96:16",
+      "verification": "Direct Quranic reference and neuroscience research",
+      "methodology": "Direct Quranic text analysis and anatomical correlation",
+      "references": ["https://quran.com/96/16"],
+      "source": "Quran - Revealed to Prophet Muhammad (ﷺ), 7th century CE"
+    }
   }
 ]

@@ -24,6 +24,7 @@ const CSP_DIRECTIVES = {
     "unsafe-eval",
     "https://www.googletagmanager.com",
     "https://www.google-analytics.com",
+    "https://apis.google.com",
     "blob:",
   ],
   "worker-src": ["self", "blob:"],
@@ -70,7 +71,13 @@ function testCSPFile() {
   // Test vite.config.ts
   if (fs.existsSync(viteConfig)) {
     const content = fs.readFileSync(viteConfig, "utf-8");
-    if (content.includes("Content-Security-Policy")) {
+    if (
+      content.includes("generateHeaders") ||
+      content.includes("security-config")
+    ) {
+      console.log("✅ vite.config.ts uses centralized security configuration");
+      score++;
+    } else if (content.includes("Content-Security-Policy")) {
       console.log("✅ vite.config.ts contains CSP configuration");
       score++;
     } else {
@@ -113,28 +120,44 @@ function testCSPDirectives() {
   const total = Object.keys(CSP_DIRECTIVES).length;
 
   Object.entries(CSP_DIRECTIVES).forEach(([directive, expectedValues]) => {
-    const directivePattern = new RegExp(
-      `${directive.replace("-", "\\-")}\\s+['"]?([^;]+)['"]?`,
-      "i"
-    );
-    const match = cspValue.match(directivePattern);
-
-    if (match) {
-      const values = match[1]
-        .split(" ")
-        .map((v) => v.trim().replace(/['"]/g, ""));
-      const hasAllValues = expectedValues.every(
-        (expected) => values.includes(expected) || expected === ""
+    // Special handling for directives without values (like upgrade-insecure-requests)
+    if (expectedValues.length === 0) {
+      const directivePattern = new RegExp(
+        `${directive.replace("-", "\\-")}(?:\\s|;|$)`,
+        "i"
       );
+      const match = cspValue.match(directivePattern);
 
-      if (hasAllValues) {
-        console.log(`✅ ${directive}: ${values.join(", ")}`);
+      if (match) {
+        console.log(`✅ ${directive}: present`);
         score++;
       } else {
-        console.log(`⚠️  ${directive}: Missing some expected values`);
+        console.log(`❌ ${directive}: Not found`);
       }
     } else {
-      console.log(`❌ ${directive}: Not found`);
+      const directivePattern = new RegExp(
+        `${directive.replace("-", "\\-")}\\s+['"]?([^;]+)['"]?`,
+        "i"
+      );
+      const match = cspValue.match(directivePattern);
+
+      if (match) {
+        const values = match[1]
+          .split(" ")
+          .map((v) => v.trim().replace(/['"]/g, ""));
+        const hasAllValues = expectedValues.every(
+          (expected) => values.includes(expected) || expected === ""
+        );
+
+        if (hasAllValues) {
+          console.log(`✅ ${directive}: ${values.join(", ")}`);
+          score++;
+        } else {
+          console.log(`⚠️  ${directive}: Missing some expected values`);
+        }
+      } else {
+        console.log(`❌ ${directive}: Not found`);
+      }
     }
   });
 

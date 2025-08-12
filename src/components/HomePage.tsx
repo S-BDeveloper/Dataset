@@ -253,6 +253,29 @@ export default function HomePage({
             {(!activeTab || activeTab === "all") && (
               <div ref={cardsListRef} className="animate-fade-in">
                 {/* Filters and Export */}
+                <div className="space-y-4 mb-6">
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-2">
+                      Reflections
+                    </h2>
+                    <p className="text-stone-600 dark:text-stone-400 max-w-2xl leading-relaxed">
+                      <em>
+                        {" "}
+                        "Read! In the name of your Lord who created. He created
+                        man from a clot. Read! And your Lord is the Most
+                        Generous, Who taught by the pen. He taught man that
+                        which he knew not."{" "}
+                      </em>
+                      <br />
+                      (Quran 96:1-5)
+                      <br />
+                      <br />
+                      <em> "Do they not contemplate within themselves?" </em>
+                      <br />
+                      (Quran 30:8)
+                    </p>
+                  </div>
+                </div>
                 <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                   <div className="flex flex-col sm:flex-row gap-2">
                     <input
