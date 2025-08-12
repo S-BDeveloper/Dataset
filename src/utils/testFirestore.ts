@@ -103,6 +103,7 @@ export const testFirestoreUserManagement = async () => {
       quranSurahs: [],
       quranVerseRange: { min: 1, max: 6236 },
       quranPlaceOfRevelation: [],
+      quranSajdahOnly: false,
       hadithNumberRange: { min: 1, max: 9999 },
       hadithCategories: [],
     });

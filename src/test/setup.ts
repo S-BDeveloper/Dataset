@@ -3,6 +3,8 @@
  * Configures test environment for security validation
  */
 
+import { vi } from "vitest";
+
 // Mock browser environment for security tests
 Object.defineProperty(window, "location", {
   value: {
