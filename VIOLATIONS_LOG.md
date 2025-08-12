@@ -1,6 +1,6 @@
 # Violations Log - Reflect & Implement
 
-**Copyright © 2024 Reflect & Implement. All rights reserved.**
+**Copyright © 2025 Reflect & Implement. All rights reserved.**
 
 This document tracks potential violations of the Reflect & Implement License.
 

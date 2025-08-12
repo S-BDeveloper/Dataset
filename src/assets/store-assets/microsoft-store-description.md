@@ -73,7 +73,7 @@ Unlike traditional apps, our Progressive Web App offers:
 
 1. **Complete Quran**: All 114 chapters with full text search
 2. **Sahih Bukhari**: Authentic Hadith collection
-3. **Scientific Miracles**: Islamic predictions confirmed by modern science
+3. **Scientific Facts**: Islamic predictions confirmed by modern science
 4. **Health & Wellness**: Islamic guidance on well-being
 5. **Historical Facts**: Important Islamic historical events
 

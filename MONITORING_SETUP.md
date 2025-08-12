@@ -1,6 +1,6 @@
 # Monitoring Setup Guide - Reflect & Implement
 
-**Copyright © 2024 Reflect & Implement. All rights reserved.**
+**Copyright © 2025 Reflect & Implement. All rights reserved.**
 
 This guide will help you set up comprehensive monitoring for your Reflect & Implement platform to protect against license violations.
 

@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document outlines the educational principles and guidelines for maintaining neutrality and academic integrity in the Islamic Dataset Interface application.
+This document outlines the educational principles and guidelines for maintaining objectivity and academic integrity in the Islamic Dataset Interface application.
 
 ## Core Principles
 
-### 1. **Educational Neutrality**
+### 1. **Educational Objectivity**
 
 - Present information without personal interpretation
 - Avoid subjective commentary on religious matters
@@ -37,7 +37,7 @@ This document outlines the educational principles and guidelines for maintaining
 - Historical facts and dates
 - Scholarly references and citations
 - Academic methodology descriptions
-- Neutral educational context
+- Objective educational context
 - **Quoted scholarly interpretations** (with proper attribution)
 - **Scientific findings and correlations** (with peer-reviewed citations)
 - **Multiple academic perspectives** on complex topics
@@ -56,7 +56,7 @@ This document outlines the educational principles and guidelines for maintaining
 
 ### Language Standards
 
-#### Neutral Language Examples
+#### Objective Language Examples
 
 **Instead of:**
 
@@ -102,15 +102,14 @@ This document outlines the educational principles and guidelines for maintaining
 
 - Use the `dataSanitizer.ts` utility
 - Remove interpretive content automatically
-- Replace with neutral educational context
+- Replace with objective educational context
 - Maintain source citations
 
 ### 2. **Component Usage**
 
-- Use `NeutralDataCard` for data presentation
-- Include `EducationalDisclaimer` prominently
+- Use `ObjectiveDataCard` for data presentation
 - Show `SourceCitation` for academic transparency
-- Display disclaimers on all pages
+- Display educational context in search features
 - **Quote Attribution**: Use `SourceCitation` for scholarly quotes
 - **Ijma Integration**: Highlight scholarly consensus when available
 - **Multiple Perspectives**: Present diverse scholarly views when available
@@ -119,9 +118,9 @@ This document outlines the educational principles and guidelines for maintaining
 
 ### 3. **User Interface**
 
-- Clear educational disclaimers
-- Prominent source citations
-- Neutral language throughout
+- Educational context in search features
+- Prominent source citations through SourceCitation component
+- Objective language throughout
 - Links to scholarly resources
 - **Quote Highlighting**: Visually distinguish quoted interpretations
 - **Perspective Indicators**: Show when multiple scholarly views exist
@@ -134,7 +133,7 @@ This document outlines the educational principles and guidelines for maintaining
 1. **Automated Screening**: Use data sanitization tools
 2. **Manual Review**: Check for interpretive content
 3. **Academic Validation**: Verify source citations
-4. **User Testing**: Ensure clarity and neutrality
+4. **User Testing**: Ensure clarity and objectivity
 5. **Quote Verification**: Confirm scholarly attribution accuracy
 6. **Ijma Verification**: Validate scholarly consensus claims
 7. **Perspective Balance**: Check for diverse scholarly representation
@@ -145,7 +144,7 @@ This document outlines the educational principles and guidelines for maintaining
 
 - Monthly content reviews
 - Source citation verification
-- Language neutrality checks
+- Language objectivity checks
 - User feedback analysis
 - **Scholarly Quote Accuracy**: Verify attribution and context
 - **Ijma Validation**: Confirm scholarly consensus claims are accurate
@@ -157,10 +156,10 @@ This document outlines the educational principles and guidelines for maintaining
 
 ### Disclaimer Placement
 
-- Homepage prominently
-- Each data card
-- Search results page
-- About/Help sections
+- Advanced Search Dashboard features section
+- Data cards through ObjectiveDataCard component
+- Footer mission statement
+- Source citations through SourceCitation component
 
 ### Educational Resources
 
@@ -183,22 +182,22 @@ This document outlines the educational principles and guidelines for maintaining
 // Use sanitization utility
 import { sanitizeIslamicData } from "../utils/dataSanitizer";
 
-const neutralData = sanitizeIslamicData(originalData);
+const objectiveData = sanitizeIslamicData(originalData);
 ```
 
 ### Component Integration
 
 ```typescript
-// Use neutral components
-import { NeutralDataCard } from "../components/common/NeutralDataCard";
-import { EducationalDisclaimer } from "../components/common/EducationalDisclaimer";
+// Use objective components
+import { ObjectiveDataCard } from "../components/common/ObjectiveDataCard";
+import { SourceCitation } from "../components/common/SourceCitation";
 ```
 
-### Language Neutralization
+### Language Objectification
 
 ```typescript
-// Neutralize status descriptions
-const neutralStatus = neutralizeStatus(originalStatus);
+// Objectify status descriptions
+const objectiveStatus = objectifyStatus(originalStatus);
 ```
 
 ## Monitoring and Maintenance
@@ -208,14 +207,14 @@ const neutralStatus = neutralizeStatus(originalStatus);
 - Regular automated scans for interpretive language
 - User feedback collection
 - Academic source verification
-- Language neutrality checks
+- Language objectivity checks
 
 ### Continuous Improvement
 
 - Update sanitization patterns
 - Enhance educational disclaimers
 - Improve source citation display
-- Refine neutral language guidelines
+- Refine objective language guidelines
 
 ## Compliance Standards
 
@@ -237,7 +236,7 @@ const neutralStatus = neutralizeStatus(originalStatus);
 - Respect for diverse interpretations
 - Avoidance of sectarian bias
 - Emphasis on scholarly consultation
-- Neutral presentation of differences
+- Objective presentation of differences
 
 ## Contact and Support
 
@@ -251,11 +250,11 @@ For questions about educational content:
 
 - **v1.0**: Initial educational guidelines
 - **v1.1**: Enhanced sanitization patterns
-- **v1.2**: Updated neutral language standards
+- **v1.2**: Updated objective language standards
 - **v1.3**: Comprehensive implementation guidelines
 - **v1.4**: Added scholarly quotation and scientific citation standards
 - **v1.5**: Integrated Ijma (consensus) methodology and enhanced scientific rigor requirements
 
 ---
 
-_This document is maintained by the development team and updated regularly to ensure educational integrity and neutrality._
+_This document is maintained by the development team and updated regularly to ensure educational integrity and objectivity._

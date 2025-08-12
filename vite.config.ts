@@ -2,23 +2,26 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { generateHeaders } from "./security-config";
+import type { Request, Response, NextFunction } from "express";
 
 // Security plugin for development
 const securityHeaders = () => {
   return {
     name: "security-headers",
     configureServer(server: any) {
-      server.middlewares.use((req: any, res: any, next: any) => {
-        // Get security headers for development environment
-        const headers = generateHeaders("development", true);
+      server.middlewares.use(
+        (_req: Request, res: Response, next: NextFunction) => {
+          // Get security headers for development environment
+          const headers = generateHeaders("development", true);
 
-        // Apply all security headers
-        Object.entries(headers).forEach(([header, value]) => {
-          res.setHeader(header, value);
-        });
+          // Apply all security headers
+          Object.entries(headers).forEach(([header, value]) => {
+            res.setHeader(header, value as string);
+          });
 
-        next();
-      });
+          next();
+        }
+      );
     },
   };
 };
