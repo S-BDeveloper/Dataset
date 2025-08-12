@@ -3,7 +3,7 @@
   command = "npm ci --legacy-peer-deps && npm run build:netlify"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
   NPM_CONFIG_PRODUCTION = "false"
   VITE_DISABLE_WORKERS = "true"
 

@@ -52,20 +52,26 @@ export function useOptimizedDataWithWorkers(
 
   // Initialize Web Worker
   useEffect(() => {
-    // Disable workers in build environment to avoid Vite worker issues
+    // Completely disable workers in build environment
+    if (import.meta.env.VITE_DISABLE_WORKERS) {
+      console.log("Web Workers disabled for build environment");
+      return;
+    }
+
     const shouldUseWorkers =
       enableWorkers &&
       typeof Worker !== "undefined" &&
       typeof window !== "undefined" &&
-      !import.meta.env.SSR &&
-      !import.meta.env.VITE_DISABLE_WORKERS;
+      !import.meta.env.SSR;
 
     if (shouldUseWorkers) {
       try {
-        workerRef.current = new Worker(
-          new URL("../workers/dataProcessor.ts", import.meta.url),
-          { type: "module" }
+        // Only create worker if not disabled
+        const workerUrl = new URL(
+          "../workers/dataProcessor.ts",
+          import.meta.url
         );
+        workerRef.current = new Worker(workerUrl, { type: "module" });
 
         workerRef.current.onmessage = (event) => {
           const { type, ...payload } = event.data;
