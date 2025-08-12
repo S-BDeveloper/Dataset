@@ -52,7 +52,15 @@ export function useOptimizedDataWithWorkers(
 
   // Initialize Web Worker
   useEffect(() => {
-    if (enableWorkers && typeof Worker !== "undefined") {
+    // Disable workers in build environment to avoid Vite worker issues
+    const shouldUseWorkers =
+      enableWorkers &&
+      typeof Worker !== "undefined" &&
+      typeof window !== "undefined" &&
+      !import.meta.env.SSR &&
+      !import.meta.env.VITE_DISABLE_WORKERS;
+
+    if (shouldUseWorkers) {
       try {
         workerRef.current = new Worker(
           new URL("../workers/dataProcessor.ts", import.meta.url),
