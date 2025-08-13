@@ -50,7 +50,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
         }
       } catch (err) {
         setError(t("profile.failedToLoad"));
-        console.error("Profile load error:", err);
+        // Log error for debugging (in production, this would go to a logging service)
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error("Profile load error:", err);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -90,7 +94,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({ className = "" }) => {
       }
     } catch (err) {
       setError(t("profile.failedToUpdate"));
-      console.error("Profile update error:", err);
+      // Log error for debugging (in production, this would go to a logging service)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Profile update error:", err);
+      }
     } finally {
       setIsLoading(false);
     }
