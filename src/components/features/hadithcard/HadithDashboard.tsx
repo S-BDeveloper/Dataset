@@ -5,6 +5,7 @@ import { useHadithData } from "../../../hooks/useHadithData";
 import { scrollToTop } from "../../../utils/scrollUtils";
 import Masonry from "react-masonry-css";
 import type { HadithEntry } from "../../../types/Types";
+import { SanitizedInput } from "../../common/SanitizedInput";
 
 interface HadithDashboardProps {
   onFavorite?: (hadith: HadithEntry) => void;
@@ -120,13 +121,16 @@ export function HadithDashboard({
                 Search:
               </label>
               <div className="flex">
-                <input
+                <SanitizedInput
                   type="text"
                   id="hadith-search"
                   name="hadith-search"
                   placeholder="Search through hadith content..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  sanitizeOptions={{
+                    sanitizeType: "islamic",
+                    validateIslamic: true,
+                  }}
+                  onValueChange={setSearchTerm}
                   className="flex-1 px-3 sm:px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-l-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 focus:ring-2 focus:ring-stone-500 focus:border-transparent text-sm sm:text-base"
                 />
                 <button

@@ -16,3 +16,5 @@ export {
 export * from "./scrollUtils";
 export * from "./validation";
 export * from "./exportUtils";
+export * from "./sanitize";
+export * from "./htmlEscape";

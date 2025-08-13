@@ -139,7 +139,14 @@
 
           resultsDiv.innerHTML = html;
         } catch (error) {
-          resultsDiv.innerHTML = `<p class="error">❌ Error testing headers: ${error.message}</p>`;
+          // Escape HTML characters to prevent XSS
+          const escapedMessage = error.message
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#x27;");
+          resultsDiv.innerHTML = `<p class="error">❌ Error testing headers: ${escapedMessage}</p>`;
         }
       }
 

@@ -55,6 +55,8 @@ export function sanitizeInput(input: string): string {
   return input
     .replace(/[<>]/g, "") // Remove < and >
     .replace(/javascript:/gi, "") // Remove javascript: protocol
+    .replace(/vbscript:/gi, "") // Remove vbscript: protocol
+    .replace(/data:/gi, "") // Remove data: protocol
     .replace(/on\w+=/gi, "") // Remove event handlers
     .trim();
 }
