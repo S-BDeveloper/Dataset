@@ -64,7 +64,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <div className={`${className}`}>
       <div className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-stone-200 dark:border-stone-800 p-6">
-      <div className="text-left mb-6">
+        <div className="text-left mb-6">
           <h2 className="text-xl text-center font-bold text-green-700 dark:text-green-400">
             {t("auth.welcomeBack")}
           </h2>
@@ -177,7 +177,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               type="button"
               onClick={() => {
                 // TODO: Implement password reset
-                console.log("Password reset requested");
+                if (import.meta.env.DEV) {
+                  // eslint-disable-next-line no-console
+                  console.log("Password reset requested");
+                }
               }}
               className="text-sm text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
             >

@@ -141,7 +141,7 @@ export function HadithDashboard({
                 </div>
                 <button
                   type="submit"
-                  className="px-3 sm:px-4 py-2 bg-purple-500 dark:bg-purple-700 text-white rounded-r-lg hover:bg-purple-700 dark:hover:bg-purple-800 transition-colors text-sm sm:text-base font-medium border border-l-0 border-stone-300 dark:border-stone-600 flex items-center justify-center min-w-fit whitespace-nowrap"
+                  className="px-3 sm:px-4 py-2 bg-stone-500 dark:bg-purple-700 text-white rounded-r-lg hover:bg-purple-700 dark:hover:bg-purple-800 transition-colors text-sm sm:text-base font-medium border border-l-0 border-stone-300 dark:border-stone-600 flex items-center justify-center min-w-fit whitespace-nowrap"
                 >
                   Search
                 </button>
@@ -208,8 +208,11 @@ export function HadithDashboard({
         <Masonry
           breakpointCols={{
             default: 3,
+            1400: 3,
             1200: 2,
+            900: 2,
             768: 1,
+            600: 1,
           }}
           className="flex w-full"
           columnClassName="bg-clip-padding pr-2 sm:pr-4"
@@ -219,7 +222,7 @@ export function HadithDashboard({
             <div key={index} className="mb-4" dir="ltr">
               <HadithCard
                 hadith={hadith}
-                index={(currentPage - 1) * 20 + index}
+                index={(currentPage - 1) * 21 + index}
                 onFavorite={onFavorite}
                 isFavorite={isFavorite}
               />

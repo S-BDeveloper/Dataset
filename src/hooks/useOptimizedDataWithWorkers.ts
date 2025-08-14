@@ -48,13 +48,16 @@ export function useOptimizedDataWithWorkers(
   });
 
   const workerRef = useRef<Worker | null>(null);
-  const searchTimeoutRef = useRef<NodeJS.Timeout>();
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Initialize Web Worker
   useEffect(() => {
     // Completely disable workers in build environment
     if (import.meta.env.VITE_DISABLE_WORKERS) {
-      console.log("Web Workers disabled for build environment");
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log("Web Workers disabled for build environment");
+      }
       return;
     }
 
@@ -78,7 +81,14 @@ export function useOptimizedDataWithWorkers(
 
           switch (type) {
             case "INDEX_BUILT":
-              console.log("Search index built with", payload.count, "entries");
+              if (import.meta.env.DEV) {
+                // eslint-disable-next-line no-console
+                console.log(
+                  "Search index built with",
+                  payload.count,
+                  "entries"
+                );
+              }
               setState((prev) => ({ ...prev, isIndexing: false }));
               break;
 
@@ -108,12 +118,20 @@ export function useOptimizedDataWithWorkers(
           }
         };
 
-        workerRef.current.onerror = (_error) => {
-          console.error("Worker error occurred");
+        workerRef.current.onerror = () => {
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.error("Worker error occurred");
+          }
           setState((prev) => ({ ...prev, error: "Worker error occurred" }));
         };
       } catch {
-        console.warn("Web Workers not supported, falling back to main thread");
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            "Web Workers not supported, falling back to main thread"
+          );
+        }
         setState((prev) => ({ ...prev, error: "Web Workers not supported" }));
       }
     }

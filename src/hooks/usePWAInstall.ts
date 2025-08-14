@@ -25,14 +25,20 @@ const notifySubscribers = () => {
 const handleBeforeInstallPrompt = (e: Event) => {
   e.preventDefault();
   globalDeferredPrompt = e as BeforeInstallPromptEvent;
-  console.log("PWA install prompt captured globally");
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log("PWA install prompt captured globally");
+  }
   notifySubscribers();
 };
 
 const handleAppInstalled = () => {
   globalIsInstalled = true;
   globalDeferredPrompt = null;
-  console.log("PWA installed globally");
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log("PWA installed globally");
+  }
   notifySubscribers();
 };
 
@@ -52,7 +58,10 @@ const initializeGlobalListeners = () => {
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     window.addEventListener("appinstalled", handleAppInstalled);
     globalIsListening = true;
-    console.log("Global PWA listeners initialized");
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.log("Global PWA listeners initialized");
+    }
   }
 };
 
@@ -113,15 +122,24 @@ export const usePWAInstall = () => {
       const { outcome } = await globalDeferredPrompt.userChoice;
 
       if (outcome === "accepted") {
-        console.log("User accepted the install prompt");
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.log("User accepted the install prompt");
+        }
         globalIsInstalled = true;
         globalDeferredPrompt = null;
         notifySubscribers();
       } else {
-        console.log("User dismissed the install prompt");
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.log("User dismissed the install prompt");
+        }
       }
     } catch (error) {
-      console.error("Error showing install prompt:", error);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Error showing install prompt:", error);
+      }
     } finally {
       setIsLoading(false);
     }

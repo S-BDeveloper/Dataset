@@ -23,7 +23,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       await logout();
       onClose();
     } catch (error) {
-      console.error("Logout failed:", error);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Logout failed:", error);
+      }
     }
   };
 

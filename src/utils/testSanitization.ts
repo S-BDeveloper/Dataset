@@ -187,38 +187,53 @@ export function runSanitizationTests(): {
 export function logSanitizationTestResults(): void {
   const { passed, failed, results } = runSanitizationTests();
 
-  console.log("🔒 Sanitization Test Results");
-  console.log("============================");
-  console.log(`✅ Passed: ${passed}`);
-  console.log(`❌ Failed: ${failed}`);
-  console.log(`📊 Total: ${passed + failed}`);
-  console.log("");
-
-  results.forEach((result, index) => {
-    const status = result.passed ? "✅" : "❌";
-    console.log(`${status} Test ${index + 1}: ${result.test}`);
-    if (!result.passed) {
-      console.log(`   Input: "${result.input}"`);
-      console.log(`   Output: "${result.output}"`);
-      console.log(`   Expected: "${result.expected}"`);
-    }
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log("🔒 Sanitization Test Results");
+    // eslint-disable-next-line no-console
+    console.log("============================");
+    // eslint-disable-next-line no-console
+    console.log(`✅ Passed: ${passed}`);
+    // eslint-disable-next-line no-console
+    console.log(`❌ Failed: ${failed}`);
+    // eslint-disable-next-line no-console
+    console.log(`📊 Total: ${passed + failed}`);
+    // eslint-disable-next-line no-console
     console.log("");
-  });
 
-  if (failed === 0) {
-    console.log(
-      "🎉 All sanitization tests passed! Your app is protected against protocol-based XSS attacks."
-    );
-  } else {
-    console.log(
-      "⚠️ Some tests failed. Please review the sanitization functions."
-    );
+    results.forEach((result, index) => {
+      const status = result.passed ? "✅" : "❌";
+      // eslint-disable-next-line no-console
+      console.log(`${status} Test ${index + 1}: ${result.test}`);
+      if (!result.passed) {
+        // eslint-disable-next-line no-console
+        console.log(`   Input: "${result.input}"`);
+        // eslint-disable-next-line no-console
+        console.log(`   Output: "${result.output}"`);
+        // eslint-disable-next-line no-console
+        console.log(`   Expected: "${result.expected}"`);
+      }
+      // eslint-disable-next-line no-console
+      console.log("");
+    });
+
+    if (failed === 0) {
+      // eslint-disable-next-line no-console
+      console.log(
+        "🎉 All sanitization tests passed! Your app is protected against protocol-based XSS attacks."
+      );
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(
+        "⚠️ Some tests failed. Please review the sanitization functions."
+      );
+    }
   }
 }
 
 // Run tests if this file is executed directly
 if (typeof window !== "undefined") {
   // Browser environment
-  window.runSanitizationTests = runSanitizationTests;
-  window.logSanitizationTestResults = logSanitizationTestResults;
+  (window as any).runSanitizationTests = runSanitizationTests;
+  (window as any).logSanitizationTestResults = logSanitizationTestResults;
 }

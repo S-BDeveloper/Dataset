@@ -170,7 +170,10 @@ export const inlineCriticalCSS = async (): Promise<void> => {
       document.head.appendChild(style);
     }
   } catch (error) {
-    console.warn("Failed to inline critical CSS:", error);
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.warn("Failed to inline critical CSS:", error);
+    }
   }
 };
 
@@ -187,11 +190,14 @@ export const monitorCSSPerformance = (): void => {
           resourceEntry.initiatorType === "link" &&
           resourceEntry.name.includes(".css")
         ) {
-          console.log(
-            `CSS loaded: ${
-              resourceEntry.name
-            } (${resourceEntry.duration.toFixed(2)}ms)`
-          );
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.log(
+              `CSS loaded: ${
+                resourceEntry.name
+              } (${resourceEntry.duration.toFixed(2)}ms)`
+            );
+          }
         }
       }
     }).observe({ entryTypes: ["resource"] });

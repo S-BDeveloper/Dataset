@@ -25,14 +25,17 @@ export function useHadithData() {
     sortBy: "index",
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
+  const itemsPerPage = 21;
 
   // Load Hadith data from JSON directly
   useEffect(() => {
     const loadHadithData = async () => {
       try {
         setLoading(true);
-        console.log("🔄 Loading Hadith data from local JSON...");
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.log("🔄 Loading Hadith data from local JSON...");
+        }
 
         // Check if the data is an array (new format) or object (old format)
         const isArrayFormat = Array.isArray(hadithDataJSON);
@@ -79,10 +82,16 @@ export function useHadithData() {
           })) as HadithEntry[];
         }
 
-        console.log("✅ Loaded", data.length, "hadiths from local JSON");
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.log("✅ Loaded", data.length, "hadiths from local JSON");
+        }
         setHadithData(data);
       } catch (err) {
-        console.error("❌ Hadith data load error:", err);
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error("❌ Hadith data load error:", err);
+        }
         setError(
           err instanceof Error ? err.message : "Failed to load Hadith data"
         );

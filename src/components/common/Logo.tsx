@@ -1,4 +1,5 @@
 import bookImage from "../../assets/5179ed07851a80de976e57843ec0f946.png";
+import React from "react";
 
 interface LogoProps {
   className?: string;

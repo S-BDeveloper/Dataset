@@ -93,7 +93,7 @@ export const SanitizedInput: React.FC<SanitizedInputProps> = ({
           }
           ${className}
         `}
-        aria-invalid={hasError}
+        aria-invalid={hasError ? "true" : undefined}
         aria-describedby={hasError ? `${inputProps.id}-error` : undefined}
       />
 
@@ -196,7 +196,7 @@ export const SanitizedTextarea: React.FC<SanitizedTextareaProps> = ({
           }
           ${className}
         `}
-        aria-invalid={hasError}
+        aria-invalid={hasError ? "true" : undefined}
         aria-describedby={hasError ? `${textareaProps.id}-error` : undefined}
       />
 

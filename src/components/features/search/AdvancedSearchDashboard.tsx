@@ -467,16 +467,20 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
             const actualResultsCount = results.length;
             results = results.slice(0, MAX_RESULTS);
 
-            console.log("Search results before limiting:", {
-              actualResultsCount,
-              limitedResultsCount: results.length,
-              totalDataCount,
-              filteredDataCount,
-              actualPercentage:
-                ((actualResultsCount / totalDataCount) * 100).toFixed(1) + "%",
-              limitedPercentage:
-                ((results.length / totalDataCount) * 100).toFixed(1) + "%",
-            });
+            if (import.meta.env.DEV) {
+              // eslint-disable-next-line no-console
+              console.log("Search results before limiting:", {
+                actualResultsCount,
+                limitedResultsCount: results.length,
+                totalDataCount,
+                filteredDataCount,
+                actualPercentage:
+                  ((actualResultsCount / totalDataCount) * 100).toFixed(1) +
+                  "%",
+                limitedPercentage:
+                  ((results.length / totalDataCount) * 100).toFixed(1) + "%",
+              });
+            }
 
             setFilteredResults(results);
             setActualResultsCount(actualResultsCount); // Set actual results count
@@ -556,18 +560,24 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
       const percentageOfTotal = useMemo(() => {
         // Only calculate if we have actual data loaded
         if (filteredDataCount === 0) {
-          console.log(
-            "No filtered data available, filteredDataCount:",
-            filteredDataCount
-          );
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.log(
+              "No filtered data available, filteredDataCount:",
+              filteredDataCount
+            );
+          }
           return "0.0";
         }
 
         if (filteredResults.length === 0) {
-          console.log(
-            "No search results, filteredResults.length:",
-            filteredResults.length
-          );
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.log(
+              "No search results, filteredResults.length:",
+              filteredResults.length
+            );
+          }
           return "0.0";
         }
 
@@ -576,17 +586,20 @@ export const AdvancedSearchDashboard: React.FC<AdvancedSearchDashboardProps> =
           actualResultsCount > 0 ? actualResultsCount : filteredResults.length;
         const percentage = (resultsCountForPercentage / totalDataCount) * 100;
 
-        console.log("Debug percentage calculation:", {
-          filteredResultsLength: filteredResults.length,
-          actualResultsCount: actualResultsCount,
-          resultsCountForPercentage,
-          filteredDataCount,
-          calculatedPercentage: percentage,
-          dataLength: data.length,
-          quranDataLength: quranData.length,
-          hadithDataLength: hadithData.length,
-          filters: filters,
-        });
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.log("Debug percentage calculation:", {
+            filteredResultsLength: filteredResults.length,
+            actualResultsCount: actualResultsCount,
+            resultsCountForPercentage,
+            filteredDataCount,
+            calculatedPercentage: percentage,
+            dataLength: data.length,
+            quranDataLength: quranData.length,
+            hadithDataLength: hadithData.length,
+            filters: filters,
+          });
+        }
 
         return percentage.toFixed(1);
       }, [

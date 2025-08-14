@@ -41,7 +41,7 @@ export const VALIDATION_PATTERNS = {
   email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   url: /^https?:\/\/[^\s/$.?#].[^\s]*$/i,
   alphanumeric: /^[a-zA-Z0-9\s\-_.,!?()]+$/,
-  search: /^[a-zA-Z0-9\s\-_.,!?()@#$%^&*()\[\]{}|\\:;"'<>?\/]+$/,
+  search: /^[a-zA-Z0-9\s\-_.,!?()@#$%^&*()[\]{}|\\:;"'<>?/]+$/,
 };
 
 /**
@@ -213,7 +213,7 @@ export const SECURE_FETCH_CONFIG = {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
   },
-  credentials: "same-origin" as RequestCredentials,
+  credentials: "same-origin" as "same-origin" | "include" | "omit",
 };
 
 /**
@@ -221,7 +221,34 @@ export const SECURE_FETCH_CONFIG = {
  */
 export async function secureFetch(
   url: string,
-  options: RequestInit = {}
+  options: {
+    method?: string;
+    headers?: Record<string, string>;
+    body?: string | FormData | URLSearchParams | ReadableStream;
+    mode?: "cors" | "no-cors" | "same-origin";
+    credentials?: "same-origin" | "include" | "omit";
+    cache?:
+      | "default"
+      | "no-store"
+      | "reload"
+      | "no-cache"
+      | "force-cache"
+      | "only-if-cached";
+    redirect?: "follow" | "error" | "manual";
+    referrer?: string;
+    referrerPolicy?:
+      | "no-referrer"
+      | "no-referrer-when-downgrade"
+      | "origin"
+      | "origin-when-cross-origin"
+      | "same-origin"
+      | "strict-origin"
+      | "strict-origin-when-cross-origin"
+      | "unsafe-url";
+    integrity?: string;
+    keepalive?: boolean;
+    signal?: AbortSignal;
+  } = {}
 ): Promise<Response> {
   // Validate URL
   if (!validateUrl(url)) {

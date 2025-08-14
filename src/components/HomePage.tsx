@@ -100,16 +100,13 @@ export default function HomePage({
       setToast(`Filtered by ${category} category`);
     };
 
-    window.addEventListener(
-      "filterByCategory",
-      handleCategoryFilter as EventListener
-    );
+    const onCategoryFilter = (e: Event) =>
+      handleCategoryFilter(e as CustomEvent);
+
+    window.addEventListener("filterByCategory", onCategoryFilter);
 
     return () => {
-      window.removeEventListener(
-        "filterByCategory",
-        handleCategoryFilter as EventListener
-      );
+      window.removeEventListener("filterByCategory", onCategoryFilter);
     };
   }, [setFilters, setActiveTab, setCurrentPage, setToast]);
 

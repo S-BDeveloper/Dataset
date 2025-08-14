@@ -30,9 +30,11 @@ Object.defineProperty(window, "crypto", {
 });
 
 // Mock fetch for security tests
+// eslint-disable-next-line no-undef
 global.fetch = vi.fn();
 
 // Mock console for security tests
+// eslint-disable-next-line no-undef
 global.console = {
   ...console,
   warn: vi.fn(),

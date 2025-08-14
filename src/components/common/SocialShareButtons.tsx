@@ -133,7 +133,10 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy URL:", err);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to copy URL:", err);
+      }
     }
   };
 
@@ -150,7 +153,10 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
         await copyToClipboard();
       }
     } catch (err) {
-      console.error("Error sharing:", err);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Error sharing:", err);
+      }
     }
   };
 

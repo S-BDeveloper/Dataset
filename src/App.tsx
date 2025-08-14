@@ -69,7 +69,10 @@ function App() {
       navigator.serviceWorker
         .register("/sw.js", { scope: "/" })
         .then((registration) => {
-          console.log("✅ Service Worker registered:", registration);
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.log("✅ Service Worker registered:", registration);
+          }
 
           // Handle service worker updates
           registration.addEventListener("updatefound", () => {
@@ -81,7 +84,10 @@ function App() {
                   navigator.serviceWorker.controller
                 ) {
                   // New service worker available
-                  console.log("🔄 New service worker available");
+                  if (import.meta.env.DEV) {
+                    // eslint-disable-next-line no-console
+                    console.log("🔄 New service worker available");
+                  }
                   // Could show user notification about update
                 }
               });
@@ -89,13 +95,19 @@ function App() {
           });
         })
         .catch((error) => {
-          console.error("❌ Service Worker registration failed:", error);
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.error("❌ Service Worker registration failed:", error);
+          }
         });
     }
 
     // Initialize route prefetching after a delay
     setTimeout(() => {
-      console.log("🚀 Initializing route prefetching");
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log("🚀 Initializing route prefetching");
+      }
       // Route prefetcher is already initialized as singleton
     }, 2000);
 
@@ -104,7 +116,10 @@ function App() {
       // Monitor largest contentful paint
       new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          console.log(`📊 LCP: ${entry.startTime.toFixed(2)}ms`);
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.log(`📊 LCP: ${entry.startTime.toFixed(2)}ms`);
+          }
         }
       }).observe({ entryTypes: ["largest-contentful-paint"] });
 
@@ -113,7 +128,10 @@ function App() {
         for (const entry of list.getEntries()) {
           const layoutShiftEntry = entry as any; // Layout shift entries have additional properties
           if (!layoutShiftEntry.hadRecentInput) {
-            console.log(`📊 CLS: ${layoutShiftEntry.value.toFixed(4)}`);
+            if (import.meta.env.DEV) {
+              // eslint-disable-next-line no-console
+              console.log(`📊 CLS: ${layoutShiftEntry.value.toFixed(4)}`);
+            }
           }
         }
       }).observe({ entryTypes: ["layout-shift"] });

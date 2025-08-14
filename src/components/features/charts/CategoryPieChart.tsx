@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useState, memo } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import type { ComputedDatum } from "@nivo/pie";
 import type { IslamicData } from "../../../types/Types";
-import { DataType } from "../../../types/Types";
+import { DataTypeEnum } from "../../../types/Types";
 import { DarkModeContext } from "../../../types/ContextTypes";
 import { getChartTheme } from "./chartTheme";
 import { useResponsive } from "../../../hooks/useResponsive";
@@ -54,13 +54,13 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = memo(
       const type = pieSlice.id.toString().toLowerCase();
 
       switch (type) {
-        case DataType.PROPHECY:
+        case DataTypeEnum.PROPHECY:
           return "#ef4444";
-        case DataType.SCIENTIFIC:
+        case DataTypeEnum.SCIENTIFIC:
           return "#3b82f6";
-        case DataType.HEALTH:
+        case DataTypeEnum.HEALTH:
           return "#10b981";
-        case "traditional-treatments":
+        case DataTypeEnum.TRADITIONAL_TREATMENTS:
           return "#f59e0b"; // amber/orange for traditional treatments
         default:
           return "#6b7280";

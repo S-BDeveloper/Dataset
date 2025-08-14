@@ -14,7 +14,10 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
       // Skip aggressive unregistration that causes refresh loops
-      console.log("Starting service worker registration");
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log("Starting service worker registration");
+      }
 
       // Register new service worker with cache busting
       const registration = await navigator.serviceWorker.register(
@@ -24,10 +27,16 @@ if ("serviceWorker" in navigator) {
         }
       );
 
-      console.log("SW registered: ", registration);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log("SW registered: ", registration);
+      }
 
       // Let updates happen naturally without forcing
-      console.log("Service worker registered successfully");
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log("Service worker registered successfully");
+      }
 
       // Listen for updates
       registration.addEventListener("updatefound", () => {
@@ -39,13 +48,19 @@ if ("serviceWorker" in navigator) {
               navigator.serviceWorker.controller
             ) {
               // New SW is available, will activate on next visit
-              console.log("New SW available, will activate on next visit");
+              if (import.meta.env.DEV) {
+                // eslint-disable-next-line no-console
+                console.log("New SW available, will activate on next visit");
+              }
             }
           });
         }
       });
     } catch (registrationError) {
-      console.log("SW registration failed: ", registrationError);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.log("SW registration failed: ", registrationError);
+      }
     }
   });
 }

@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import {
   sanitizeDataArray,
+  sanitizeIslamicData,
+  hasInterpretiveContent,
   type SanitizedIslamicData,
 } from "../utils/dataSanitizer";
 import type { IslamicData } from "../types/Types";
@@ -17,7 +19,6 @@ export const useSanitizedData = (data: IslamicData[]) => {
 // Hook for individual data item sanitization
 export const useSanitizedItem = (item: IslamicData): SanitizedIslamicData => {
   const sanitizedItem = useMemo(() => {
-    const { sanitizeIslamicData } = require("../utils/dataSanitizer");
     return sanitizeIslamicData(item);
   }, [item]);
 
@@ -27,7 +28,6 @@ export const useSanitizedItem = (item: IslamicData): SanitizedIslamicData => {
 // Hook for checking if content needs sanitization
 export const useContentNeedsSanitization = (text: string) => {
   const needsSanitization = useMemo(() => {
-    const { hasInterpretiveContent } = require("../utils/dataSanitizer");
     return hasInterpretiveContent(text);
   }, [text]);
 

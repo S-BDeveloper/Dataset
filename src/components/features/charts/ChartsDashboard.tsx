@@ -26,9 +26,14 @@ export const ChartsDashboard: React.FC<ChartsDashboardProps> = memo(
     const sanitizedData = useSanitizedData([...data]);
 
     // Debug logging
-    console.log("ChartsDashboard - Received data:", data);
-    console.log("ChartsDashboard - Data length:", data.length);
-    console.log("ChartsDashboard - Sanitized data:", sanitizedData);
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.log("ChartsDashboard - Received data:", data);
+      // eslint-disable-next-line no-console
+      console.log("ChartsDashboard - Data length:", data.length);
+      // eslint-disable-next-line no-console
+      console.log("ChartsDashboard - Sanitized data:", sanitizedData);
+    }
 
     const [viewMode, setViewMode] = useState<"single" | "overview">("overview");
     const [activeChart, setActiveChart] = useState<string>("all");

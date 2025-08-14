@@ -25,7 +25,10 @@ export default function Navbar({ onMenuToggle }: NavbarProps) {
       await logout();
       navigate("/");
     } catch (error) {
-      console.error("Logout failed:", error);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Logout failed:", error);
+      }
     }
   };
 

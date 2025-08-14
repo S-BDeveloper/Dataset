@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { SanitizedInput, SanitizedTextarea } from "../common/SanitizedInput";
-import {
-  sanitizeInput,
-  sanitizeHtmlContent,
-  isValidIslamicText,
-} from "../../utils/sanitize";
+import { sanitizeInput, isValidIslamicText } from "../../utils/sanitize";
 import { escapeHtml } from "../../utils/htmlEscape";
 import { runSanitizationTests } from "../../utils/testSanitization";
 
@@ -21,7 +17,7 @@ export const SanitizationTest: React.FC = () => {
     const protocolTests = runSanitizationTests();
 
     // Add protocol test results
-    protocolTests.results.forEach((test, index) => {
+    protocolTests.results.forEach((test) => {
       const status = test.passed ? "✅" : "❌";
       results.push(
         `${status} ${test.test}: "${test.input}" → "${test.output}"`

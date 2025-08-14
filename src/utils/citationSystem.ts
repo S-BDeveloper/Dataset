@@ -220,9 +220,10 @@ export class IslamicCitationGenerator {
     switch (type) {
       case "quran":
         return `${prefix}/${year}/quran.${chapter}.${verse}`;
-      case "hadith":
+      case "hadith": {
         const sourceCode = source.toLowerCase().replace(/\s+/g, "");
         return `${prefix}/${year}/hadith.${sourceCode}.${hadithNumber}`;
+      }
       default:
         return `${prefix}/${year}/${type}.${Date.now()}`;
     }

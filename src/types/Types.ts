@@ -4,7 +4,7 @@
 // CONSTANTS - Strict type definitions
 // ============================================================================
 
-export const DataType = {
+export const DataTypeEnum = {
   PROPHECY: "prophecy",
   SCIENTIFIC: "scientific",
   HEALTH: "health",
@@ -12,14 +12,14 @@ export const DataType = {
   QADR: "qadr",
 } as const;
 
-export const FulfillmentStatus = {
+export const FulfillmentStatusEnum = {
   FULFILLED: "fulfilled",
   IN_PROGRESS: "in-progress",
   PENDING: "pending",
   PARTIALLY_FULFILLED: "partially-fulfilled",
 } as const;
 
-export const ProphecyStatus = {
+export const ProphecyStatusEnum = {
   FULFILLED_PROPHECY: "Fulfilled Prophecy",
   FUTURE_EVENT: "Future Event",
   DOCUMENTED: "Documented",
@@ -29,7 +29,7 @@ export const ProphecyStatus = {
   PENDING: "Pending",
 } as const;
 
-export const ProphecyCategory = {
+export const ProphecyCategoryEnum = {
   HISTORICAL: "historical",
   SCIENTIFIC: "scientific",
   SOCIAL: "social",
@@ -38,32 +38,32 @@ export const ProphecyCategory = {
   TECHNOLOGICAL: "technological",
 } as const;
 
-export const DataSource = {
+export const DataSourceEnum = {
   ISLAMIC_DATA: "islamic data",
   QURAN: "quran",
   HADITH: "hadith",
 } as const;
 
-export const SortOrder = {
+export const SortOrderEnum = {
   ASC: "asc",
   DESC: "desc",
 } as const;
 
-export const ToastType = {
+export const ToastTypeEnum = {
   SUCCESS: "success",
   ERROR: "error",
   WARNING: "warning",
   INFO: "info",
 } as const;
 
-export const ChartType = {
+export const ChartTypeEnum = {
   BAR: "bar",
   PIE: "pie",
   LINE: "line",
   SCATTER: "scatter",
 } as const;
 
-export const ErrorCode = {
+export const ErrorCodeEnum = {
   NETWORK_ERROR: "NETWORK_ERROR",
   PARSE_ERROR: "PARSE_ERROR",
   NOT_FOUND: "NOT_FOUND",
@@ -71,18 +71,18 @@ export const ErrorCode = {
 } as const;
 
 // Type definitions from constants
-export type DataType = (typeof DataType)[keyof typeof DataType];
+export type DataType = (typeof DataTypeEnum)[keyof typeof DataTypeEnum];
 export type FulfillmentStatus =
-  (typeof FulfillmentStatus)[keyof typeof FulfillmentStatus];
+  (typeof FulfillmentStatusEnum)[keyof typeof FulfillmentStatusEnum];
 export type ProphecyStatus =
-  (typeof ProphecyStatus)[keyof typeof ProphecyStatus];
+  (typeof ProphecyStatusEnum)[keyof typeof ProphecyStatusEnum];
 export type ProphecyCategory =
-  (typeof ProphecyCategory)[keyof typeof ProphecyCategory];
-export type DataSource = (typeof DataSource)[keyof typeof DataSource];
-export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
-export type ToastType = (typeof ToastType)[keyof typeof ToastType];
-export type ChartType = (typeof ChartType)[keyof typeof ChartType];
-export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
+  (typeof ProphecyCategoryEnum)[keyof typeof ProphecyCategoryEnum];
+export type DataSource = (typeof DataSourceEnum)[keyof typeof DataSourceEnum];
+export type SortOrder = (typeof SortOrderEnum)[keyof typeof SortOrderEnum];
+export type ToastType = (typeof ToastTypeEnum)[keyof typeof ToastTypeEnum];
+export type ChartType = (typeof ChartTypeEnum)[keyof typeof ChartTypeEnum];
+export type ErrorCode = (typeof ErrorCodeEnum)[keyof typeof ErrorCodeEnum];
 
 // ============================================================================
 // STRICT INTERFACES

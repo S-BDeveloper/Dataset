@@ -81,7 +81,10 @@ export const CitationCard: React.FC<CitationCardProps> = ({
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
-      console.error("Failed to copy citation:", err);
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to copy citation:", err);
+      }
     }
   };
 

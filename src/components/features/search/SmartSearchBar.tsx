@@ -39,7 +39,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   // Debounced search function
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const debouncedSearch = (searchQuery: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
